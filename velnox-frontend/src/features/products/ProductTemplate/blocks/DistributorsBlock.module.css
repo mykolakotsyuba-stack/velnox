@@ -1,0 +1,445 @@
+.container {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animations */
+@keyframes scanSweep {
+    0% {
+        top: -1px;
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes cornerReveal {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes badgePulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(59, 130, 246, 0.18);
+    }
+}
+
+@keyframes tagDotBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+
+    50% {
+        opacity: 0.3;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fadeUp {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--primary-color, #3b82f6);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.tag::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: tagDotBlink 2.4s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+.title {
+    font-size: 32px;
+    color: white;
+    margin: 0;
+    font-weight: 800;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    position: relative;
+    background: rgba(7, 16, 26, 0.8);
+    border: 1px solid rgba(15, 30, 48, 1);
+    border-radius: 12px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+    transition:
+        opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.cardIn {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.card:hover {
+    background: rgba(10, 21, 37, 0.9);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 12px 60px rgba(37, 99, 235, 0.13), inset 0 0 30px rgba(37, 99, 235, 0.04);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 4px;
+    box-shadow:
+        inset 12px 0 0 -10px rgba(59, 130, 246, 0.6),
+        inset 0 12px 0 -10px rgba(59, 130, 246, 0.6),
+        inset -12px 0 0 -10px rgba(59, 130, 246, 0.6),
+        inset -12px 0 0 -10px rgba(59, 130, 246, 0.6),
+        inset 0 -12px 0 -10px rgba(59, 130, 246, 0.6),
+        inset 12px 0 0 -10px rgba(59, 130, 246, 0.6),
+        inset 0 -12px 0 -10px rgba(59, 130, 246, 0.6);
+    pointer-events: none;
+    animation: cornerReveal 0.3s ease both;
+}
+
+.cardScan {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.7) 50%, transparent 100%);
+    top: -1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card:hover .cardScan {
+    animation: scanSweep 1.2s ease-in-out;
+}
+
+.cardLogoWrap {
+    width: 100%;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.cardLogo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.65;
+    transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+.card:hover .cardLogo {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.cardMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 24px;
+    flex: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.cardFlag {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.cardName {
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    transition: color 0.3s;
+}
+
+.card:hover .cardName {
+    color: #7a90a8;
+}
+
+.cardCountry {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.card:hover .cardCountry {
+    color: #2a3a4e;
+}
+
+.orderButton {
+    width: 100%;
+    padding: 12px;
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary-color, #3b82f6);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.card:hover .orderButton {
+    background: var(--primary-color, #3b82f6);
+    color: white;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Modal Styles */
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(4, 6, 10, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal {
+    background: #11141c;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    position: relative;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8);
+}
+
+.modalClose {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: #808b9c;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.modalClose:hover {
+    color: white;
+}
+
+.modalTag {
+    font-size: 11px;
+    color: var(--primary-color, #3b82f6);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.modalTitle {
+    font-size: 24px;
+    color: white;
+    margin: 0 0 12px;
+}
+
+.modalDesc {
+    color: #808b9c;
+    font-size: 14px;
+    margin-bottom: 32px;
+}
+
+.leadForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.formRow input,
+.formFieldArea {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.formRow input:focus,
+.formFieldArea:focus {
+    border-color: var(--primary-color, #3b82f6);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.formFieldArea {
+    resize: vertical;
+}
+
+.formSubmit {
+    background: var(--primary-color, #3b82f6);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+
+.formSubmit:hover {
+    background: #2563eb;
+}
+
+.successState {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.successIcon {
+    color: #10b981;
+    margin-bottom: 24px;
+}
+
+.successState h3 {
+    font-size: 24px;
+    color: white;
+    margin: 0 0 12px;
+}
+
+.successState p {
+    color: #808b9c;
+    margin-bottom: 32px;
+    line-height: 1.5;
+}
+
+.formBtnClose {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.formBtnClose:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal {
+        padding: 30px 20px;
+    }
+}

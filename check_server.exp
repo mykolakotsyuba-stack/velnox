@@ -1,0 +1,56 @@
+#!/usr/bin/expect -f
+
+set timeout 30
+set host "mail.irbis.ua"
+set user "user"
+set pass "12345678"
+
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $user@$host
+
+expect {
+    "password:" {
+        send "$pass\r"
+    }
+    "Connection refused" {
+        puts "ERROR: Connection refused"
+        exit 1
+    }
+    timeout {
+        puts "ERROR: Connection timeout"
+        exit 1
+    }
+}
+
+expect {
+    "$ " { }
+    "# " { }
+    "~" { }
+    timeout {
+        puts "ERROR: Login timeout"
+        exit 1
+    }
+}
+
+send "echo '=== START SERVER DIAGNOSTICS ==='\r"
+expect "$ "
+
+send "ls -la /srv/projects/ 2>/dev/null && echo 'PROJECTS_OK' || echo 'NO_PROJECTS_DIR'\r"
+expect "$ "
+
+send "systemctl list-units --type=service --state=active 2>/dev/null | grep -E 'irbis|velnox|nginx|php|postgres'\r"
+expect "$ "
+
+send "ss -tlnp 2>/dev/null | grep LISTEN\r"
+expect "$ "
+
+send "ls /etc/nginx/sites-enabled/ 2>/dev/null\r"
+expect "$ "
+
+send "cat /etc/nginx/sites-enabled/default 2>/dev/null\r"
+expect "$ "
+
+send "echo '=== END DIAGNOSTICS ==='\r"
+expect "$ "
+
+send "exit\r"
+expect eof

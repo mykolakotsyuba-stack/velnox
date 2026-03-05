@@ -1,0 +1,30 @@
+.section {
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #555;
+    margin-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.config {
+    font-size: 16px;
+    font-weight: 700;
+    color: #3b82f6;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+}
+
+.description {
+    font-size: 14px;
+    color: #bbb;
+    line-height: 1.7;
+}

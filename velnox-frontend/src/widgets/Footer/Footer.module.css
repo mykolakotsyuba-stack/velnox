@@ -1,0 +1,35 @@
+.footer {
+    background: #0d0d0d;
+    border-top: 1px solid #1e1e1e;
+    padding: 32px 24px;
+    margin-top: auto;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.logo {
+    height: 65px;
+    width: auto;
+    object-fit: contain;
+}
+
+.copy {
+    font-size: 12px;
+    color: #555;
+}

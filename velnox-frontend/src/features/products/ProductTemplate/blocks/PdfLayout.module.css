@@ -1,0 +1,230 @@
+.a4Page {
+    width: 794px;
+    /* Exact A4 width in pixels approx (96dpi) */
+    background: #ffffff;
+    color: #000000;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #11141c;
+    /* Almost black */
+    color: #ffffff;
+    padding: 25px 40px;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #ffffff;
+}
+
+.headerTitle {
+    font-size: 16px;
+    color: #cccccc;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.pageContent {
+    padding: 0 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.titleSection {
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 42px;
+    font-weight: 900;
+    margin: 0 0 8px 0;
+    line-height: 1.1;
+    color: #000000;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #444444;
+    margin: 0 0 15px 0;
+    font-weight: normal;
+}
+
+.fklBadge {
+    display: inline-block;
+    background: #f0f0f0;
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #222222;
+    border: 1px solid #cccccc;
+}
+
+.topRow {
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+}
+
+.photoWrapper {
+    flex: 0 0 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fcfcfc;
+    border: 1px solid #eaeaea;
+    border-radius: 6px;
+    padding: 10px;
+    height: 280px;
+}
+
+.photo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.infoWrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.infoBlock h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    margin: 0 0 8px 0;
+    color: #11141c;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 4px;
+}
+
+.infoBlock p {
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.5;
+    color: #333333;
+}
+
+.crossList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    color: #333333;
+}
+
+.sectionTitle {
+    font-size: 18px;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+    color: #000000;
+    font-weight: 900;
+}
+
+.drawingSection {
+    margin-top: 10px;
+}
+
+.drawingWrapper {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drawingInner {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drawing {
+    max-height: 200px;
+    object-fit: contain;
+}
+
+.specsSection {
+    margin-top: 10px;
+}
+
+.specsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.specsTable tr {
+    border-bottom: 1px solid #eaeaea;
+}
+
+.specsTable th,
+.specsTable td {
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.specKey {
+    color: #555555;
+    width: 40%;
+    font-weight: normal;
+}
+
+.specValue {
+    font-weight: bold;
+    color: #000000;
+}
+
+.distributorBlock {
+    margin-top: 20px;
+    background: #f9f9f9;
+    border-left: 4px solid #11141c;
+    padding: 15px 20px;
+    font-size: 13px;
+}
+
+.distributorBlock h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.distributorBlock p {
+    margin: 0;
+    line-height: 1.5;
+    color: #333;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #11141c;
+    color: #999999;
+    padding: 15px 40px;
+    font-size: 12px;
+}
+
+.footer span {
+    color: #ffffff;
+    font-weight: bold;
+}

@@ -1,0 +1,165 @@
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.page {
+    padding: 24px 0;
+    width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header {
+    margin: 20px 0 32px;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.headerTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: #aaa;
+    margin-bottom: 16px;
+}
+
+.meta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: monospace;
+    color: #e2e8f0;
+    letter-spacing: 0.05em;
+}
+
+.body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Верхній блок (Gallery + Base Info) */
+.topSection {
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    gap: 40px;
+}
+
+.visual {
+    position: sticky;
+    top: 84px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeInLeft 0.7s ease-out 0.2s forwards;
+}
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    opacity: 0;
+    animation: fadeInRight 0.7s ease-out 0.3s forwards;
+}
+
+.animateOnScroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.inView {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Нижній блок (Specs + Blueprint) */
+.technicalSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 40px;
+    align-items: start;
+}
+
+.specsColumn,
+.drawingColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+@media (max-width: 1024px) {
+    .topSection {
+        grid-template-columns: 1fr;
+    }
+
+    .technicalSection {
+        grid-template-columns: 1fr;
+    }
+
+    .visual {
+        position: static;
+    }
+}

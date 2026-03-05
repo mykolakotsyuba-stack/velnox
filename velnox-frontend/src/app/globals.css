@@ -1,0 +1,133 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --color-bg: #0a0a0a;
+    --color-surface: #111;
+    --color-border: #222;
+    --color-text: #e0e0e0;
+    --color-text-muted: #888;
+    --color-accent: #3b82f6;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+html {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+@media print {
+
+    /* Global Print Hiding Rules added to avoid Next.js CSS Module pure selector errors */
+    .print-hide,
+    nav,
+    footer,
+    .breadcrumbs,
+    #distributorsBlock,
+    .ctaBlock {
+        display: none !important;
+    }
+
+    @page {
+        size: A4 portrait;
+        margin: 1.5cm;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Remove animations universally */
+    * {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Force global reset overrides for the catalog structure */
+    div[class*="ProductTemplate_container"] {
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+
+    div[class*="ProductTemplate_header"] {
+        margin: 0 0 20px 0 !important;
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+    }
+
+    h1[class*="ProductTemplate_title"] {
+        color: #000 !important;
+        font-size: 28pt !important;
+        font-weight: bold !important;
+    }
+
+    div[class*="ProductTemplate_subtitle"] {
+        color: #333 !important;
+        font-size: 14pt !important;
+    }
+
+    div[class*="ProductTemplate_technicalSection"] {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 20px !important;
+        margin-top: 20px !important;
+        border-top: 1px solid #ccc !important;
+        padding-top: 20px !important;
+    }
+
+    div[class*="SpecsTable_table"] {
+        background: none !important;
+        border: 1px solid #ccc !important;
+    }
+
+    div[class*="SpecsTable_table"] th {
+        color: #333 !important;
+        border-bottom-color: #eee !important;
+    }
+
+    div[class*="SpecsTable_table"] td {
+        color: #000 !important;
+        border-bottom-color: #eee !important;
+    }
+
+    canvas {
+        filter: invert(1) hue-rotate(180deg) contrast(1.2) !important;
+    }
+}

@@ -1,0 +1,166 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.mainImageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #fff;
+    /* Білий фон для деталей, як на fkl-czech */
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mainImage {
+    object-fit: contain;
+    padding: 24px;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    /* For scrollbar if needed */
+}
+
+/* Hide scrollbar for clean UI */
+.thumbnails::-webkit-scrollbar {
+    display: none;
+}
+
+.thumbnails {
+    scrollbar-width: none;
+}
+
+.thumbnailWrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.thumbnailWrapper:hover {
+    border-color: rgba(59, 130, 246, 0.5);
+}
+
+.thumbnailWrapper.active {
+    border-color: #3b82f6;
+    /* Blue border for active */
+}
+
+.thumbnailImage {
+    object-fit: contain;
+    padding: 8px;
+}
+
+/* --- Swipe UI Additions --- */
+.mainImageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: grab;
+    user-select: none;
+}
+
+.mainImageWrapper:active {
+    cursor: grabbing;
+}
+
+.swipeHintLeft,
+.swipeHintRight {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    cursor: pointer;
+    display: none;
+    /* Only show on hover/desktop */
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    background: rgba(0, 0, 0, 0.05);
+    /* Subtle hint */
+    z-index: 10;
+}
+
+@media (hover: hover) {
+
+    .mainImageWrapper:hover .swipeHintLeft,
+    .mainImageWrapper:hover .swipeHintRight {
+        display: flex;
+    }
+}
+
+.swipeHintLeft {
+    left: 0;
+}
+
+.swipeHintRight {
+    right: 0;
+}
+
+.swipeHintLeft::after {
+    content: "‹";
+    font-size: 32px;
+    color: #111;
+}
+
+.swipeHintRight::after {
+    content: "›";
+    font-size: 32px;
+    color: #111;
+}
+
+.bullets {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    z-index: 5;
+}
+
+.bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+}
+
+.bulletActive {
+    background: #3b82f6;
+    /* Active blue */
+    transform: scale(1.3);
+}

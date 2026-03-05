@@ -1,0 +1,106 @@
+[
+    {
+        "designation": "LEFG 206-104 TDT",
+        "d_mm": "31.75 (1 1/4\")",
+        "j_mm": "83.0",
+        "width_mm": "A: 40.2 / A1: 31.0 / A2: 13.0",
+        "holes": "N: 16 mm",
+        "l_mm": "108.0"
+    },
+    {
+        "designation": "LEFG 207 TDT",
+        "d_mm": "35.0",
+        "j_mm": "92.0",
+        "width_mm": "A: 44.4 / A1: 34.0 / A2: 13.0",
+        "holes": "N: 14 mm",
+        "l_mm": "118.0"
+    },
+    {
+        "designation": "LEFG 207-104 TDT",
+        "d_mm": "31.75 (1 1/4\")",
+        "j_mm": "92.0",
+        "width_mm": "A: 44.4 / A1: 34.0 / A2: 13.0",
+        "holes": "N: 14 mm",
+        "l_mm": "118.0"
+    },
+    {
+        "designation": "LEFG 207-106 TDT",
+        "d_mm": "34.925 (1 3/8\")",
+        "j_mm": "92.0",
+        "width_mm": "A: 44.4 / A1: 34.0 / A2: 13.0",
+        "holes": "N: 14 mm",
+        "l_mm": "118.0"
+    },
+    {
+        "designation": "LEFG 208 TDT",
+        "d_mm": "40.0",
+        "j_mm": "102.0",
+        "width_mm": "A: 51.2 / A1: 36.0 / A2: 14.0",
+        "holes": "N: 16 mm",
+        "l_mm": "130.0"
+    },
+    {
+        "designation": "LEFG 208-108 TDT",
+        "d_mm": "38.1 (1 1/2\")",
+        "j_mm": "102.0",
+        "width_mm": "A: 51.2 / A1: 36.0 / A2: 14.0",
+        "holes": "N: 16H13 mm",
+        "l_mm": "130.0"
+    },
+    {
+        "designation": "LEFG 209 TDT",
+        "d_mm": "45.0",
+        "j_mm": "105.0",
+        "width_mm": "A: 52.2 / A1: 38.0 / A2: 16.0",
+        "holes": "N: 16 mm",
+        "l_mm": "137.0"
+    },
+    {
+        "designation": "LEFG 210 TDT",
+        "d_mm": "50.0",
+        "j_mm": "111.0",
+        "width_mm": "A: 54.6 / A1: 40.0 / A2: 16.0",
+        "holes": "N: 16 mm",
+        "l_mm": "143.0"
+    },
+    {
+        "designation": "LEFG 214 TDT",
+        "d_mm": "70.0",
+        "j_mm": "152.0",
+        "width_mm": "A: 70.7 / A1: 50.3 / A2: 21.3",
+        "holes": "N: 19 mm",
+        "l_mm": "193.0"
+    },
+    {
+        "designation": "LSGR 207 TBS",
+        "d_mm": "35.0",
+        "j_mm": "100.0",
+        "width_mm": "A: 40.0 / A1: — / A2: 20.0",
+        "holes": "H/T: M12 mm",
+        "l_mm": "— (Круглий фланець)"
+    },
+    {
+        "designation": "LSQFR 308 2TD.H.T",
+        "d_mm": "40.0",
+        "j_mm": "101.5",
+        "width_mm": "A: 48.4 / A1: 40.6 / A2: 19.0",
+        "holes": "H/T: 4x13 mm",
+        "l_mm": "130.0"
+    },
+    {
+        "designation": "LSQFR 309-16 2TB.H.T",
+        "d_mm": "45.0",
+        "j_mm": "105.0",
+        "width_mm": "A: 55.0 / A1: 44.0 / A2: 22.0",
+        "holes": "H/T: 16 mm",
+        "l_mm": "137.0"
+    },
+    {
+        "designation": "ZGKU 309 2S",
+        "d_mm": "45.0",
+        "j_mm": "120 (J1, J2)",
+        "width_mm": "A: 66.9 / A1: 18.0 / A2: 12.0",
+        "holes": "H: 4x12.3 / T: 4xM12x1.25",
+        "l_mm": "152 (L1) / 150 (L2)"
+    }
+]

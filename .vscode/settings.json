@@ -1,0 +1,9 @@
+{
+  "files.exclude": {
+    "**/velnox-api": true,
+    "**/.git": true
+  },
+  "search.exclude": {
+    "**/velnox-api": true
+  }
+}

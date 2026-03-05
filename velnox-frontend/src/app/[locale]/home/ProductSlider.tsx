@@ -1,0 +1,173 @@
+'use client';
+
+import Image from 'next/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import styles from './ProductSlider.module.css';
+
+interface Slide {
+    img: string;
+    bgImg: string;
+    tag: string;
+    title: string;
+    body: string;
+    spec: string;
+}
+
+export function ProductSlider() {
+    const t = useTranslations('home.slider');
+    const [active, setActive] = useState(0);
+    const [animDir, setAnimDir] = useState<'left' | 'right'>('right');
+    const [isAnimating, setIsAnimating] = useState(false);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    const SLIDES: Slide[] = [
+        {
+            img: '/images/fg_agro.png',
+            bgImg: '/images/bg_agro.png',
+            tag: t('slide1.tag'),
+            title: t('slide1.title'),
+            body: t('slide1.body'),
+            spec: t('slide1.spec'),
+        },
+        {
+            img: '/images/fg_heavy.png',
+            bgImg: '/images/bg_heavy.png',
+            tag: t('slide2.tag'),
+            title: t('slide2.title'),
+            body: t('slide2.body'),
+            spec: t('slide2.spec'),
+        },
+        {
+            img: '/images/fg_custom.png',
+            bgImg: '/images/bg_custom.png',
+            tag: t('slide3.tag'),
+            title: t('slide3.title'),
+            body: t('slide3.body'),
+            spec: t('slide3.spec'),
+        },
+    ];
+
+    const goTo = useCallback((idx: number, dir: 'left' | 'right' = 'right') => {
+        if (isAnimating) return;
+        setIsAnimating(true);
+        setAnimDir(dir);
+        setTimeout(() => {
+            setActive(idx);
+            setIsAnimating(false);
+        }, 420);
+    }, [isAnimating]);
+
+    const next = useCallback(() => {
+        goTo((active + 1) % SLIDES.length, 'right');
+    }, [active, SLIDES.length, goTo]);
+
+    const prev = useCallback(() => {
+        goTo((active - 1 + SLIDES.length) % SLIDES.length, 'left');
+    }, [active, SLIDES.length, goTo]);
+
+    // Auto-advance
+    useEffect(() => {
+        intervalRef.current = setInterval(next, 6000);
+        return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+    }, [next]);
+
+    const resetTimer = useCallback(() => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        intervalRef.current = setInterval(next, 6000);
+    }, [next]);
+
+    const slide = SLIDES[active];
+
+    return (
+        <section className={styles.slider}>
+            {/* Background image (blurred, full bleed) */}
+            <div className={styles.sliderBg}>
+                {SLIDES.map((s, i) => (
+                    <div key={i} className={`${styles.bgLayer} ${i === active ? styles.bgLayerActive : ''}`}>
+                        <Image src={s.bgImg} alt="" fill style={{ objectFit: 'cover' }} quality={60} />
+                    </div>
+                ))}
+                <div className={styles.bgOverlay} />
+                <div className={styles.bgVignette} />
+            </div>
+
+            {/* Slide rail */}
+            <div className={styles.sliderInner}>
+                {/* Left: content */}
+                <div className={`${styles.slideContent} ${isAnimating ? (animDir === 'right' ? styles.exitLeft : styles.exitRight) : styles.slideIn}`}>
+                    <span className={styles.slideTag}>
+                        <span className={styles.tagPulse} />
+                        {slide.tag}
+                    </span>
+
+                    <h2 className={styles.slideTitle}>{slide.title}</h2>
+                    <p className={styles.slideBody}>{slide.body}</p>
+
+                    <div className={styles.slideSpec}>
+                        <svg viewBox="0 0 16 16" width="14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <circle cx="8" cy="8" r="6" /><path d="M8 5v4l2.5 2.5" strokeLinecap="round" />
+                        </svg>
+                        {slide.spec}
+                    </div>
+
+                    <div className={styles.slideActions}>
+                        <a href="#products" className={styles.slideBtn}>
+                            {t('cta_details')}
+                            <svg viewBox="0 0 16 16" fill="none" width="14">
+                                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </a>
+                        <a href="#contacts" className={styles.slideBtnGhost}>{t('cta_engineer')}</a>
+                    </div>
+                </div>
+
+                {/* Right: product image */}
+                <div className={`${styles.slideVisual} ${isAnimating ? styles.visualHide : styles.visualShow}`}>
+                    <div className={styles.visualGlow} />
+                    <Image
+                        src={slide.img}
+                        alt={slide.title}
+                        width={580}
+                        height={580}
+                        className={styles.slideImg}
+                        priority={active === 0}
+                    />
+                </div>
+            </div>
+
+            {/* Controls */}
+            <div className={styles.controls}>
+                {/* Prev/Next arrows */}
+                <button className={`${styles.arrow} ${styles.arrowPrev}`} onClick={() => { prev(); resetTimer(); }} aria-label="Previous">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="20">
+                        <path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </button>
+
+                {/* Dots */}
+                <div className={styles.dots}>
+                    {SLIDES.map((_, i) => (
+                        <button
+                            key={i}
+                            className={`${styles.dot} ${i === active ? styles.dotActive : ''}`}
+                            onClick={() => { goTo(i, i > active ? 'right' : 'left'); resetTimer(); }}
+                            aria-label={`Slide ${i + 1}`}
+                        />
+                    ))}
+                </div>
+
+                <button className={`${styles.arrow} ${styles.arrowNext}`} onClick={() => { next(); resetTimer(); }} aria-label="Next">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="20">
+                        <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </button>
+            </div>
+
+            {/* Progress bar */}
+            <div className={styles.progressBar}>
+                <div key={active} className={styles.progressFill} />
+            </div>
+        </section>
+    );
+}
