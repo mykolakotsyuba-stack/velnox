@@ -1,0 +1,12 @@
+# Velnox Project AI Rules
+
+**CRITICAL INSTRUCTIONS FOR ANY AI ASSISTANT / MODEL**
+
+1. **NO LOCAL SERVERS OR DEPENDENCIES**: The user's local machine (macOS) is strictly for code editing. DO NOT install, run, or suggest running PHP, Composer, Node.js, npm, Docker, or any local dev servers (`php artisan serve`, `npm run dev`). This is a hard limit to save RAM.
+2. **EXTERNAL SERVER ENVIRONMENT**: Both the Frontend (Next.js) and Backend (Laravel API) are hosted on an external server (`mx.irbis.ua`, internal IP `172.20.222.90`). All validation and testing must be done by deploying/syncing files to the external server.
+3. **DEPLOYMENT SOURCE OF TRUTH**: ALWAYS read and follow the `DEPLOYMENT_GUIDE.md` located in the root directory for any server-related tasks, Nginx configs, ports, and paths.
+4. **DO NOT MODIFY SYSTEM FILES LOUDLY**: Avoid running background language servers or heavy indexing tools (`devsense.php.ls`, etc.) unless strictly constrained. Keep local `.vscode/settings.json` configured to ignore the `velnox-api` and heavy directories.
+5. **LOCATIONS**:
+   - Frontend path on server: `/srv/projects/velnox/frontend`
+   - Backend path on server: `/srv/projects/velnox/api`
+6. **SYNC / DEPLOYMENT**: Use the bash scripts available in the root directory (`sync_images.sh`, `run_deploy.sh`, `fix_and_build.sh`) to synchronize changes with the remote server.
