@@ -1,0 +1,287 @@
+.pageWrapper {
+  padding: 40px;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  background: #f0f2f5;
+  color: #333;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.intro h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.intro p {
+  color: #555;
+  margin-top: 10px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+/* =========================================
+   Variant 1: Industrial Dark
+   ========================================= */
+.variant1 {
+  background: #000000;
+  color: #FFFFFF;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.v1Header {
+  padding: 20px;
+  background: #000000;
+  border-bottom: 2px solid #2E2981;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v1HeaderTitle {
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.v1Nav {
+  color: #00953E;
+  font-weight: 600;
+  display: flex;
+  gap: 15px;
+}
+
+.v1Body {
+  padding: 20px;
+}
+
+.v1Card {
+  border: 1px solid #2E2981;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background: rgba(46, 41, 129, 0.1);
+}
+
+.v1Card h3 {
+  color: #FFFFFF;
+  margin-bottom: 10px;
+}
+
+.v1Card p {
+  color: #CCCCCC;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.v1Button {
+  background: #00953E;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.v1Button:hover { opacity: 0.9; }
+
+.v1Table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  border: 1px solid #2E2981;
+}
+
+.v1Table th, .v1Table td {
+  padding: 10px;
+  border-bottom: 1px solid #2E2981;
+  text-align: left;
+}
+
+.v1Table th {
+  background: rgba(46, 41, 129, 0.3);
+  color: #FFFFFF;
+}
+
+/* =========================================
+   Variant 2: Engineering Clean
+   ========================================= */
+.variant2 {
+  background: #FFFFFF;
+  color: #000000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.v2Header {
+  padding: 20px;
+  background: #2E2981;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v2HeaderTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.v2Nav {
+  display: flex;
+  gap: 15px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.v2Body {
+  padding: 20px;
+}
+
+.v2Card {
+  border: 1px solid #E2E8F0;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background: #FFFFFF;
+}
+
+.v2Card h3 {
+  color: #00953E;
+  margin-bottom: 10px;
+}
+
+.v2Card p {
+  color: #4A5568;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.v2Button {
+  background: #00953E;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.v2Table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.v2Table th, .v2Table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.v2Table th {
+  background: #F8FAFC;
+  color: #2E2981;
+  font-weight: bold;
+}
+.v2Table tr:nth-child(even) {
+  background: #F5F5FA; /* light indigo */
+}
+
+/* =========================================
+   Variant 3: High-Tech Indigo
+   ========================================= */
+.variant3 {
+  background: #2E2981;
+  color: #FFFFFF;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(46,41,129,0.3);
+}
+
+.v3Header {
+  padding: 20px;
+  background: #2E2981;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.v3HeaderTitle {
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.v3Nav {
+  color: #FFFFFF;
+  display: flex;
+  gap: 15px;
+}
+
+.v3Body {
+  padding: 20px;
+}
+
+.v3Card {
+  border: 2px solid #2E2981;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background: #FFFFFF;
+  color: #000000;
+}
+
+.v3Card h3 {
+  color: #2E2981;
+  margin-bottom: 10px;
+}
+
+.v3Card p {
+  color: #333333;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.v3Button {
+  background: #00953E;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 149, 62, 0.3);
+}
+
+.v3Table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  color: #000000;
+  background: #FFFFFF;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.v3Table th, .v3Table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(46, 41, 129, 0.2);
+}
+
+.v3Table th {
+  background: rgba(46, 41, 129, 0.05);
+  color: #2E2981;
+}
