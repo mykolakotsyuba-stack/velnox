@@ -4,8 +4,10 @@
   z-index: 100;
   background: var(--color-nav-bg);
   color: var(--color-nav-text);
-  border-bottom: 2px solid var(--color-accent);
-  box-shadow: 0 2px 16px rgba(46, 41, 129, 0.07);
+  border-bottom: none;
+  /* Removed the blue/indigo strip */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  /* Slightly more prominent shadow without border */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -13,7 +15,8 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
-  height: 80px;
+  height: 100px;
+  /* Increased from 80px */
   display: flex;
   align-items: center;
   gap: 40px;
@@ -204,12 +207,13 @@
 .mobileMenu {
   display: none;
   position: fixed;
-  top: 82px;
+  top: 100px;
+  /* Adjusted for taller header */
   left: 0;
   right: 0;
   bottom: 0;
   background: var(--color-nav-bg);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   overflow-y: auto;
   z-index: 99;
   padding: 16px 24px 40px;
