@@ -23,7 +23,8 @@
     inset: 0;
     opacity: 0;
     transition: opacity 1.2s ease;
-    filter: brightness(0.55) saturate(0.85);
+    /* Brighter, more natural background */
+    filter: brightness(1.05) saturate(0.95);
     transform: scale(1.08);
 }
 
@@ -45,20 +46,20 @@
 .bgOverlay {
     position: absolute;
     inset: 0;
-    /* Strong left-side gradient keeps white text readable, fades to transparent on right */
+    /* Light silver gradient for dark text readability */
     background:
         linear-gradient(to right,
-            rgba(0, 0, 0, 0.82) 0%,
-            rgba(0, 0, 0, 0.70) 28%,
-            rgba(0, 0, 0, 0.35) 55%,
-            rgba(0, 0, 0, 0.10) 100%),
-        radial-gradient(ellipse at 70% 50%, color-mix(in srgb, var(--color-accent) 6%, transparent) 0%, transparent 55%);
+            rgba(255, 255, 255, 0.94) 0%,
+            rgba(255, 255, 255, 0.85) 35%,
+            rgba(255, 255, 255, 0.45) 65%,
+            rgba(255, 255, 255, 0.15) 100%),
+        radial-gradient(ellipse at 70% 50%, color-mix(in srgb, var(--color-accent) 4%, transparent) 0%, transparent 60%);
 }
 
 .bgVignette {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 15% 50%, transparent 55%, rgba(0, 0, 0, 0.25) 100%);
+    background: radial-gradient(ellipse at 15% 50%, transparent 60%, rgba(255, 255, 255, 0.4) 100%);
 }
 
 /* ── Main inner layout ── */
@@ -169,7 +170,8 @@
 .slideTitle {
     font-size: clamp(28px, 3.5vw, 50px);
     font-weight: 900;
-    color: #FFFFFF;
+    color: #1E293B;
+    /* Dark Blue/Slate */
     letter-spacing: -0.025em;
     line-height: 1.08;
     margin-bottom: 22px;
@@ -179,7 +181,8 @@
 .slideBody {
     font-size: 16px;
     line-height: 1.8;
-    color: rgba(255, 255, 255, 0.85);
+    color: #475569;
+    /* Muted slate */
     margin-bottom: 28px;
     max-width: 480px;
 }
@@ -241,17 +244,18 @@
     align-items: center;
     font-size: 14px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.85);
+    color: #1E293B;
     text-decoration: none;
     padding: 14px 16px;
     border-radius: 10px;
-    border: 1.5px solid rgba(255, 255, 255, 0.3);
-    transition: color 0.2s ease, border-color 0.2s ease;
+    border: 1.5px solid rgba(30, 41, 59, 0.2);
+    transition: all 0.2s ease;
 }
 
 .slideBtnGhost:hover {
-    color: #FFFFFF;
+    color: var(--color-accent);
     border-color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 5%, transparent);
 }
 
 /* ── Product image (right) ── */
