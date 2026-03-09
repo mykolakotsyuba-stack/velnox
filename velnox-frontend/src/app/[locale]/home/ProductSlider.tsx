@@ -23,24 +23,24 @@ export function ProductSlider() {
 
     const SLIDES: Slide[] = [
         {
-            img: '/images/fg_agro.png',
-            bgImg: '/images/bg_agro.png',
+            img: '/velnox/images/fg_agro.png',
+            bgImg: '/velnox/images/bg_agro.png',
             tag: t('slide1.tag'),
             title: t('slide1.title'),
             body: t('slide1.body'),
             spec: t('slide1.spec'),
         },
         {
-            img: '/images/fg_heavy.png',
-            bgImg: '/images/bg_heavy.png',
+            img: '/velnox/images/fg_heavy.png',
+            bgImg: '/velnox/images/bg_heavy.png',
             tag: t('slide2.tag'),
             title: t('slide2.title'),
             body: t('slide2.body'),
             spec: t('slide2.spec'),
         },
         {
-            img: '/images/fg_custom.png',
-            bgImg: '/images/bg_custom.png',
+            img: '/velnox/images/fg_custom.png',
+            bgImg: '/velnox/images/bg_custom.png',
             tag: t('slide3.tag'),
             title: t('slide3.title'),
             body: t('slide3.body'),

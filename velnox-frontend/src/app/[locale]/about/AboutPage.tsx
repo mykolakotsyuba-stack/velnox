@@ -203,7 +203,7 @@ export function AboutPage({ locale }: { locale: string }) {
                     >
                         <div className={styles.bearingGlow} />
                         <Image
-                            src="/images/bearing-hub-3d.png"
+                            src="/velnox/images/bearing-hub-3d.png"
                             alt="VELNOX PL-127 Bearing Hub"
                             width={580}
                             height={580}

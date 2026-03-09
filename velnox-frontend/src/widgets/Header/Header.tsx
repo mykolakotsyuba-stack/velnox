@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { Globe, ChevronDown, Menu, X } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import styles from './Header.module.css';
+import { useTheme } from '@/shared/context/ThemeContext';
 
 interface HeaderProps {
     locale: string;
@@ -43,6 +44,7 @@ function useClickOutside(ref: React.RefObject<HTMLElement>, onClose: () => void)
 }
 
 export function Header({ locale }: HeaderProps) {
+    const { logoPath } = useTheme();
     const t = useTranslations('nav');
     const tCat = useTranslations('categories');
     const tNews = useTranslations('news.categories');
@@ -79,7 +81,7 @@ export function Header({ locale }: HeaderProps) {
 
                     {/* Лого */}
                     <Link href={`/${locale}`} className={styles.logo} onClick={closeAll}>
-                        <Image src="/images/velnox-logo-white.png" alt="VELNOX Logo" width={300} height={65} priority />
+                        <Image src={logoPath} alt="Velnox Logo" width={140} height={35} priority />
                     </Link>
 
                     {/* ── DESKTOP NAV ── */}

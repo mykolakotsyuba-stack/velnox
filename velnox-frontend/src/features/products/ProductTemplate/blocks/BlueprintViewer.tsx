@@ -134,7 +134,7 @@ export function BlueprintViewer({
                     </button>
 
                     <Image
-                        src="/images/blueprint-base.png"
+                        src="/velnox/images/blueprint-base.png"
                         alt={`Blueprint ${article}`}
                         fill
                         className={styles.blueprintImage}
@@ -159,7 +159,7 @@ export function BlueprintViewer({
                     <div className={styles.modalDrawing}>
                         <div style={{ position: 'relative', width: '100%', height: '100%', maxWidth: '800px', maxHeight: '800px', aspectRatio: '1/1' }}>
                             <Image
-                                src="/images/blueprint-base.png"
+                                src="/velnox/images/blueprint-base.png"
                                 alt={`Blueprint ${article} Fullscreen`}
                                 fill
                                 className={styles.blueprintImage}

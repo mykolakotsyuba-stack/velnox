@@ -59,8 +59,8 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
 
     // Dummy images for gallery
     const demoImages = [
-        '/images/products/bearing-photo-1.webp',
-        '/images/products/bearing-photo-2.webp'
+        '/velnox/images/products/bearing-photo-1.webp',
+        '/velnox/images/products/bearing-photo-2.webp'
     ];
 
     return (

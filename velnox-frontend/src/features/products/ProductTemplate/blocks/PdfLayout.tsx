@@ -39,7 +39,7 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                 <div className={styles.topRow}>
                     <div className={styles.photoWrapper}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/images/products/bearing-photo-1.webp" alt={product.article} className={styles.photo} crossOrigin="anonymous" />
+                        <img src="/velnox/images/products/bearing-photo-1.webp" alt={product.article} className={styles.photo} crossOrigin="anonymous" />
                     </div>
                     <div className={styles.infoWrapper}>
                         {sealingDesc && (
@@ -77,7 +77,7 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                     <div className={styles.drawingWrapper}>
                         <div className={styles.drawingInner}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="/images/blueprint-base.png" alt="Креслення" className={styles.drawing} crossOrigin="anonymous" />
+                            <img src="/velnox/images/blueprint-base.png" alt="Креслення" className={styles.drawing} crossOrigin="anonymous" />
                         </div>
                     </div>
                 </div>

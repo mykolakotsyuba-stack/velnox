@@ -1,0 +1,64 @@
+.container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    z-index: 9999;
+    color: white;
+    font-size: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn {
+    background: transparent;
+    color: #ccc;
+    border: 1px solid #555;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.btn.active {
+    background: #00953E;
+    color: white;
+    border-color: #00ea61;
+}
+
+.approveBtn {
+    margin-top: 15px;
+    width: 100%;
+    background: #2E2981;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.approveBtn:hover {
+    background: #3b35a3;
+}

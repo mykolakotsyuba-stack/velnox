@@ -242,7 +242,7 @@ export function HomePage({ locale }: { locale: string }) {
                     <div className={`${styles.heroBearing} ${heroIn ? styles.heroBearingIn : ''}`}>
                         <div className={styles.bearingGlow} />
                         <Image
-                            src="/images/bearing-hub-3d.png"
+                            src="/velnox/images/bearing-hub-3d.png"
                             alt="VELNOX PL-127 Bearing Hub"
                             width={620}
                             height={620}

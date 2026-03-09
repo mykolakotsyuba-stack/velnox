@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getLocale } from 'next-intl/server';
 import { setRequestLocale } from 'next-intl/server';
 import { MainLayout } from '@/shared/layouts/MainLayout';
+import { ThemeProvider } from '@/shared/context/ThemeContext';
 import type { Locale } from '@/entities/product/model/types';
 import '../globals.css';
 
@@ -19,12 +20,14 @@ export default async function LocaleLayout({ children, params: { locale } }: Loc
     return (
         <html lang={locale}>
             <body>
-                {/* locale prop потрібен щоб client-компоненти (Header) отримали правильну мову */}
-                <NextIntlClientProvider locale={locale} messages={messages}>
-                    <MainLayout locale={locale}>
-                        {children}
-                    </MainLayout>
-                </NextIntlClientProvider>
+                <ThemeProvider>
+                    {/* locale prop потрібен щоб client-компоненти (Header) отримали правильну мову */}
+                    <NextIntlClientProvider locale={locale} messages={messages}>
+                        <MainLayout locale={locale}>
+                            {children}
+                        </MainLayout>
+                    </NextIntlClientProvider>
+                </ThemeProvider>
             </body>
         </html>
     );

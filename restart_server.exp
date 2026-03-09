@@ -1,0 +1,20 @@
+#!/usr/bin/expect -f
+set timeout 300
+set password "12345678"
+set host "mail.irbis.ua"
+set user "user"
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $user@$host
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    "$ " {
+        send "cd /srv/projects/velnox/frontend && tar -xzvf ../velnox.tar.gz && npm run build && sudo systemctl restart velnox-frontend\r"
+        expect "password" { send "$password\r" }
+        expect timeout { puts "Timeout waiting for build"; exit 1 }
+        expect "$ "
+        send "exit\r"
+    }
+}
+expect eof

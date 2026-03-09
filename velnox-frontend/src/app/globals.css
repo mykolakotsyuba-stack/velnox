@@ -7,14 +7,105 @@
 }
 
 :root {
-    --color-bg: #0a0a0a;
-    --color-surface: #111;
-    --color-border: #222;
-    --color-text: #e0e0e0;
-    --color-text-muted: #888;
-    --color-accent: #3b82f6;
+    /* VELNOX Official Brand Colors */
+    --velnox-green: #00953E;
+    --velnox-white: #FFFFFF;
+    --velnox-indigo: #2E2981;
+    --velnox-black: #000000;
+
+    /* Base Colors - Universal Silver Background */
+    --color-bg: #E7EDF3;
+    --color-bg-overlay-light: rgba(231, 237, 243, 0.5);
+
+    /* Typography */
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Variables mapped to default theme */
+    --color-text: var(--velnox-black);
+    --color-text-muted: #4B5563;
+    --color-accent: var(--velnox-green);
+
+    --color-surface: var(--velnox-white);
+    --color-border: #CBD5E1;
+    --radius-block: 12px;
+    --shadow-block: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    /* Header/Footer Default - Brand Green */
+    --color-nav-bg: var(--velnox-green);
+    --color-nav-text: var(--velnox-white);
+
+    /* Background overrides */
+    --slider-bg-brightness: 0.18;
+    --slider-bg-saturation: 0.5;
 }
+
+/* 1. Industrial Dark Theme */
+body[data-theme='industrial-dark'] {
+    --color-text: var(--velnox-black);
+    --color-text-muted: #334155;
+    --color-accent: var(--velnox-green);
+
+    --color-surface: var(--velnox-white);
+    --color-border: #1E293B;
+    /* Strong dark border */
+    --radius-block: 0px;
+    --shadow-block: 4px 4px 0px rgba(0, 0, 0, 0.15);
+
+    /* Header/Footer - Brand Black */
+    --color-nav-bg: var(--velnox-black);
+    --color-nav-text: var(--velnox-white);
+}
+
+/* 2. Engineering Clean Theme (ACTIVE) */
+body[data-theme='engineering-clean'] {
+    --color-text: var(--velnox-black);
+    --color-text-muted: #475569;
+    --color-accent: var(--velnox-indigo);
+
+    --color-surface: var(--velnox-white);
+    --color-border: #D1DAE6;
+    --radius-block: 8px;
+    --shadow-block: 0 4px 20px rgba(46, 41, 129, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+
+    /* Header — light grey, dark text */
+    --color-nav-bg: #EEF2F7;
+    --color-nav-text: #1E293B;
+}
+
+/* 3. High-Tech Indigo Theme */
+body[data-theme='high-tech-indigo'] {
+    --color-text: var(--velnox-indigo);
+    --color-text-muted: #4338CA;
+    --color-accent: var(--velnox-green);
+
+    --color-surface: var(--velnox-white);
+    --color-border: rgba(46, 41, 129, 0.2);
+    --radius-block: 24px;
+    --shadow-block: 0 10px 40px rgba(46, 41, 129, 0.10);
+
+    /* Header/Footer - Brand Indigo */
+    --color-nav-bg: var(--velnox-indigo);
+    --color-nav-text: var(--velnox-white);
+}
+
+/* 4. Pure Indigo (NEW) */
+body[data-theme='pure-indigo'] {
+    --color-text: var(--velnox-black);
+    --color-text-muted: #4338CA;
+    /* Primary Accent is Indigo instead of Green */
+    --color-accent: var(--velnox-indigo);
+
+    --color-surface: var(--velnox-white);
+    --color-border: rgba(46, 41, 129, 0.1);
+    --radius-block: 8px;
+    /* Slightly softened square */
+    --shadow-block: 0 8px 30px rgba(46, 41, 129, 0.08);
+
+    /* Header/Footer - Brand Indigo */
+    --color-nav-bg: var(--velnox-indigo);
+    --color-nav-text: var(--velnox-white);
+}
+
 
 html {
     font-family: var(--font-sans);

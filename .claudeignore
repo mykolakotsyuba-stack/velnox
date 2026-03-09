@@ -1,0 +1,22 @@
+# Архіви та бекапи (критично важкі для токенів)
+*.tar.gz
+*.zip
+velnox-api-old-backup.tar.gz
+velnox.tar.gz
+
+# Тимчасові папки
+pdf-gen-temp/
+__pycache__/
+.venv/
+venv/
+
+# Залежності (якщо працюєш з фронтендом)
+node_modules/
+velnox-frontend/node_modules/
+velnox-frontend/.next/
+velnox-frontend/dist/
+
+# Зображення
+*.png
+*.jpg
+*.jpeg
