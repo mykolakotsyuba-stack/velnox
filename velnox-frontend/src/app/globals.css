@@ -67,9 +67,9 @@ body[data-theme='engineering-clean'] {
     --radius-block: 8px;
     --shadow-block: 0 4px 20px rgba(46, 41, 129, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
 
-    /* Header — light grey, dark text */
-    --color-nav-bg: #EEF2F7;
-    --color-nav-text: #1E293B;
+    /* Header/Footer - Brand Green, White Text */
+    --color-nav-bg: var(--velnox-green);
+    --color-nav-text: var(--velnox-white);
 }
 
 /* 3. High-Tech Indigo Theme */

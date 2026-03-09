@@ -22,7 +22,7 @@
     align-items: center;
     gap: 10px;
     font-size: 13px;
-    color: var(--color-text-muted);
+    color: var(--color-nav-text);
 }
 
 .logo {
@@ -33,5 +33,5 @@
 
 .copy {
     font-size: 12px;
-    color: var(--color-text-muted);
+    color: var(--color-nav-text);
 }

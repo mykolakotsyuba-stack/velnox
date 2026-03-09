@@ -30,8 +30,8 @@
   width: auto;
   height: 50px;
   object-fit: contain;
-  /* White logo → brand green on light header */
-  filter: brightness(0) saturate(100%) invert(38%) sepia(95%) saturate(520%) hue-rotate(113deg) brightness(96%) contrast(97%);
+  /* Reset filter to keep logo white */
+  filter: none;
 }
 
 /* ── Nav ── */
@@ -63,8 +63,8 @@
 }
 
 .navLink:hover {
-  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
-  color: var(--color-accent);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--velnox-white);
 }
 
 /* ── Dropdown ── */
@@ -133,8 +133,8 @@
   font-size: 13.5px;
   font-weight: 500;
   color: var(--color-nav-text);
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(46, 41, 129, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
@@ -145,9 +145,9 @@
 
 .langToggle:hover,
 .langToggle:focus {
-  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
-  color: var(--color-accent);
-  border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--velnox-white);
+  border-color: rgba(255, 255, 255, 0.5);
   outline: none;
 }
 
