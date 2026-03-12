@@ -608,7 +608,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 <div className={styles.appWatermark} aria-hidden="true">Ущільнення</div>
                 <div className={styles.appInner}>
                     <div className={styles.appHeader}>
-                        <span className={styles.appTag}>Специфікація</span>
+                        <span className={styles.appTag}>Ущільнення</span>
                         <h2 className={styles.appTitle}>Пакерні котки</h2>
                     </div>
                     <div className={styles.appBody}>
