@@ -605,10 +605,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
             {/* ─── Section: Packer Rollers (Пакерні котки) with Sealing Info ─── */}
             <section className={`${styles.applicationsSection} ${styles.appSectionVisible}`}>
-                <div className={styles.appWatermark} aria-hidden="true">Applications</div>
+                <div className={styles.appWatermark} aria-hidden="true">Ущільнення</div>
                 <div className={styles.appInner}>
                     <div className={styles.appHeader}>
-                        <span className={styles.appTag}>Applications</span>
+                        <span className={styles.appTag}>Специфікація</span>
                         <h2 className={styles.appTitle}>Пакерні котки</h2>
                     </div>
                     <div className={styles.appBody}>
