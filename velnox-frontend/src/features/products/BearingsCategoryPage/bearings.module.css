@@ -1600,6 +1600,18 @@
     overflow: hidden;
 }
 
+/* ────────────────────────────────────────────────────────
+   SEALING SECTION (Пакерні котки - Ущільнення)
+──────────────────────────────────────────────────────── */
+.sealingSection {
+    position: relative;
+    padding: 100px 0 120px;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+}
+
 .appWatermark {
     position: absolute;
     top: 50%;
