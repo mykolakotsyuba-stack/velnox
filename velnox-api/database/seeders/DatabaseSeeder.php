@@ -352,30 +352,45 @@ class DatabaseSeeder extends Seeder
         }
 
         // ===== TABLE 2: PERFORMANCE DATA (Нова таблиця 2) =====
-        Product::updateOrCreate(
-            ['slug' => 'ce066-performance'],
-            [
-                'article'         => 'CE066',
-                'category_id'     => $bearingsCategory->id,
-                'specs'           => [
-                    'bearing_designation' => 'CE066',
-                    'brand_name' => 'SNR / FKL / PEER / SN',
-                    'cross_reference' => '957305 AMAZONE, CE066 AMAZONE, CE078 AMAZONE, LSQFR308 TBS.H.T.Zn FKL',
-                    'bore_diameter_d_mm' => 40.0,
-                    'total_housing_width_a1_mm' => 40.6,
-                    'housing_flange_thickness_a2_mm' => 19.0,
-                    'distance_between_holes_j_mm' => 101.5,
-                    'total_length_l_mm' => 130.0,
-                    'hole_thread_ht' => 'M12',
-                    'overall_width_a_mm' => 51.4,
-                    'mass_kg' => null,
-                    'dynamic_load_rating_cdyn_kn' => 62.3,
-                    'static_load_rating_co_kn' => 45.2,
-                    'fatigue_load_limit_pu_kn' => 1.898,
-                ],
-                'is_active' => true,
-            ]
-        );
+        // Newline-separated variants from Excel
+        $table2Variants = [
+            ['CE066', 'SNR'],
+            ['LSQFR308 TBT.H.T.Zn', 'FKL'],
+            ['UC 308 X1', 'SNR'],
+            ['UCF308 A01X1', 'SNR'],
+            ['W308-40MM-FDT-MF-AP-SP1 (PER.W308RRBP52-F-A)', 'PEER'],
+            ['W308-40MM-FDT-MF-AP-SP1 Without thread', 'PEER'],
+            ['W308RRBP52-F-B (BX-PER.W308RRBP52-F)', 'PEER'],
+            ['XUCF308B01B169', 'SNR'],
+        ];
+
+        foreach ($table2Variants as $idx => $variant) {
+            Product::updateOrCreate(
+                ['slug' => 'ce066-performance-' . str($variant[0])->slug()],
+                [
+                    'article'         => $variant[0],
+                    'category_id'     => $bearingsCategory->id,
+                    'specs'           => [
+                        'table_group' => 'performance',
+                        'bearing_designation' => $variant[0],
+                        'brand_name' => $variant[1],
+                        'cross_reference' => '957305 AMAZONE, CE066 AMAZONE, CE078 AMAZONE',
+                        'bore_diameter_d_mm' => 40.0,
+                        'total_housing_width_a1_mm' => 40.6,
+                        'housing_flange_thickness_a2_mm' => 19.0,
+                        'distance_between_holes_j_mm' => 101.5,
+                        'total_length_l_mm' => 130.0,
+                        'hole_thread_ht' => 'M12',
+                        'overall_width_a_mm' => 51.4,
+                        'mass_kg' => null,
+                        'dynamic_load_rating_cdyn_kn' => 62.3,
+                        'static_load_rating_co_kn' => 45.2,
+                        'fatigue_load_limit_pu_kn' => 1.898,
+                    ],
+                    'is_active' => true,
+                ]
+            );
+        }
 
         // ===== TABLE 3: CROSS-REFERENCES (Нова таблиця 3) =====
         Product::updateOrCreate(
@@ -384,6 +399,7 @@ class DatabaseSeeder extends Seeder
                 'article'         => 'BUQ 309-2T3H',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
+                    'table_group' => 'cross-references',
                     'bearing_designation' => 'CJI 309 GGG+19000509 (Assy), LSQFR 309-2TB.H.T',
                     'brand_name' => 'CT-AGRI / FKL',
                     'cross_reference' => 'Farmet: 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607',
@@ -412,6 +428,7 @@ class DatabaseSeeder extends Seeder
                 'article'         => 'BUCR-SG-309-S2',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
+                    'table_group' => 'extended-specs',
                     'bearing_designation' => 'M43400468, M43400468 H.60 S.PAR',
                     'brand_name' => 'CT-AGRI / Ri.Ma / RBF / FKL',
                     'cross_reference' => 'Gaspardo: 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300',
@@ -440,6 +457,7 @@ class DatabaseSeeder extends Seeder
                 'article'         => 'BUP 207-X3L',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
+                    'table_group' => 'additional-data',
                     'bearing_designation' => '207XTR-R-DFC-A534 (PER.207RRSB-FC-A), GH.PN 00032, LSGR 207-TBS',
                     'brand_name' => 'PEER / RBF / FKL / CT-AGRI / NTE (Slovakia)',
                     'cross_reference' => 'Lemken: 31910034, 3199372; Opall Agri: 3421370; INA/FAG: F232812 - 0200, GGF35A08, GGME07 - AH07; SNR: UC 207 X1',

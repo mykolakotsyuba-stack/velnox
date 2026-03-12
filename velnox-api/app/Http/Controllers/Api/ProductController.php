@@ -86,7 +86,7 @@ class ProductController extends Controller
         $locale = $request->get('locale', 'en');
 
         $products = Product::where('is_active', true)
-            ->where('article', 'like', 'CE%')
+            ->whereJsonContains('specs->table_group', 'performance')
             ->get()
             ->map(fn($p) => [
                 'Bearing designation' => $p->specs['bearing_designation'] ?? $p->article,
@@ -114,7 +114,7 @@ class ProductController extends Controller
     public function tableCrossReferences(Request $request): JsonResponse
     {
         $products = Product::where('is_active', true)
-            ->whereRaw("specs->>'bore_diameter_d_mm' IS NOT NULL")
+            ->whereJsonContains('specs->table_group', 'cross-references')
             ->get()
             ->map(fn($p) => [
                 'Part Number' => $p->article,
@@ -143,7 +143,7 @@ class ProductController extends Controller
     public function tableExtendedSpecs(Request $request): JsonResponse
     {
         $products = Product::where('is_active', true)
-            ->whereRaw("specs->>'centering_diameter_d1_mm' IS NOT NULL")
+            ->whereJsonContains('specs->table_group', 'extended-specs')
             ->get()
             ->map(fn($p) => [
                 'Part Number' => $p->article,
@@ -174,7 +174,7 @@ class ProductController extends Controller
     public function tableAdditionalData(Request $request): JsonResponse
     {
         $products = Product::where('is_active', true)
-            ->whereRaw("specs->>'outside_diameter_d_mm' IS NOT NULL")
+            ->whereJsonContains('specs->table_group', 'additional-data')
             ->get()
             ->map(fn($p) => [
                 'Part Number' => $p->article,
