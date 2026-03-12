@@ -103,7 +103,7 @@
 
 .title {
     font-size: 32px;
-    color: white;
+    color: #111;
     margin: 0;
     font-weight: 800;
 }
@@ -116,8 +116,8 @@
 
 .card {
     position: relative;
-    background: rgba(7, 16, 26, 0.8);
-    border: 1px solid rgba(15, 30, 48, 1);
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 24px 20px;
     display: flex;
@@ -140,7 +140,7 @@
 }
 
 .card:hover {
-    background: rgba(10, 21, 37, 0.9);
+    background: #f8fafc;
     border-color: rgba(59, 130, 246, 0.4);
     transform: translateY(-6px) scale(1.02);
     box-shadow: 0 12px 60px rgba(37, 99, 235, 0.13), inset 0 0 30px rgba(37, 99, 235, 0.04);
@@ -237,7 +237,7 @@
 }
 
 .cardName {
-    color: white;
+    color: #111;
     font-weight: 700;
     font-size: 13px;
     transition: color 0.3s;
@@ -248,7 +248,7 @@
 }
 
 .cardCountry {
-    color: rgba(255, 255, 255, 0.5);
+    color: #666;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -301,7 +301,7 @@
 }
 
 .modal {
-    background: #11141c;
+    background: #ffffff;
     border: 1px solid rgba(59, 130, 246, 0.2);
     border-radius: 16px;
     width: 100%;
@@ -338,7 +338,7 @@
 
 .modalTitle {
     font-size: 24px;
-    color: white;
+    color: #111;
     margin: 0 0 12px;
 }
 
@@ -358,10 +358,10 @@
 .formFieldArea {
     width: 100%;
     padding: 16px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
-    color: white;
+    color: #111;
     font-size: 15px;
     outline: none;
     transition: all 0.2s;

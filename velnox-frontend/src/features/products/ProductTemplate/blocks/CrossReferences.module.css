@@ -1,6 +1,6 @@
 .section {
-    background: #111;
-    border: 1px solid #1e1e1e;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 24px;
 }
@@ -39,8 +39,8 @@
 .showAllBtn {
     margin-top: 20px;
     background: transparent;
-    border: 1px solid #333;
-    color: #ccc;
+    border: 1px solid #d1d5db;
+    color: #555;
     padding: 8px 16px;
     border-radius: 6px;
     font-size: 14px;
@@ -50,6 +50,6 @@
 }
 
 .showAllBtn:hover {
-    background: #222;
-    border-color: #444;
+    background: #f3f4f6;
+    border-color: #9ca3af;
 }

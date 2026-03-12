@@ -79,6 +79,125 @@ class ProductController extends Controller
     }
 
     /**
+     * Table 2: Performance Data — GET /api/v1/products/tables/performance
+     */
+    public function tablePerformance(Request $request): JsonResponse
+    {
+        $locale = $request->get('locale', 'en');
+
+        $products = Product::where('is_active', true)
+            ->where('article', 'like', 'CE%')
+            ->get()
+            ->map(fn($p) => [
+                'Bearing designation' => $p->specs['bearing_designation'] ?? $p->article,
+                'Brand \nname' => $p->specs['brand_name'] ?? '-',
+                'Cross-Refference' => $p->specs['cross_reference'] ?? '-',
+                'Bore diameter \nd (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
+                'Total housing width \nA1 (mm)' => $p->specs['total_housing_width_a1_mm'] ?? '-',
+                'Housing flange thickness \nA2 (mm)' => $p->specs['housing_flange_thickness_a2_mm'] ?? '-',
+                'Distance between the holes \nJ (mm)' => $p->specs['distance_between_holes_j_mm'] ?? '-',
+                'Total length \nL (mm)' => $p->specs['total_length_l_mm'] ?? '-',
+                'Hole / Thread \nH/T' => $p->specs['hole_thread_ht'] ?? '-',
+                'Overall width \nA (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
+                'Mass \nkg' => $p->specs['mass_kg'] ?? '-',
+                'Dynamic load rating \nCdyn (kN)' => $p->specs['dynamic_load_rating_cdyn_kn'] ?? '-',
+                'Static load rating \nCo (kN)' => $p->specs['static_load_rating_co_kn'] ?? '-',
+                'Fatigue load limit \nPu (kN)' => $p->specs['fatigue_load_limit_pu_kn'] ?? '-',
+            ]);
+
+        return response()->json($products);
+    }
+
+    /**
+     * Table 3: Cross-References — GET /api/v1/products/tables/cross-references
+     */
+    public function tableCrossReferences(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereRaw("specs->>'bore_diameter_d_mm' IS NOT NULL")
+            ->get()
+            ->map(fn($p) => [
+                'Part Number' => $p->article,
+                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
+                'Brand \nname' => $p->specs['brand_name'] ?? '-',
+                'Cross-Refference' => $p->specs['cross_reference'] ?? '-',
+                'Bore diameter d (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
+                'Total length L (mm)' => $p->specs['total_length_l_mm'] ?? '-',
+                'Distance between the holes J (mm)' => $p->specs['distance_between_holes_j_mm'] ?? '-',
+                'Hole / Thread H/T (mm)' => $p->specs['hole_thread_ht_mm'] ?? '-',
+                'Overall width A (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
+                'Total housing width A1 (mm)' => $p->specs['total_housing_width_a1_mm'] ?? '-',
+                'Housing flange thickness A2 (mm)' => $p->specs['housing_flange_thickness_a2_mm'] ?? '-',
+                'Width inner ring B (mm)' => $p->specs['width_inner_ring_b_mm'] ?? '-',
+                'Static load rating Co (kN)' => $p->specs['static_load_rating_co_kn'] ?? '-',
+                'Dynamic load rating Cdyn (kN)' => $p->specs['dynamic_load_rating_cdyn_kn'] ?? '-',
+                'Fatigue load limit Pu (kN)' => $p->specs['fatigue_load_limit_pu_kn'] ?? '-',
+            ]);
+
+        return response()->json($products);
+    }
+
+    /**
+     * Table 4: Extended Specs — GET /api/v1/products/tables/extended-specs
+     */
+    public function tableExtendedSpecs(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereRaw("specs->>'centering_diameter_d1_mm' IS NOT NULL")
+            ->get()
+            ->map(fn($p) => [
+                'Part Number' => $p->article,
+                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
+                'Brand \nname' => $p->specs['brand_name'] ?? '-',
+                'Cross-Refference' => $p->specs['cross_reference'] ?? '-',
+                'Bore diameter d (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
+                'Centering diameter d1 (mm)' => $p->specs['centering_diameter_d1_mm'] ?? '-',
+                'Housing overall width L1 (mm)' => $p->specs['housing_overall_width_l1_mm'] ?? '-',
+                'Distance between the holes J1 (mm)' => $p->specs['distance_between_holes_j1_mm'] ?? '-',
+                'Housing overall width L2 (mm)' => $p->specs['housing_overall_width_l2_mm'] ?? '-',
+                'Distance between the holes J2 (mm)' => $p->specs['distance_between_holes_j2_mm'] ?? '-',
+                'Overall width A (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
+                'Flange width A1 (mm)' => $p->specs['flange_width_a1_mm'] ?? '-',
+                'Flange width A2 (mm)' => $p->specs['flange_width_a2_mm'] ?? '-',
+                'Centering diameter height A3 (mm)' => $p->specs['centering_diameter_height_a3_mm'] ?? '-',
+                'Threaded hole size T' => $p->specs['threaded_hole_size_t'] ?? '-',
+                'Hole diameter H (mm)' => $p->specs['hole_diameter_h_mm'] ?? '-',
+                'Mass kg' => $p->specs['mass_kg'] ?? '-',
+            ]);
+
+        return response()->json($products);
+    }
+
+    /**
+     * Table 5: Additional Data — GET /api/v1/products/tables/additional-data
+     */
+    public function tableAdditionalData(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereRaw("specs->>'outside_diameter_d_mm' IS NOT NULL")
+            ->get()
+            ->map(fn($p) => [
+                'Part Number' => $p->article,
+                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
+                'Brand \nname' => $p->specs['brand_name'] ?? '-',
+                'Cross-Refference' => $p->specs['cross_reference'] ?? '-',
+                'Bore diameter d (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
+                'Outside diameter D (mm)' => $p->specs['outside_diameter_d_mm'] ?? '-',
+                'Pitch circle diameter J (mm)' => $p->specs['pitch_circle_diameter_j_mm'] ?? '-',
+                'Hole / Thread H/T' => $p->specs['hole_thread_ht'] ?? '-',
+                'Overall width A (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
+                'Housing flange thickness A2 (mm)' => $p->specs['housing_flange_thickness_a2_mm'] ?? '-',
+                'Width inner ring B (mm)' => $p->specs['width_inner_ring_b_mm'] ?? '-',
+                'Mass kg' => $p->specs['mass_kg'] ?? '-',
+                'Static load rating Co (kN)' => $p->specs['static_load_rating_co_kn'] ?? '-',
+                'Dynamic load rating Cdyn (kN)' => $p->specs['dynamic_load_rating_cdyn_kn'] ?? '-',
+                'Fatigue load limit Pu (kN)' => $p->specs['fatigue_load_limit_pu_kn'] ?? '-',
+            ]);
+
+        return response()->json($products);
+    }
+
+    /**
      * Імпорт товарів з 1С (захищений Sanctum-токеном)
      * POST /api/v1/import/products
      * Body: JSON-масив товарів

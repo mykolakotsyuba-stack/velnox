@@ -60,14 +60,14 @@
 .title {
     font-size: 32px;
     font-weight: 800;
-    color: #fff;
+    color: #111;
     margin-bottom: 2px;
 }
 
 .subtitle {
     font-size: 18px;
     font-weight: 400;
-    color: #aaa;
+    color: #555;
     margin-bottom: 16px;
 }
 
@@ -80,12 +80,12 @@
 .badge {
     display: inline-block;
     padding: 4px 10px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid #2a2a2a;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
     border-radius: 6px;
     font-size: 12px;
     font-family: monospace;
-    color: #e2e8f0;
+    color: #555;
     letter-spacing: 0.05em;
 }
 

@@ -162,7 +162,7 @@
    APPROACH (FEATURES)
 ──────────────────────────────────────────────────────── */
 .approach {
-    padding: 100px 0;
+    padding: 40px 0;
     background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
 }
@@ -251,7 +251,8 @@
    TABLES SECTION
 ──────────────────────────────────────────────────────── */
 .tablesSection {
-    padding: 100px 0;
+    padding: 40px 0;
+    min-height: 100vh;
     background: var(--color-bg);
 }
 
@@ -529,7 +530,7 @@
    CTA SECTION
 ──────────────────────────────────────────────────────── */
 .cta {
-    padding: 120px 0;
+    padding: 40px 0;
     background: var(--color-surface);
     border-top: 2px solid var(--color-accent);
     text-align: center;
@@ -1171,5 +1172,489 @@
 
     .sealingDiagram {
         height: 220px;
+    }
+}
+
+/* ────────────────────────────────────────────────────────
+   BUQ DRAWING COMPOSITE BLOCK
+──────────────────────────────────────────────────────── */
+.buqDrawingBlock {
+    margin: 20px 0 30px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-block);
+    padding: 24px;
+    box-shadow: var(--shadow-block);
+}
+
+.buqDrawingTitle {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.buqDrawingComposite {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 0.8fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.buqDrawingPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.buqDrawingPanelImg {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: visible;      /* allow SVG arrows slightly outside */
+}
+
+.buqDimSvg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.buqDrawingPanelLabel {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .buqDrawingComposite {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .buqDrawingPanel:last-child {
+        grid-column: 1 / -1;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .buqDrawingComposite {
+        grid-template-columns: 1fr;
+    }
+
+    .buqDrawingPanel:last-child {
+        grid-column: auto;
+        max-width: 100%;
+    }
+}
+.buqDrawingCompositeSingle {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 8px;
+
+    overflow: hidden;
+    background: var(--color-surface);
+    border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.techTableCompact th, .techTableCompact td {
+    padding: 10px 4px !important;
+    font-size: 11px !important;
+}
+.techTableCompact th {
+    font-size: 11px !important;
+}
+
+/* ────────────────────────────────────────────────────────
+   PACKER ROLLER BLOCK
+──────────────────────────────────────────────────────── */
+.introBlock {
+    padding: 80px 0;
+    background: var(--color-bg);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.introBlockPerformance {
+    background: radial-gradient(circle at 10% 10%, rgba(67, 56, 202, 0.02) 0%, transparent 50%), var(--color-bg);
+}
+
+.introBanner {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.introText {
+    display: flex;
+    flex-direction: column;
+}
+
+.introTag {
+    display: inline-block;
+    padding: 6px 20px;
+    background: #f0f4ff;
+    color: #4338ca;
+    border: 1px solid #dce4ff;
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.animIn .introTag {
+    animation: animFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.introTitle {
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.animIn .introTitle {
+    animation: animFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+.introCopy {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.animIn .introCopy {
+    animation: animFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+.introGraphic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.animIn .introGraphic {
+    animation: animScaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+.forceDiagram {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+}
+
+.forceLine {
+    stroke-dasharray: 4 2;
+    animation: forceDashScroll 20s linear infinite;
+}
+
+@keyframes forceDashScroll {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: 100; }
+}
+
+@keyframes animFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes animScaleIn {
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Maintain compatibility with previous animations if needed */
+.techAnimWrap {
+    width: 100%;
+}
+
+@keyframes vectorFa {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(5px); }
+}
+
+.rotationArrow {
+    animation: rotateDash 10s infinite linear;
+}
+
+@keyframes rotateDash {
+    from { stroke-dashoffset: 20; }
+    to { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 900px) {
+    .packerContent {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .packerVisualSide {
+        order: -1;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+}
+
+@keyframes decorFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(20px) rotate(10deg); }
+}
+
+.highlight {
+    color: var(--color-accent);
+    font-weight: 700;
+}
+
+.packerGraphicSide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.packerBadge {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 2px dashed color-mix(in srgb, var(--color-accent) 20%, transparent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--color-accent);
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    animation: badgeRotate 20s linear infinite;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
+}
+
+@keyframes badgeRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(5deg); } /* Subtle toggle or full rotate? let's do a slow hover float */
+}
+
+.packerRollerBlock.animIn {
+    animation: animSlideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes animSlideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@media (max-width: 991px) {
+    .packerContent {
+        grid-template-columns: 1fr;
+    }
+    .packerGraphicSide {
+        display: none;
+    }
+}
+
+.packerContentSimple {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ────────────────────────────────────────────────────────
+   APPLICATIONS SECTION (PackerRollerIntro)
+──────────────────────────────────────────────────────── */
+.applicationsSection {
+    position: relative;
+    padding: 100px 0 120px;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+}
+
+.appWatermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(80px, 18vw, 200px);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: color-mix(in srgb, var(--color-accent) 4%, transparent);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    text-transform: uppercase;
+    transition: opacity 1s ease;
+    opacity: 0;
+}
+
+.appSectionVisible .appWatermark {
+    opacity: 1;
+}
+
+.appInner {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.appHeader {
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.appSectionVisible .appHeader {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.appTag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 16px 6px 0;
+    color: var(--color-accent);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.appTag::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 2px;
+    background: var(--color-accent);
+    flex-shrink: 0;
+}
+
+.appTitle {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 900;
+    color: var(--color-text);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.appTitle::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
+
+.appSectionVisible .appTitle::after {
+    width: 60px;
+}
+
+.appBody {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 860px;
+}
+
+.appPara {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    margin: 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.appParaLead {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--color-text);
+    font-weight: 500;
+    padding-left: 20px;
+    border-left: 3px solid var(--color-accent);
+}
+
+.appParaVisible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.appKeyword {
+    color: var(--color-accent);
+    font-weight: 700;
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+    padding: 1px 5px;
+    border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .applicationsSection {
+        padding: 64px 0 80px;
+    }
+
+    .appInner {
+        padding: 0 20px;
+    }
+
+    .appHeader {
+        margin-bottom: 36px;
+    }
+
+    .appBody {
+        gap: 18px;
+    }
+
+    .appPara {
+        font-size: 15px;
+    }
+
+    .appParaLead {
+        font-size: 16px;
     }
 }

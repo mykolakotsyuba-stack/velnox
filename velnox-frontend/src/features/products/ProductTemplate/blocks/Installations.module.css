@@ -1,6 +1,6 @@
 .section {
-    background: #111;
-    border: 1px solid #1e1e1e;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 24px;
 }
@@ -23,7 +23,7 @@
 
 .list li {
     font-size: 14px;
-    color: #ccc;
+    color: #555;
     padding-left: 16px;
     position: relative;
 }

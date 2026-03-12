@@ -8,19 +8,19 @@
 }
 
 .breadcrumbs a {
-    color: #888;
+    color: #666;
     text-decoration: none;
     transition: color 0.15s;
 }
 
 .breadcrumbs a:hover {
-    color: #fff;
+    color: #111;
 }
 
 .sep {
-    color: #444;
+    color: #999;
 }
 
 .current {
-    color: #ccc;
+    color: #999;
 }

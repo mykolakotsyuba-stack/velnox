@@ -1,6 +1,6 @@
 .container {
-    background-color: var(--surface-bg, #11141c);
-    border: 1px solid var(--border-color, #232736);
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 24px;
     display: flex;
@@ -153,8 +153,8 @@
 }
 
 .modalContent {
-    background: var(--surface-bg, #11141c);
-    border: 1px solid var(--border-color, #232736);
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 16px;
     width: 100%;
     max-width: 1400px;

@@ -6,6 +6,7 @@ import type { ProductDTO, Locale } from '@/entities/product/model/types';
 import { Breadcrumbs } from './blocks/Breadcrumbs';
 import { VisualBlock } from './blocks/VisualBlock';
 import { BlueprintViewer } from './blocks/BlueprintViewer';
+import { BuqBlueprintViewer } from './blocks/BuqBlueprintViewer';
 import { SealingBlock } from './blocks/SealingBlock';
 import { SpecsTable } from './blocks/SpecsTable';
 import { CrossReferences } from './blocks/CrossReferences';
@@ -57,11 +58,17 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
     const productName = translation?.product_name ?? product.article;
     const sealingDesc = translation?.sealing_desc;
 
-    // Dummy images for gallery
-    const demoImages = [
-        '/velnox/images/products/bearing-photo-1.webp',
-        '/velnox/images/products/bearing-photo-2.webp'
-    ];
+    // Gallery images: BUQ series gets product-specific images, others get generic
+    const isBuq = product.article.toUpperCase().startsWith('BUQ');
+    const demoImages = isBuq
+        ? [
+            '/velnox/images/products/buq-bearing-photo.png',
+            '/velnox/images/products/buq-bearing-dimensions.png',
+          ]
+        : [
+            '/velnox/images/products/bearing-photo-1.webp',
+            '/velnox/images/products/bearing-photo-2.webp',
+          ];
 
     return (
         <article className={styles.page}>
@@ -144,7 +151,15 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
 
                         <div className={styles.drawingColumn}>
                             {/* Інтерактивне креслення */}
-                            {product.category_id === 'bearings' && (
+                            {product.category_id === 'bearings' && isBuq && (
+                                <BuqBlueprintViewer
+                                    article={product.article}
+                                    specs={product.specs}
+                                    hoveredSpec={hoveredSpec}
+                                    onHoverSpec={setHoveredSpec}
+                                />
+                            )}
+                            {product.category_id === 'bearings' && !isBuq && (
                                 <BlueprintViewer
                                     article={product.article}
                                     specs={product.specs}

@@ -1,6 +1,6 @@
 .section {
-    background: #111;
-    border: 1px solid #1e1e1e;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
     padding: 24px;
 }
@@ -25,6 +25,6 @@
 
 .description {
     font-size: 14px;
-    color: #bbb;
+    color: #555;
     line-height: 1.7;
 }
