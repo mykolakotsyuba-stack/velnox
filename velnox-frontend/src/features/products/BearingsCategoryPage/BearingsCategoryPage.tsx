@@ -2,11 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import styles from './bearings.module.css';
 import type { Locale, ProductListItem } from '@/entities/product/model/types';
-import crossRefData from '../data/bearingsCrossRefData.json';
-import sealingData from '../data/bearingsSealingData.json';
+import buqData from '../data/buqTable1Data.json';
 
 /* ─── Shared Hooks ─── */
 function useInView(threshold = 0.12) {
@@ -97,7 +97,9 @@ function PerformanceIntro() {
                 <div className={styles.introBanner}>
                     <div className={styles.introText}>
                         <div className={styles.introTag}>PERFORMANCE DATA</div>
-                        <h2 className={styles.introTitle}>Розрахунковий ресурс та<br />експлуатаційні навантаження</h2>
+                        <h2 className={styles.introTitle}>
+                            Розрахунковий ресурс та<br />експлуатаційні навантаження
+                        </h2>
                         <p className={styles.introCopy}>
                             Для OEM-виробників критично важливо точно прогнозувати життєвий цикл кожного вузла.
                             База даних VELNOX містить вичерпні параметри <strong>динамічної (C<sub>dyn</sub>) та статичної (C<sub>0</sub>)</strong> вантажопідйомності,
@@ -106,28 +108,18 @@ function PerformanceIntro() {
                         </p>
                     </div>
                     <div className={styles.introGraphic}>
-                        {/* Force vector SVG diagram */}
                         <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.forceDiagram}>
-                            {/* Bearing housing outline */}
                             <circle cx="100" cy="100" r="55" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" />
                             <circle cx="100" cy="100" r="35" stroke="rgba(59,130,246,0.5)" strokeWidth="1.5" />
                             <circle cx="100" cy="100" r="18" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.6)" strokeWidth="1.5" />
-
-                            {/* Radial force arrow (downward) */}
                             <line x1="100" y1="40" x2="100" y2="75" stroke="#3b82f6" strokeWidth="2" strokeDasharray="4 2" className={styles.forceLine} />
                             <polygon points="100,80 95,68 105,68" fill="#3b82f6" />
                             <text x="107" y="55" fill="rgba(59,130,246,0.9)" fontSize="11" fontFamily="monospace">Fr</text>
-
-                            {/* Axial force arrow (rightward) */}
                             <line x1="160" y1="100" x2="127" y2="100" stroke="#22c55e" strokeWidth="2" strokeDasharray="4 2" className={styles.forceLine} />
                             <polygon points="122,100 134,95 134,105" fill="#22c55e" />
                             <text x="164" y="104" fill="rgba(34,197,94,0.9)" fontSize="11" fontFamily="monospace">Fa</text>
-
-                            {/* Rotation indicator */}
                             <path d="M 100 62 A 38 38 0 0 1 138 100" stroke="rgba(255,255,255,0.2)" strokeWidth="1" fill="none" strokeDasharray="3 3" />
                             <polygon points="140,95 136,107 144,107" fill="rgba(255,255,255,0.2)" transform="rotate(45 140 101)" />
-
-                            {/* Cdyn label */}
                             <text x="60" y="150" fill="rgba(59,130,246,0.7)" fontSize="10" fontFamily="monospace">Cdyn</text>
                             <text x="112" y="150" fill="rgba(34,197,94,0.7)" fontSize="10" fontFamily="monospace">Co</text>
                             <line x1="57" y1="153" x2="195" y2="153" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
@@ -206,20 +198,63 @@ function SealingIntro() {
     );
 }
 
-/* ─── Main Page Component ─── */
-type CrossRefRow = {
-    'Артикул VELNOX': string;
-    'Позначення аналога (FKL)': string;
-    'Основні ОЕМ-аналоги (Крос-референси)': string;
-    'Застосування на техніці (Бренди та агрегати)': string;
-};
+/* ─── Applications: keyword highlight helper ─── */
+const APP_KEYWORDS = [
+    'радіальних навантажень', 'сильного забруднення', 'низьких швидкостей обертання',
+    'підсилених корпусів', 'систем ущільнення', 'оптимізованих внутрішніх зазорів',
+    'захисту від забруднень', 'тривалого ресурсу', 'мінімальними вимогами до обслуговування',
+    'стабільну роботу та зменшення простоїв', 'ударних впливів', 'запас міцності',
+];
 
-type SealingRow = {
-    'Артикул VELNOX': string;
-    'Позначення аналога (FKL)': string;
-    'Конфігурація ущільнення': string;
-    'Інженерні особливості та принцип дії': string;
-};
+function HighlightedText({ text }: { text: string }) {
+    const escaped = APP_KEYWORDS.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const pattern = new RegExp(`(${escaped.join('|')})`, 'gi');
+    const parts = text.split(pattern);
+    return (
+        <>
+            {parts.map((part, i) =>
+                APP_KEYWORDS.some(k => k.toLowerCase() === part.toLowerCase())
+                    ? <strong key={i} className={styles.appKeyword}>{part}</strong>
+                    : part
+            )}
+        </>
+    );
+}
+
+/* ─── Intro Block 5: Packer Roller Application ─── */
+function PackerRollerIntro() {
+    const t = useTranslations('bearingsPage.packer_roller');
+    const { ref, inView } = useInView(0.05);
+    const paragraphs = t('content').split('\n\n');
+
+    return (
+        <section
+            className={`${styles.applicationsSection} ${inView ? styles.appSectionVisible : ''}`}
+            ref={ref as React.Ref<HTMLElement>}
+        >
+            <div className={styles.appWatermark} aria-hidden>Applications</div>
+            <div className={styles.appInner}>
+                <div className={styles.appHeader}>
+                    <span className={styles.appTag}>Applications</span>
+                    <h2 className={styles.appTitle}>{t('title')}</h2>
+                </div>
+                <div className={styles.appBody}>
+                    {paragraphs.map((para, i) => (
+                        <p
+                            key={i}
+                            className={`${styles.appPara} ${i === 0 ? styles.appParaLead : ''} ${inView ? styles.appParaVisible : ''}`}
+                            style={{ transitionDelay: `${0.25 + i * 0.15}s` }}
+                        >
+                            <HighlightedText text={para} />
+                        </p>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ─── Main Page Component ─── */
 
 export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale, products?: ProductListItem[] }) {
     const t = useTranslations('bearingsPage');
@@ -248,48 +283,86 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Table 1: Dimensional Specs (from API)
-    const filteredBearings = useMemo(() => {
-        if (!searchQuery) return products;
-        const q = searchQuery.toLowerCase();
-        return products.filter(b =>
-            Object.values(b.specs || {}).some(val => val && String(val).toLowerCase().includes(q)) ||
-            b.article.toLowerCase().includes(q) ||
-            b.name.toLowerCase().includes(q)
-        );
-    }, [searchQuery, products]);
+    // API base URL
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
-    // Table 2: Performance data — from API products (Cdyn, Co, Pu, mass from specs)
+    // Table data states
+    const [table2Data, setTable2Data] = useState<any[]>([]);
+    const [table3Data, setTable3Data] = useState<any[]>([]);
+    const [table4Data, setTable4Data] = useState<any[]>([]);
+    const [table5Data, setTable5Data] = useState<any[]>([]);
+    const [loadingTables, setLoadingTables] = useState(true);
+
+    // Fetch table data from API
+    useEffect(() => {
+        const fetchTableData = async () => {
+            try {
+                const [res2, res3, res4, res5] = await Promise.all([
+                    fetch(`${apiBase}/v1/products/tables/performance`),
+                    fetch(`${apiBase}/v1/products/tables/cross-references`),
+                    fetch(`${apiBase}/v1/products/tables/extended-specs`),
+                    fetch(`${apiBase}/v1/products/tables/additional-data`),
+                ]);
+
+                if (res2.ok) setTable2Data(await res2.json());
+                if (res3.ok) setTable3Data(await res3.json());
+                if (res4.ok) setTable4Data(await res4.json());
+                if (res5.ok) setTable5Data(await res5.json());
+            } catch (err) {
+                console.error('Error fetching table data:', err);
+            } finally {
+                setLoadingTables(false);
+            }
+        };
+
+        fetchTableData();
+    }, [apiBase]);
+
+    // Table 1: BUQ Dimensional Specs
+    const filteredT1 = useMemo(() => {
+        const typedBuq = buqData as typeof buqData;
+        if (!searchQuery) return typedBuq;
+        const q = searchQuery.toLowerCase();
+        return typedBuq.filter(row =>
+            Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
+        );
+    }, [searchQuery]);
+
+    // Table 2: Performance data — from API
     const filteredT2 = useMemo(() => {
-        if (!searchQuery) return products;
+        if (!searchQuery) return table2Data;
         const q = searchQuery.toLowerCase();
-        return products.filter(b =>
-            b.article.toLowerCase().includes(q) ||
-            b.name.toLowerCase().includes(q) ||
-            String(b.specs?.cdyn_kn || '').includes(q) ||
-            String(b.specs?.co_kn || '').includes(q)
+        return table2Data.filter(row =>
+            Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
         );
-    }, [searchQuery, products]);
+    }, [searchQuery, table2Data]);
 
-    // Table 3: Cross-references & applications
-    const typedCrossRef = crossRefData as CrossRefRow[];
+    // Table 3: Cross-references & applications — from API
     const filteredT3 = useMemo(() => {
-        if (!searchQuery) return typedCrossRef;
+        if (!searchQuery) return table3Data;
         const q = searchQuery.toLowerCase();
-        return typedCrossRef.filter(row =>
+        return table3Data.filter(row =>
             Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
         );
-    }, [searchQuery, typedCrossRef]);
+    }, [searchQuery, table3Data]);
 
-    // Table 4: Sealing systems
-    const typedSealing = sealingData as SealingRow[];
+    // Table 4: Additional specs — from API
     const filteredT4 = useMemo(() => {
-        if (!searchQuery) return typedSealing;
+        if (!searchQuery) return table4Data;
         const q = searchQuery.toLowerCase();
-        return typedSealing.filter(row =>
+        return table4Data.filter(row =>
             Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
         );
-    }, [searchQuery, typedSealing]);
+    }, [searchQuery, table4Data]);
+
+    // Table 5: Additional specs — from API
+    const filteredT5 = useMemo(() => {
+        if (!searchQuery) return table5Data;
+        const q = searchQuery.toLowerCase();
+        return table5Data.filter(row =>
+            Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
+        );
+    }, [searchQuery, table5Data]);
 
     return (
         <main className={styles.page}>
@@ -346,9 +419,27 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 </div>
             </section>
 
+            {/* ─── Application: Packer Roller ─── */}
+            <PackerRollerIntro />
+
             {/* 3. TECHNICAL TABLES */}
             <section className={styles.tablesSection} ref={tablesRef.ref}>
                 <div className={`${styles.container} ${tablesRef.inView ? styles.animIn : ''}`}>
+                    {/* ─── BUQ Drawing Composite (above Table 1) ─── */}
+                    <div className={styles.buqDrawingBlock}>
+                        <div className={styles.buqDrawingTitle}>ТЕХНІЧНЕ КРЕСЛЕННЯ — BUQ SERIES</div>
+                        <div className={styles.buqDrawingCompositeSingle}>
+                            <Image
+                                src="/velnox/images/products/buq-composite-drawing.png"
+                                alt="BUQ Series Blueprint"
+                                width={1200}
+                                height={600}
+                                style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+                                priority
+                            />
+                        </div>
+                    </div>
+
                     <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
                         <div className={`${styles.container} ${styles.stickyContainer}`}>
                             <div className={styles.tablesHeader}>
@@ -373,45 +464,63 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         </div>
                     </div>
 
-                    {/* ─── Table 1: Dimensional Specs ─── */}
+                    {/* ─── Table 1: BUQ Dimensional & Load Specs ─── */}
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table1.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table1.desc')}</p>
                         <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
+                            <table className={`${styles.techTable} ${styles.techTableCompact}`}>
                                 <thead>
                                     <tr>
-                                        <th>{t('block2.table1.col_designation')}</th>
-                                        <th>{t('block2.table1.col_d')}</th>
-                                        <th>{t('block2.table1.col_j')}</th>
-                                        <th>{t('block2.table1.col_width')}</th>
-                                        <th>{t('block2.table1.col_holes')}</th>
-                                        <th>{t('block2.table1.col_l')}</th>
+                                        <th>Part Number</th>
+                                        <th>Cross-Reference</th>
+                                        <th>Brand</th>
+                                        <th>d (mm)</th>
+                                        <th>d (inch)</th>
+                                        <th>A1 (mm)</th>
+                                        <th>A2 (mm)</th>
+                                        <th>J (mm)</th>
+                                        <th>L (mm)</th>
+                                        <th>N (mm)</th>
+                                        <th>A (mm)</th>
+                                        <th>Mass (kg)</th>
+                                        <th>Cdyn (kN)</th>
+                                        <th>Co (kN)</th>
+                                        <th>Pu (kN)</th>
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredBearings.slice(0, 50).map((b, i) => (
-                                        <tr key={b.slug || i}>
+                                    {filteredT1.map((row, i) => (
+                                        <tr key={row.slug || i}>
                                             <td>
-                                                <Link href={`/${locale}/products/bearings/${b.slug}`} className={styles.designationLink}>
-                                                    {b.article}
+                                                <Link href={`/${locale}/products/bearings/${row.slug}`} className={styles.designationLink}>
+                                                    {row.article}
                                                 </Link>
                                             </td>
-                                            <td>{b.specs?.d_mm || b.specs?.d || '-'}</td>
-                                            <td>{b.specs?.j_mm || b.specs?.J || '-'}</td>
-                                            <td>{b.specs?.width_mm || b.specs?.B || '-'}</td>
-                                            <td>{b.specs?.holes || '-'}</td>
-                                            <td>{b.specs?.l_mm || b.specs?.L || '-'}</td>
+                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row.cross_ref}</td>
+                                            <td>{row.brand}</td>
+                                            <td>{row.d_mm}</td>
+                                            <td>{row.d_inch ?? '—'}</td>
+                                            <td>{row.A1}</td>
+                                            <td>{row.A2}</td>
+                                            <td>{row.J}</td>
+                                            <td>{row.L}</td>
+                                            <td>{row.N}</td>
+                                            <td>{row.A}</td>
+                                            <td>{row.mass_kg}</td>
+                                            <td>{row.Cdyn}</td>
+                                            <td>{row.Co}</td>
+                                            <td>{row.Pu}</td>
                                             <td className={styles.actionCol}>
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(b.article)}>
+                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row.article)}>
                                                     {t('block2.btn_request')}
                                                 </button>
                                             </td>
                                         </tr>
                                     ))}
-                                    {filteredBearings.length === 0 && (
-                                        <tr><td colSpan={7} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                    {filteredT1.length === 0 && (
+                                        <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -429,41 +538,60 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table2.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table2.desc')}</p>
+
+                        {/* Diagram for Table 2 */}
+                        <div className={styles.tableDiagramContainer}>
+                            <Image
+                                src="/images/bearings/table2-diagram.png"
+                                alt="Table 2 Bearing Diagram"
+                                width={600}
+                                height={400}
+                                priority={false}
+                                className={styles.tableDiagram}
+                            />
+                        </div>
+
                         <div className={styles.tableScroll}>
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <th>Артикул VELNOX</th>
-                                        <th>Аналог FKL</th>
-                                        <th>Cdyn, kN</th>
-                                        <th>Co, kN</th>
-                                        <th>Pu, kN</th>
-                                        <th>Маса, kg</th>
-                                        <th className={styles.actionCol}></th>
+                                        <th>Bearing designation</th>
+                                        <th>Brand</th>
+                                        <th>Cross-Reference</th>
+                                        <th>Bore d (mm)</th>
+                                        <th>A1 (mm)</th>
+                                        <th>A2 (mm)</th>
+                                        <th>J (mm)</th>
+                                        <th>L (mm)</th>
+                                        <th>H/T</th>
+                                        <th>A (mm)</th>
+                                        <th>Mass (kg)</th>
+                                        <th>Cdyn (kN)</th>
+                                        <th>Co (kN)</th>
+                                        <th>Pu (kN)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredT2.slice(0, 50).map((b, i) => (
-                                        <tr key={b.slug || i}>
-                                            <td>
-                                                <Link href={`/${locale}/products/bearings/${b.slug}`} className={styles.designationLink}>
-                                                    {b.article}
-                                                </Link>
-                                            </td>
-                                            <td>{b.name || '-'}</td>
-                                            <td>{b.specs?.cdyn_kn || b.specs?.Cdyn || '-'}</td>
-                                            <td>{b.specs?.co_kn || b.specs?.Co || '-'}</td>
-                                            <td>{b.specs?.pu_kn || b.specs?.Pu || '-'}</td>
-                                            <td>{b.specs?.mass_kg || b.specs?.KG || '-'}</td>
-                                            <td className={styles.actionCol}>
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(b.article)}>
-                                                    {t('block2.btn_request')}
-                                                </button>
-                                            </td>
+                                    {filteredT2.map((row, i) => (
+                                        <tr key={i}>
+                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
+                                            <td style={{ fontSize: '12px' }}>{row['Brand \nname'] || '-'}</td>
+                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
+                                            <td>{row['Bore diameter \nd (mm)'] || '-'}</td>
+                                            <td>{row['Total housing width \nA1 (mm)'] || '-'}</td>
+                                            <td>{row['Housing flange thickness \nA2 (mm)'] || '-'}</td>
+                                            <td>{row['Distance between the holes \nJ (mm)'] || '-'}</td>
+                                            <td>{row['Total length \nL (mm)'] || '-'}</td>
+                                            <td>{row['Hole / Thread \nH/T'] || '-'}</td>
+                                            <td>{row['Overall width \nA (mm)'] || '-'}</td>
+                                            <td>{row['Mass \nkg'] || '-'}</td>
+                                            <td>{row['Dynamic load rating \nCdyn (kN)'] || '-'}</td>
+                                            <td>{row['Static load rating \nCo (kN)'] || '-'}</td>
+                                            <td>{row['Fatigue load limit \nPu (kN)'] || '-'}</td>
                                         </tr>
                                     ))}
                                     {filteredT2.length === 0 && (
-                                        <tr><td colSpan={7} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={14} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -481,33 +609,62 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table4.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table4.desc')}</p>
+
+                        {/* Diagram for Table 3 */}
+                        <div className={styles.tableDiagramContainer}>
+                            <Image
+                                src="/images/bearings/table3-diagram.png"
+                                alt="Table 3 Bearing Diagram"
+                                width={600}
+                                height={400}
+                                priority={false}
+                                className={styles.tableDiagram}
+                            />
+                        </div>
+
                         <div className={styles.tableScroll}>
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <th>Артикул VELNOX</th>
-                                        <th>Аналог FKL</th>
-                                        <th>Крос-референси (OEM)</th>
-                                        <th>Застосування (Техніка)</th>
-                                        <th className={styles.actionCol}></th>
+                                        <th>Part Number</th>
+                                        <th>Bearing Designation</th>
+                                        <th>Brand</th>
+                                        <th>Cross-Reference</th>
+                                        <th>Bore d (mm)</th>
+                                        <th>Length L (mm)</th>
+                                        <th>J (mm)</th>
+                                        <th>H/T (mm)</th>
+                                        <th>A (mm)</th>
+                                        <th>A1 (mm)</th>
+                                        <th>A2 (mm)</th>
+                                        <th>B (mm)</th>
+                                        <th>Co (kN)</th>
+                                        <th>Cdyn (kN)</th>
+                                        <th>Pu (kN)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {filteredT3.map((row, i) => (
                                         <tr key={i}>
-                                            <td className={styles.designationCol}>{row['Артикул VELNOX']}</td>
-                                            <td>{row['Позначення аналога (FKL)']}</td>
-                                            <td>{row['Основні ОЕМ-аналоги (Крос-референси)']}</td>
-                                            <td>{row['Застосування на техніці (Бренди та агрегати)']}</td>
-                                            <td className={styles.actionCol}>
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['Артикул VELNOX'])}>
-                                                    {t('block2.btn_request')}
-                                                </button>
-                                            </td>
+                                            <td>{row['Part Number'] || '-'}</td>
+                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
+                                            <td style={{ fontSize: '12px' }}>{row['Brand \nname'] || '-'}</td>
+                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
+                                            <td>{row['Bore diameter d (mm)'] || '-'}</td>
+                                            <td>{row['Total length L (mm)'] || '-'}</td>
+                                            <td>{row['Distance between the holes J (mm)'] || '-'}</td>
+                                            <td>{row['Hole / Thread H/T (mm)'] || '-'}</td>
+                                            <td>{row['Overall width A (mm)'] || '-'}</td>
+                                            <td>{row['Total housing width A1 (mm)'] || '-'}</td>
+                                            <td>{row['Housing flange thickness A2 (mm)'] || '-'}</td>
+                                            <td>{row['Width inner ring B (mm)'] || '-'}</td>
+                                            <td>{row['Static load rating Co (kN)'] || '-'}</td>
+                                            <td>{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
+                                            <td>{row['Fatigue load limit Pu (kN)'] || '-'}</td>
                                         </tr>
                                     ))}
                                     {filteredT3.length === 0 && (
-                                        <tr><td colSpan={5} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -519,33 +676,116 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             {/* ─── Intro Block: Sealing Systems ─── */}
             <SealingIntro />
 
-            {/* ─── Section: Table 4: Sealing Systems ─── */}
+            {/* ─── Section: Table 4: Additional Specifications ─── */}
             <section className={styles.tablesSection}>
                 <div className={styles.container}>
                     <div className={styles.tableBlock}>
-                        <h3>{t('block2.table3.title')}</h3>
-                        <p className={styles.tableDesc}>{t('block2.table3.desc')}</p>
+                        <h3>Table 4: Bearing Specifications</h3>
+                        <p className={styles.tableDesc}>Detailed technical specifications</p>
                         <div className={styles.tableScroll}>
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <th>Артикул VELNOX</th>
-                                        <th>Аналог FKL</th>
-                                        <th>Конфігурація ущільнення</th>
-                                        <th>Принцип дії</th>
+                                        <th>Part Number</th>
+                                        <th>Bearing Designation</th>
+                                        <th>Brand</th>
+                                        <th>Cross-Reference</th>
+                                        <th>Bore d (mm)</th>
+                                        <th>d1 (mm)</th>
+                                        <th>L1 (mm)</th>
+                                        <th>J1 (mm)</th>
+                                        <th>L2 (mm)</th>
+                                        <th>J2 (mm)</th>
+                                        <th>A (mm)</th>
+                                        <th>A1 (mm)</th>
+                                        <th>A2 (mm)</th>
+                                        <th>A3 (mm)</th>
+                                        <th>T</th>
+                                        <th>H (mm)</th>
+                                        <th>Mass (kg)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {filteredT4.map((row, i) => (
                                         <tr key={i}>
-                                            <td className={styles.designationCol} style={{ whiteSpace: 'pre-line', fontSize: '12px' }}>{row['Артикул VELNOX'].replace(/<br>/g, '\n')}</td>
-                                            <td style={{ whiteSpace: 'pre-line', fontSize: '12px' }}>{row['Позначення аналога (FKL)'].replace(/<br>/g, '\n')}</td>
-                                            <td><span className={styles.sealBadge}>{row['Конфігурація ущільнення']}</span></td>
-                                            <td>{row['Інженерні особливості та принцип дії']}</td>
+                                            <td>{row['Part Number'] || '-'}</td>
+                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
+                                            <td style={{ fontSize: '12px' }}>{row['Brand \nname'] || '-'}</td>
+                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
+                                            <td>{row['Bore diameter d (mm)'] || '-'}</td>
+                                            <td>{row['Centering diameter d1 (mm)'] || '-'}</td>
+                                            <td>{row['Housing overall width L1 (mm)'] || '-'}</td>
+                                            <td>{row['Distance between the holes J1 (mm)'] || '-'}</td>
+                                            <td>{row['Housing overall width L2 (mm)'] || '-'}</td>
+                                            <td>{row['Distance between the holes J2 (mm)'] || '-'}</td>
+                                            <td>{row['Overall width A (mm)'] || '-'}</td>
+                                            <td>{row['Flange width A1 (mm)'] || '-'}</td>
+                                            <td>{row['Flange width A2 (mm)'] || '-'}</td>
+                                            <td>{row['Centering diameter height A3 (mm)'] || '-'}</td>
+                                            <td>{row['Threaded hole size T'] || '-'}</td>
+                                            <td>{row['Hole diameter H (mm)'] || '-'}</td>
+                                            <td>{row['Mass kg'] || '-'}</td>
                                         </tr>
                                     ))}
                                     {filteredT4.length === 0 && (
-                                        <tr><td colSpan={4} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={17} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ─── Section: Table 5: Additional Bearing Specifications ─── */}
+            <section className={styles.tablesSection}>
+                <div className={styles.container}>
+                    <div className={styles.tableBlock}>
+                        <h3>Table 5: Extended Bearing Data</h3>
+                        <p className={styles.tableDesc}>Additional bearing specifications and load ratings</p>
+                        <div className={styles.tableScroll}>
+                            <table className={styles.techTable}>
+                                <thead>
+                                    <tr>
+                                        <th>Part Number</th>
+                                        <th>Bearing Designation</th>
+                                        <th>Brand</th>
+                                        <th>Cross-Reference</th>
+                                        <th>Bore d (mm)</th>
+                                        <th>Outside D (mm)</th>
+                                        <th>Pitch J (mm)</th>
+                                        <th>H/T</th>
+                                        <th>A (mm)</th>
+                                        <th>A2 (mm)</th>
+                                        <th>B (mm)</th>
+                                        <th>Mass (kg)</th>
+                                        <th>Co (kN)</th>
+                                        <th>Cdyn (kN)</th>
+                                        <th>Pu (kN)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredT5.map((row, i) => (
+                                        <tr key={i}>
+                                            <td>{row['Part Number'] || '-'}</td>
+                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
+                                            <td style={{ fontSize: '12px' }}>{row['Brand \nname'] || '-'}</td>
+                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
+                                            <td>{row['Bore diameter d (mm)'] || '-'}</td>
+                                            <td>{row['Outside diameter D (mm)'] || '-'}</td>
+                                            <td>{row['Pitch circle diameter J (mm)'] || '-'}</td>
+                                            <td>{row['Hole / Thread H/T'] || '-'}</td>
+                                            <td>{row['Overall width A (mm)'] || '-'}</td>
+                                            <td>{row['Housing flange thickness A2 (mm)'] || '-'}</td>
+                                            <td>{row['Width inner ring B (mm)'] || '-'}</td>
+                                            <td>{row['Mass kg'] || '-'}</td>
+                                            <td>{row['Static load rating Co (kN)'] || '-'}</td>
+                                            <td>{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
+                                            <td>{row['Fatigue load limit Pu (kN)'] || '-'}</td>
+                                        </tr>
+                                    ))}
+                                    {filteredT5.length === 0 && (
+                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>

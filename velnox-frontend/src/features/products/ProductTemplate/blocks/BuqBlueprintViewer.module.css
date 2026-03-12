@@ -1,0 +1,268 @@
+/* ─── Container ─────────────────────────────────────────────────────────── */
+.container {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 14px;
+    color: var(--text-secondary, #808b9c);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* ─── Blueprint wrapper ─────────────────────────────────────────────────── */
+.blueprintWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 629 / 397;        /* matches SVG viewBox exactly */
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.blueprintWrapper:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── Inner container (holds two image panels + SVG overlay) ─────────────── */
+.blueprintInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+/* Front view takes 62% width (matching viewBox proportions ~540/870) */
+.frontPanel {
+    position: relative;
+    flex: 0 0 62%;
+    height: 100%;
+}
+
+/* Side view takes remaining 38% */
+.sidePanel {
+    position: relative;
+    flex: 0 0 38%;
+    height: 100%;
+}
+
+.panelImage {
+    object-fit: contain;
+    padding: 12px;
+}
+
+/* ─── SVG dimension overlay ─────────────────────────────────────────────── */
+.svgOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* separator between panels */
+.separator {
+    stroke: rgba(30, 41, 59, 0.2);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+}
+
+.panelLabel {
+    font-family: 'monospace', monospace;
+    font-size: 13px;
+    fill: #64748b;
+    text-anchor: middle;
+    letter-spacing: 0.5px;
+}
+
+/* ─── Dimension group (label + line) ────────────────────────────────────── */
+.dimGroup {
+    pointer-events: all;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.25s ease;
+}
+
+.dimGroup:hover,
+.dimGroup.active {
+    opacity: 1;
+}
+
+.dimLine {
+    stroke: #1e3a5f;
+    stroke-width: 1.5;
+}
+
+.arrowHead {
+    fill: #1e3a5f;
+}
+
+.textBg {
+    fill: rgba(255, 255, 255, 0.92);
+    rx: 3px;
+}
+
+.dimText {
+    fill: #1e3a5f;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+.dimValue {
+    fill: #1d4ed8;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    text-anchor: middle;
+}
+
+/* Active/hovered highlight */
+.dimGroup.active .dimLine {
+    stroke: #f59e0b;
+    stroke-width: 2.5;
+}
+
+.dimGroup.active .arrowHead {
+    fill: #f59e0b;
+}
+
+.dimGroup.active .dimText {
+    fill: #f59e0b;
+}
+
+/* ─── Expand button ─────────────────────────────────────────────────────── */
+.expandButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.25s;
+}
+
+.expandButton:hover {
+    background: var(--primary-color, #3b82f6);
+}
+
+/* ─── Fullscreen modal ──────────────────────────────────────────────────── */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 10, 14, 0.95);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modalOverlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modalContent {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
+}
+
+.modalDrawing {
+    flex: 2;
+    background: #ffffff;
+    position: relative;
+    padding: 24px;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalSpecs {
+    flex: 1;
+    border-left: 1px solid #e5e7eb;
+    padding: 32px;
+    overflow-y: auto;
+    background: #ffffff;
+}
+
+.closeButton {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 100;
+}
+
+.closeButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 1024px) {
+    .modalContent {
+        flex-direction: column;
+    }
+    .modalDrawing {
+        flex: 1;
+        min-height: 40vh;
+    }
+    .modalSpecs {
+        flex: 1;
+        border-left: none;
+        border-top: 1px solid #e5e7eb;
+    }
+}
+
+@media (min-width: 2560px) {
+    .modalOverlay {
+        padding: 48px;
+    }
+    .modalContent {
+        max-width: 2800px;
+    }
+}

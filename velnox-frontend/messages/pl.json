@@ -27,7 +27,7 @@
                 "tag": "SPRZĘT CIĘŻKI",
                 "title": "Zoptymalizowana geometria do ekstremalnych obciążeń.",
                 "body": "Stal wytrzymała, precyzyjna geometria i obliczona śleżnia — do wytrzymywania obciążeń promieniowych i osiowych w sprzęcie budowlanym i górniczym.",
-                "spec": "Klasa obciążeń: C\u2099ₙₙ do 148 kN"
+                "spec": "Klasa obciążeń: Cₙₙₙ do 148 kN"
             },
             "slide3": {
                 "tag": "INDYWIDUALNY R&D",
@@ -109,7 +109,7 @@
             "tag": "Program dealerski",
             "title": "Gotowi dołączyć do sieci dealerów VELNOX?",
             "desc": "Współpraca wymaga spełnienia rygorystycznych kryteriów autoryzacji: posiadania powierzchni magazynowej, kwalifikowanego wsparcia inżynierskiego i realizacji gwarantowanych wolumenów.",
-            "req1": "Własna powierzchnia magazynowa od 500 m\u00b2",
+            "req1": "Własna powierzchnia magazynowa od 500 m²",
             "req2": "Kwalifikowane wsparcie inżynierskie klientów",
             "req3": "Realizacja gwarantowanych minimalnych wolumenów zamówień",
             "btn": "Złóż wniosek o autoryzację",
@@ -140,65 +140,83 @@
     },
     "about": {
         "hero": {
-            "eyebrow": "Marka inżynieryjna",
-            "title_line1": "VELNOX.",
-            "title_line2": "Inżynieria",
-            "title_line3": "dla rzeczywistości.",
-            "desc1": "VELNOX to inżynierska marka łożysk, zbudowana na wieloletnim praktycznym doświadczeniu rynkowym. Marka należy do firmy ",
-            "desc_brand": "Tech Solution",
-            "desc2": " i jest w całości skierowana do producentów maszyn, działów konstruktorskich i profesjonalnych dystrybutorów.",
-            "focus1": "Nasz fokus to wyłącznie ",
-            "focus_em": "segment OEM",
-            "focus2": " i najbardziej odpowiedzialne węzły maszyn."
-        },
-        "philosophy": {
-            "tag": "Filozofia",
-            "title_line1": "Czysta inżynieria.",
-            "title_line2": "Zero marketingu.",
-            "body1": "Filozofia VELNOX wyklucza puste obietnice. Wszystkie rozwiązania techniczne opracowywane są ściśle pod rzeczywiste warunki eksploatacji: specyficzne obciążenia, prognozowany resurs, agresywność środowiska i wymagania funkcjonalne konkretnego węzła.",
-            "body2": "Nie sugerujemy dobierania części wyłącznie po gabarytach. Nasza praca zawsze zaczyna się od głębokiej analizy specyfikacji technicznej klienta — nie od przeglądania katalogu."
-        },
-        "oem": {
-            "tag": "Podejście do jakości",
-            "title_line1": "Stabilność",
-            "title_line2": "partia po partii.",
-            "intro": "VELNOX doskonale rozumie bezkompromisową logikę rynku OEM. Dla produkcji seryjnej krytyczne są trzy czynniki: stabilność jakości stali, stuprocentowa powtarzalność parametrów i odpowiedzialność inżyniera za wynik końcowy.",
-            "cards": {
-                "metal_title": "Stabilność stali",
-                "metal_text": "Ciągła instrumentalna kontrola składu chemicznego i właściwości mechanicznych stali od partii do partii.",
-                "tolerance_title": "Powtarzalność tolerancji",
-                "tolerance_text": "Ścisłe przestrzeganie tolerancji geometrycznych. Wymienność bez dodatkowego dopasowania.",
-                "engineer_title": "Odpowiedzialność inżyniera",
-                "engineer_text": "Każda decyzja poparta jest uzasadnieniem inżynierskim. Nie katalog — lecz specyfikacja techniczna klienta.",
-                "resource_title": "Żywotność, nie cena",
-                "resource_text": "Produkty zaprojektowane do długoterminowej pracy w maszynach seryjnych — nie do jednorazowej wymiany w terenie."
-            }
-        },
-        "custom": {
-            "tag": "Kastomizacja",
-            "title_line1": "Inżynierska kastomizacja",
-            "title_line2": "pod Twoje potrzeby.",
-            "body1": "Kluczową zaletą VELNOX jest zdolność adaptacji standardowych węzłów do specyficznych potrzeb klienta. Modyfikujemy elementy konstrukcyjne, wdrażamy wielostopniowe uszczelnienia (Dirtblock seal + Forged cover plate), optymalizujemy materiały i obliczamy żywotność z dokładnością do godziny pracy.",
-            "body2": "VELNOX to racjonalna inżynieryjna alternatywa dla drogich europejskich marek. Płacisz za rzeczywisty resurs — nie za narzut na głośną nazwę marki.",
-            "slider_standard": "Standardowe uszczelnienie",
-            "slider_custom": "Dirtblock Seal + Forged Cover Plate",
-            "slider_left": "← Standard",
-            "slider_right": "Custom →"
-        },
-        "cta": {
-            "tag": "Dla kogo pracujemy",
-            "title_line1": "Nasze rozwiązania",
-            "title_line2": "działają już w maszynach",
-            "title_line3": "wiodących ",
-            "title_line3_em": "producentów OEM.",
-            "body": "Działy konstruktorskie, dystrybutorzy produktów technicznych, przedsiębiorstwa sektora rolniczego i przemysłowego. Gotowi na integrację w Twoim projekcie.",
-            "button": "Skontaktuj się z inżynierem"
+            "eyebrow": "Marka Inzynierska",
+            "title": "VELNOX Engineering: Projektujemy resurs, nie tylko czesci.",
+            "lead": "VELNOX to inżynieryjna marka łożysk i zespołów łożyskowych do odpowiedzialnych zastosowań w maszynach rolniczych i przemysłowych. Marka należy do firmy Tech Solution sp. z o.o. i jest skierowana do producentów OEM, działów inżynieryjnych/projektowych oraz profesjonalnych dystrybutorów.",
+            "cta": "Uzyskaj konsultacje inzynierska"
         },
         "stats": {
-            "years": "Lat na rynku",
-            "clients": "Klientów OEM",
-            "repeatability": "Powtarzalność tolerancji",
-            "products": "Pozycji w katalogu"
+            "tag": "Panel techniczny",
+            "title": "Zalety w liczbach",
+            "s1_suffix": "+",
+            "s1_label": "lat praktycznego doswiadczenia w sektorze rolniczym i przemyslowym",
+            "s2_suffix": "+",
+            "s2_label": "klientow wsrod producentow OEM i dzialow konstruktorskich",
+            "s3_suffix": "%",
+            "s3_label": "powtarzalnosc parametrow tolerancji w partiach seryjnych",
+            "s4_suffix": "+",
+            "s4_label": "pozycji unikalnych rozwiazan HUB, KIT i specjalnych lozysk"
+        },
+        "philosophy": {
+            "tag": "Kluczowe zasady",
+            "title": "Filozofia inzynierska i fokus OEM",
+            "p1_title": "Filozofia inzynierska",
+            "p1_text": "Opieramy się na zadaniu technicznym węzła: obciążenie, prędkość, resurs, środowisko (pył/wilgoć/ścierniwo), pasowania i wymagania serwisowe. Rozwiązanie VELNOX to nie „uniwersalne łożysko”, ale konstrukcja do konkretnego trybu pracy.",
+            "p2_title": "Fokus OEM",
+            "p2_text": "Dla OEM kluczowa jest powtarzalność parametrów i stabilność z partii na partię. VELNOX buduje produkt do zastosowań seryjnych: kontrola materiałów, geometrii i parametrów funkcjonalnych, aby ta sama logika jakości działała w produkcji."
+        },
+        "custom": {
+            "tag": "Kastomizacja i jakosc",
+            "title": "Inzynierska kastomizacja wezlow",
+            "text": "Dostosowujemy produkt do zadania klienta, a w szczególności: systemy uszczelnień (pył/wilgoć/ścierniwo, różne rodzaje ochrony), rodzaj i objętość smaru do trybu pracy, materiały i powłoki do warunków korozyjnych, elementy konstrukcyjne i pasowania do węzła i montażu.",
+            "goal": "Cel - przewidywany resurs i minimalizacja przestojow maszyn."
+        },
+        "quality": {
+            "title": "Podejście do jakości",
+            "text": "Jakość VELNOX to kontrolowany wynik, oparty na:",
+            "list_item_1": "kontroli kluczowych parametrów geometrycznych,",
+            "list_item_2": "stabilności materiałów i komponentów,",
+            "list_item_3": "weryfikacji cech funkcjonalnych gotowego produktu."
+        },
+        "audience": {
+            "tag": "Dla kogo pracujemy",
+            "title": "Nasza grupa docelowa",
+            "desc": "VELNOX jest zorientowany wylacznie na technicznie wymagajacych klientow, dla ktorych niezawodnosc wezla jest bezposrednia koniecznoscia produkcyjna.",
+            "s1_title": "Producenci maszyn OEM",
+            "s1_desc": "Zapewniamy stabilnosc parametrow dla linii montazowych. Powtarzalnosc partia po partii to nasz kluczowy standard.",
+            "s2_title": "Zespoly inzynieryjne i konstruktorskie",
+            "s2_desc": "Dostarczamy dokladne obliczenia i modele 3D do projektowania. Pracujemy od Panstwa Zadania Technicznego.",
+            "s3_title": "Dystrybutorzy produktow technicznych",
+            "s3_desc": "Oferujemy niezawodna alternatywe inzynierska dla europejskich marek z potwierdzonymi charakterystykami.",
+            "s4_title": "Producenci OEM",
+            "s4_desc": "Producenci maszyn rolniczych ciągnionych oraz przedsiębiorstwa rolnicze.",
+            "cta": "Uzyskaj konsultacje inzynierska",
+            "cta2": "Wyslij zadanie techniczne"
+        },
+        "principles": {
+            "tag": "Kluczowe zasady",
+            "title": "Podejscie do OEM",
+            "card1_title": "Filozofia inzynierska",
+            "card1_quote": "Rozwiazania VELNOX to projekt pod konkretny tryb pracy.",
+            "card1_text": "Pracujemy od zadania technicznego wezla.",
+            "card2_title": "Fokus OEM",
+            "card2_text": "Dla OEM kluczowe sa powtarzalnosc parametrow i stabilnosc partia po partii."
+        },
+        "expertise": {
+            "tag": "Ekspertyza",
+            "title": "Kastomizacja i jakosc",
+            "custom_title": "Kastomizacja i rozwiazania inzynieryjne",
+            "custom_intro": "Adaptujemy wyrob do zadania klienta, m.in.:",
+            "custom_item1": "systemy uszczelnienia (pyl/wilgoc/scierniko)",
+            "custom_item2": "typ i objetosc smaru pod tryb pracy",
+            "custom_item3": "materialy i powloki dla srodowisk korozyjnych",
+            "custom_item4": "elementy konstrukcyjne i pasowania pod wezel",
+            "quality_title": "Podejscie do jakosci",
+            "quality_intro": "Jakosc VELNOX to zarzadzany wynik:",
+            "quality_item1": "kontrola kluczowych parametrow geometrycznych",
+            "quality_item2": "stabilnosc materialow i komponentow",
+            "quality_item3": "weryfikacja charakterystyk funkcjonalnych wyrobu gotowego",
+            "quality_callout": "Cel - przewidywana zywotnosc i minimalizacja przestojow maszyn."
         }
     },
     "nav": {

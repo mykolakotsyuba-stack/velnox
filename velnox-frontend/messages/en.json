@@ -27,12 +27,12 @@
                 "tag": "HEAVY EQUIPMENT",
                 "title": "Optimized geometry for extreme loads.",
                 "body": "High-strength steel, precise geometry and engineered race surfaces — for withstanding radial and axial loads in construction and mining equipment.",
-                "spec": "Load class: C\u2099ₙₙ up to 148 kN"
+                "spec": "Load class: Cₙₙₙ up to 148 kN"
             },
             "slide3": {
-                "tag": "CUSTOM R\u0026D",
+                "tag": "CUSTOM R&D",
                 "title": "Flange modification strictly to your specification.",
-                "body": "From flange configuration to multi-stage cassette sealing — full R\u0026D cycle: audit, CAD model, production, bench testing.",
+                "body": "From flange configuration to multi-stage cassette sealing — full R&D cycle: audit, CAD model, production, bench testing.",
                 "spec": "Lead time: from 21 days with prototype"
             },
             "cta_details": "Learn more",
@@ -109,7 +109,7 @@
             "tag": "Dealer Program",
             "title": "Ready to join the VELNOX dealer network?",
             "desc": "Partnership requires strict authorization criteria: warehouse facilities, qualified engineering support, and guaranteed order volumes.",
-            "req1": "Own warehouse space from 500 m\u00b2",
+            "req1": "Own warehouse space from 500 m²",
             "req2": "Qualified engineering customer support",
             "req3": "Fulfillment of guaranteed minimum order volumes",
             "btn": "Apply for authorization",
@@ -141,64 +141,82 @@
     "about": {
         "hero": {
             "eyebrow": "Engineering Brand",
-            "title_line1": "VELNOX.",
-            "title_line2": "Engineered",
-            "title_line3": "for Reality.",
-            "desc1": "VELNOX is an engineering bearing brand built on years of hands-on market experience. The brand is owned by ",
-            "desc_brand": "Tech Solution",
-            "desc2": " and is exclusively oriented toward machinery manufacturers, engineering design departments, and professional distributors.",
-            "focus1": "Our focus is exclusively the ",
-            "focus_em": "OEM segment",
-            "focus2": " and the most critical machine assemblies."
-        },
-        "philosophy": {
-            "tag": "Philosophy",
-            "title_line1": "Pure Engineering.",
-            "title_line2": "Zero Marketing.",
-            "body1": "The VELNOX philosophy excludes empty promises. All technical solutions are developed strictly for real operating conditions: specific loads, predictable service life, environmental aggressiveness, and the functional requirements of the specific assembly.",
-            "body2": "We do not suggest selecting parts purely by dimensions. Our work always starts with a deep analysis of the client's engineering specification — not by browsing a catalogue."
-        },
-        "oem": {
-            "tag": "Quality Approach",
-            "title_line1": "Batch-to-Batch",
-            "title_line2": "Consistency.",
-            "intro": "VELNOX understands the uncompromising logic of the OEM market. For series production, three factors are critical: steel quality stability, 100% repeatability of parameters, and engineering responsibility for the end result.",
-            "cards": {
-                "metal_title": "Steel Stability",
-                "metal_text": "Continuous instrumental monitoring of chemical composition and mechanical properties of steel from batch to batch.",
-                "tolerance_title": "Dimensional Repeatability",
-                "tolerance_text": "Strict adherence to geometric tolerances. Full interchangeability without additional fitting or adjustment.",
-                "engineer_title": "Engineering Responsibility",
-                "engineer_text": "Every decision is backed by engineering reasoning. Not a catalogue — but the client's technical specification.",
-                "resource_title": "Service Life, Not Price",
-                "resource_text": "Products are designed for long-term operation in complex machinery — not for a cheap one-time field replacement."
-            }
-        },
-        "custom": {
-            "tag": "Customization",
-            "title_line1": "Engineering Customization",
-            "title_line2": "for Your Application.",
-            "body1": "The key advantage of VELNOX is the ability to adapt standard assemblies to a client's specific pain points. We modify structural elements, implement multi-stage sealing systems (Dirtblock seal + Forged cover plate), optimize materials, and calculate service life to within an hour of operation.",
-            "body2": "VELNOX is a rational engineering alternative to expensive European brands. You pay for working service life — not for a famous brand name markup.",
-            "slider_standard": "Standard sealing",
-            "slider_custom": "Dirtblock Seal + Forged Cover Plate",
-            "slider_left": "← Standard",
-            "slider_right": "Custom →"
-        },
-        "cta": {
-            "tag": "For Whom We Work",
-            "title_line1": "Our solutions already",
-            "title_line2": "operate in machinery of",
-            "title_line3": "leading ",
-            "title_line3_em": "OEM manufacturers.",
-            "body": "Engineering design departments, distributors of technical products, agricultural and industrial enterprises. Ready to integrate into your project.",
-            "button": "Contact Engineering Team"
+            "title": "VELNOX Engineering: We design service life, not just parts.",
+            "lead": "VELNOX is an engineering brand of bearings and assemblies for critical applications in agricultural and industrial machinery. The brand belongs to Tech Solution sp. z o.o. and is focused on OEM manufacturers, engineering/design departments and professional distributors.",
+            "cta": "Get Engineering Consultation"
         },
         "stats": {
-            "years": "Years on the market",
-            "clients": "OEM clients",
-            "repeatability": "Tolerance repeatability",
-            "products": "Catalogue items"
+            "tag": "Technical Dashboard",
+            "title": "Advantages by the Numbers",
+            "s1_suffix": "+",
+            "s1_label": "years of practical experience in agro and industrial sectors",
+            "s2_suffix": "+",
+            "s2_label": "clients among OEM manufacturers and engineering departments",
+            "s3_suffix": "%",
+            "s3_label": "tolerance parameter repeatability in serial batches",
+            "s4_suffix": "+",
+            "s4_label": "unique HUB, KIT solutions and special bearing SKUs"
+        },
+        "philosophy": {
+            "tag": "Key Principles",
+            "title": "Engineering Philosophy & OEM Focus",
+            "p1_title": "Engineering Philosophy",
+            "p1_text": "We work from the technical specification of the assembly: load, speed, service life, environment (dust/moisture/abrasive), fits, and maintenance requirements. The VELNOX solution is not a “universal bearing”, but a design for a specific operating mode.",
+            "p2_title": "OEM Focus",
+            "p2_text": "For OEM, parameter repeatability and batch-to-batch stability are critical. VELNOX builds a product for serial application: control of materials, geometry and functional parameters, so that the same quality logic works in production."
+        },
+        "custom": {
+            "tag": "Customization & Quality",
+            "title": "Engineering Customization of Assemblies",
+            "text": "We adapt the product to the client's task, including: sealing systems (dust/moisture/abrasive, different types of protection), type and volume of lubricant for the operating mode, materials and coatings for corrosive conditions, structural elements and fits for assembly and mounting.",
+            "goal": "Goal — predictable service life and minimized machinery downtime."
+        },
+        "quality": {
+            "title": "Quality Approach",
+            "text": "VELNOX quality is a controlled outcome based on:",
+            "list_item_1": "control of key geometric parameters,",
+            "list_item_2": "stability of materials and components,",
+            "list_item_3": "verification of functional characteristics of the finished product."
+        },
+        "audience": {
+            "tag": "Who We Work For",
+            "title": "Our Target Audience",
+            "desc": "VELNOX is focused exclusively on technically demanding clients for whom assembly reliability is a direct production necessity.",
+            "s1_title": "OEM Machinery Manufacturers",
+            "s1_desc": "We ensure parameter stability for assembly lines. Batch-to-batch repeatability is our key standard.",
+            "s2_title": "Engineering & Design Teams",
+            "s2_desc": "We provide precise calculations and 3D models for design. We work from your Technical Specification.",
+            "s3_title": "Technical Product Distributors",
+            "s3_desc": "We offer a reliable engineering alternative to European brands with verified characteristics.",
+            "s4_title": "OEM Manufacturers",
+            "s4_desc": "OEM manufacturers of trailed agricultural machinery and agricultural enterprises.",
+            "cta": "Get Engineering Consultation",
+            "cta2": "Submit Technical Specification"
+        },
+        "principles": {
+            "tag": "Key Principles",
+            "title": "OEM Approach",
+            "card1_title": "Engineering Philosophy",
+            "card1_quote": "VELNOX solutions are a design for a specific operating mode.",
+            "card1_text": "We work from the assembly technical specification.",
+            "card2_title": "OEM Focus",
+            "card2_text": "For OEM, parameter repeatability and batch-to-batch stability are critical."
+        },
+        "expertise": {
+            "tag": "Expertise",
+            "title": "Customization & Quality",
+            "custom_title": "Customization & Engineering Solutions",
+            "custom_intro": "We adapt the product to the client’s task, including:",
+            "custom_item1": "sealing systems (dust/moisture/abrasive)",
+            "custom_item2": "lubricant type and volume for operating mode",
+            "custom_item3": "materials and coatings for corrosive environments",
+            "custom_item4": "structural elements and fits for assembly",
+            "quality_title": "Quality Approach",
+            "quality_intro": "VELNOX quality is a controlled outcome:",
+            "quality_item1": "control of key geometric parameters",
+            "quality_item2": "stability of materials and components",
+            "quality_item3": "verification of functional characteristics",
+            "quality_callout": "Goal — predictable service life and minimized machinery downtime."
         }
     },
     "nav": {
@@ -309,6 +327,10 @@
             "btn_pdf": "Download PDF Catalog",
             "btn_cad": "3D / CAD Library",
             "btn_contact": "Contact Engineer"
+        },
+        "packer_roller": {
+            "title": "Packer Roller",
+            "content": "Packer rollers operate under continuous contact with soil, moisture and abrasive particles, resulting in constant radial loads and a highly contaminated working environment. Bearing units used in packer rollers must therefore ensure reliable operation under slow rotational speeds, high static loads and frequent shock impacts.\n\nVELNOX bearing solutions for packer rollers are designed with reinforced housings, enhanced sealing systems and optimized internal clearances to withstand heavy loads and aggressive operating conditions. Special attention is given to contamination protection and long service life with minimal maintenance requirements.\n\nThese characteristics make VELNOX bearings a reliable solution for packer rollers used in modern agricultural machinery, ensuring stable performance and reduced downtime throughout the working season."
         }
     }
 }

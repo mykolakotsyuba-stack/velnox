@@ -1,0 +1,29 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "12345678"
+
+# 1. Rsync the files
+spawn rsync -avz --exclude node_modules --exclude .next --exclude .git velnox-frontend/ user@mail.irbis.ua:/srv/projects/velnox/frontend/
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
+
+# 2. SSH and build
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@mail.irbis.ua
+expect {
+    "password:" {
+        send "$password\r"
+    }
+}
+
+expect "$ "
+send "cd /srv/projects/velnox/frontend && npm run build\r"
+expect "$ "
+send "echo \"12345678\" | sudo -S systemctl restart velnox-frontend\r"
+expect "$ "
+send "exit\r"
+expect eof

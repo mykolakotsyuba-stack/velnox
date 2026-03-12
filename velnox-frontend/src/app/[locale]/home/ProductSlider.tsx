@@ -130,6 +130,7 @@ export function ProductSlider() {
                         alt={slide.title}
                         width={580}
                         height={580}
+                        style={{ '--mask-url': `url(${slide.img})` } as any}
                         className={styles.slideImg}
                         priority={active === 0}
                     />

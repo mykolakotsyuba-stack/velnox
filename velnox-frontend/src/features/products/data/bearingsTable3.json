@@ -1,0 +1,20 @@
+[
+  {
+    "Part Number": "BUQ 309-2T3H",
+    "Bearing designation": "CJI 309 GGG+19000509 (Assy) \nLSQFR 309-2TB.H.T \nLSQFR 309-2TB.H.T",
+    "Brand \nname": "CT-AGRI \nFKL \nCT-AGRI",
+    "Cross-Refference": "4000412 Farmet \nM14581 Farmet \n15626ND Farmet \n18888ND Farmet \nM10257 Farmet \nM13082ND Farmet \nM15626 Farmet \nM17627 Farmet \nM24607 Farmet \nCJI309GGG+19000509 \nLEFG 209 TDT FKL",
+    "Bore diameter d (mm)": 45.0,
+    "Total length L (mm)": 137.0,
+    "Distance between the holes J (mm)": 105.0,
+    "Hole / Thread H/T (mm)": 14.0,
+    "Overall width A (mm)": 54.0,
+    "Total housing width A1 (mm)": 44.0,
+    "Housing flange thickness A2 (mm)": 22.0,
+    "Width inner ring B (mm)": "51.1",
+    "Mass kg": null,
+    "Static load rating Co (kN)": "59.6",
+    "Dynamic load rating Cdyn (kN)": "80.8",
+    "Fatigue load limit Pu (kN)": "2.503"
+  }
+]

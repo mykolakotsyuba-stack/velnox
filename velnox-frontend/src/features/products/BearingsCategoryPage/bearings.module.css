@@ -411,6 +411,26 @@
     margin-bottom: 24px;
 }
 
+/* Diagram styling */
+.tableDiagramContainer {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: color-mix(in srgb, var(--color-accent) 3%, transparent);
+    border-radius: 8px;
+    padding: 24px;
+    border: 1px solid var(--color-border);
+}
+
+.tableDiagram {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
 .tableScroll {
     overflow-x: auto;
     border: 1px solid var(--color-border);
@@ -800,6 +820,19 @@
         grid-template-columns: 1fr;
         gap: 8px;
     }
+
+    /* Tables tablet responsive */
+    .tableBlock {
+        padding: 20px;
+    }
+
+    .tableDiagramContainer {
+        padding: 20px;
+    }
+
+    .techTable {
+        min-width: 700px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -815,6 +848,54 @@
     .btnSecondary {
         width: 100%;
         justify-content: center;
+    }
+
+    /* Tables mobile responsive */
+    .container {
+        padding: 0 16px;
+    }
+
+    .tableBlock {
+        padding: 16px;
+        margin-bottom: 40px;
+    }
+
+    .tableBlock h3 {
+        font-size: 18px;
+    }
+
+    .tableDesc {
+        font-size: 14px;
+        margin-bottom: 16px;
+    }
+
+    .tableDiagramContainer {
+        margin-bottom: 20px;
+        padding: 16px;
+    }
+
+    .tableDiagram {
+        max-width: 100%;
+    }
+
+    .tableScroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .techTable {
+        min-width: 600px;
+        font-size: 12px;
+    }
+
+    .techTable th {
+        padding: 10px 12px;
+        font-size: 11px;
+    }
+
+    .techTable td {
+        padding: 10px 12px;
+        font-size: 12px;
     }
 }
 

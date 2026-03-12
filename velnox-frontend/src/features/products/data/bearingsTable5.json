@@ -1,0 +1,19 @@
+[
+  {
+    "Part Number": "BUP 207-X3L",
+    "Bearing designation": "207XTR-R-DFC-A534 (PER.207RRSB-FC-A) \nGH.PN 00032 \nLSGR 207-TBS \nLSGR 207-TBS \nLSGR 207-TBS \nPN 00023 \nPN 00032",
+    "Brand \nname": "PEER \nRBF \nFKL \nCT-AGRI \nNTE (Slovakia) \nRBF \nRBF",
+    "Cross-Refference": "31910034 Lemken \n3199372 Lemken \n3421370 Opall Agri \nF232812 - 0200 INA/FAG Bearing \nGGF35A08 \nGGME07 - AH07 INA/FAG Housing \nRCJ 35 35x118x39,9 4xM12 \nUC 207 X1 SNR Bearing",
+    "Bore diameter d (mm)": 35.0,
+    "Outside diameter D (mm)": 125.0,
+    "Pitch circle diameter J (mm)": 100.0,
+    "Hole / Thread H/T": "M12",
+    "Overall width A (mm)": 40.0,
+    "Housing flange thickness A2 (mm)": 20.0,
+    "Width inner ring B (mm)": null,
+    "Mass kg": null,
+    "Static load rating Co (kN)": null,
+    "Dynamic load rating Cdyn (kN)": null,
+    "Fatigue load limit Pu (kN)": "0.643"
+  }
+]

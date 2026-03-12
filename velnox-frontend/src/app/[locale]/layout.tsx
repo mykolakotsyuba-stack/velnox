@@ -18,7 +18,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Loc
     const messages = await getMessages();
 
     return (
-        <html lang={locale}>
+        <html lang={locale} suppressHydrationWarning>
             <body>
                 <ThemeProvider>
                     {/* locale prop потрібен щоб client-компоненти (Header) отримали правильну мову */}
