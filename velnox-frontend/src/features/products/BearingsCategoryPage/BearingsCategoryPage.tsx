@@ -607,8 +607,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             <section className={styles.tablesSection}>
                 <div className={styles.container}>
                     <div className={styles.tableBlock}>
-                        <h3>{t('block2.table4.title')}</h3>
-                        <p className={styles.tableDesc}>{t('block2.table4.desc')}</p>
+                        <h3>{t('block2.table3.title')}</h3>
+                        <p className={styles.tableDesc}>{t('block2.table3.desc')}</p>
 
                         {/* Diagram for Table 3 */}
                         <div className={styles.tableDiagramContainer}>
@@ -622,8 +622,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             />
                         </div>
 
-                        <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
+                        <div className={`${styles.tableScroll} ${styles.noScroll}`}>
+                            <table className={`${styles.techTable} ${styles.noScroll}`}>
                                 <thead>
                                     <tr>
                                         <th>Part Number</th>
@@ -676,14 +676,46 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             {/* ─── Intro Block: Sealing Systems ─── */}
             <SealingIntro />
 
-            {/* ─── Section: Table 4: Additional Specifications ─── */}
+            {/* ─── Sealing Info Block (Requested) ─── */}
             <section className={styles.tablesSection}>
                 <div className={styles.container}>
+                    <div className={`${styles.buqDrawingBlock} ${styles.sealingInfoBlock}`}>
+                        <div className={styles.sealingInfoTag}>{t('sealing_info.tag')}</div>
+                        <div className={styles.sealingInfoTitle}>
+                            {t('sealing_info.title')}
+                        </div>
+                        <div className={styles.sealingInfoContent}>
+                            <p>{t('sealing_info.p1')}</p>
+                            <p>{t('sealing_info.p2')}</p>
+                            <p>{t('sealing_info.p3')}</p>
+                        </div>
+                    </div>
+
+                    {/* Placeholder for Sealing Scheme (Figure) */}
+                    <div className={styles.buqDrawingBlock}>
+                        <div className={styles.buqDrawingTitle}>FIGURE: SEALING SYSTEM SCHEME</div>
+                        <div className={styles.buqDrawingCompositeSingle}>
+                            <div style={{ 
+                                width: '100%', 
+                                height: '300px', 
+                                background: 'rgba(255,255,255,0.05)', 
+                                border: '1px dashed rgba(255,255,255,0.2)',
+                                borderRadius: '8px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: 'rgba(255,255,255,0.3)'
+                            }}>
+                                [ SEALING SYSTEM SCHEME IMAGE ]
+                            </div>
+                        </div>
+                    </div>
+
                     <div className={styles.tableBlock}>
-                        <h3>Table 4: Bearing Specifications</h3>
-                        <p className={styles.tableDesc}>Detailed technical specifications</p>
-                        <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
+                        <h3>{t('block2.table4.title')}</h3>
+                        <p className={styles.tableDesc}>{t('block2.table4.desc')}</p>
+                        <div className={`${styles.tableScroll} ${styles.noScroll}`}>
+                            <table className={`${styles.techTable} ${styles.noScroll}`}>
                                 <thead>
                                     <tr>
                                         <th>Part Number</th>
@@ -741,10 +773,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             <section className={styles.tablesSection}>
                 <div className={styles.container}>
                     <div className={styles.tableBlock}>
-                        <h3>Table 5: Extended Bearing Data</h3>
-                        <p className={styles.tableDesc}>Additional bearing specifications and load ratings</p>
-                        <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
+                        <h3>{t('block2.table5.title')}</h3>
+                        <p className={styles.tableDesc}>{t('block2.table5.desc')}</p>
+                        <div className={`${styles.tableScroll} ${styles.noScroll}`}>
+                            <table className={`${styles.techTable} ${styles.noScroll}`}>
                                 <thead>
                                     <tr>
                                         <th>Part Number</th>

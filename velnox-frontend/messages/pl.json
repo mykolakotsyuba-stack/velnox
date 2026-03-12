@@ -304,22 +304,37 @@
                 "col_pu": "Granica zmęczenia (Pu, kN)",
                 "col_mass": "Masa (kg)"
             },
-            "table3": {
-                "title": "Tabela 3: Systemy uszczelnień VELNOX (Sealing Systems)",
+            "sealing_visual": {
+                "title": "Tabela: Systemy uszczelnień VELNOX (Sealing Systems)",
                 "desc": "Tutaj wizualizujemy i wyjaśniamy typy ochrony, ponieważ jest to główna zaleta dla sektora rolniczego.",
                 "2rs": "Podstawowe uszczelnienie stykowe dla warunków neutralnych.",
                 "2s": "Uszczelnienie jednowargowe z labiryntem. Wysoka ochrona przed grubymi cząstkami.",
                 "tseal": "Trójwargowe uszczelnienie dla maksymalnej ochrony przed pyłem i wilgocią.",
                 "dirtblock": "Ekstremalna ochrona dla ciężkich bron talerzowych. Półmetal-półguma z kutą osłoną ochronną."
             },
-            "table4": {
-                "title": "Tabela 4: Odnośniki i zastosowania (Cross-References & Installations)",
+            "table3": {
+                "title": "Tabela 3: Odnośniki i zastosowania (Cross-References & Installations)",
                 "desc": "Kluczowe dla dystrybutorów, którzy szukają zamiennika dla istniejących zespołów.",
                 "col_brand": "Analogi marek",
                 "col_oem": "Numery fabryczne maszyn OEM",
                 "col_app": "Zastosowanie"
             },
+            "table4": {
+                "title": "Tabela 4: Specyfikacje łożysk",
+                "desc": "Szczegółowe specyfikacje techniczne"
+            },
+            "table5": {
+                "title": "Tabela 5: Rozszerzone dane łożysk",
+                "desc": "Dodatkowe specyfikacje łożysk i nośności"
+            },
             "btn_request": "Złóż wniosek"
+        },
+        "sealing_info": {
+            "tag": "Uszczelnienie",
+            "title": "SYSTEM USZCZELNIEŃ TRÓJWARGOWYCH + DWUWARGOWYCH",
+            "p1": "Zespoły łożyskowe VELNOX są wyposażone w kombinowany system uszczelnień, obejmujący uszczelnienie trójwargowe oraz dodatkowe uszczelnienie dwuwargowe po obu stronach łożyska.",
+            "p2": "Uszczelnienie trójwargowe zapewnia podstawową ochronę przed pyłem, brudem i wilgocią, natomiast uszczelnienie dwuwargowe pełni funkcję dodatkowej bariery, ograniczającej przenikanie zanieczyszczeń w trudnych warunkach eksploatacji.",
+            "p3": "Zastosowanie wzmocnionych systemów uszczelnień po obu stronach łożyska pozwala na niezawodną pracę zespołów VELNOX w szerszym zakresie zastosowań i warunków środowiskowych, w szczególności w rolnictwie."
         },
         "block3": {
             "title": "Gotowi do integracji w Twój projekt",
@@ -327,6 +342,10 @@
             "btn_pdf": "Pobierz katalog PDF",
             "btn_cad": "Biblioteka modeli 3D / CAD",
             "btn_contact": "Skontaktuj się z inżynierem"
+        },
+        "packer_roller": {
+            "title": "Uszczelnienie i ochrona wałów (Packer Roller)",
+            "content": "Wały dogniatające (Packer rollers) pracują w ciągłym kontakcie z glebą, wilgocią i cząstkami ściernymi, co prowadzi do stałych obciążeń promieniowych i silnego zanieczyszczenia środowiska pracy. Zespoły łożyskowe stosowane w wałach muszą zatem zapewniać niezawodną pracę przy niskich prędkościach obrotowych, dużych obciążeniach statycznych i częstych uderzeniach.\n\nRozwiązania łożyskowe VELNOX dla wałów dogniatających zostały zaprojektowane ze wzmocnionymi oprawami, ulepszonymi systemami uszczelnień i zoptymalizowanymi luzami wewnętrznymi, aby wytrzymać duże obciążenia i agresywne warunki eksploatacji. Szczególną uwagę poświęcono ochronie przed zanieczyszczeniami i zapewnieniu długiej żywotności przy minimalnych wymaganiach serwisowych.\n\nCharakterystyka ta sprawia, że łożyska VELNOX są niezawodnym rozwiązaniem dla wałów dogniatających stosowanych w nowoczesnych maszynach rolniczych, zapewniając stabilną pracę i redukcję przestojów w całym sezonie prac polowych."
         }
     }
 }

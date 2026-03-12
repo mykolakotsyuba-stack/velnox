@@ -304,22 +304,37 @@
                 "col_pu": "Fatigue Limit (Pu, kN)",
                 "col_mass": "Mass (kg)"
             },
-            "table3": {
-                "title": "Table 3: VELNOX Sealing Systems",
+            "sealing_visual": {
+                "title": "Table: VELNOX Sealing Systems",
                 "desc": "Here we visualize and explain the types of protection, as this is the main advantage for the agricultural sector.",
                 "2rs": "Basic contact seal for neutral conditions.",
                 "2s": "Single-lip seal with labyrinth. High protection from coarse particles.",
                 "tseal": "Triple-lip seal for maximum protection against dust and moisture.",
                 "dirtblock": "Extreme protection for heavy disc harrows. Semi-metal-semi-rubber with a forged cover plate."
             },
-            "table4": {
-                "title": "Table 4: Cross-References & Installations",
+            "table3": {
+                "title": "Table 3: Cross-References & Installations",
                 "desc": "Critical for distributors looking for a replacement to existing units.",
                 "col_brand": "Brand Analogs",
                 "col_oem": "OEM Equipment Numbers",
                 "col_app": "Application"
             },
+            "table4": {
+                "title": "Table 4: Bearing Specifications",
+                "desc": "Detailed technical specifications"
+            },
+            "table5": {
+                "title": "Table 5: Extended Bearing Data",
+                "desc": "Additional bearing specifications and load ratings"
+            },
             "btn_request": "Request"
+        },
+        "sealing_info": {
+            "tag": "Sealing",
+            "title": "TRIPLE-LIP + DOUBLE-LIP SEALING SYSTEM",
+            "p1": "VELNOX bearing units are equipped with a combined sealing system featuring a triple-lip seal and an additional double-lip seal on both sides of the bearing.",
+            "p2": "The triple-lip seal provides primary protection against dust, dirt and moisture, while the double-lip seal acts as a secondary barrier, limiting contaminant penetration under severe operating conditions.",
+            "p3": "The use of reinforced sealing systems on both sides of the bearing allows VELNOX units to operate reliably across a wider range of applications and environmental conditions, particularly in agriculture."
         },
         "block3": {
             "title": "Ready for Integration into Your Project",

@@ -437,11 +437,27 @@
     border-radius: 6px;
 }
 
+.tableScroll.noScroll {
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
 .techTable {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
     min-width: 900px;
+}
+
+.techTable.noScroll {
+    min-width: 0;
+    table-layout: fixed;
+}
+
+.techTable.noScroll td,
+.techTable.noScroll th {
+    word-break: break-word;
+    white-space: normal;
 }
 
 .techTable th {
@@ -1737,5 +1753,68 @@
 
     .appParaLead {
         font-size: 16px;
+    }
+}
+
+/* ────────────────────────────────────────────────────────
+   SEALING INFO BLOCK (Technical)
+──────────────────────────────────────────────────────── */
+.sealingInfoBlock {
+    margin: 40px 0;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+.sealingInfoTag {
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    margin-bottom: 20px;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.sealingInfoTitle {
+    text-align: left;
+    font-size: clamp(24px, 2.5vw, 32px);
+    margin-bottom: 24px;
+    color: var(--color-text);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.sealingInfoContent {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 16px;
+    max-width: 800px;
+}
+
+.sealingInfoContent p {
+    margin-bottom: 16px;
+}
+
+.sealingInfoContent p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+    .sealingInfoBlock {
+        padding: 24px;
+        margin: 20px 0;
+    }
+    
+    .sealingInfoTitle {
+        font-size: 20px;
+    }
+    
+    .sealingInfoContent {
+        font-size: 14px;
     }
 }
