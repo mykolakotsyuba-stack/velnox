@@ -575,19 +575,19 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     {filteredT2.map((row, i) => (
                                         <tr key={i}>
                                             <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand \nname'] || '-'}</td>
+                                            <td style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
                                             <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
-                                            <td>{row['Bore diameter \nd (mm)'] || '-'}</td>
-                                            <td>{row['Total housing width \nA1 (mm)'] || '-'}</td>
-                                            <td>{row['Housing flange thickness \nA2 (mm)'] || '-'}</td>
-                                            <td>{row['Distance between the holes \nJ (mm)'] || '-'}</td>
-                                            <td>{row['Total length \nL (mm)'] || '-'}</td>
-                                            <td>{row['Hole / Thread \nH/T'] || '-'}</td>
-                                            <td>{row['Overall width \nA (mm)'] || '-'}</td>
-                                            <td>{row['Mass \nkg'] || '-'}</td>
-                                            <td>{row['Dynamic load rating \nCdyn (kN)'] || '-'}</td>
-                                            <td>{row['Static load rating \nCo (kN)'] || '-'}</td>
-                                            <td>{row['Fatigue load limit \nPu (kN)'] || '-'}</td>
+                                            <td>{row['Bore diameter \\nd (mm)'] || '-'}</td>
+                                            <td>{row['Total housing width \\nA1 (mm)'] || '-'}</td>
+                                            <td>{row['Housing flange thickness \\nA2 (mm)'] || '-'}</td>
+                                            <td>{row['Distance between the holes \\nJ (mm)'] || '-'}</td>
+                                            <td>{row['Total length \\nL (mm)'] || '-'}</td>
+                                            <td>{row['Hole / Thread \\nH/T'] || '-'}</td>
+                                            <td>{row['Overall width \\nA (mm)'] || '-'}</td>
+                                            <td>{row['Mass \\nkg'] || '-'}</td>
+                                            <td>{row['Dynamic load rating \\nCdyn (kN)'] || '-'}</td>
+                                            <td>{row['Static load rating \\nCo (kN)'] || '-'}</td>
+                                            <td>{row['Fatigue load limit \\nPu (kN)'] || '-'}</td>
                                         </tr>
                                     ))}
                                     {filteredT2.length === 0 && (
@@ -648,7 +648,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <tr key={i}>
                                             <td>{row['Part Number'] || '-'}</td>
                                             <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand \nname'] || '-'}</td>
+                                            <td style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
                                             <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
                                             <td>{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td>{row['Total length L (mm)'] || '-'}</td>
@@ -710,7 +710,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <tr key={i}>
                                             <td>{row['Part Number'] || '-'}</td>
                                             <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand \nname'] || '-'}</td>
+                                            <td style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
                                             <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
                                             <td>{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td>{row['Centering diameter d1 (mm)'] || '-'}</td>
@@ -769,7 +769,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <tr key={i}>
                                             <td>{row['Part Number'] || '-'}</td>
                                             <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand \nname'] || '-'}</td>
+                                            <td style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
                                             <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
                                             <td>{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td>{row['Outside diameter D (mm)'] || '-'}</td>
