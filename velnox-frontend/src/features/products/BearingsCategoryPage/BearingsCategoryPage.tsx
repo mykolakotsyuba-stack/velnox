@@ -603,6 +603,32 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             {/* ─── Intro Block: Cross-References ─── */}
             <CrossRefIntro />
 
+            {/* ─── Section: Packer Rollers (Пакерні котки) with Sealing Info ─── */}
+            <section className={`${styles.applicationsSection} ${styles.appSectionVisible}`}>
+                <div className={styles.appWatermark} aria-hidden="true">Applications</div>
+                <div className={styles.appInner}>
+                    <div className={styles.appHeader}>
+                        <span className={styles.appTag}>Applications</span>
+                        <h2 className={styles.appTitle}>Пакерні котки</h2>
+                    </div>
+                    <div className={styles.appBody}>
+                        <p className={`${styles.appPara} ${styles.appParaLead} ${styles.appParaVisible}`}>
+                            Ущільнення <strong className={styles.appKeyword}>ТРИКРОМКОВЕ + ДВОКРОМКОВЕ</strong>
+                            — Підшипникові вузли VELNOX оснащені комбінованою системою ущільнення, яка включає
+                            <strong className={styles.appKeyword}> трикромочне та додаткове двокромочне ущільнення</strong> з обох сторін підшипника.
+                        </p>
+                        <p className={`${styles.appPara} ${styles.appParaVisible}`}>
+                            Трикромочне ущільнення забезпечує основний захист від пилу, бруду та вологи, а двокромочне ущільнення виконує функцію додаткового бар'єра,
+                            обмежуючи <strong className={styles.appKeyword}>проникнення забруднень</strong> у складних умовах експлуатації.
+                        </p>
+                        <p className={`${styles.appPara} ${styles.appParaVisible}`}>
+                            Застосування посилених систем ущільнення з обох сторін підшипника дозволяє використовувати підшипникові вузли VELNOX у більш широкому діапазоні
+                            <strong className={styles.appKeyword}> застосувань та умов експлуатації</strong>, особливо в аграрному середовищі.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             {/* ─── Section: Table 3: Cross-References & Applications ─── */}
             <section className={styles.tablesSection}>
                 <div className={styles.container}>
