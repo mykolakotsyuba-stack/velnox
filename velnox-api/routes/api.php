@@ -23,13 +23,14 @@ Route::prefix('v1')->group(function () {
 
     // Продукти
     Route::get('/products', [ProductController::class, 'index']);       // ?category=hubs&cdyn_min=30&cdyn_max=100&locale=en
-    Route::get('/products/{slug}', [ProductController::class, 'show']); // ?locale=en
 
-    // Tables для сторінки bearings
+    // Tables для сторінки bearings (мають йти ДО {slug} маршруту!)
     Route::get('/products/tables/performance', [ProductController::class, 'tablePerformance']);
     Route::get('/products/tables/cross-references', [ProductController::class, 'tableCrossReferences']);
     Route::get('/products/tables/extended-specs', [ProductController::class, 'tableExtendedSpecs']);
     Route::get('/products/tables/additional-data', [ProductController::class, 'tableAdditionalData']);
+
+    Route::get('/products/{slug}', [ProductController::class, 'show']); // ?locale=en
 
     // Новини
     Route::get('/news', [NewsController::class, 'index']);              // ?category=oem-solutions&locale=en
