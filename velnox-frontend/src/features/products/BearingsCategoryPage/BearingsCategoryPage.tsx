@@ -542,7 +542,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         {/* Diagram for Table 2 */}
                         <div className={styles.tableDiagramContainer}>
                             <Image
-                                src="/images/bearings/table2-diagram.png"
+                                src="/velnox/images/bearings/table2-diagram.png"
                                 alt="Table 2 Bearing Diagram"
                                 width={600}
                                 height={400}
@@ -613,7 +613,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         {/* Diagram for Table 3 */}
                         <div className={styles.tableDiagramContainer}>
                             <Image
-                                src="/images/bearings/table3-diagram.png"
+                                src="/velnox/images/bearings/table3-diagram.png"
                                 alt="Table 3 Bearing Diagram"
                                 width={600}
                                 height={400}

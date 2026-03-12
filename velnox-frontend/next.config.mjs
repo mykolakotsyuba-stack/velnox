@@ -5,6 +5,7 @@ const withNextIntl = createNextIntlPlugin('./src/shared/lib/i18n.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     basePath: "/velnox",
+    assetPrefix: "/velnox",
     images: {
         unoptimized: true,
         remotePatterns: [
