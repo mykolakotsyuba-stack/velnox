@@ -13,6 +13,12 @@
     padding: 0 40px;
 }
 
+.tableSectionContainer {
+    max-width: 98%; /* Use almost full width for tables */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 /* Animations */
 @keyframes animSlideUp {
     from {
@@ -432,9 +438,11 @@
 }
 
 .tableScroll {
-    overflow-x: auto;
+    overflow-x: auto; /* Allow horizontal scroll if needed for extremely wide tables on tablet */
+    -webkit-overflow-scrolling: touch;
     border: 1px solid var(--color-border);
     border-radius: 6px;
+    margin-bottom: 20px;
 }
 
 .tableScroll.noScroll {
@@ -446,38 +454,37 @@
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    min-width: 900px;
+    table-layout: auto; /* Let browser decide widths naturally */
 }
 
-.techTable.noScroll {
-    min-width: 0;
-    table-layout: fixed;
-}
-
-.techTable.noScroll td,
-.techTable.noScroll th {
+.techTable td,
+.techTable th {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     word-break: break-word;
     white-space: normal;
+    min-width: 60px; /* Ensure some space for labels */
 }
 
 .techTable th {
     background: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
-    padding: 16px 20px;
-    font-size: 13px;
-    font-weight: 600;
+    padding: 10px 8px; /* Compact padding */
+    font-size: 11px; /* Smaller font */
+    font-weight: 700;
     color: var(--color-text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid var(--color-border);
+    letter-spacing: 0.02em;
+    border-bottom: 2px solid var(--color-border);
 }
 
 .techTable td {
-    padding: 16px 20px;
-    font-size: 14px;
+    padding: 10px 8px; /* Compact padding */
+    font-size: 12px; /* Small readable font */
     color: var(--color-text-muted);
     border-bottom: 1px solid var(--color-border);
     background: transparent;
     transition: background 0.2s ease;
+    line-height: 1.3;
 }
 
 .techTable tr:last-child td {
@@ -530,6 +537,81 @@
     padding: 40px !important;
     color: var(--color-text-muted);
     font-style: italic;
+}
+
+/* Responsive Table: Card view on Mobile */
+@media (max-width: 1024px) {
+    .techTable thead {
+        display: none; /* Hide headers on tablet/mobile */
+    }
+
+    .techTable, .techTable tbody, .techTable tr, .techTable td {
+        display: block;
+        width: 100%;
+    }
+
+    .techTable tr {
+        margin-bottom: 24px;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--color-surface);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .techTable td {
+        text-align: right;
+        padding: 12px 16px;
+        position: relative;
+        border-bottom: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .techTable td:last-child {
+        border-bottom: none;
+        background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+    }
+
+    .techTable td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        color: var(--color-text-muted);
+        text-align: left;
+        flex-shrink: 0;
+    }
+
+    .actionCol {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+
+    .reqBtn {
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .techTable {
+        min-width: 1200px; /* Ensure 1200px minimum width to prevent squashing on desktop */
+        table-layout: auto; /* Return to auto for better content-based width fitting on desktop */
+    }
+
+    /* Specific column adjustments for Table 1 common view */
+    .techTable th:nth-child(1), .techTable td:nth-child(1) { width: 140px; } /* Part Number */
+    .techTable th:nth-child(2), .techTable td:nth-child(2) { width: 140px; } /* Cross-Ref */
+    .techTable th:nth-child(3), .techTable td:nth-child(3) { width: 90px; }  /* Brand */
+    
+    .techTable td {
+        vertical-align: middle;
+    }
 }
 
 /* Grid Table for Sealing */
@@ -837,7 +919,7 @@
         gap: 8px;
     }
 
-    /* Tables tablet responsive */
+    /* Tables tablet responsive - improved for card view */
     .tableBlock {
         padding: 20px;
     }
@@ -847,7 +929,7 @@
     }
 
     .techTable {
-        min-width: 700px;
+        min-width: 0; /* Clear min-width for card view */
     }
 }
 
@@ -895,13 +977,12 @@
     }
 
     .tableScroll {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        overflow-x: visible; /* Cards don't need scroll */
     }
 
     .techTable {
-        min-width: 600px;
-        font-size: 12px;
+        min-width: 0;
+        font-size: 14px;
     }
 
     .techTable th {

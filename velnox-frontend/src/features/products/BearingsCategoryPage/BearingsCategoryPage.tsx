@@ -430,7 +430,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <div className={styles.buqDrawingTitle}>ТЕХНІЧНЕ КРЕСЛЕННЯ — BUQ SERIES</div>
                         <div className={styles.buqDrawingCompositeSingle}>
                             <Image
-                                src="/velnox/images/products/buq-composite-drawing.png"
+                                src="/velnox/images/products/buq-drawing-composite.png"
                                 alt="BUQ Series Blueprint"
                                 width={1200}
                                 height={600}
@@ -493,25 +493,25 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                 <tbody>
                                     {filteredT1.map((row, i) => (
                                         <tr key={row.slug || i}>
-                                            <td>
+                                            <td data-label="Part Number">
                                                 <Link href={`/${locale}/products/bearings/${row.slug}`} className={styles.designationLink}>
                                                     {row.article}
                                                 </Link>
                                             </td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row.cross_ref}</td>
-                                            <td>{row.brand}</td>
-                                            <td>{row.d_mm}</td>
-                                            <td>{row.d_inch ?? '—'}</td>
-                                            <td>{row.A1}</td>
-                                            <td>{row.A2}</td>
-                                            <td>{row.J}</td>
-                                            <td>{row.L}</td>
-                                            <td>{row.N}</td>
-                                            <td>{row.A}</td>
-                                            <td>{row.mass_kg}</td>
-                                            <td>{row.Cdyn}</td>
-                                            <td>{row.Co}</td>
-                                            <td>{row.Pu}</td>
+                                            <td data-label="Cross-Reference" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row.cross_ref}</td>
+                                            <td data-label="Brand">{row.brand}</td>
+                                            <td data-label="d (mm)">{row.d_mm}</td>
+                                            <td data-label="d (inch)">{row.d_inch ?? '—'}</td>
+                                            <td data-label="A1 (mm)">{row.A1}</td>
+                                            <td data-label="A2 (mm)">{row.A2}</td>
+                                            <td data-label="J (mm)">{row.J}</td>
+                                            <td data-label="L (mm)">{row.L}</td>
+                                            <td data-label="N (mm)">{row.N}</td>
+                                            <td data-label="A (mm)">{row.A}</td>
+                                            <td data-label="Mass (kg)">{row.mass_kg}</td>
+                                            <td data-label="Cdyn (kN)">{row.Cdyn}</td>
+                                            <td data-label="Co (kN)">{row.Co}</td>
+                                            <td data-label="Pu (kN)">{row.Pu}</td>
                                             <td className={styles.actionCol}>
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row.article)}>
                                                     {t('block2.btn_request')}
@@ -534,7 +534,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
             {/* ─── Section: Table 2: Performance Data ─── */}
             <section className={styles.tablesSection}>
-                <div className={styles.container}>
+                <div className={styles.tableSectionContainer}>
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table2.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table2.desc')}</p>
@@ -555,39 +555,41 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <th>Bearing designation</th>
+                                        <th>Part No</th>
+                                        <th>Designation</th>
                                         <th>Brand</th>
-                                        <th>Cross-Reference</th>
-                                        <th>Bore d (mm)</th>
-                                        <th>A1 (mm)</th>
-                                        <th>A2 (mm)</th>
-                                        <th>J (mm)</th>
-                                        <th>L (mm)</th>
+                                        <th>Cross-Ref</th>
+                                        <th>Bore d</th>
+                                        <th>A1</th>
+                                        <th>A2</th>
+                                        <th>J</th>
+                                        <th>L</th>
                                         <th>H/T</th>
-                                        <th>A (mm)</th>
-                                        <th>Mass (kg)</th>
-                                        <th>Cdyn (kN)</th>
-                                        <th>Co (kN)</th>
-                                        <th>Pu (kN)</th>
+                                        <th>A</th>
+                                        <th>Mass</th>
+                                        <th>Cdyn</th>
+                                        <th>Co</th>
+                                        <th>Pu</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {filteredT2.map((row, i) => (
                                         <tr key={i}>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
-                                            <td>{row['Bore diameter \\nd (mm)'] || '-'}</td>
-                                            <td>{row['Total housing width \\nA1 (mm)'] || '-'}</td>
-                                            <td>{row['Housing flange thickness \\nA2 (mm)'] || '-'}</td>
-                                            <td>{row['Distance between the holes \\nJ (mm)'] || '-'}</td>
-                                            <td>{row['Total length \\nL (mm)'] || '-'}</td>
-                                            <td>{row['Hole / Thread \\nH/T'] || '-'}</td>
-                                            <td>{row['Overall width \\nA (mm)'] || '-'}</td>
-                                            <td>{row['Mass \\nkg'] || '-'}</td>
-                                            <td>{row['Dynamic load rating \\nCdyn (kN)'] || '-'}</td>
-                                            <td>{row['Static load rating \\nCo (kN)'] || '-'}</td>
-                                            <td>{row['Fatigue load limit \\nPu (kN)'] || '-'}</td>
+                                            <td data-label="Part No">{row['Part Number'] || '-'}</td>
+                                            <td data-label="Designation" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
+                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name'] || '-'}</td>
+                                            <td data-label="Cross-Ref" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
+                                            <td data-label="Bore d">{row['Bore diameter d (mm)'] || '-'}</td>
+                                            <td data-label="A1">{row['Total housing width A1 (mm)'] || '-'}</td>
+                                            <td data-label="A2">{row['Housing flange thickness A2 (mm)'] || '-'}</td>
+                                            <td data-label="J">{row['Distance between the holes J (mm)'] || '-'}</td>
+                                            <td data-label="L">{row['Total length L (mm)'] || '-'}</td>
+                                            <td data-label="H/T">{row['Hole / Thread H/T'] || '-'}</td>
+                                            <td data-label="A">{row['Overall width A (mm)'] || '-'}</td>
+                                            <td data-label="Mass">{row['Mass kg'] || '-'}</td>
+                                            <td data-label="Cdyn">{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
+                                            <td data-label="Co">{row['Static load rating Co (kN)'] || '-'}</td>
+                                            <td data-label="Pu">{row['Fatigue load limit Pu (kN)'] || '-'}</td>
                                         </tr>
                                     ))}
                                     {filteredT2.length === 0 && (
@@ -609,7 +611,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 <div className={styles.appInner}>
                     <div className={styles.appHeader}>
                         <span className={styles.appTag}>Ущільнення</span>
-                        <h2 className={styles.appTitle}>Пакерні котки</h2>
+                        <h2 className={styles.appTitle}>{t('packer_roller.sealing_title')}</h2>
                     </div>
                     <div className={styles.appBody}>
                         <p className={`${styles.appPara} ${styles.appParaLead} ${styles.appParaVisible}`}>
@@ -631,7 +633,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
             {/* ─── Section: Table 3: Cross-References & Applications ─── */}
             <section className={styles.tablesSection}>
-                <div className={styles.container}>
+                <div className={styles.tableSectionContainer}>
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table3.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table3.desc')}</p>
@@ -672,21 +674,21 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                 <tbody>
                                     {filteredT3.map((row, i) => (
                                         <tr key={i}>
-                                            <td>{row['Part Number'] || '-'}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
-                                            <td>{row['Bore diameter d (mm)'] || '-'}</td>
-                                            <td>{row['Total length L (mm)'] || '-'}</td>
-                                            <td>{row['Distance between the holes J (mm)'] || '-'}</td>
-                                            <td>{row['Hole / Thread H/T (mm)'] || '-'}</td>
-                                            <td>{row['Overall width A (mm)'] || '-'}</td>
-                                            <td>{row['Total housing width A1 (mm)'] || '-'}</td>
-                                            <td>{row['Housing flange thickness A2 (mm)'] || '-'}</td>
-                                            <td>{row['Width inner ring B (mm)'] || '-'}</td>
-                                            <td>{row['Static load rating Co (kN)'] || '-'}</td>
-                                            <td>{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
-                                            <td>{row['Fatigue load limit Pu (kN)'] || '-'}</td>
+                                            <td data-label="Part Number">{row['Part Number'] || '-'}</td>
+                                            <td data-label="Bearing Designation" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
+                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
+                                            <td data-label="Cross-Reference" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
+                                            <td data-label="Bore d (mm)">{row['Bore diameter d (mm)'] || '-'}</td>
+                                            <td data-label="Length L (mm)">{row['Total length L (mm)'] || '-'}</td>
+                                            <td data-label="J (mm)">{row['Distance between the holes J (mm)'] || '-'}</td>
+                                            <td data-label="H/T (mm)">{row['Hole / Thread H/T (mm)'] || '-'}</td>
+                                            <td data-label="A (mm)">{row['Overall width A (mm)'] || '-'}</td>
+                                            <td data-label="A1 (mm)">{row['Total housing width A1 (mm)'] || '-'}</td>
+                                            <td data-label="A2 (mm)">{row['Housing flange thickness A2 (mm)'] || '-'}</td>
+                                            <td data-label="B (mm)">{row['Width inner ring B (mm)'] || '-'}</td>
+                                            <td data-label="Co (kN)">{row['Static load rating Co (kN)'] || '-'}</td>
+                                            <td data-label="Cdyn (kN)">{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
+                                            <td data-label="Pu (kN)">{row['Fatigue load limit Pu (kN)'] || '-'}</td>
                                         </tr>
                                     ))}
                                     {filteredT3.length === 0 && (
@@ -761,28 +763,34 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <th>T</th>
                                         <th>H (mm)</th>
                                         <th>Mass (kg)</th>
+                                        <th>Cdyn (kN)</th>
+                                        <th>Co (kN)</th>
+                                        <th>Pu (kN)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {filteredT4.map((row, i) => (
                                         <tr key={i}>
-                                            <td>{row['Part Number'] || '-'}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
-                                            <td>{row['Bore diameter d (mm)'] || '-'}</td>
-                                            <td>{row['Centering diameter d1 (mm)'] || '-'}</td>
-                                            <td>{row['Housing overall width L1 (mm)'] || '-'}</td>
-                                            <td>{row['Distance between the holes J1 (mm)'] || '-'}</td>
-                                            <td>{row['Housing overall width L2 (mm)'] || '-'}</td>
-                                            <td>{row['Distance between the holes J2 (mm)'] || '-'}</td>
-                                            <td>{row['Overall width A (mm)'] || '-'}</td>
-                                            <td>{row['Flange width A1 (mm)'] || '-'}</td>
-                                            <td>{row['Flange width A2 (mm)'] || '-'}</td>
-                                            <td>{row['Centering diameter height A3 (mm)'] || '-'}</td>
-                                            <td>{row['Threaded hole size T'] || '-'}</td>
-                                            <td>{row['Hole diameter H (mm)'] || '-'}</td>
-                                            <td>{row['Mass kg'] || '-'}</td>
+                                            <td data-label="Part Number">{row['Part Number'] || '-'}</td>
+                                            <td data-label="Bearing Designation" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
+                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
+                                            <td data-label="Cross-Reference" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
+                                            <td data-label="Bore d (mm)">{row['Bore diameter d (mm)'] || '-'}</td>
+                                            <td data-label="d1 (mm)">{row['Centering diameter d1 (mm)'] || '-'}</td>
+                                            <td data-label="L1 (mm)">{row['Housing overall width L1 (mm)'] || '-'}</td>
+                                            <td data-label="J1 (mm)">{row['Distance between the holes J1 (mm)'] || '-'}</td>
+                                            <td data-label="L2 (mm)">{row['Housing overall width L2 (mm)'] || '-'}</td>
+                                            <td data-label="J2 (mm)">{row['Distance between the holes J2 (mm)'] || '-'}</td>
+                                            <td data-label="A (mm)">{row['Overall width A (mm)'] || '-'}</td>
+                                            <td data-label="A1 (mm)">{row['Flange width A1 (mm)'] || '-'}</td>
+                                            <td data-label="A2 (mm)">{row['Flange width A2 (mm)'] || '-'}</td>
+                                            <td data-label="A3 (mm)">{row['Centering diameter height A3 (mm)'] || '-'}</td>
+                                            <td data-label="T">{row['Threaded hole size T'] || '-'}</td>
+                                            <td data-label="H (mm)">{row['Hole diameter H (mm)'] || '-'}</td>
+                                            <td data-label="Mass (kg)">{row['Mass kg'] || '-'}</td>
+                                            <td data-label="Cdyn (kN)">{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
+                                            <td data-label="Co (kN)">{row['Static load rating Co (kN)'] || '-'}</td>
+                                            <td data-label="Pu (kN)">{row['Fatigue load limit Pu (kN)'] || '-'}</td>
                                         </tr>
                                     ))}
                                     {filteredT4.length === 0 && (
@@ -797,7 +805,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
             {/* ─── Section: Table 5: Additional Bearing Specifications ─── */}
             <section className={styles.tablesSection}>
-                <div className={styles.container}>
+                <div className={styles.tableSectionContainer}>
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table5.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table5.desc')}</p>
@@ -805,41 +813,41 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={`${styles.techTable} ${styles.noScroll}`}>
                                 <thead>
                                     <tr>
-                                        <th>Part Number</th>
-                                        <th>Bearing Designation</th>
+                                        <th>Part No</th>
+                                        <th>Designation</th>
                                         <th>Brand</th>
-                                        <th>Cross-Reference</th>
-                                        <th>Bore d (mm)</th>
-                                        <th>Outside D (mm)</th>
-                                        <th>Pitch J (mm)</th>
+                                        <th>Cross-Ref</th>
+                                        <th>Bore d</th>
+                                        <th>Out D</th>
+                                        <th>Pitch J</th>
                                         <th>H/T</th>
-                                        <th>A (mm)</th>
-                                        <th>A2 (mm)</th>
-                                        <th>B (mm)</th>
-                                        <th>Mass (kg)</th>
-                                        <th>Co (kN)</th>
-                                        <th>Cdyn (kN)</th>
-                                        <th>Pu (kN)</th>
+                                        <th>A</th>
+                                        <th>A2</th>
+                                        <th>B</th>
+                                        <th>Mass</th>
+                                        <th>Co</th>
+                                        <th>Cdyn</th>
+                                        <th>Pu</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {filteredT5.map((row, i) => (
                                         <tr key={i}>
-                                            <td>{row['Part Number'] || '-'}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
-                                            <td>{row['Bore diameter d (mm)'] || '-'}</td>
-                                            <td>{row['Outside diameter D (mm)'] || '-'}</td>
-                                            <td>{row['Pitch circle diameter J (mm)'] || '-'}</td>
-                                            <td>{row['Hole / Thread H/T'] || '-'}</td>
-                                            <td>{row['Overall width A (mm)'] || '-'}</td>
-                                            <td>{row['Housing flange thickness A2 (mm)'] || '-'}</td>
-                                            <td>{row['Width inner ring B (mm)'] || '-'}</td>
-                                            <td>{row['Mass kg'] || '-'}</td>
-                                            <td>{row['Static load rating Co (kN)'] || '-'}</td>
-                                            <td>{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
-                                            <td>{row['Fatigue load limit Pu (kN)'] || '-'}</td>
+                                            <td data-label="Part No">{row['Part Number'] || '-'}</td>
+                                            <td data-label="Designation" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
+                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
+                                            <td data-label="Cross-Ref" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
+                                            <td data-label="Bore d">{row['Bore diameter d (mm)'] || '-'}</td>
+                                            <td data-label="Out D">{row['Outside diameter D (mm)'] || '-'}</td>
+                                            <td data-label="Pitch J">{row['Pitch circle diameter J (mm)'] || '-'}</td>
+                                            <td data-label="H/T">{row['Hole / Thread H/T'] || '-'}</td>
+                                            <td data-label="A">{row['Overall width A (mm)'] || '-'}</td>
+                                            <td data-label="A2">{row['Housing flange thickness A2 (mm)'] || '-'}</td>
+                                            <td data-label="B">{row['Width inner ring B (mm)'] || '-'}</td>
+                                            <td data-label="Mass">{row['Mass kg'] || '-'}</td>
+                                            <td data-label="Co">{row['Static load rating Co (kN)'] || '-'}</td>
+                                            <td data-label="Cdyn">{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
+                                            <td data-label="Pu">{row['Fatigue load limit Pu (kN)'] || '-'}</td>
                                         </tr>
                                     ))}
                                     {filteredT5.length === 0 && (
