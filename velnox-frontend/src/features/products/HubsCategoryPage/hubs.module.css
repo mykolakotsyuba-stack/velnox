@@ -2805,3 +2805,11 @@
 .blueprintLayoutRight {
     justify-content: flex-end !important;
 }
+
+/* Block 2 text — flex: 0 so spacer actually pushes it right */
+.blueprintTextRight {
+    flex: 0 1 520px !important;
+}
+.blueprintLayoutRight {
+    justify-content: flex-end;
+}

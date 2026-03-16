@@ -488,7 +488,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 {/* Overlay: dark on RIGHT (text zone), transparent on LEFT (machine visible) */}
                 <div className={styles.blueprintDarkOverlayRight} />
                 <div className={`${styles.blueprintLayout} ${styles.blueprintLayoutRight}`}>
-                    <div className={styles.blueprintText}>
+                    <div className={styles.blueprintSpacer} />
+                    <div className={`${styles.blueprintText} ${styles.blueprintTextRight}`}>
                         <span className={styles.blueprintTag} style={{ color: '#34d399' }}>
                             <span className={styles.blueprintTagLine} style={{ background: '#34d399' }} />
                             CUTTING NODES
