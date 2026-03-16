@@ -352,45 +352,32 @@ class DatabaseSeeder extends Seeder
         }
 
         // ===== TABLE 2: PERFORMANCE DATA (Нова таблиця 2) =====
-        // Newline-separated variants from Excel
-        $table2Variants = [
-            ['CE066', 'SNR'],
-            ['LSQFR308 TBT.H.T.Zn', 'FKL'],
-            ['UC 308 X1', 'SNR'],
-            ['UCF308 A01X1', 'SNR'],
-            ['W308-40MM-FDT-MF-AP-SP1 (PER.W308RRBP52-F-A)', 'PEER'],
-            ['W308-40MM-FDT-MF-AP-SP1 Without thread', 'PEER'],
-            ['W308RRBP52-F-B (BX-PER.W308RRBP52-F)', 'PEER'],
-            ['XUCF308B01B169', 'SNR'],
-        ];
-
-        foreach ($table2Variants as $idx => $variant) {
-            Product::updateOrCreate(
-                ['slug' => 'ce066-performance-' . str($variant[0])->slug()],
-                [
-                    'article'         => $variant[0],
-                    'category_id'     => $bearingsCategory->id,
-                    'specs'           => [
-                        'table_group' => 'performance',
-                        'bearing_designation' => $variant[0],
-                        'brand_name' => $variant[1],
-                        'cross_reference' => '957305 AMAZONE, CE066 AMAZONE, CE078 AMAZONE',
-                        'bore_diameter_d_mm' => 40.0,
-                        'total_housing_width_a1_mm' => 40.6,
-                        'housing_flange_thickness_a2_mm' => 19.0,
-                        'distance_between_holes_j_mm' => 101.5,
-                        'total_length_l_mm' => 130.0,
-                        'hole_thread_ht' => 'M12',
-                        'overall_width_a_mm' => 51.4,
-                        'mass_kg' => null,
-                        'dynamic_load_rating_cdyn_kn' => 62.3,
-                        'static_load_rating_co_kn' => 45.2,
-                        'fatigue_load_limit_pu_kn' => 1.898,
-                    ],
-                    'is_active' => true,
-                ]
-            );
-        }
+        Product::updateOrCreate(
+            ['slug' => 'buq-308-2t3h-ds'],
+            [
+                'article'         => 'BUQ-308-2T3H-DS',
+                'category_id'     => $bearingsCategory->id,
+                'specs'           => [
+                    'table_group' => 'performance',
+                    'part_number' => 'BUQ-308-2T3H-DS',
+                    'bearing_designation' => "CE066\nLSQFR308 TBT.H.T.Zn\nUC 308 X1\nUCF308 A01X1\nW308-40MM-FDT-MF-AP-SP1 (PER.W308RRBP52-F-A)\nW308-40MM-FDT-MF-AP-SP1 Without thread\nW308RRBP52-F-B (BX-PER.W308RRBP52-F)\nXUCF308B01B169",
+                    'brand_name' => "SNR\nFKL\nSNR\nSNR\nPEER\nPEER\nPEER\nSNR",
+                    'cross_reference' => "957305 AMAZONE\nCE066 AMAZONE\nCE078 AMAZONE\nLSQFR308 TBS.H.T.Zn FKL\nPN00042 RBF Housing\nSL308MR3L Z&S\nUCFE308 A01X1=UC308X1+FE308A01\nUCFE308 A01X1",
+                    'bore_diameter_d_mm' => 40.0,
+                    'total_housing_width_a1_mm' => 40.6,
+                    'housing_flange_thickness_a2_mm' => 19.0,
+                    'distance_between_holes_j_mm' => 101.5,
+                    'total_length_l_mm' => 130.0,
+                    'hole_thread_ht' => 'M12',
+                    'overall_width_a_mm' => 51.4,
+                    'mass_kg' => 2.5,
+                    'dynamic_load_rating_cdyn_kn' => 62.3,
+                    'static_load_rating_co_kn' => 45.2,
+                    'fatigue_load_limit_pu_kn' => 1.898,
+                ],
+                'is_active' => true,
+            ]
+        );
 
         // ===== TABLE 3: CROSS-REFERENCES (Нова таблиця 3) =====
         Product::updateOrCreate(
@@ -400,9 +387,9 @@ class DatabaseSeeder extends Seeder
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
                     'table_group' => 'cross-references',
-                    'bearing_designation' => 'CJI 309 GGG+19000509 (Assy), LSQFR 309-2TB.H.T',
-                    'brand_name' => 'CT-AGRI / FKL',
-                    'cross_reference' => 'Farmet: 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607',
+                    'bearing_designation' => "CJI 309 GGG+19000509 (Assy)\nLSQFR 309-2TB.H.T\nLSQFR 309-2TB.H.T",
+                    'brand_name' => "CT-AGRI\nFKL\nCT-AGRI",
+                    'cross_reference' => "4000412 Farmet\nM14581 Farmet\n15626ND Farmet\n18888ND Farmet\nM10257 Farmet\nM13082ND Farmet\nM15626 Farmet\nM17627 Farmet\nM24607 Farmet\nCJI309GGG+19000509\nLEFG 209 TDT FKL",
                     'bore_diameter_d_mm' => 45.0,
                     'total_length_l_mm' => 137.0,
                     'distance_between_holes_j_mm' => 105.0,
@@ -411,7 +398,7 @@ class DatabaseSeeder extends Seeder
                     'total_housing_width_a1_mm' => 44.0,
                     'housing_flange_thickness_a2_mm' => 22.0,
                     'width_inner_ring_b_mm' => 51.1,
-                    'mass_kg' => null,
+                    'mass_kg' => 3.4,
                     'static_load_rating_co_kn' => 59.6,
                     'dynamic_load_rating_cdyn_kn' => 80.8,
                     'fatigue_load_limit_pu_kn' => 2.503,
@@ -429,9 +416,9 @@ class DatabaseSeeder extends Seeder
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
                     'table_group' => 'extended-specs',
-                    'bearing_designation' => 'M43400468, M43400468 H.60 S.PAR',
-                    'brand_name' => 'CT-AGRI / Ri.Ma / RBF / FKL',
-                    'cross_reference' => 'Gaspardo: 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300',
+                    'bearing_designation' => "M43400468\nM43400468 H.60 S.PAR\nM43400468 H.60 S.PAR\nM43400468 Bearing unit\nPN 0102\nZGKU 309 2S\nPN00102",
+                    'brand_name' => "CT-AGRI\n-\n-\nRi.Ma\nRBF\nFKL\nRBF",
+                    'cross_reference' => "17014180 GASPARDO\nM23400435 Gaspardo - Bearing housing section\nM23400436 Gaspardo - Bearing housing section\nM43400413 Gaspardo\nM43400468 Gaspardo\nM43400468R Gaspardo\nR17015300 Gaspardo\n?43400468 Bearing Unit",
                     'bore_diameter_d_mm' => 45.0,
                     'centering_diameter_d1_mm' => 74.0,
                     'housing_overall_width_l1_mm' => 152.0,
@@ -444,7 +431,10 @@ class DatabaseSeeder extends Seeder
                     'centering_diameter_height_a3_mm' => 7.0,
                     'threaded_hole_size_t' => '4xM12x1.25',
                     'hole_diameter_h_mm' => '4x12.3',
-                    'mass_kg' => null,
+                    'mass_kg' => 5.6,
+                    'dynamic_load_rating_cdyn_kn' => 52.7,
+                    'static_load_rating_co_kn' => 31.5,
+                    'fatigue_load_limit_pu_kn' => 1.32,
                 ],
                 'is_active' => true,
             ]
@@ -458,20 +448,20 @@ class DatabaseSeeder extends Seeder
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
                     'table_group' => 'additional-data',
-                    'bearing_designation' => '207XTR-R-DFC-A534 (PER.207RRSB-FC-A), GH.PN 00032, LSGR 207-TBS',
-                    'brand_name' => 'PEER / RBF / FKL / CT-AGRI / NTE (Slovakia)',
-                    'cross_reference' => 'Lemken: 31910034, 3199372; Opall Agri: 3421370; INA/FAG: F232812 - 0200, GGF35A08, GGME07 - AH07; SNR: UC 207 X1',
+                    'bearing_designation' => "207XTR-R-DFC-A534 (PER.207RRSB-FC-A)\nGH.PN 00032\nLSGR 207-TBS\nLSGR 207-TBS\nLSGR 207-TBS\nPN 00023\nPN 00032",
+                    'brand_name' => "PEER\nRBF\nFKL\nCT-AGRI\nNTE (Slovakia)\nRBF\nRBF",
+                    'cross_reference' => "31910034 Lemken\n3199372 Lemken\n3421370 Opall Agri\nF232812 - 0200 INA/FAG Bearing\nGGF35A08\nGGME07 - AH07 INA/FAG Housing\nRCJ 35 35x118x39,9 4xM12\nUC 207 X1 SNR Bearing",
                     'bore_diameter_d_mm' => 35.0,
                     'outside_diameter_d_mm' => 125.0,
                     'pitch_circle_diameter_j_mm' => 100.0,
                     'hole_thread_ht' => 'M12',
                     'overall_width_a_mm' => 40.0,
                     'housing_flange_thickness_a2_mm' => 20.0,
-                    'width_inner_ring_b_mm' => null,
-                    'mass_kg' => 0.643,
-                    'static_load_rating_co_kn' => null,
-                    'dynamic_load_rating_cdyn_kn' => null,
-                    'fatigue_load_limit_pu_kn' => null,
+                    'width_inner_ring_b_mm' => 28.3,
+                    'mass_kg' => 1.7,
+                    'static_load_rating_co_kn' => 15.3,
+                    'dynamic_load_rating_cdyn_kn' => 25.5,
+                    'fatigue_load_limit_pu_kn' => 0.643,
                 ],
                 'oem_cross'       => ['31910034 Lemken', '3199372 Lemken', '3421370 Opall Agri'],
                 'is_active' => true,

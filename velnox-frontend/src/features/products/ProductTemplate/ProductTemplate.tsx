@@ -63,7 +63,8 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
     const demoImages = isBuq
         ? [
             '/velnox/images/products/buq-bearing-photo.png',
-            '/velnox/images/products/buq-bearing-dimensions.png',
+            '/velnox/images/products/buq-drawing-part-1.png',
+            '/velnox/images/products/buq-drawing-part-2.png',
           ]
         : [
             '/velnox/images/products/bearing-photo-1.webp',

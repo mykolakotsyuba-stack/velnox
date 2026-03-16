@@ -10,10 +10,10 @@
     "Hole / Thread H/T": "M12",
     "Overall width A (mm)": 40.0,
     "Housing flange thickness A2 (mm)": 20.0,
-    "Width inner ring B (mm)": null,
-    "Mass kg": null,
-    "Static load rating Co (kN)": null,
-    "Dynamic load rating Cdyn (kN)": null,
-    "Fatigue load limit Pu (kN)": "0.643"
+    "Width inner ring B (mm)": 28.3,
+    "Mass kg": 1.7,
+    "Static load rating Co (kN)": 15.3,
+    "Dynamic load rating Cdyn (kN)": 25.5,
+    "Fatigue load limit Pu (kN)": 0.643
   }
 ]

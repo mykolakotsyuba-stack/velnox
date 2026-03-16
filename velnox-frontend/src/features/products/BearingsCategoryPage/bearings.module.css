@@ -80,6 +80,16 @@
     }
 }
 
+@keyframes heroFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
 .animIn {
     display: block;
 }
@@ -91,12 +101,16 @@
     animation: animSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.animIn .featureCard:nth-child(1) {
+    animation-delay: 0s;
+}
+
 .animIn .featureCard:nth-child(2) {
-    animation-delay: 0.1s;
+    animation-delay: 0.12s;
 }
 
 .animIn .featureCard:nth-child(3) {
-    animation-delay: 0.2s;
+    animation-delay: 0.24s;
 }
 
 .animIn .tableBlock:nth-child(3) {
@@ -123,7 +137,36 @@
 .heroContainer {
     position: relative;
     z-index: 2;
-    max-width: 900px;
+    max-width: 1400px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.heroContent {
+    flex: 1;
+    max-width: 580px;
+}
+
+.heroImageWrap {
+    flex: 0 0 auto;
+    width: 480px;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animIn .heroImageWrap {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.3s;
+    animation: heroFloat 3s ease-in-out 0.9s infinite;
+}
+
+.heroImage {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .heroEyebrow {
@@ -881,6 +924,21 @@
 
 /* Responsive */
 @media (max-width: 900px) {
+    .heroContainer {
+        flex-direction: column;
+        max-width: 100%;
+    }
+
+    .heroContent {
+        max-width: 100%;
+    }
+
+    .heroImageWrap {
+        width: 100%;
+        max-width: 380px;
+        margin: 20px auto 0;
+    }
+
     .featureGrid {
         grid-template-columns: 1fr;
     }
@@ -934,6 +992,15 @@
 }
 
 @media (max-width: 600px) {
+    .hero {
+        padding: 60px 0;
+    }
+
+    .heroImageWrap {
+        width: 100%;
+        max-width: 240px;
+    }
+
     .formRow {
         flex-direction: column;
     }
@@ -1433,6 +1500,18 @@
 }
 
 @media (max-width: 480px) {
+    .heroTitle {
+        font-size: clamp(28px, 6vw, 40px);
+    }
+
+    .heroSubtitle {
+        font-size: clamp(14px, 3.5vw, 16px);
+    }
+
+    .heroImageWrap {
+        max-width: 200px;
+    }
+
     .buqDrawingComposite {
         grid-template-columns: 1fr;
     }
@@ -1902,12 +1981,80 @@
         padding: 24px;
         margin: 20px 0;
     }
-    
+
     .sealingInfoTitle {
         font-size: 20px;
     }
-    
+
     .sealingInfoContent {
         font-size: 14px;
+    }
+}
+
+/* ─── Large Screen Support ─── */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    .heroContainer {
+        max-width: 1400px;
+        gap: 80px;
+    }
+
+    .heroImageWrap {
+        width: 560px;
+    }
+
+    .heroTitle {
+        font-size: clamp(48px, 5vw, 72px);
+    }
+
+    .sectionTitle {
+        font-size: clamp(32px, 3.5vw, 48px);
+    }
+}
+
+/* ─── TV / Ultra-Large Screen Support ─── */
+@media (min-width: 1920px) {
+    .hero {
+        padding: 160px 0;
+    }
+
+    .container {
+        max-width: 1600px;
+    }
+
+    .heroContainer {
+        max-width: 1600px;
+        gap: 100px;
+    }
+
+    .heroImageWrap {
+        width: 600px;
+    }
+
+    .heroTitle {
+        font-size: clamp(64px, 6vw, 80px);
+    }
+
+    .heroSubtitle {
+        font-size: clamp(20px, 1.5vw, 24px);
+    }
+
+    .sectionTitle {
+        font-size: clamp(40px, 4vw, 56px);
+    }
+
+    .featureCard {
+        padding: 50px 40px;
+    }
+
+    .crossRefTitle {
+        font-size: clamp(36px, 4vw, 56px);
+    }
+
+    .tableBlock {
+        padding: 40px;
     }
 }

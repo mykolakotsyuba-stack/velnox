@@ -12,7 +12,7 @@
     "Total housing width A1 (mm)": 44.0,
     "Housing flange thickness A2 (mm)": 22.0,
     "Width inner ring B (mm)": "51.1",
-    "Mass kg": null,
+    "Mass kg": 3.4,
     "Static load rating Co (kN)": "59.6",
     "Dynamic load rating Cdyn (kN)": "80.8",
     "Fatigue load limit Pu (kN)": "2.503"

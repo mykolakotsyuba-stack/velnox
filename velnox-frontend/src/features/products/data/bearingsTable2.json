@@ -1,18 +1,19 @@
 [
   {
-    "Bearing designation": "CE066 \nLSQFR308 TBT.H.T.Zn \nUC 308 X1 \nUCF308 A01X1 \nW308-40MM-FDT-MF-AP-SP1 (PER.W308RRBP52-F-A) \nW308-40MM-FDT-MF-AP-SP1 Without thread \nW308RRBP52-F-B (BX-PER.W308RRBP52-F) \nXUCF308B01B169",
-    "Brand \nname": "SNR \nFKL \nSNR \nSNR \nPEER \nPEER \nPEER \nSNR",
-    "Cross-Refference": "957305 AMAZONE \nCE066 AMAZONE \nCE078 AMAZONE \nLSQFR308 TBS.H.T.Zn FKL \nPN00042 RBF Housing \nSL308MR3L Z&S \nUCFE308 A01X1=UC308X1+FE308A01 \nUCFE308 A01X1",
-    "Bore diameter \nd (mm)": 40.0,
-    "Total housing width \nA1 (mm)": "40.6",
-    "Housing flange thickness \nA2 (mm)": 19.0,
-    "Distance between the holes \nJ (mm)": "101.5",
-    "Total length \nL (mm)": 130.0,
-    "Hole / Thread \nH/T": "M12",
-    "Overall width \nA (mm)": "51.4",
-    "Mass \nkg": null,
-    "Dynamic load rating \nCdyn (kN)": "62.3",
-    "Static load rating \nCo (kN)": "45.2",
-    "Fatigue load limit \nPu (kN)": "1.898"
+    "Part Number": "BUQ-308-2T3H-DS",
+    "Bearing designation": "CE066\nLSQFR308 TBT.H.T.Zn\nUC 308 X1\nUCF308 A01X1\nW308-40MM-FDT-MF-AP-SP1 (PER.W308RRBP52-F-A)\nW308-40MM-FDT-MF-AP-SP1 Without thread\nW308RRBP52-F-B (BX-PER.W308RRBP52-F)\nXUCF308B01B169",
+    "Brand name": "SNR\nFKL\nSNR\nSNR\nPEER\nPEER\nPEER\nSNR",
+    "Cross-Refference": "957305 AMAZONE\nCE066 AMAZONE\nCE078 AMAZONE\nLSQFR308 TBS.H.T.Zn FKL\nPN00042 RBF Housing\nSL308MR3L Z&S\nUCFE308 A01X1=UC308X1+FE308A01\nUCFE308 A01X1",
+    "Bore diameter d (mm)": 40.0,
+    "Total housing width A1 (mm)": 40.6,
+    "Housing flange thickness A2 (mm)": 19.0,
+    "Distance between the holes J (mm)": 101.5,
+    "Total length L (mm)": 130.0,
+    "Hole / Thread H/T": "M12",
+    "Overall width A (mm)": 51.4,
+    "Mass kg": 2.5,
+    "Dynamic load rating Cdyn (kN)": 62.3,
+    "Static load rating Co (kN)": 45.2,
+    "Fatigue load limit Pu (kN)": 1.898
   }
 ]

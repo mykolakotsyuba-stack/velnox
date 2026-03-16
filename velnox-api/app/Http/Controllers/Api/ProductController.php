@@ -89,20 +89,21 @@ class ProductController extends Controller
             ->whereJsonContains('specs->table_group', 'performance')
             ->get()
             ->map(fn($p) => [
+                'Part Number' => $p->specs['part_number'] ?? '-',
                 'Bearing designation' => $p->specs['bearing_designation'] ?? $p->article,
-                'Brand \nname' => $p->specs['brand_name'] ?? '-',
+                'Brand name' => $p->specs['brand_name'] ?? '-',
                 'Cross-Refference' => $p->specs['cross_reference'] ?? '-',
-                'Bore diameter \nd (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
-                'Total housing width \nA1 (mm)' => $p->specs['total_housing_width_a1_mm'] ?? '-',
-                'Housing flange thickness \nA2 (mm)' => $p->specs['housing_flange_thickness_a2_mm'] ?? '-',
-                'Distance between the holes \nJ (mm)' => $p->specs['distance_between_holes_j_mm'] ?? '-',
-                'Total length \nL (mm)' => $p->specs['total_length_l_mm'] ?? '-',
-                'Hole / Thread \nH/T' => $p->specs['hole_thread_ht'] ?? '-',
-                'Overall width \nA (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
-                'Mass \nkg' => $p->specs['mass_kg'] ?? '-',
-                'Dynamic load rating \nCdyn (kN)' => $p->specs['dynamic_load_rating_cdyn_kn'] ?? '-',
-                'Static load rating \nCo (kN)' => $p->specs['static_load_rating_co_kn'] ?? '-',
-                'Fatigue load limit \nPu (kN)' => $p->specs['fatigue_load_limit_pu_kn'] ?? '-',
+                'Bore diameter d (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
+                'Total housing width A1 (mm)' => $p->specs['total_housing_width_a1_mm'] ?? '-',
+                'Housing flange thickness A2 (mm)' => $p->specs['housing_flange_thickness_a2_mm'] ?? '-',
+                'Distance between the holes J (mm)' => $p->specs['distance_between_holes_j_mm'] ?? '-',
+                'Total length L (mm)' => $p->specs['total_length_l_mm'] ?? '-',
+                'Hole / Thread H/T' => $p->specs['hole_thread_ht'] ?? '-',
+                'Overall width A (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
+                'Mass kg' => $p->specs['mass_kg'] ?? '-',
+                'Dynamic load rating Cdyn (kN)' => $p->specs['dynamic_load_rating_cdyn_kn'] ?? '-',
+                'Static load rating Co (kN)' => $p->specs['static_load_rating_co_kn'] ?? '-',
+                'Fatigue load limit Pu (kN)' => $p->specs['fatigue_load_limit_pu_kn'] ?? '-',
             ]);
 
         return response()->json($products);

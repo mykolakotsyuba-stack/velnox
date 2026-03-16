@@ -275,12 +275,12 @@
         },
         "block1": {
             "title": "Why OEM Manufacturers Choose VELNOX Units?",
-            "card1_title": "Absolute Environmental Protection.",
-            "card1_desc": "The #1 problem in the fields is abrasive and moisture. We implement multi-level sealing systems (T-Seal, Dirtblock Seal, Forged Cover Plate) that physically exclude dirt from entering the rolling body. Your unit runs its entire stated lifespan maintenance-free.",
-            "card2_title": "100% Tolerance Repeatability.",
-            "card2_desc": "For assembly line production, we guarantee the stability of geometric tolerances and cast iron/steel quality from batch to batch. No downtime due to defects.",
-            "card3_title": "Engineering Customization.",
-            "card3_desc": "If a standard flange doesn't meet your drawing, our designers will modify the housing, change the lubrication system, or the seal type strictly according to your technical task."
+            "card1_title": "Environmental Protection.",
+            "card1_desc": "VELNOX bearing units are engineered to operate in severe field conditions: dust, moisture, abrasives and shock loads. The sealing and protective element design minimizes contamination entry into the rolling zone and ensures stable operation throughout the service life.",
+            "card2_title": "Batch-to-Batch Repeatability.",
+            "card2_desc": "For OEM production, tolerance repeatability is critical. VELNOX ensures stable geometry, mounting dimensions and functional parameters from batch to batch, guaranteeing predictable equipment performance in series production.",
+            "card3_title": "Manufacturer Adaptation.",
+            "card3_desc": "VELNOX offers adaptation of bearing units to manufacturer requirements. Housing geometry, bearing parameters, sealing system and other elements can be modified according to operational conditions."
         },
         "block2": {
             "title": "Technical Specifications & Unit Parameters",
@@ -345,6 +345,7 @@
         },
         "packer_roller": {
             "title": "Packer Roller",
+            "sealing_title": "Combined Sealing System",
             "content": "Packer rollers operate under continuous contact with soil, moisture and abrasive particles, resulting in constant radial loads and a highly contaminated working environment. Bearing units used in packer rollers must therefore ensure reliable operation under slow rotational speeds, high static loads and frequent shock impacts.\n\nVELNOX bearing solutions for packer rollers are designed with reinforced housings, enhanced sealing systems and optimized internal clearances to withstand heavy loads and aggressive operating conditions. Special attention is given to contamination protection and long service life with minimal maintenance requirements.\n\nThese characteristics make VELNOX bearings a reliable solution for packer rollers used in modern agricultural machinery, ensuring stable performance and reduced downtime throughout the working season."
         }
     }

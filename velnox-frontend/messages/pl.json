@@ -275,12 +275,12 @@
         },
         "block1": {
             "title": "Dlaczego producenci OEM wybierają zespoły VELNOX?",
-            "card1_title": "Absolutna ochrona przed środowiskiem.",
-            "card1_desc": "Problem nr 1 w polu to ścierniwo i wilgoć. Wdrażamy wielopoziomowe systemy uszczelnień (T-Seal, Dirtblock Seal, Forged Cover Plate), które fizycznie wykluczają wnikanie brudu do elementu tocznego. Twój zespół pracuje przez cały podany okres bezobsługowo.",
-            "card2_title": "100% powtarzalność tolerancji.",
-            "card2_desc": "Dla montażu na linii produkcyjnej gwarantujemy stabilność tolerancji geometrycznych i jakości żeliwa/stali z partii na partię. Brak przestojów z powodu wad.",
-            "card3_title": "Niestandardowa inżynieria.",
-            "card3_desc": "Jeśli standardowy kołnierz nie odpowiada Twojemu rysunkowi, nasi konstruktorzy zmodyfikują oprawę, zmienią system smarowania lub typ uszczelnienia ściśle według Twojego zadania technicznego."
+            "card1_title": "Ochrona przed środowiskiem.",
+            "card1_desc": "Zespoły podkładów VELNOX są zaprojektowane do pracy w ekstremalnych warunkach polowych: pył, wilgoć, ścierniwo i udary. Konstrukcja systemu uszczelniającego i elementów ochronnych minimalizuje przenikanie zanieczyszczeń do strefy toczenia i zapewnia stabilną pracę przez cały okres użytkowania.",
+            "card2_title": "Powtarzalność z partii na partię.",
+            "card2_desc": "Dla produkcji OEM powtarzalność tolerancji jest krytyczna. VELNOX zapewnia stabilną geometrię, wymiary montażowe i parametry funkcjonalne z partii na partię, gwarantując przewidywalną pracę urządzeń w produkcji seryjnej.",
+            "card3_title": "Dostosowanie do producenta.",
+            "card3_desc": "VELNOX oferuje dostosowanie zespołów podkładów do wymagań producenta. Geometrię obudowy, parametry łożyska, system uszczelniający i inne elementy można modyfikować zgodnie z warunkami eksploatacji."
         },
         "block2": {
             "title": "Specyfikacje techniczne i parametry zespołów",
@@ -345,6 +345,7 @@
         },
         "packer_roller": {
             "title": "Uszczelnienie i ochrona wałów (Packer Roller)",
+            "sealing_title": "Kombinowany system uszczelnień",
             "content": "Wały dogniatające (Packer rollers) pracują w ciągłym kontakcie z glebą, wilgocią i cząstkami ściernymi, co prowadzi do stałych obciążeń promieniowych i silnego zanieczyszczenia środowiska pracy. Zespoły łożyskowe stosowane w wałach muszą zatem zapewniać niezawodną pracę przy niskich prędkościach obrotowych, dużych obciążeniach statycznych i częstych uderzeniach.\n\nRozwiązania łożyskowe VELNOX dla wałów dogniatających zostały zaprojektowane ze wzmocnionymi oprawami, ulepszonymi systemami uszczelnień i zoptymalizowanymi luzami wewnętrznymi, aby wytrzymać duże obciążenia i agresywne warunki eksploatacji. Szczególną uwagę poświęcono ochronie przed zanieczyszczeniami i zapewnieniu długiej żywotności przy minimalnych wymaganiach serwisowych.\n\nCharakterystyka ta sprawia, że łożyska VELNOX są niezawodnym rozwiązaniem dla wałów dogniatających stosowanych w nowoczesnych maszynach rolniczych, zapewniając stabilną pracę i redukcję przestojów w całym sezonie prac polowych."
         }
     }

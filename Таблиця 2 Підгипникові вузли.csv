@@ -1,0 +1,35 @@
+Part Number;Bearing designation;"Brand
+name";Cross-Refference;"Bore diameter
+d (mm)";"Total housing width
+A1 (mm)";"Housing flange thickness
+A2 (mm)";"Distance between the holes
+J (mm)";"Total length
+L (mm)";"Hole / Thread
+H/T";"Overall width
+A (mm)";"Mass
+kg";"Dynamic load rating
+Cdyn (kN)";"Static load rating
+Co (kN)";"Fatigue load limit
+Pu (kN)";;;;;
+BUQ-308-2T3H-DS ;"CE066
+LSQFR308 TBT.H.T.Zn
+UC 308 X1
+UCF308 A01X1
+W308-40MM-FDT-MF-AP-SP1 (PER.W308RRBP52-F-A)
+W308-40MM-FDT-MF-AP-SP1 Without thread
+W308RRBP52-F-B (BX-PER.W308RRBP52-F)
+XUCF308B01B169";"SNR
+FKL
+SNR
+SNR
+PEER
+PEER
+PEER
+SNR";"957305 AMAZONE
+CE066 AMAZONE
+CE078 AMAZONE
+LSQFR308 TBS.H.T.Zn FKL
+PN00042 RBF Housing
+SL308MR3L Z&S
+UCFE308 A01X1=UC308X1+FE308A01
+UCFE308 A01X1";40;40.6;19;101.5;130;M12;51.4;2.5;62.3;45.2;1.898;;;;;

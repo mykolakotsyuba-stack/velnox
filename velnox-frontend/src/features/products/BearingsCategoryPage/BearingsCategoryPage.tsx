@@ -139,11 +139,9 @@ function CrossRefIntro() {
         <section className={`${styles.introBlock} ${styles.introBlockCrossRef} ${inView ? styles.animIn : ''}`} ref={ref as React.Ref<HTMLElement>}>
             <div className={styles.crossRefBannerContent}>
                 <div className={styles.crossRefTag}>CROSS-REFERENCES & INSTALLATIONS</div>
-                <h2 className={styles.crossRefTitle}>Безшовна інтеграція<br />без зміни креслень</h2>
+                <h2 className={styles.crossRefTitle}>Безшовна інтеграція<br />без змін у конструкції техніки</h2>
                 <p className={styles.crossRefCopy}>
-                    Впровадження інженерних рішень VELNOX не вимагає переробки конструкторської документації чи зміни посадкових місць.
-                    Наші підшипникові вузли є <strong>100% геометричними та функціональними аналогами</strong> продукції провідних
-                    європейських брендів та оригінальних деталей (OEM) сільськогосподарської та промислової техніки.
+                    Використання підшипникових вузлів VELNOX не потребує змін у кресленнях або посадкових місцях. Наші рішення є геометричними та функціональними аналогами вузлів провідних європейських брендів та оригінальних OEM-компонентів, тому можуть інтегруватися у техніку без додаткових доопрацювань.
                 </p>
             </div>
             {/* Infinite marquee */}
@@ -373,12 +371,24 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             {/* 1. HERO SECTION */}
             <section className={styles.hero} ref={heroRef.ref}>
                 <div className={`${styles.container} ${styles.heroContainer} ${heroRef.inView ? styles.animIn : ''}`}>
-                    <div className={styles.heroEyebrow}>
-                        <span className={styles.eyebrowLine}></span>
-                        VELNOX BEARING UNITS
+                    <div className={styles.heroContent}>
+                        <div className={styles.heroEyebrow}>
+                            <span className={styles.eyebrowLine}></span>
+                            VELNOX BEARING UNITS
+                        </div>
+                        <h1 className={styles.heroTitle}>{t('hero.title')}</h1>
+                        <p className={styles.heroSubtitle}>{t('hero.subtitle')}</p>
                     </div>
-                    <h1 className={styles.heroTitle}>{t('hero.title')}</h1>
-                    <p className={styles.heroSubtitle}>{t('hero.subtitle')}</p>
+                    <div className={styles.heroImageWrap}>
+                        <Image
+                            src="/velnox/images/bearings/hero-bearing.png"
+                            alt="VELNOX Bearing Unit Cross Section"
+                            width={520}
+                            height={520}
+                            priority
+                            className={styles.heroImage}
+                        />
+                    </div>
                 </div>
             </section>
 
@@ -390,7 +400,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <div className={styles.featureCard}>
                             <div className={styles.featureIcon}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
                                 </svg>
                             </div>
                             <h3>{t('block1.card1_title')}</h3>
@@ -399,8 +409,9 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <div className={styles.featureCard}>
                             <div className={styles.featureIcon}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                    <circle cx="12" cy="12" r="10" />
+                                    <circle cx="12" cy="12" r="6" />
+                                    <circle cx="12" cy="12" r="2" />
                                 </svg>
                             </div>
                             <h3>{t('block1.card2_title')}</h3>
@@ -409,7 +420,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <div className={styles.featureCard}>
                             <div className={styles.featureIcon}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m2.54 2.54l4.24 4.24M1 12h6m6 0h6m-17.78 7.78l4.24-4.24m2.54-2.54l4.24-4.24" />
                                 </svg>
                             </div>
                             <h3>{t('block1.card3_title')}</h3>
@@ -650,8 +662,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             />
                         </div>
 
-                        <div className={`${styles.tableScroll} ${styles.noScroll}`}>
-                            <table className={`${styles.techTable} ${styles.noScroll}`}>
+                        <div className={styles.tableScroll}>
+                            <table className={styles.techTable}>
                                 <thead>
                                     <tr>
                                         <th>Part Number</th>
@@ -742,8 +754,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table4.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table4.desc')}</p>
-                        <div className={`${styles.tableScroll} ${styles.noScroll}`}>
-                            <table className={`${styles.techTable} ${styles.noScroll}`}>
+                        <div className={styles.tableScroll}>
+                            <table className={styles.techTable}>
                                 <thead>
                                     <tr>
                                         <th>Part Number</th>
@@ -809,8 +821,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table5.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table5.desc')}</p>
-                        <div className={`${styles.tableScroll} ${styles.noScroll}`}>
-                            <table className={`${styles.techTable} ${styles.noScroll}`}>
+                        <div className={styles.tableScroll}>
+                            <table className={styles.techTable}>
                                 <thead>
                                     <tr>
                                         <th>Part No</th>
