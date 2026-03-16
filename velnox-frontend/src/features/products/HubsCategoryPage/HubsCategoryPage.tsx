@@ -285,24 +285,135 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             <section className={styles.tablesSection} ref={app1Ref.ref}>
                 <div className={styles.container}>
 
-                    {/* ── APP BLOCK 1 ── */}
-                    <section className={app1Class}>
-                        <div className={styles.appWatermark}>HORSCH</div>
-                        <div className={styles.appInner}>
-                            <div className={styles.appHeader}>
-                                <span className={styles.appTag}>DISK HARROWS</span>
-                                <h2 className={styles.appTitle}>{t('hubsPage.app1.title')}</h2>
+                    {/* ── APP BLOCK 1 — BLUEPRINT OVERLAY ── */}
+                    <section className={`${styles.blueprintBlock} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
+                        {/* HORSCH background photo */}
+                        <div className={styles.blueprintBg} />
+                        <div className={styles.blueprintDarkOverlay} />
+
+                        <div className={styles.blueprintLayout}>
+                            {/* LEFT: Text */}
+                            <div className={styles.blueprintText}>
+                                <span className={styles.blueprintTag}>
+                                    <span className={styles.blueprintTagLine} />
+                                    DISK HARROWS
+                                </span>
+                                <h2 className={styles.blueprintTitle}>{t('hubsPage.app1.title')}</h2>
+                                <p className={styles.blueprintLead}>{t('hubsPage.app1.desc')}</p>
+                                <div className={styles.blueprintMeta}>
+                                    <div className={styles.blueprintMetaItem}>
+                                        <span className={styles.blueprintMetaLabel}>Сфера застосування</span>
+                                        <span className={styles.blueprintMetaValue}>{t('hubsPage.app1.applications')}</span>
+                                    </div>
+                                    <div className={styles.blueprintMetaItem}>
+                                        <span className={styles.blueprintMetaLabel}>OEM-сумісність</span>
+                                        <span className={styles.blueprintMetaValue}>{t('hubsPage.app1.oem_focus')}</span>
+                                    </div>
+                                </div>
+                                <div className={styles.blueprintSpecs}>
+                                    <div className={styles.blueprintSpec}>
+                                        <span className={styles.blueprintSpecVal}>48.8 kN</span>
+                                        <span className={styles.blueprintSpecLabel}>Cdyn</span>
+                                    </div>
+                                    <div className={styles.blueprintSpecDivider} />
+                                    <div className={styles.blueprintSpec}>
+                                        <span className={styles.blueprintSpecVal}>35.3 kN</span>
+                                        <span className={styles.blueprintSpecLabel}>Co static</span>
+                                    </div>
+                                    <div className={styles.blueprintSpecDivider} />
+                                    <div className={styles.blueprintSpec}>
+                                        <span className={styles.blueprintSpecVal}>3.81 kg</span>
+                                        <span className={styles.blueprintSpecLabel}>Mass</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className={styles.appBody}>
-                                <p className={`${styles.appPara} ${styles.appParaLead} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
-                                    {t('hubsPage.app1.desc')}
-                                </p>
-                                <p className={`${styles.appPara} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
-                                    <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('hubsPage.app1.applications')}
-                                </p>
-                                <p className={`${styles.appPara} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
-                                    <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('hubsPage.app1.oem_focus')}
-                                </p>
+
+                            {/* RIGHT: Blueprint SVG */}
+                            <div className={styles.blueprintDiagram}>
+                                <svg viewBox="0 0 340 400" className={styles.blueprintSvg} aria-hidden>
+                                    {/* Defs */}
+                                    <defs>
+                                        <filter id="glow">
+                                            <feGaussianBlur stdDeviation="2" result="blur" />
+                                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                        </filter>
+                                    </defs>
+
+                                    {/* Grid */}
+                                    {Array.from({ length: 9 }).map((_, i) => (
+                                        <line key={`h${i}`} x1="0" y1={i * 50} x2="340" y2={i * 50} stroke="rgba(56,189,248,0.06)" strokeWidth="1" />
+                                    ))}
+                                    {Array.from({ length: 8 }).map((_, i) => (
+                                        <line key={`v${i}`} x1={i * 50} y1="0" x2={i * 50} y2="400" stroke="rgba(56,189,248,0.06)" strokeWidth="1" />
+                                    ))}
+
+                                    {/* ─── HUB CROSS-SECTION ─── */}
+                                    {/* Outer housing circle (D = 127.3mm) */}
+                                    <circle className={styles.bpCircle} cx="170" cy="200" r="95" />
+                                    {/* Housing inner wall */}
+                                    <circle className={styles.bpCircle} cx="170" cy="200" r="75" strokeDasharray="4 3" />
+                                    {/* Bearing outer race */}
+                                    <circle className={styles.bpCircle} cx="170" cy="200" r="60" />
+                                    {/* Bearing inner race */}
+                                    <circle className={styles.bpCircle} cx="170" cy="200" r="42" />
+                                    {/* Bore (d = 55.7mm) */}
+                                    <circle className={`${styles.bpCircle} ${styles.bpBore}`} cx="170" cy="200" r="22" />
+
+                                    {/* Center crosshair */}
+                                    <line className={styles.bpDim} x1="130" y1="200" x2="210" y2="200" />
+                                    <line className={styles.bpDim} x1="170" y1="160" x2="170" y2="240" />
+
+                                    {/* Bolt holes (J = 106mm, H/T = M12) — 4 holes */}
+                                    {[0, 90, 180, 270].map((angle) => {
+                                        const r = 68;
+                                        const rad = (angle * Math.PI) / 180;
+                                        const x = 170 + r * Math.cos(rad);
+                                        const y = 200 + r * Math.sin(rad);
+                                        return <circle key={angle} className={styles.bpHole} cx={x} cy={y} r="6" />;
+                                    })}
+
+                                    {/* ─── DIMENSION LINES ─── */}
+                                    {/* D — outer diameter */}
+                                    <line className={styles.bpDim} x1="170" y1="96" x2="170" y2="70" />
+                                    <line className={styles.bpDim} x1="170" y1="70" x2="290" y2="70" />
+                                    <text className={styles.bpLabel} x="295" y="74">D = 127.3</text>
+
+                                    {/* d — bore */}
+                                    <line className={styles.bpDim} x1="170" y1="178" x2="170" y2="148" />
+                                    <line className={styles.bpDim} x1="170" y1="148" x2="290" y2="148" />
+                                    <text className={styles.bpLabel} x="295" y="152">d = 55.7</text>
+
+                                    {/* H/T */}
+                                    <line className={styles.bpDim} x1="238" y1="200" x2="260" y2="200" />
+                                    <line className={styles.bpDim} x1="260" y1="200" x2="290" y2="230" />
+                                    <text className={styles.bpLabel} x="295" y="234">H/T = M12</text>
+
+                                    {/* ─── COMPONENT LABELS (left side) ─── */}
+                                    {/* КОРПУС З ЧАВУНУ */}
+                                    <line className={styles.bpLeader} x1="85" y1="145" x2="50" y2="110" />
+                                    <text className={styles.bpLabelLeft} x="45" y="106">КОРПУС</text>
+                                    <text className={styles.bpLabelLeft} x="45" y="120">З ЧАВУНУ</text>
+
+                                    {/* КАСЕТНЕ УЩІЛЬНЕННЯ */}
+                                    <line className={styles.bpLeader} x1="113" y1="195" x2="50" y2="185" />
+                                    <text className={styles.bpLabelLeft} x="45" y="180">КАСЕТНЕ</text>
+                                    <text className={styles.bpLabelLeft} x="45" y="194">УЩІЛЬНЕННЯ</text>
+
+                                    {/* ВНУТРІШНІЙ ПІДШИПНИК */}
+                                    <line className={styles.bpLeader} x1="128" y1="220" x2="50" y2="260" />
+                                    <text className={styles.bpLabelLeft} x="45" y="256">ВНУТРІШНІЙ</text>
+                                    <text className={styles.bpLabelLeft} x="45" y="270">ПІДШИПНИК</text>
+
+                                    {/* ─── HOT POINTS (pulsing) ─── */}
+                                    <circle className={styles.bpHotPulse} cx="170" cy="140" r="5" />
+                                    <circle className={styles.bpHotDot} cx="170" cy="140" r="4" />
+
+                                    <circle className={styles.bpHotPulse} cx="128" cy="200" r="5" />
+                                    <circle className={styles.bpHotDot} cx="128" cy="200" r="4" />
+
+                                    {/* Watermark */}
+                                    <text className={styles.bpWatermark} x="170" y="390">© 2026 VELNOX</text>
+                                </svg>
                             </div>
                         </div>
                     </section>
