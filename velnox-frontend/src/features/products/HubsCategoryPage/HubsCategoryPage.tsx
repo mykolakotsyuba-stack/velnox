@@ -476,17 +476,18 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── APP BLOCK 2 — CUTTING NODES (full-width, photo + text only) ── */}
+            {/* ── APP BLOCK 2 — CUTTING NODES: text RIGHT, machine visible LEFT ── */}
             <section ref={app2Ref.ref} className={`${styles.blueprintBlock} ${app2Ref.inView ? styles.blueprintVisible : ''}`}>
                 <Image
                     src="/velnox/images/hubs/bednar-field.png"
                     alt=""
                     fill
                     priority={false}
-                    style={{ objectFit: 'cover', objectPosition: '55% 60%' }}
+                    style={{ objectFit: 'cover', objectPosition: '30% 50%' }}
                 />
-                <div className={styles.blueprintDarkOverlay} />
-                <div className={styles.blueprintLayout}>
+                {/* Overlay: dark on RIGHT (text zone), transparent on LEFT (machine visible) */}
+                <div className={styles.blueprintDarkOverlayRight} />
+                <div className={`${styles.blueprintLayout} ${styles.blueprintLayoutRight}`}>
                     <div className={styles.blueprintText}>
                         <span className={styles.blueprintTag} style={{ color: '#34d399' }}>
                             <span className={styles.blueprintTagLine} style={{ background: '#34d399' }} />

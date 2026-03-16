@@ -2786,3 +2786,22 @@
     opacity: 0;
 }
 .blueprintVisible .bpWatermark2 { animation: bpFadeIn 0.4s ease 2.2s forwards; }
+
+/* Block 2 — text on RIGHT, dark overlay on RIGHT */
+.blueprintDarkOverlayRight {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(5, 12, 18, 0.00) 0%,
+        rgba(5, 12, 18, 0.10) 35%,
+        rgba(5, 12, 18, 0.75) 55%,
+        rgba(5, 12, 18, 0.92) 75%,
+        rgba(5, 12, 18, 0.95) 100%
+    );
+    z-index: 1;
+}
+
+.blueprintLayoutRight {
+    justify-content: flex-end !important;
+}
