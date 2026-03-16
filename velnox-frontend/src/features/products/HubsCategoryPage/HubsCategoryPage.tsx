@@ -485,9 +485,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     priority={false}
                     style={{ objectFit: 'cover', objectPosition: '55% 60%' }}
                 />
-                <div className={styles.blueprintDarkOverlay2} />
-                <div className={`${styles.blueprintLayout} ${styles.blueprintLayout2}`}>
-                    <div className={styles.blueprintSpacer} />
+                <div className={styles.blueprintDarkOverlay} />
+                <div className={styles.blueprintLayout}>
                     <div className={styles.blueprintText}>
                         <span className={styles.blueprintTag} style={{ color: '#34d399' }}>
                             <span className={styles.blueprintTagLine} style={{ background: '#34d399' }} />
