@@ -2076,3 +2076,120 @@
         padding: 40px;
     }
 }
+
+/* ────────────────────────────────────────────────────────
+   HUBS PAGE SPECIFIC STYLES
+──────────────────────────────────────────────────────── */
+
+.heroDescription {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin-bottom: 40px;
+}
+
+.searchWrapper {
+    margin-bottom: 40px;
+    display: flex;
+    gap: 12px;
+}
+
+.searchInput {
+    flex: 1;
+    max-width: 400px;
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: var(--color-accent, #10b981);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.diagramPlaceholder {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px dashed #ddd;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+}
+
+.tableWrapper {
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 60px;
+}
+
+.dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.dataTable thead tr {
+    background: #f0f0f0;
+}
+
+.dataTable thead th {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    font-weight: 600;
+    color: #333;
+}
+
+.dataTable tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.dataTable tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.dataTable tbody tr:hover {
+    background: #f5f5f5;
+}
+
+.dataTable tbody td {
+    padding: 12px;
+    color: #555;
+}
+
+.noData {
+    padding: 20px !important;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .searchInput {
+        max-width: 100%;
+    }
+
+    .dataTable {
+        font-size: 12px;
+    }
+
+    .dataTable thead th,
+    .dataTable tbody td {
+        padding: 8px;
+    }
+
+    .tableWrapper {
+        margin-bottom: 40px;
+    }
+}

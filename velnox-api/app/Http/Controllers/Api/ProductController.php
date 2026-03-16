@@ -199,6 +199,96 @@ class ProductController extends Controller
     }
 
     /**
+     * Hubs Table 1: 28071300 VX (Disk Harrows) — GET /api/v1/products/tables/hubs-table1
+     */
+    public function tableHubsTable1(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereJsonContains('specs->table_group', 'hubs-table1')
+            ->get()
+            ->map(fn($p) => [
+                'Part Number' => $p->article,
+                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
+                'Brand name' => $p->specs['brand_name'] ?? '-',
+                'J (mm)' => $p->specs['j_mm'] ?? '-',
+                'D (mm)' => $p->specs['D_mm'] ?? '-',
+                'D1 (mm)' => $p->specs['D1_mm'] ?? '-',
+                'd (mm)' => $p->specs['d_mm'] ?? '-',
+                'C (mm)' => $p->specs['C_mm'] ?? '-',
+                'H/T' => $p->specs['hole_thread'] ?? '-',
+                'G' => $p->specs['G'] ?? '-',
+                'L (mm)' => $p->specs['L_mm'] ?? '-',
+                'L1 (mm)' => $p->specs['L1_mm'] ?? '-',
+                'F (mm)' => $p->specs['F_mm'] ?? '-',
+                'Mass (kg)' => $p->specs['mass_kg'] ?? '-',
+                'Cdyn (kN)' => $p->specs['cdyn_kn'] ?? '-',
+                'Co (kN)' => $p->specs['co_kn'] ?? '-',
+                'Pu (kN)' => $p->specs['pu_kn'] ?? '-',
+            ]);
+
+        return response()->json($products);
+    }
+
+    /**
+     * Hubs Table 2: BAA-0004 VX (Cutting Nodes) — GET /api/v1/products/tables/hubs-table2
+     */
+    public function tableHubsTable2(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereJsonContains('specs->table_group', 'hubs-table2')
+            ->get()
+            ->map(fn($p) => [
+                'Part Number' => $p->article,
+                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
+                'Brand name' => $p->specs['brand_name'] ?? '-',
+                'J (mm)' => $p->specs['j_mm'] ?? '-',
+                'D (mm)' => $p->specs['D_mm'] ?? '-',
+                'H/T' => $p->specs['hole_thread'] ?? '-',
+                'd (mm)' => $p->specs['d_mm'] ?? '-',
+                'C (mm)' => $p->specs['C_mm'] ?? '-',
+                'M' => $p->specs['M_thread'] ?? '-',
+                'L (mm)' => $p->specs['L_mm'] ?? '-',
+                'L1 (mm)' => $p->specs['L1_mm'] ?? '-',
+                'E (mm)' => $p->specs['E_mm'] ?? '-',
+                'F (mm)' => $p->specs['F_mm'] ?? '-',
+                'Mass (kg)' => $p->specs['mass_kg'] ?? '-',
+                'Cdyn (kN)' => $p->specs['cdyn_kn'] ?? '-',
+                'Co (kN)' => $p->specs['co_kn'] ?? '-',
+                'Pu (kN)' => $p->specs['pu_kn'] ?? '-',
+            ]);
+
+        return response()->json($products);
+    }
+
+    /**
+     * Hubs Table 3: PL-140 VX (Seeders) — GET /api/v1/products/tables/hubs-table3
+     */
+    public function tableHubsTable3(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereJsonContains('specs->table_group', 'hubs-table3')
+            ->get()
+            ->map(fn($p) => [
+                'Part Number' => $p->article,
+                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
+                'Brand name' => $p->specs['brand_name'] ?? '-',
+                'J (mm)' => $p->specs['j_mm'] ?? '-',
+                'D (mm)' => $p->specs['D_mm'] ?? '-',
+                'D1 (mm)' => $p->specs['D1_mm'] ?? '-',
+                'd (mm)' => $p->specs['d_mm'] ?? '-',
+                'H/T' => $p->specs['hole_thread'] ?? '-',
+                'L (mm)' => $p->specs['L_mm'] ?? '-',
+                'B (mm)' => $p->specs['B_mm'] ?? '-',
+                'Mass (kg)' => $p->specs['mass_kg'] ?? '-',
+                'Cdyn (kN)' => $p->specs['cdyn_kn'] ?? '-',
+                'Co (kN)' => $p->specs['co_kn'] ?? '-',
+                'Pu (kN)' => $p->specs['pu_kn'] ?? '-',
+            ]);
+
+        return response()->json($products);
+    }
+
+    /**
      * Імпорт товарів з 1С (захищений Sanctum-токеном)
      * POST /api/v1/import/products
      * Body: JSON-масив товарів

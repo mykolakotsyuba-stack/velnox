@@ -30,6 +30,11 @@ Route::prefix('v1')->group(function () {
     Route::get('/products/tables/extended-specs', [ProductController::class, 'tableExtendedSpecs']);
     Route::get('/products/tables/additional-data', [ProductController::class, 'tableAdditionalData']);
 
+    // Tables для сторінки hubs (мають йти ДО {slug} маршруту!)
+    Route::get('/products/tables/hubs-table1', [ProductController::class, 'tableHubsTable1']);
+    Route::get('/products/tables/hubs-table2', [ProductController::class, 'tableHubsTable2']);
+    Route::get('/products/tables/hubs-table3', [ProductController::class, 'tableHubsTable3']);
+
     Route::get('/products/{slug}', [ProductController::class, 'show']); // ?locale=en
 
     // Новини

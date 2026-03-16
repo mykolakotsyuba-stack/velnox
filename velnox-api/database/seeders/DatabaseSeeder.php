@@ -468,6 +468,96 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // ===== HUBS TABLE 1: 28071300 VX (Disk Harrows) =====
+        Product::updateOrCreate(
+            ['slug' => '28071300-vx-table1'],
+            [
+                'article'         => '28071300 VX',
+                'category_id'     => $hubCategory->id,
+                'specs'           => [
+                    'table_group' => 'hubs-table1',
+                    'part_number' => '28071300 VX',
+                    'bearing_designation' => 'HUB',
+                    'brand_name' => 'HORSCH',
+                    'j_mm' => 106.0,
+                    'D_mm' => 127.3,
+                    'D1_mm' => 64.2,
+                    'd_mm' => 55.7,
+                    'C_mm' => 38.0,
+                    'hole_thread' => 'M12',
+                    'G' => '2xM20',
+                    'L_mm' => 106.5,
+                    'L1_mm' => 2.0,
+                    'F_mm' => 25.0,
+                    'mass_kg' => 3.81,
+                    'cdyn_kn' => 48.8,
+                    'co_kn' => 35.3,
+                    'pu_kn' => 1.483,
+                ],
+                'oem_cross' => ['28071300', '28077800', '28077900', '28085600', 'PN60041'],
+                'is_active' => true,
+            ]
+        );
+
+        // ===== HUBS TABLE 2: BAA-0004 VX (Cutting Nodes) =====
+        Product::updateOrCreate(
+            ['slug' => 'baa-0004-vx-table2'],
+            [
+                'article'         => 'BAA-0004 VX',
+                'category_id'     => $hubCategory->id,
+                'specs'           => [
+                    'table_group' => 'hubs-table2',
+                    'part_number' => 'BAA-0004 VX',
+                    'bearing_designation' => '8395.TDA.5.05.015 / AGHU2898X4E-DSCS / AHU28117A-01 / BAA0004 / F-673270.04.TILL / HUB-30MM',
+                    'brand_name' => 'SKF / NSK / FBJ / INA / PEER / FKL / RBF',
+                    'j_mm' => 98.0,
+                    'D_mm' => 117.0,
+                    'hole_thread' => '6xM12x1.25',
+                    'd_mm' => 27.95,
+                    'C_mm' => 25.4,
+                    'M_thread' => 'M22x1.5',
+                    'L_mm' => 102.0,
+                    'L1_mm' => 60.0,
+                    'E_mm' => 17.0,
+                    'F_mm' => 25.0,
+                    'mass_kg' => 2.16,
+                    'cdyn_kn' => 42.9,
+                    'co_kn' => 36.3,
+                    'pu_kn' => 1.53,
+                ],
+                'oem_cross' => ['1000042983 Holmer', '642668 Köckerling', 'F06160015 Gaspardo', 'KM040110 BEDNAR', 'M11308 Farmet', 'IL-117-M22 Kuhn'],
+                'is_active' => true,
+            ]
+        );
+
+        // ===== HUBS TABLE 3: PL-140 VX (Seeders) =====
+        Product::updateOrCreate(
+            ['slug' => 'pl-140-vx-table3'],
+            [
+                'article'         => 'PL-140 VX',
+                'category_id'     => $hubCategory->id,
+                'specs'           => [
+                    'table_group' => 'hubs-table3',
+                    'part_number' => 'PL-140 VX',
+                    'bearing_designation' => 'PL-140 / SAH017',
+                    'brand_name' => 'FKL / FBJ',
+                    'j_mm' => 104.0,
+                    'D_mm' => 140.0,
+                    'D1_mm' => 62.0,
+                    'd_mm' => 30.0,
+                    'hole_thread' => 'M12',
+                    'L_mm' => 35.0,
+                    'B_mm' => 23.8,
+                    'mass_kg' => 1.5,
+                    'cdyn_kn' => 31.0,
+                    'co_kn' => 22.2,
+                    'pu_kn' => 0.932,
+                ],
+                'oem_cross' => ['405814', '418531', '420013', '420832 Vaderstad', 'PL-140'],
+                'is_active' => true,
+            ]
+        );
+
         // ===== ДЕМО-СТАТТЯ =====
         NewsArticle::updateOrCreate(
             ['slug' => 'oem-bearing-selection-guide'],

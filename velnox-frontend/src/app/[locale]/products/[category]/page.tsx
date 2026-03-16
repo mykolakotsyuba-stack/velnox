@@ -1,6 +1,7 @@
 import { fetchProducts } from '@/entities/product/api/productApi';
 import Link from 'next/link';
 import { BearingsCategoryPage } from '@/features/products/BearingsCategoryPage/BearingsCategoryPage';
+import { HubsCategoryPage } from '@/features/products/HubsCategoryPage/HubsCategoryPage';
 import type { Locale } from '@/entities/product/model/types';
 
 interface CategoryPageProps {
@@ -11,6 +12,11 @@ export default async function CategoryPage({ params: { locale, category } }: Cat
     if (category === 'bearings') {
         const { data: bearings } = await fetchProducts({ locale, category: 'bearings', per_page: 1000 });
         return <BearingsCategoryPage locale={locale} products={bearings} />;
+    }
+
+    if (category === 'hubs') {
+        const { data: hubs } = await fetchProducts({ locale, category: 'hubs', per_page: 1000 });
+        return <HubsCategoryPage locale={locale} products={hubs} />;
     }
 
     const { data: products } = await fetchProducts({ locale, category });
