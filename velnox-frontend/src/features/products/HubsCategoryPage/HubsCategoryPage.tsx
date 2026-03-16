@@ -322,14 +322,23 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                 <tbody>
                                     {sortedT1.map((row, i) => (
                                         <tr key={i}>
-                                            <td className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation']}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand name']}</td>
-                                            <td>{row['J (mm)']}</td><td>{row['D (mm)']}</td><td>{row['D1 (mm)']}</td>
-                                            <td>{row['d (mm)']}</td><td>{row['C (mm)']}</td><td>{row['H/T']}</td>
-                                            <td>{row['G']}</td><td>{row['L (mm)']}</td><td>{row['L1 (mm)']}</td>
-                                            <td>{row['F (mm)']}</td><td>{row['Mass (kg)']}</td>
-                                            <td>{row['Cdyn (kN)']}</td><td>{row['Co (kN)']}</td><td>{row['Pu (kN)']}</td>
+                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
+                                            <td data-label="Bearing" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation']}</td>
+                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name']}</td>
+                                            <td data-label="J">{row['J (mm)']}</td>
+                                            <td data-label="D">{row['D (mm)']}</td>
+                                            <td data-label="D1">{row['D1 (mm)']}</td>
+                                            <td data-label="d">{row['d (mm)']}</td>
+                                            <td data-label="C">{row['C (mm)']}</td>
+                                            <td data-label="H/T">{row['H/T']}</td>
+                                            <td data-label="G">{row['G']}</td>
+                                            <td data-label="L">{row['L (mm)']}</td>
+                                            <td data-label="L1">{row['L1 (mm)']}</td>
+                                            <td data-label="F">{row['F (mm)']}</td>
+                                            <td data-label="Mass">{row['Mass (kg)']}</td>
+                                            <td data-label="Cdyn">{row['Cdyn (kN)']}</td>
+                                            <td data-label="Co">{row['Co (kN)']}</td>
+                                            <td data-label="Pu">{row['Pu (kN)']}</td>
                                             <td className={styles.actionCol}>
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('hubsPage.block2.btn_request')}
@@ -399,14 +408,23 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                 <tbody>
                                     {sortedT2.map((row, i) => (
                                         <tr key={i}>
-                                            <td className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation']}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand name']}</td>
-                                            <td>{row['J (mm)']}</td><td>{row['D (mm)']}</td><td>{row['H/T']}</td>
-                                            <td>{row['d (mm)']}</td><td>{row['C (mm)']}</td><td>{row['M']}</td>
-                                            <td>{row['L (mm)']}</td><td>{row['L1 (mm)']}</td><td>{row['E (mm)']}</td>
-                                            <td>{row['F (mm)']}</td><td>{row['Mass (kg)']}</td>
-                                            <td>{row['Cdyn (kN)']}</td><td>{row['Co (kN)']}</td><td>{row['Pu (kN)']}</td>
+                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
+                                            <td data-label="Bearing" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation']}</td>
+                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name']}</td>
+                                            <td data-label="J">{row['J (mm)']}</td>
+                                            <td data-label="D">{row['D (mm)']}</td>
+                                            <td data-label="H/T">{row['H/T']}</td>
+                                            <td data-label="d">{row['d (mm)']}</td>
+                                            <td data-label="C">{row['C (mm)']}</td>
+                                            <td data-label="M">{row['M']}</td>
+                                            <td data-label="L">{row['L (mm)']}</td>
+                                            <td data-label="L1">{row['L1 (mm)']}</td>
+                                            <td data-label="E">{row['E (mm)']}</td>
+                                            <td data-label="F">{row['F (mm)']}</td>
+                                            <td data-label="Mass">{row['Mass (kg)']}</td>
+                                            <td data-label="Cdyn">{row['Cdyn (kN)']}</td>
+                                            <td data-label="Co">{row['Co (kN)']}</td>
+                                            <td data-label="Pu">{row['Pu (kN)']}</td>
                                             <td className={styles.actionCol}>
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('hubsPage.block2.btn_request')}
@@ -473,14 +491,20 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                 <tbody>
                                     {sortedT3.map((row, i) => (
                                         <tr key={i}>
-                                            <td className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation']}</td>
-                                            <td style={{ fontSize: '12px' }}>{row['Brand name']}</td>
-                                            <td>{row['J (mm)']}</td><td>{row['D (mm)']}</td><td>{row['D1 (mm)']}</td>
-                                            <td>{row['d (mm)']}</td><td>{row['H/T']}</td>
-                                            <td>{row['L (mm)']}</td><td>{row['B (mm)']}</td>
-                                            <td>{row['Mass (kg)']}</td>
-                                            <td>{row['Cdyn (kN)']}</td><td>{row['Co (kN)']}</td><td>{row['Pu (kN)']}</td>
+                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
+                                            <td data-label="Bearing" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation']}</td>
+                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name']}</td>
+                                            <td data-label="J">{row['J (mm)']}</td>
+                                            <td data-label="D">{row['D (mm)']}</td>
+                                            <td data-label="D1">{row['D1 (mm)']}</td>
+                                            <td data-label="d">{row['d (mm)']}</td>
+                                            <td data-label="H/T">{row['H/T']}</td>
+                                            <td data-label="L">{row['L (mm)']}</td>
+                                            <td data-label="B">{row['B (mm)']}</td>
+                                            <td data-label="Mass">{row['Mass (kg)']}</td>
+                                            <td data-label="Cdyn">{row['Cdyn (kN)']}</td>
+                                            <td data-label="Co">{row['Co (kN)']}</td>
+                                            <td data-label="Pu">{row['Pu (kN)']}</td>
                                             <td className={styles.actionCol}>
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('hubsPage.block2.btn_request')}
