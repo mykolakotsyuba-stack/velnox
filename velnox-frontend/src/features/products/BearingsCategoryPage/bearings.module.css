@@ -2079,3 +2079,34 @@
         padding: 40px;
     }
 }
+
+/* ────────────────────────────────────────────────────────
+   SORTABLE TABLE HEADERS
+ ──────────────────────────────────────────────────────── */
+.sortableTh {
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.sortableTh:hover {
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    color: var(--color-text);
+}
+
+.sortIcon {
+    margin-left: 4px;
+    font-size: 10px;
+    opacity: 0.6;
+    display: inline-block;
+}
+
+/* ────────────────────────────────────────────────────────
+   PART NUMBER CELL
+ ──────────────────────────────────────────────────────── */
+.partNumCell {
+    font-weight: 700;
+    color: var(--color-accent);
+    white-space: nowrap;
+}
+

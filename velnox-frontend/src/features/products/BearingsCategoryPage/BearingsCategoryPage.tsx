@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import styles from './bearings.module.css';
 import type { Locale, ProductListItem } from '@/entities/product/model/types';
 import buqData from '../data/buqTable1Data.json';
@@ -86,6 +86,44 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void, 
             </div>
         </div>
     );
+}
+
+/* ─── Sortable Table ─── */
+type SortDir = 'asc' | 'desc' | null;
+
+function SortIcon({ dir }: { dir: SortDir }) {
+    return (
+        <span className={styles.sortIcon} aria-hidden>
+            {dir === 'asc' ? '↑' : dir === 'desc' ? '↓' : '↕'}
+        </span>
+    );
+}
+
+function useSortableTable(data: any[]) {
+    const [sortCol, setSortCol] = useState<string | null>(null);
+    const [sortDir, setSortDir] = useState<SortDir>(null);
+
+    const toggle = useCallback((col: string) => {
+        setSortCol(prev => {
+            if (prev !== col) { setSortDir('asc'); return col; }
+            setSortDir(d => d === 'asc' ? 'desc' : d === 'desc' ? null : 'asc');
+            return col;
+        });
+    }, []);
+
+    const sorted = useMemo(() => {
+        if (!sortCol || !sortDir) return data;
+        return [...data].sort((a, b) => {
+            const av = a[sortCol] ?? '';
+            const bv = b[sortCol] ?? '';
+            const an = parseFloat(String(av));
+            const bn = parseFloat(String(bv));
+            const cmp = !isNaN(an) && !isNaN(bn) ? an - bn : String(av).localeCompare(String(bv));
+            return sortDir === 'asc' ? cmp : -cmp;
+        });
+    }, [data, sortCol, sortDir]);
+
+    return { sorted, sortCol, sortDir, toggle };
 }
 
 /* ─── Intro Block 2: Performance Specs ─── */
@@ -288,6 +326,14 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
     const [table5Data, setTable5Data] = useState<any[]>([]);
     const [loadingTables, setLoadingTables] = useState(true);
 
+    function Th({ col, label, toggle, sortCol, sortDir }: { col: string; label: string; toggle: (c: string) => void; sortCol: string | null; sortDir: SortDir }) {
+        return (
+            <th className={styles.sortableTh} onClick={() => toggle(col)}>
+                {label} <SortIcon dir={sortCol === col ? sortDir : null} />
+            </th>
+        );
+    }
+
     // Fetch table data from API
     useEffect(() => {
         const fetchTableData = async () => {
@@ -359,6 +405,12 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
         );
     }, [searchQuery, table5Data]);
+
+    const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
+    const { sorted: sortedT2, sortCol: sc2, sortDir: sd2, toggle: tog2 } = useSortableTable(filteredT2);
+    const { sorted: sortedT3, sortCol: sc3, sortDir: sd3, toggle: tog3 } = useSortableTable(filteredT3);
+    const { sorted: sortedT4, sortCol: sc4, sortDir: sd4, toggle: tog4 } = useSortableTable(filteredT4);
+    const { sorted: sortedT5, sortCol: sc5, sortDir: sd5, toggle: tog5 } = useSortableTable(filteredT5);
 
     return (
         <main className={styles.page}>
@@ -483,28 +535,28 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={`${styles.techTable} ${styles.techTableCompact}`}>
                                 <thead>
                                     <tr>
-                                        <th>Part Number</th>
-                                        <th>Cross-Reference</th>
-                                        <th>Brand</th>
-                                        <th>d (mm)</th>
-                                        <th>d (inch)</th>
-                                        <th>A1 (mm)</th>
-                                        <th>A2 (mm)</th>
-                                        <th>J (mm)</th>
-                                        <th>L (mm)</th>
-                                        <th>N (mm)</th>
-                                        <th>A (mm)</th>
-                                        <th>Mass (kg)</th>
-                                        <th>Cdyn (kN)</th>
-                                        <th>Co (kN)</th>
-                                        <th>Pu (kN)</th>
+                                        <Th col="article" label="Part Number" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="cross_ref" label="Cross-Reference" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="brand" label="Brand" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="d_mm" label="d (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="d_inch" label="d (inch)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="A1" label="A1 (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="A2" label="A2 (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="J" label="J (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="L" label="L (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="N" label="N (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="A" label="A (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="mass_kg" label="Mass (kg)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="Cdyn" label="Cdyn (kN)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="Co" label="Co (kN)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="Pu" label="Pu (kN)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredT1.map((row, i) => (
+                                    {sortedT1.map((row, i) => (
                                         <tr key={row.slug || i}>
-                                            <td data-label="Part Number">
+                                            <td data-label="Part Number" className={styles.partNumCell}>
                                                 <Link href={`/${locale}/products/bearings/${row.slug}`} className={styles.designationLink}>
                                                     {row.article}
                                                 </Link>
@@ -566,27 +618,27 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <th>Part No</th>
-                                        <th>Designation</th>
-                                        <th>Brand</th>
-                                        <th>Cross-Ref</th>
-                                        <th>Bore d</th>
-                                        <th>A1</th>
-                                        <th>A2</th>
-                                        <th>J</th>
-                                        <th>L</th>
-                                        <th>H/T</th>
-                                        <th>A</th>
-                                        <th>Mass</th>
-                                        <th>Cdyn</th>
-                                        <th>Co</th>
-                                        <th>Pu</th>
+                                        <Th col="Part Number" label="Part No" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Bearing designation" label="Designation" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Brand name" label="Brand" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Cross-Refference" label="Cross-Ref" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Bore diameter d (mm)" label="Bore d" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Total housing width A1 (mm)" label="A1" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Housing flange thickness A2 (mm)" label="A2" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Distance between the holes J (mm)" label="J" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Total length L (mm)" label="L" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Hole / Thread H/T" label="H/T" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Overall width A (mm)" label="A" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Mass kg" label="Mass" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Static load rating Co (kN)" label="Co" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Fatigue load limit Pu (kN)" label="Pu" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredT2.map((row, i) => (
+                                    {sortedT2.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Part No">{row['Part Number'] || '-'}</td>
+                                            <td data-label="Part No" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
                                             <td data-label="Designation" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name'] || '-'}</td>
                                             <td data-label="Cross-Ref" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
@@ -665,27 +717,27 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <th>Part Number</th>
-                                        <th>Bearing Designation</th>
-                                        <th>Brand</th>
-                                        <th>Cross-Reference</th>
-                                        <th>Bore d (mm)</th>
-                                        <th>Length L (mm)</th>
-                                        <th>J (mm)</th>
-                                        <th>H/T (mm)</th>
-                                        <th>A (mm)</th>
-                                        <th>A1 (mm)</th>
-                                        <th>A2 (mm)</th>
-                                        <th>B (mm)</th>
-                                        <th>Co (kN)</th>
-                                        <th>Cdyn (kN)</th>
-                                        <th>Pu (kN)</th>
+                                        <Th col="Part Number" label="Part Number" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Bearing designation" label="Bearing Designation" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Brand \nname" label="Brand" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Cross-Refference" label="Cross-Reference" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Bore diameter d (mm)" label="Bore d (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Total length L (mm)" label="Length L (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Distance between the holes J (mm)" label="J (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Hole / Thread H/T (mm)" label="H/T (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Overall width A (mm)" label="A (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Total housing width A1 (mm)" label="A1 (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Housing flange thickness A2 (mm)" label="A2 (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Width inner ring B (mm)" label="B (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Static load rating Co (kN)" label="Co (kN)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn (kN)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Fatigue load limit Pu (kN)" label="Pu (kN)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredT3.map((row, i) => (
+                                    {sortedT3.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Part Number">{row['Part Number'] || '-'}</td>
+                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
                                             <td data-label="Bearing Designation" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
                                             <td data-label="Cross-Reference" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
@@ -757,32 +809,32 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <th>Part Number</th>
-                                        <th>Bearing Designation</th>
-                                        <th>Brand</th>
-                                        <th>Cross-Reference</th>
-                                        <th>Bore d (mm)</th>
-                                        <th>d1 (mm)</th>
-                                        <th>L1 (mm)</th>
-                                        <th>J1 (mm)</th>
-                                        <th>L2 (mm)</th>
-                                        <th>J2 (mm)</th>
-                                        <th>A (mm)</th>
-                                        <th>A1 (mm)</th>
-                                        <th>A2 (mm)</th>
-                                        <th>A3 (mm)</th>
-                                        <th>T</th>
-                                        <th>H (mm)</th>
-                                        <th>Mass (kg)</th>
-                                        <th>Cdyn (kN)</th>
-                                        <th>Co (kN)</th>
-                                        <th>Pu (kN)</th>
+                                        <Th col="Part Number" label="Part Number" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Bearing designation" label="Bearing Designation" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Brand \\nname" label="Brand" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Cross-Refference" label="Cross-Reference" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Bore diameter d (mm)" label="Bore d (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Centering diameter d1 (mm)" label="d1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Housing overall width L1 (mm)" label="L1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Distance between the holes J1 (mm)" label="J1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Housing overall width L2 (mm)" label="L2 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Distance between the holes J2 (mm)" label="J2 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Overall width A (mm)" label="A (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Flange width A1 (mm)" label="A1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Flange width A2 (mm)" label="A2 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Centering diameter height A3 (mm)" label="A3 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Threaded hole size T" label="T" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Hole diameter H (mm)" label="H (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Mass kg" label="Mass (kg)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Static load rating Co (kN)" label="Co (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Fatigue load limit Pu (kN)" label="Pu (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredT4.map((row, i) => (
+                                    {sortedT4.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Part Number">{row['Part Number'] || '-'}</td>
+                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
                                             <td data-label="Bearing Designation" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
                                             <td data-label="Cross-Reference" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
@@ -844,27 +896,27 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <th>Part No</th>
-                                        <th>Designation</th>
-                                        <th>Brand</th>
-                                        <th>Cross-Ref</th>
-                                        <th>Bore d</th>
-                                        <th>Out D</th>
-                                        <th>Pitch J</th>
-                                        <th>H/T</th>
-                                        <th>A</th>
-                                        <th>A2</th>
-                                        <th>B</th>
-                                        <th>Mass</th>
-                                        <th>Co</th>
-                                        <th>Cdyn</th>
-                                        <th>Pu</th>
+                                        <Th col="Part Number" label="Part No" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Bearing designation" label="Designation" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Brand \\nname" label="Brand" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Cross-Refference" label="Cross-Ref" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Bore diameter d (mm)" label="Bore d" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Outside diameter D (mm)" label="Out D" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Pitch circle diameter J (mm)" label="Pitch J" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Hole / Thread H/T" label="H/T" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Overall width A (mm)" label="A" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Housing flange thickness A2 (mm)" label="A2" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Width inner ring B (mm)" label="B" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Mass kg" label="Mass" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Static load rating Co (kN)" label="Co" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Fatigue load limit Pu (kN)" label="Pu" toggle={tog5} sortCol={sc5} sortDir={sd5} />
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredT5.map((row, i) => (
+                                    {sortedT5.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Part No">{row['Part Number'] || '-'}</td>
+                                            <td data-label="Part No" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
                                             <td data-label="Designation" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation'] || '-'}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
                                             <td data-label="Cross-Ref" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Cross-Refference'] || '-'}</td>
