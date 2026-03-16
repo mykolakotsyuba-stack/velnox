@@ -259,15 +259,86 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
             {/* ── APP BLOCK 1 — BLUEPRINT OVERLAY (before search) ── */}
             <section ref={app1Ref.ref} className={`${styles.blueprintBlock} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
-                        {/* HORSCH background photo — using next/image for correct path resolution */}
+                        {/* HORSCH background photo */}
                         <Image
                             src="/velnox/images/hubs/horsch-field.png"
                             alt=""
                             fill
                             priority
-                            style={{ objectFit: 'cover', objectPosition: '60% 55%' }}
+                            style={{ objectFit: 'cover', objectPosition: '45% 62%' }}
                         />
                         <div className={styles.blueprintDarkOverlay} />
+
+                        {/* Blueprint SVG — absolutely positioned over the wheel hub */}
+                        <div className={`${styles.blueprintSvgWrap} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
+                            <svg viewBox="0 0 320 320" className={styles.blueprintSvg} aria-hidden>
+                                <defs>
+                                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="3" result="blur" />
+                                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                    </filter>
+                                </defs>
+
+                                {/* Outer housing (D = 127.3mm) */}
+                                <circle className={`${styles.bpCircle} ${styles.bpC1}`} cx="160" cy="160" r="120" filter="url(#glow)" />
+                                {/* Housing inner */}
+                                <circle className={`${styles.bpCircle} ${styles.bpC2}`} cx="160" cy="160" r="96" strokeDasharray="6 4" />
+                                {/* Bearing outer race */}
+                                <circle className={`${styles.bpCircle} ${styles.bpC3}`} cx="160" cy="160" r="74" filter="url(#glow)" />
+                                {/* Bearing inner race */}
+                                <circle className={`${styles.bpCircle} ${styles.bpC4}`} cx="160" cy="160" r="52" />
+                                {/* Bore (d = 55.7mm) */}
+                                <circle className={`${styles.bpCircle} ${styles.bpBore}`} cx="160" cy="160" r="28" filter="url(#glow)" />
+
+                                {/* Center crosshair */}
+                                <line className={styles.bpDim} x1="120" y1="160" x2="200" y2="160" />
+                                <line className={styles.bpDim} x1="160" y1="120" x2="160" y2="200" />
+                                <circle cx="160" cy="160" r="3" fill="#38bdf8" opacity="0.9" />
+
+                                {/* Bolt holes — 4 × M12 at J=106mm */}
+                                {[0, 90, 180, 270].map((angle) => {
+                                    const r = 86;
+                                    const rad = (angle * Math.PI) / 180;
+                                    return <circle key={angle} className={`${styles.bpHole} ${styles.bpC5}`}
+                                        cx={160 + r * Math.cos(rad)} cy={160 + r * Math.sin(rad)} r="8" />;
+                                })}
+
+                                {/* D label */}
+                                <line className={styles.bpDim} x1="160" y1="36" x2="160" y2="15" />
+                                <line className={styles.bpDim} x1="160" y1="15" x2="280" y2="15" />
+                                <text className={styles.bpLabel} x="284" y="19">D = 127.3</text>
+
+                                {/* d label */}
+                                <line className={styles.bpDim} x1="160" y1="132" x2="160" y2="110" />
+                                <line className={styles.bpDim} x1="160" y1="110" x2="280" y2="110" />
+                                <text className={styles.bpLabel} x="284" y="114">d = 55.7</text>
+
+                                {/* H/T label */}
+                                <line className={styles.bpDim} x1="246" y1="160" x2="270" y2="190" />
+                                <text className={styles.bpLabel} x="274" y="194">H/T M12</text>
+
+                                {/* Left labels */}
+                                <line className={styles.bpLeader} x1="60" y1="110" x2="30" y2="85" />
+                                <text className={styles.bpLabelLeft} x="28" y="81">КОРПУС</text>
+                                <text className={styles.bpLabelLeft} x="28" y="93">З ЧАВУНУ</text>
+
+                                <line className={styles.bpLeader} x1="86" y1="155" x2="30" y2="150" />
+                                <text className={styles.bpLabelLeft} x="28" y="146">КАСЕТНЕ</text>
+                                <text className={styles.bpLabelLeft} x="28" y="158">УЩІЛЬНЕННЯ</text>
+
+                                <line className={styles.bpLeader} x1="108" y1="195" x2="30" y2="225" />
+                                <text className={styles.bpLabelLeft} x="28" y="221">ВНУТРІШНІЙ</text>
+                                <text className={styles.bpLabelLeft} x="28" y="233">ПІДШИПНИК</text>
+
+                                {/* Hot points */}
+                                <circle className={`${styles.bpHotPulse} ${styles.bpHP1}`} cx="160" cy="40" r="6" />
+                                <circle className={styles.bpHotDot} cx="160" cy="40" r="4" />
+                                <circle className={`${styles.bpHotPulse} ${styles.bpHP2}`} cx="86" cy="160" r="6" />
+                                <circle className={styles.bpHotDot} cx="86" cy="160" r="4" />
+
+                                <text className={styles.bpWatermark} x="160" y="312">VELNOX © 2026</text>
+                            </svg>
+                        </div>
 
                         <div className={styles.blueprintLayout}>
                             {/* LEFT: Text */}
@@ -306,93 +377,6 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                 </div>
                             </div>
 
-                            {/* RIGHT: Blueprint SVG */}
-                            <div className={styles.blueprintDiagram}>
-                                <svg viewBox="0 0 340 400" className={styles.blueprintSvg} aria-hidden>
-                                    {/* Defs */}
-                                    <defs>
-                                        <filter id="glow">
-                                            <feGaussianBlur stdDeviation="2" result="blur" />
-                                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                        </filter>
-                                    </defs>
-
-                                    {/* Grid */}
-                                    {Array.from({ length: 9 }).map((_, i) => (
-                                        <line key={`h${i}`} x1="0" y1={i * 50} x2="340" y2={i * 50} stroke="rgba(56,189,248,0.06)" strokeWidth="1" />
-                                    ))}
-                                    {Array.from({ length: 8 }).map((_, i) => (
-                                        <line key={`v${i}`} x1={i * 50} y1="0" x2={i * 50} y2="400" stroke="rgba(56,189,248,0.06)" strokeWidth="1" />
-                                    ))}
-
-                                    {/* ─── HUB CROSS-SECTION ─── */}
-                                    {/* Outer housing circle (D = 127.3mm) */}
-                                    <circle className={styles.bpCircle} cx="170" cy="200" r="95" />
-                                    {/* Housing inner wall */}
-                                    <circle className={styles.bpCircle} cx="170" cy="200" r="75" strokeDasharray="4 3" />
-                                    {/* Bearing outer race */}
-                                    <circle className={styles.bpCircle} cx="170" cy="200" r="60" />
-                                    {/* Bearing inner race */}
-                                    <circle className={styles.bpCircle} cx="170" cy="200" r="42" />
-                                    {/* Bore (d = 55.7mm) */}
-                                    <circle className={`${styles.bpCircle} ${styles.bpBore}`} cx="170" cy="200" r="22" />
-
-                                    {/* Center crosshair */}
-                                    <line className={styles.bpDim} x1="130" y1="200" x2="210" y2="200" />
-                                    <line className={styles.bpDim} x1="170" y1="160" x2="170" y2="240" />
-
-                                    {/* Bolt holes (J = 106mm, H/T = M12) — 4 holes */}
-                                    {[0, 90, 180, 270].map((angle) => {
-                                        const r = 68;
-                                        const rad = (angle * Math.PI) / 180;
-                                        const x = 170 + r * Math.cos(rad);
-                                        const y = 200 + r * Math.sin(rad);
-                                        return <circle key={angle} className={styles.bpHole} cx={x} cy={y} r="6" />;
-                                    })}
-
-                                    {/* ─── DIMENSION LINES ─── */}
-                                    {/* D — outer diameter */}
-                                    <line className={styles.bpDim} x1="170" y1="96" x2="170" y2="70" />
-                                    <line className={styles.bpDim} x1="170" y1="70" x2="290" y2="70" />
-                                    <text className={styles.bpLabel} x="295" y="74">D = 127.3</text>
-
-                                    {/* d — bore */}
-                                    <line className={styles.bpDim} x1="170" y1="178" x2="170" y2="148" />
-                                    <line className={styles.bpDim} x1="170" y1="148" x2="290" y2="148" />
-                                    <text className={styles.bpLabel} x="295" y="152">d = 55.7</text>
-
-                                    {/* H/T */}
-                                    <line className={styles.bpDim} x1="238" y1="200" x2="260" y2="200" />
-                                    <line className={styles.bpDim} x1="260" y1="200" x2="290" y2="230" />
-                                    <text className={styles.bpLabel} x="295" y="234">H/T = M12</text>
-
-                                    {/* ─── COMPONENT LABELS (left side) ─── */}
-                                    {/* КОРПУС З ЧАВУНУ */}
-                                    <line className={styles.bpLeader} x1="85" y1="145" x2="50" y2="110" />
-                                    <text className={styles.bpLabelLeft} x="45" y="106">КОРПУС</text>
-                                    <text className={styles.bpLabelLeft} x="45" y="120">З ЧАВУНУ</text>
-
-                                    {/* КАСЕТНЕ УЩІЛЬНЕННЯ */}
-                                    <line className={styles.bpLeader} x1="113" y1="195" x2="50" y2="185" />
-                                    <text className={styles.bpLabelLeft} x="45" y="180">КАСЕТНЕ</text>
-                                    <text className={styles.bpLabelLeft} x="45" y="194">УЩІЛЬНЕННЯ</text>
-
-                                    {/* ВНУТРІШНІЙ ПІДШИПНИК */}
-                                    <line className={styles.bpLeader} x1="128" y1="220" x2="50" y2="260" />
-                                    <text className={styles.bpLabelLeft} x="45" y="256">ВНУТРІШНІЙ</text>
-                                    <text className={styles.bpLabelLeft} x="45" y="270">ПІДШИПНИК</text>
-
-                                    {/* ─── HOT POINTS (pulsing) ─── */}
-                                    <circle className={styles.bpHotPulse} cx="170" cy="140" r="5" />
-                                    <circle className={styles.bpHotDot} cx="170" cy="140" r="4" />
-
-                                    <circle className={styles.bpHotPulse} cx="128" cy="200" r="5" />
-                                    <circle className={styles.bpHotDot} cx="128" cy="200" r="4" />
-
-                                    {/* Watermark */}
-                                    <text className={styles.bpWatermark} x="170" y="390">© 2026 VELNOX</text>
-                                </svg>
-                            </div>
                         </div>
             </section>
 

@@ -2501,3 +2501,159 @@
         font-size: 18px;
     }
 }
+
+/* ══════════════════════════════════════════════════════
+   BLUEPRINT SVG — absolute positioned over wheel hub
+══════════════════════════════════════════════════════ */
+
+/* Wrap: centered on the wheel hub (50% x, 62% y of block) */
+.blueprintSvgWrap {
+    position: absolute;
+    /* Center of the wheel hub in the photo */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(420px, 45%);
+    aspect-ratio: 1;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* On large screens push the SVG right (hub is right of center) */
+@media (min-width: 1000px) {
+    .blueprintSvgWrap {
+        left: 58%;
+        top: 52%;
+    }
+}
+
+.blueprintSvg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* ── CIRCLE ANIMATIONS ── */
+
+@keyframes bpDraw {
+    from { stroke-dashoffset: var(--dash-len, 800); opacity: 0; }
+    10%  { opacity: 1; }
+    to   { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes bpFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes bpPulse {
+    0%, 100% { r: 6; opacity: 0.5; }
+    50%       { r: 18; opacity: 0; }
+}
+
+/* Base circle styles — thick bright lines */
+.bpCircle {
+    fill: none;
+    stroke: rgba(56, 189, 248, 0.85);
+    stroke-width: 2.5;
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+    --dash-len: 800;
+}
+
+/* Each circle gets its own delay */
+.blueprintVisible .bpC1 { animation: bpDraw 1.4s cubic-bezier(0.4,0,0.2,1) 0.1s forwards; }
+.blueprintVisible .bpC2 { animation: bpDraw 1.4s cubic-bezier(0.4,0,0.2,1) 0.4s forwards; }
+.blueprintVisible .bpC3 { animation: bpDraw 1.4s cubic-bezier(0.4,0,0.2,1) 0.7s forwards; }
+.blueprintVisible .bpC4 { animation: bpDraw 1.4s cubic-bezier(0.4,0,0.2,1) 1.0s forwards; }
+.blueprintVisible .bpBore { animation: bpDraw 1.0s cubic-bezier(0.4,0,0.2,1) 1.3s forwards; }
+
+.bpBore {
+    fill: rgba(56, 189, 248, 0.10);
+    stroke: rgba(56, 189, 248, 1);
+    stroke-width: 3;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+}
+
+.bpHole {
+    fill: rgba(56, 189, 248, 0.15);
+    stroke: rgba(56, 189, 248, 0.9);
+    stroke-width: 2;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+}
+.blueprintVisible .bpC5 {
+    animation: bpDraw 0.6s ease 1.5s forwards;
+    --dash-len: 60;
+}
+
+/* Dimension lines */
+.bpDim {
+    stroke: rgba(56, 189, 248, 0.5);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    opacity: 0;
+}
+.blueprintVisible .bpDim { animation: bpFadeIn 0.4s ease 1.6s forwards; }
+
+/* Leader lines */
+.bpLeader {
+    stroke: rgba(56, 189, 248, 0.55);
+    stroke-width: 1;
+    opacity: 0;
+}
+.blueprintVisible .bpLeader { animation: bpFadeIn 0.4s ease 1.8s forwards; }
+
+/* Text labels */
+.bpLabel {
+    fill: #93c5fd;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    opacity: 0;
+}
+.blueprintVisible .bpLabel { animation: bpFadeIn 0.4s ease 1.8s forwards; }
+
+.bpLabelLeft {
+    fill: #bfdbfe;
+    font-size: 9.5px;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    text-anchor: end;
+    opacity: 0;
+}
+.blueprintVisible .bpLabelLeft { animation: bpFadeIn 0.4s ease 2.0s forwards; }
+
+/* Hot points */
+.bpHotPulse {
+    fill: rgba(56, 189, 248, 0.4);
+    stroke: none;
+}
+.blueprintVisible .bpHP1 { animation: bpPulse 2.4s ease-in-out 2s infinite; }
+.blueprintVisible .bpHP2 { animation: bpPulse 2.4s ease-in-out 2.3s infinite; }
+
+.bpHotDot {
+    fill: #38bdf8;
+    stroke: #fff;
+    stroke-width: 1.5;
+    opacity: 0;
+}
+.blueprintVisible .bpHotDot { animation: bpFadeIn 0.3s ease 2s forwards; }
+
+.bpWatermark {
+    fill: rgba(56, 189, 248, 0.3);
+    font-size: 8.5px;
+    font-family: 'Courier New', monospace;
+    text-anchor: middle;
+    letter-spacing: 0.12em;
+    opacity: 0;
+}
+.blueprintVisible .bpWatermark { animation: bpFadeIn 0.4s ease 2.2s forwards; }
+
+/* Make text readable since overlay has text on left */
+.blueprintLayout {
+    position: relative;
+    z-index: 4; /* above SVG so text is in front */
+}
