@@ -256,37 +256,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 </div>
             </section>
 
-            {/* STICKY SEARCH — identical structure to bearings page */}
-            <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
-                <div className={`${styles.container} ${styles.stickyContainer}`}>
-                    <div className={styles.tablesHeader}>
-                        <div className={styles.headerTitles}>
-                            <h2 className={styles.sectionTitle}>{t('hubsPage.block2.title')}</h2>
-                            <p className={styles.tablesIntro}>{t('hubsPage.block2.intro')}</p>
-                        </div>
-                        <div className={styles.searchWrap}>
-                            <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <input
-                                type="text"
-                                className={styles.searchInput}
-                                placeholder={t('hubsPage.block2.search_placeholder')}
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* TABLES SECTION */}
-            <section className={styles.tablesSection} ref={app1Ref.ref}>
-                <div className={styles.container}>
-
-                    {/* ── APP BLOCK 1 — BLUEPRINT OVERLAY ── */}
-                    <section className={`${styles.blueprintBlock} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
+            {/* ── APP BLOCK 1 — BLUEPRINT OVERLAY (before search) ── */}
+            <section ref={app1Ref.ref} className={`${styles.blueprintBlock} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
                         {/* HORSCH background photo */}
                         <div className={styles.blueprintBg} />
                         <div className={styles.blueprintDarkOverlay} />
@@ -416,7 +387,36 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                 </svg>
                             </div>
                         </div>
-                    </section>
+            </section>
+
+            {/* STICKY SEARCH — after blueprint block */}
+            <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
+                <div className={`${styles.container} ${styles.stickyContainer}`}>
+                    <div className={styles.tablesHeader}>
+                        <div className={styles.headerTitles}>
+                            <h2 className={styles.sectionTitle}>{t('hubsPage.block2.title')}</h2>
+                            <p className={styles.tablesIntro}>{t('hubsPage.block2.intro')}</p>
+                        </div>
+                        <div className={styles.searchWrap}>
+                            <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input
+                                type="text"
+                                className={styles.searchInput}
+                                placeholder={t('hubsPage.block2.search_placeholder')}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* TABLES SECTION */}
+            <section className={styles.tablesSection}>
+                <div className={styles.container}>
 
                     {/* TABLE 1 */}
                     <div className={styles.tableBlock}>
