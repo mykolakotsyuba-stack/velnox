@@ -41,6 +41,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
+    const searchBoxRef = useRef<HTMLDivElement>(null);
 
     const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
@@ -156,13 +157,11 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 </div>
             </section>
 
-            {/* TABLES SECTION */}
-            <section className={styles.tablesSection} ref={tablesRef.ref}>
+            {/* SEARCH SECTION (STICKY) */}
+            <section className={styles.tablesHeader} ref={searchBoxRef}>
                 <div className={styles.container}>
                     <h2 className={styles.sectionTitle}>{t('hubsPage.block2.title')}</h2>
                     <p className={styles.introText}>{t('hubsPage.block2.intro')}</p>
-
-                    {/* Search input */}
                     <div className={styles.searchWrapper}>
                         <input
                             type="text"
@@ -172,13 +171,36 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                             className={styles.searchInput}
                         />
                     </div>
+                </div>
+            </section>
 
-                    {/* TABLE 1 */}
+            {/* TABLES SECTION */}
+            <section className={styles.tablesSection} ref={tablesRef.ref}>
+                <div className={styles.container}>
+                    {/* APP BLOCK 1 + TABLE 1 */}
+                    <div className={styles.applicationsSection}>
+                        <div className={styles.appInner}>
+                            <div className={styles.appHeader}>
+                                <div className={styles.appTag}>HORSCH OEM</div>
+                                <h3 className={styles.appTitle}>{t('hubsPage.app1.title')}</h3>
+                            </div>
+                            <div className={styles.appBody}>
+                                <p className={styles.appParaLead}>{t('hubsPage.app1.desc')}</p>
+                                <p className={styles.appPara}>
+                                    <strong className={styles.appKeyword}>{t('hubsPage.app1.applications')}</strong>
+                                </p>
+                                <p className={styles.appPara} style={{ marginTop: '12px' }}>
+                                    {t('hubsPage.app1.oem_focus')}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table1.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table1.desc')}</p>
                         <div className={styles.diagramPlaceholder}>
-                            [ SEALING SYSTEM SCHEME - TABLE 1 ]
+                            [ SEALING SYSTEM SCHEME ]
                         </div>
                         <div className={styles.tableWrapper}>
                             <table className={styles.dataTable}>
@@ -186,8 +208,18 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     <tr>
                                         <th>Part Number</th>
                                         <th>Bearing designation</th>
+                                        <th>Brand name</th>
                                         <th>J (mm)</th>
                                         <th>D (mm)</th>
+                                        <th>D1 (mm)</th>
+                                        <th>d (mm)</th>
+                                        <th>C (mm)</th>
+                                        <th>H/T</th>
+                                        <th>G</th>
+                                        <th>L (mm)</th>
+                                        <th>L1 (mm)</th>
+                                        <th>F (mm)</th>
+                                        <th>Mass (kg)</th>
                                         <th>Cdyn (kN)</th>
                                         <th>Co (kN)</th>
                                         <th>Pu (kN)</th>
@@ -199,8 +231,18 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                             <tr key={idx}>
                                                 <td>{row['Part Number'] || '-'}</td>
                                                 <td>{row['Bearing designation'] || '-'}</td>
+                                                <td>{row['Brand name'] || '-'}</td>
                                                 <td>{row['J (mm)'] || '-'}</td>
                                                 <td>{row['D (mm)'] || '-'}</td>
+                                                <td>{row['D1 (mm)'] || '-'}</td>
+                                                <td>{row['d (mm)'] || '-'}</td>
+                                                <td>{row['C (mm)'] || '-'}</td>
+                                                <td>{row['H/T'] || '-'}</td>
+                                                <td>{row['G'] || '-'}</td>
+                                                <td>{row['L (mm)'] || '-'}</td>
+                                                <td>{row['L1 (mm)'] || '-'}</td>
+                                                <td>{row['F (mm)'] || '-'}</td>
+                                                <td>{row['Mass (kg)'] || '-'}</td>
                                                 <td>{row['Cdyn (kN)'] || '-'}</td>
                                                 <td>{row['Co (kN)'] || '-'}</td>
                                                 <td>{row['Pu (kN)'] || '-'}</td>
@@ -208,7 +250,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan={7} className={styles.noData}>
+                                            <td colSpan={17} className={styles.noData}>
                                                 Нічого не знайдено
                                             </td>
                                         </tr>
@@ -218,12 +260,30 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                         </div>
                     </div>
 
-                    {/* TABLE 2 */}
+                    {/* APP BLOCK 2 + TABLE 2 */}
+                    <div className={styles.applicationsSection}>
+                        <div className={styles.appInner}>
+                            <div className={styles.appHeader}>
+                                <div className={styles.appTag}>CUTTING NODES</div>
+                                <h3 className={styles.appTitle}>{t('hubsPage.app2.title')}</h3>
+                            </div>
+                            <div className={styles.appBody}>
+                                <p className={styles.appParaLead}>{t('hubsPage.app2.desc')}</p>
+                                <p className={styles.appPara}>
+                                    <strong className={styles.appKeyword}>{t('hubsPage.app2.applications')}</strong>
+                                </p>
+                                <p className={styles.appPara} style={{ marginTop: '12px' }}>
+                                    {t('hubsPage.app2.oem_focus')}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table2.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table2.desc')}</p>
                         <div className={styles.diagramPlaceholder}>
-                            [ SEALING SYSTEM SCHEME - TABLE 2 ]
+                            [ SEALING SYSTEM SCHEME ]
                         </div>
                         <div className={styles.tableWrapper}>
                             <table className={styles.dataTable}>
@@ -231,10 +291,21 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     <tr>
                                         <th>Part Number</th>
                                         <th>Bearing designation</th>
+                                        <th>Brand name</th>
                                         <th>J (mm)</th>
                                         <th>D (mm)</th>
+                                        <th>H/T</th>
+                                        <th>d (mm)</th>
+                                        <th>C (mm)</th>
+                                        <th>M</th>
+                                        <th>L (mm)</th>
+                                        <th>L1 (mm)</th>
+                                        <th>E (mm)</th>
+                                        <th>F (mm)</th>
+                                        <th>Mass (kg)</th>
                                         <th>Cdyn (kN)</th>
                                         <th>Co (kN)</th>
+                                        <th>Pu (kN)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -243,15 +314,26 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                             <tr key={idx}>
                                                 <td>{row['Part Number'] || '-'}</td>
                                                 <td>{row['Bearing designation'] || '-'}</td>
+                                                <td>{row['Brand name'] || '-'}</td>
                                                 <td>{row['J (mm)'] || '-'}</td>
                                                 <td>{row['D (mm)'] || '-'}</td>
+                                                <td>{row['H/T'] || '-'}</td>
+                                                <td>{row['d (mm)'] || '-'}</td>
+                                                <td>{row['C (mm)'] || '-'}</td>
+                                                <td>{row['M'] || '-'}</td>
+                                                <td>{row['L (mm)'] || '-'}</td>
+                                                <td>{row['L1 (mm)'] || '-'}</td>
+                                                <td>{row['E (mm)'] || '-'}</td>
+                                                <td>{row['F (mm)'] || '-'}</td>
+                                                <td>{row['Mass (kg)'] || '-'}</td>
                                                 <td>{row['Cdyn (kN)'] || '-'}</td>
                                                 <td>{row['Co (kN)'] || '-'}</td>
+                                                <td>{row['Pu (kN)'] || '-'}</td>
                                             </tr>
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan={6} className={styles.noData}>
+                                            <td colSpan={17} className={styles.noData}>
                                                 Нічого не знайдено
                                             </td>
                                         </tr>
@@ -261,12 +343,30 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                         </div>
                     </div>
 
-                    {/* TABLE 3 */}
+                    {/* APP BLOCK 3 + TABLE 3 */}
+                    <div className={styles.applicationsSection}>
+                        <div className={styles.appInner}>
+                            <div className={styles.appHeader}>
+                                <div className={styles.appTag}>HIGH-SPEED SEEDERS</div>
+                                <h3 className={styles.appTitle}>{t('hubsPage.app3.title')}</h3>
+                            </div>
+                            <div className={styles.appBody}>
+                                <p className={styles.appParaLead}>{t('hubsPage.app3.desc')}</p>
+                                <p className={styles.appPara}>
+                                    <strong className={styles.appKeyword}>{t('hubsPage.app3.applications')}</strong>
+                                </p>
+                                <p className={styles.appPara} style={{ marginTop: '12px' }}>
+                                    {t('hubsPage.app3.oem_focus')}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table3.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table3.desc')}</p>
                         <div className={styles.diagramPlaceholder}>
-                            [ SEALING SYSTEM SCHEME - TABLE 3 ]
+                            [ SEALING SYSTEM SCHEME ]
                         </div>
                         <div className={styles.tableWrapper}>
                             <table className={styles.dataTable}>
@@ -274,10 +374,18 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     <tr>
                                         <th>Part Number</th>
                                         <th>Bearing designation</th>
+                                        <th>Brand name</th>
+                                        <th>J (mm)</th>
+                                        <th>D (mm)</th>
+                                        <th>D1 (mm)</th>
+                                        <th>d (mm)</th>
+                                        <th>H/T</th>
                                         <th>L (mm)</th>
                                         <th>B (mm)</th>
+                                        <th>Mass (kg)</th>
                                         <th>Cdyn (kN)</th>
                                         <th>Co (kN)</th>
+                                        <th>Pu (kN)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -286,15 +394,23 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                             <tr key={idx}>
                                                 <td>{row['Part Number'] || '-'}</td>
                                                 <td>{row['Bearing designation'] || '-'}</td>
+                                                <td>{row['Brand name'] || '-'}</td>
+                                                <td>{row['J (mm)'] || '-'}</td>
+                                                <td>{row['D (mm)'] || '-'}</td>
+                                                <td>{row['D1 (mm)'] || '-'}</td>
+                                                <td>{row['d (mm)'] || '-'}</td>
+                                                <td>{row['H/T'] || '-'}</td>
                                                 <td>{row['L (mm)'] || '-'}</td>
                                                 <td>{row['B (mm)'] || '-'}</td>
+                                                <td>{row['Mass (kg)'] || '-'}</td>
                                                 <td>{row['Cdyn (kN)'] || '-'}</td>
                                                 <td>{row['Co (kN)'] || '-'}</td>
+                                                <td>{row['Pu (kN)'] || '-'}</td>
                                             </tr>
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan={6} className={styles.noData}>
+                                            <td colSpan={14} className={styles.noData}>
                                                 Нічого не знайдено
                                             </td>
                                         </tr>

@@ -2089,107 +2089,176 @@
     margin-bottom: 40px;
 }
 
+/* STICKY SEARCH HEADER */
+.tablesHeader {
+    position: sticky;
+    top: 0;
+    background: var(--color-bg);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px 0;
+    margin-bottom: 60px;
+}
+
+.tablesHeader .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.tablesHeader .sectionTitle {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.introText {
+    color: #999;
+    margin-bottom: 24px;
+    max-width: 800px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
 .searchWrapper {
-    margin-bottom: 40px;
+    margin-bottom: 0;
     display: flex;
     gap: 12px;
 }
 
 .searchInput {
     flex: 1;
-    max-width: 400px;
-    padding: 12px 16px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    max-width: 500px;
+    padding: 14px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text);
+    transition: all 0.3s ease;
+}
+
+.searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .searchInput:focus {
     outline: none;
     border-color: var(--color-accent, #10b981);
+    background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
 .diagramPlaceholder {
     margin-bottom: 30px;
     padding: 20px;
-    background: #f9f9f9;
+    background: rgba(255, 255, 255, 0.02);
     border-radius: 8px;
-    border: 1px dashed #ddd;
-    min-height: 200px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    min-height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #666;
+    color: #888;
     font-size: 14px;
     text-align: center;
 }
 
 .tableWrapper {
     overflow-x: auto;
-    border: 1px solid #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
+    background: rgba(255, 255, 255, 0.02);
+    -webkit-overflow-scrolling: touch;
 }
 
 .dataTable {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 13px;
+    min-width: 1000px;
 }
 
 .dataTable thead tr {
-    background: #f0f0f0;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .dataTable thead th {
-    padding: 12px;
+    padding: 14px 12px;
     text-align: left;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     font-weight: 600;
-    color: #333;
+    color: var(--color-text);
+    white-space: nowrap;
 }
 
 .dataTable tbody tr {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .dataTable tbody tr:nth-child(even) {
-    background: #f9f9f9;
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .dataTable tbody tr:hover {
-    background: #f5f5f5;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .dataTable tbody td {
     padding: 12px;
-    color: #555;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .noData {
-    padding: 20px !important;
+    padding: 32px 12px !important;
     text-align: center;
     color: #999;
     font-style: italic;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .searchInput {
         max-width: 100%;
     }
 
     .dataTable {
         font-size: 12px;
+        min-width: 800px;
     }
 
     .dataTable thead th,
     .dataTable tbody td {
-        padding: 8px;
+        padding: 10px 8px;
+    }
+
+    .tablesHeader {
+        padding: 28px 0;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .searchInput {
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .dataTable {
+        font-size: 11px;
+        min-width: 1200px;
+    }
+
+    .dataTable thead th,
+    .dataTable tbody td {
+        padding: 8px 6px;
     }
 
     .tableWrapper {
-        margin-bottom: 40px;
+        margin-bottom: 60px;
+    }
+
+    .diagramPlaceholder {
+        min-height: 140px;
     }
 }
