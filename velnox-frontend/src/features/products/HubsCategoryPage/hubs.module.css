@@ -2188,7 +2188,7 @@
 
 .blueprintBlock {
     position: relative;
-    min-height: 560px;
+    min-height: 620px;
     overflow: hidden;
     margin-bottom: 60px;
     border-radius: var(--radius-block, 12px);
@@ -2196,28 +2196,27 @@
     align-items: stretch;
 }
 
-/* Background photo */
+/* Background photo — visible on the right side (wheel area) */
 .blueprintBg {
     position: absolute;
     inset: 0;
     background-image: url('/velnox/images/hubs/horsch-field.png');
     background-size: cover;
-    background-position: center 40%;
-    transition: transform 0.1s linear;
-    will-change: transform;
+    background-position: 60% 55%;
     z-index: 0;
 }
 
-/* Dark gradient overlay — left heavier, right lighter */
+/* Overlay: ONLY darkens the left text zone; right side shows the photo */
 .blueprintDarkOverlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
-        100deg,
-        rgba(5, 12, 28, 0.92) 0%,
-        rgba(5, 12, 28, 0.80) 45%,
-        rgba(5, 12, 28, 0.55) 70%,
-        rgba(5, 12, 28, 0.35) 100%
+        90deg,
+        rgba(5, 12, 28, 0.90) 0%,
+        rgba(5, 12, 28, 0.85) 35%,
+        rgba(5, 12, 28, 0.50) 55%,
+        rgba(5, 12, 28, 0.10) 75%,
+        rgba(5, 12, 28, 0.00) 100%
     );
     z-index: 1;
 }
