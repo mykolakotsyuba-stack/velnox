@@ -2164,19 +2164,17 @@
 }
 
 .tableWrapper {
-    overflow-x: auto;
+    overflow-x: visible;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
     margin-bottom: 80px;
     background: rgba(255, 255, 255, 0.02);
-    -webkit-overflow-scrolling: touch;
 }
 
 .dataTable {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
-    min-width: 1000px;
 }
 
 .dataTable thead tr {
@@ -2217,6 +2215,142 @@
     font-style: italic;
 }
 
+/* ────────────────────────────────────────────────────────
+   APPLICATION SECTIONS WITH ANIMATIONS
+──────────────────────────────────────────────────────── */
+
+.applicationsSection {
+    position: relative;
+    padding: 100px 0 120px;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.appWatermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(80px, 18vw, 200px);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: color-mix(in srgb, var(--color-accent) 4%, transparent);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+.appInner {
+    position: relative;
+    z-index: 1;
+    padding: 0 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.appHeader {
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.appSectionVisible .appHeader {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.appTag {
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    margin-bottom: 12px;
+}
+
+.appTag::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1em;
+    background: #10b981;
+    margin-right: 8px;
+    vertical-align: -0.125em;
+}
+
+.appTitle {
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0;
+    position: relative;
+}
+
+.appTitle::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: #10b981;
+    transition: width 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 2px;
+}
+
+.appSectionVisible .appTitle::after {
+    width: 60px;
+}
+
+.appBody {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 860px;
+}
+
+.appPara {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    margin: 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.appParaLead {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--color-text);
+    font-weight: 500;
+    padding-left: 20px;
+    border-left: 3px solid var(--color-accent);
+}
+
+.appParaVisible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.appKeyword {
+    color: var(--color-accent);
+    font-weight: 700;
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+    padding: 1px 5px;
+    border-radius: 3px;
+}
+
 @media (max-width: 1024px) {
     .searchInput {
         max-width: 100%;
@@ -2224,7 +2358,6 @@
 
     .dataTable {
         font-size: 12px;
-        min-width: 800px;
     }
 
     .dataTable thead th,
@@ -2236,6 +2369,30 @@
         padding: 28px 0;
         margin-bottom: 40px;
     }
+
+    .applicationsSection {
+        padding: 64px 0 80px;
+    }
+
+    .appInner {
+        padding: 0 20px;
+    }
+
+    .appHeader {
+        margin-bottom: 36px;
+    }
+
+    .appBody {
+        gap: 18px;
+    }
+
+    .appPara {
+        font-size: 15px;
+    }
+
+    .appParaLead {
+        font-size: 16px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -2246,7 +2403,6 @@
 
     .dataTable {
         font-size: 11px;
-        min-width: 1200px;
     }
 
     .dataTable thead th,
@@ -2256,6 +2412,7 @@
 
     .tableWrapper {
         margin-bottom: 60px;
+        overflow-x: auto;
     }
 
     .diagramPlaceholder {
