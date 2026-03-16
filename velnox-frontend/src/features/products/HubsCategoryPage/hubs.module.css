@@ -2509,9 +2509,9 @@
 /* Wrap: centered on the wheel hub (50% x, 62% y of block) */
 .blueprintSvgWrap {
     position: absolute;
-    /* Center of the wheel hub in the photo */
-    left: 50%;
-    top: 50%;
+    /* Center of the disc hub in the photo (base) */
+    left: 54%;
+    top: 74%;
     transform: translate(-50%, -50%);
     width: min(420px, 45%);
     aspect-ratio: 1;
@@ -2519,11 +2519,11 @@
     pointer-events: none;
 }
 
-/* On large screens push the SVG right (hub is right of center) */
+/* On large screens position over the red disc hub */
 @media (min-width: 1000px) {
     .blueprintSvgWrap {
-        left: 58%;
-        top: 52%;
+        left: 62%;
+        top: 76%;
     }
 }
 
@@ -2657,3 +2657,132 @@
     position: relative;
     z-index: 4; /* above SVG so text is in front */
 }
+
+/* ══════════════════════════════════════════════════════
+   APP BLOCK 2 — CUTTING NODES (teal accent, mirrored)
+══════════════════════════════════════════════════════ */
+
+/* Block 2 overlay — text on RIGHT, photo on LEFT */
+.blueprintDarkOverlay2 {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        270deg,
+        rgba(5, 20, 18, 0.92) 0%,
+        rgba(5, 20, 18, 0.85) 35%,
+        rgba(5, 20, 18, 0.45) 58%,
+        rgba(5, 20, 18, 0.08) 78%,
+        rgba(5, 20, 18, 0.00) 100%
+    );
+    z-index: 1;
+}
+
+/* SVG on the LEFT side for block 2 */
+.blueprintSvgWrap2 {
+    left: 32% !important;
+    top: 52% !important;
+}
+@media (max-width: 1000px) {
+    .blueprintSvgWrap2 { left: 50% !important; top: 50% !important; }
+}
+
+/* Layout for block 2: spacer on left, text on right */
+.blueprintLayout2 {
+    justify-content: flex-end !important;
+}
+.blueprintSpacer {
+    flex: 1;
+}
+
+/* ── BLOCK 2 SVG STYLES (teal #34d399) ── */
+
+.bpCircle2 {
+    fill: none;
+    stroke: rgba(52, 211, 153, 0.85);
+    stroke-width: 2.5;
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+}
+
+.blueprintVisible .bpCircle2.bpC1 { animation: bpDraw 1.4s cubic-bezier(0.4,0,0.2,1) 0.1s forwards; }
+.blueprintVisible .bpCircle2.bpC2 { animation: bpDraw 1.4s cubic-bezier(0.4,0,0.2,1) 0.4s forwards; }
+.blueprintVisible .bpCircle2.bpC3 { animation: bpDraw 1.4s cubic-bezier(0.4,0,0.2,1) 0.7s forwards; }
+.blueprintVisible .bpCircle2.bpC4 { animation: bpDraw 1.4s cubic-bezier(0.4,0,0.2,1) 1.0s forwards; }
+
+.bpBore2 {
+    fill: rgba(52, 211, 153, 0.10);
+    stroke: rgba(52, 211, 153, 1);
+    stroke-width: 3;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+}
+.blueprintVisible .bpBore2 { animation: bpDraw 1.0s cubic-bezier(0.4,0,0.2,1) 1.3s forwards; }
+
+.bpHole2 {
+    fill: rgba(52, 211, 153, 0.12);
+    stroke: rgba(52, 211, 153, 0.85);
+    stroke-width: 2;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+}
+.blueprintVisible .bpHole2 { animation: bpDraw 0.6s ease 1.5s forwards; --dash-len: 60; }
+
+.bpDim2 {
+    stroke: rgba(52, 211, 153, 0.45);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    opacity: 0;
+}
+.blueprintVisible .bpDim2 { animation: bpFadeIn 0.4s ease 1.6s forwards; }
+
+.bpLeader2 {
+    stroke: rgba(52, 211, 153, 0.5);
+    stroke-width: 1;
+    opacity: 0;
+}
+.blueprintVisible .bpLeader2 { animation: bpFadeIn 0.4s ease 1.8s forwards; }
+
+.bpLabel2 {
+    fill: #6ee7b7;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    opacity: 0;
+}
+.blueprintVisible .bpLabel2 { animation: bpFadeIn 0.4s ease 1.8s forwards; }
+
+.bpLabelRight {
+    fill: #a7f3d0;
+    font-size: 9.5px;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    text-anchor: start;
+    opacity: 0;
+}
+.blueprintVisible .bpLabelRight { animation: bpFadeIn 0.4s ease 2.0s forwards; }
+
+.bpHotPulse2 {
+    fill: rgba(52, 211, 153, 0.35);
+    stroke: none;
+}
+.blueprintVisible .bpHotPulse2.bpHP1 { animation: bpPulse 2.4s ease-in-out 2s infinite; }
+.blueprintVisible .bpHotPulse2.bpHP2 { animation: bpPulse 2.4s ease-in-out 2.4s infinite; }
+
+.bpHotDot2 {
+    fill: #34d399;
+    stroke: #fff;
+    stroke-width: 1.5;
+    opacity: 0;
+}
+.blueprintVisible .bpHotDot2 { animation: bpFadeIn 0.3s ease 2s forwards; }
+
+.bpWatermark2 {
+    fill: rgba(52, 211, 153, 0.25);
+    font-size: 8.5px;
+    font-family: 'Courier New', monospace;
+    text-anchor: middle;
+    letter-spacing: 0.12em;
+    opacity: 0;
+}
+.blueprintVisible .bpWatermark2 { animation: bpFadeIn 0.4s ease 2.2s forwards; }

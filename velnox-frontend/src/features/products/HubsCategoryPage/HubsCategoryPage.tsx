@@ -473,24 +473,125 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                         </div>
                     </div>
 
-                    {/* ── APP BLOCK 2 ── */}
-                    <section className={app2Class} ref={app2Ref.ref}>
-                        <div className={styles.appWatermark}>CUTTING</div>
-                        <div className={styles.appInner}>
-                            <div className={styles.appHeader}>
-                                <span className={styles.appTag}>CUTTING NODES</span>
-                                <h2 className={styles.appTitle}>{t('hubsPage.app2.title')}</h2>
-                            </div>
-                            <div className={styles.appBody}>
-                                <p className={`${styles.appPara} ${styles.appParaLead} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
-                                    {t('hubsPage.app2.desc')}
-                                </p>
-                                <p className={`${styles.appPara} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
-                                    <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('hubsPage.app2.applications')}
-                                </p>
-                                <p className={`${styles.appPara} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
-                                    <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('hubsPage.app2.oem_focus')}
-                                </p>
+                    {/* ── APP BLOCK 2 — BLUEPRINT OVERLAY: CUTTING NODES ── */}
+                    <section ref={app2Ref.ref} className={`${styles.blueprintBlock} ${styles.blueprintBlock2} ${app2Ref.inView ? styles.blueprintVisible : ''}`}>
+                        <Image
+                            src="/velnox/images/hubs/bednar-field.png"
+                            alt=""
+                            fill
+                            priority={false}
+                            style={{ objectFit: 'cover', objectPosition: '55% 60%' }}
+                        />
+                        {/* Teal overlay — text on RIGHT for visual variety */}
+                        <div className={styles.blueprintDarkOverlay2} />
+
+                        {/* Blueprint SVG — disk cutting node, 6 bolt holes */}
+                        <div className={`${styles.blueprintSvgWrap} ${styles.blueprintSvgWrap2} ${app2Ref.inView ? styles.blueprintVisible : ''}`}>
+                            <svg viewBox="0 0 320 320" className={styles.blueprintSvg} aria-hidden>
+                                <defs>
+                                    <filter id="glow2" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="3" result="blur" />
+                                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                    </filter>
+                                </defs>
+
+                                {/* Outer housing D=117mm */}
+                                <circle className={`${styles.bpCircle2} ${styles.bpC1}`} cx="160" cy="160" r="110" filter="url(#glow2)" />
+                                {/* Housing inner */}
+                                <circle className={`${styles.bpCircle2} ${styles.bpC2}`} cx="160" cy="160" r="88" strokeDasharray="6 4" />
+                                {/* Bearing outer race */}
+                                <circle className={`${styles.bpCircle2} ${styles.bpC3}`} cx="160" cy="160" r="68" filter="url(#glow2)" />
+                                {/* Bearing inner race */}
+                                <circle className={`${styles.bpCircle2} ${styles.bpC4}`} cx="160" cy="160" r="48" />
+                                {/* Bore d=27.95mm */}
+                                <circle className={`${styles.bpCircle2} ${styles.bpBore2}`} cx="160" cy="160" r="24" filter="url(#glow2)" />
+
+                                {/* Crosshair */}
+                                <line className={styles.bpDim2} x1="120" y1="160" x2="200" y2="160" />
+                                <line className={styles.bpDim2} x1="160" y1="120" x2="160" y2="200" />
+                                <circle cx="160" cy="160" r="3" fill="#34d399" opacity="0.9" />
+
+                                {/* 6 bolt holes at J=98mm (60° spacing) — H/T=6xM12x1.25 */}
+                                {[0, 60, 120, 180, 240, 300].map((angle) => {
+                                    const r = 78;
+                                    const rad = (angle * Math.PI) / 180;
+                                    return <circle key={angle} className={`${styles.bpHole2} ${styles.bpC5}`}
+                                        cx={160 + r * Math.cos(rad)} cy={160 + r * Math.sin(rad)} r="7" />;
+                                })}
+
+                                {/* D label */}
+                                <line className={styles.bpDim2} x1="160" y1="46" x2="160" y2="22" />
+                                <line className={styles.bpDim2} x1="160" y1="22" x2="18" y2="22" />
+                                <text className={styles.bpLabel2} x="14" y="26" textAnchor="end">D = 117</text>
+
+                                {/* d label */}
+                                <line className={styles.bpDim2} x1="160" y1="136" x2="160" y2="115" />
+                                <line className={styles.bpDim2} x1="160" y1="115" x2="18" y2="115" />
+                                <text className={styles.bpLabel2} x="14" y="119" textAnchor="end">d = 27.95</text>
+
+                                {/* H/T label — 6×M12 */}
+                                <line className={styles.bpDim2} x1="238" y1="160" x2="260" y2="195" />
+                                <text className={styles.bpLabel2} x="264" y="199">6×M12×1.25</text>
+
+                                {/* Right side labels */}
+                                <line className={styles.bpLeader2} x1="248" y1="110" x2="290" y2="85" />
+                                <text className={styles.bpLabelRight} x="293" y="81">КОРПУС</text>
+                                <text className={styles.bpLabelRight} x="293" y="93">З ЧАВУНУ</text>
+
+                                <line className={styles.bpLeader2} x1="208" y1="155" x2="290" y2="150" />
+                                <text className={styles.bpLabelRight} x="293" y="146">КАСЕТНЕ</text>
+                                <text className={styles.bpLabelRight} x="293" y="158">УЩІЛЬНЕННЯ</text>
+
+                                <line className={styles.bpLeader2} x1="208" y1="175" x2="290" y2="225" />
+                                <text className={styles.bpLabelRight} x="293" y="221">ВНУТРІШНІЙ</text>
+                                <text className={styles.bpLabelRight} x="293" y="233">ПІДШИПНИК</text>
+
+                                {/* Pulsing hot-points */}
+                                <circle className={`${styles.bpHotPulse2} ${styles.bpHP1}`} cx="160" cy="50" r="6" />
+                                <circle className={styles.bpHotDot2} cx="160" cy="50" r="4" />
+                                <circle className={`${styles.bpHotPulse2} ${styles.bpHP2}`} cx="208" cy="160" r="6" />
+                                <circle className={styles.bpHotDot2} cx="208" cy="160" r="4" />
+
+                                <text className={styles.bpWatermark2} x="160" y="312">VELNOX © 2026</text>
+                            </svg>
+                        </div>
+
+                        {/* Text — positioned on the RIGHT for visual variety */}
+                        <div className={`${styles.blueprintLayout} ${styles.blueprintLayout2}`}>
+                            <div className={styles.blueprintSpacer} />
+                            <div className={styles.blueprintText}>
+                                <span className={styles.blueprintTag} style={{ color: '#34d399' }}>
+                                    <span className={styles.blueprintTagLine} style={{ background: '#34d399' }} />
+                                    CUTTING NODES
+                                </span>
+                                <h2 className={styles.blueprintTitle}>{t('hubsPage.app2.title')}</h2>
+                                <p className={styles.blueprintLead}>{t('hubsPage.app2.desc')}</p>
+                                <div className={styles.blueprintMeta}>
+                                    <div className={styles.blueprintMetaItem}>
+                                        <span className={styles.blueprintMetaLabel} style={{ color: '#34d399' }}>Сфера застосування</span>
+                                        <span className={styles.blueprintMetaValue}>{t('hubsPage.app2.applications')}</span>
+                                    </div>
+                                    <div className={styles.blueprintMetaItem}>
+                                        <span className={styles.blueprintMetaLabel} style={{ color: '#34d399' }}>OEM-сумісність</span>
+                                        <span className={styles.blueprintMetaValue}>{t('hubsPage.app2.oem_focus')}</span>
+                                    </div>
+                                </div>
+                                <div className={styles.blueprintSpecs} style={{ borderColor: 'rgba(52,211,153,0.25)', background: 'rgba(52,211,153,0.06)' }}>
+                                    <div className={styles.blueprintSpec}>
+                                        <span className={styles.blueprintSpecVal}>42.9 kN</span>
+                                        <span className={styles.blueprintSpecLabel} style={{ color: '#34d399' }}>Cdyn</span>
+                                    </div>
+                                    <div className={styles.blueprintSpecDivider} />
+                                    <div className={styles.blueprintSpec}>
+                                        <span className={styles.blueprintSpecVal}>36.3 kN</span>
+                                        <span className={styles.blueprintSpecLabel} style={{ color: '#34d399' }}>Co static</span>
+                                    </div>
+                                    <div className={styles.blueprintSpecDivider} />
+                                    <div className={styles.blueprintSpec}>
+                                        <span className={styles.blueprintSpecVal}>2.16 kg</span>
+                                        <span className={styles.blueprintSpecLabel} style={{ color: '#34d399' }}>Mass</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
