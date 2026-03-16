@@ -2196,16 +2196,6 @@
     align-items: stretch;
 }
 
-/* Background photo — visible on the right side (wheel area) */
-.blueprintBg {
-    position: absolute;
-    inset: 0;
-    background-image: url('/velnox/images/hubs/horsch-field.png');
-    background-size: cover;
-    background-position: 60% 55%;
-    z-index: 0;
-}
-
 /* Overlay: ONLY darkens the left text zone; right side shows the photo */
 .blueprintDarkOverlay {
     position: absolute;

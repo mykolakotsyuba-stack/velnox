@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import Image from 'next/image';
 import styles from './hubs.module.css';
 import type { Locale, ProductListItem } from '@/entities/product/model/types';
 
@@ -258,8 +259,14 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
             {/* ── APP BLOCK 1 — BLUEPRINT OVERLAY (before search) ── */}
             <section ref={app1Ref.ref} className={`${styles.blueprintBlock} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
-                        {/* HORSCH background photo */}
-                        <div className={styles.blueprintBg} />
+                        {/* HORSCH background photo — using next/image for correct path resolution */}
+                        <Image
+                            src="/velnox/images/hubs/horsch-field.png"
+                            alt=""
+                            fill
+                            priority
+                            style={{ objectFit: 'cover', objectPosition: '60% 55%' }}
+                        />
                         <div className={styles.blueprintDarkOverlay} />
 
                         <div className={styles.blueprintLayout}>
