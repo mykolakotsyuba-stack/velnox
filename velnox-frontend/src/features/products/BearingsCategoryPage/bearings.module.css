@@ -312,18 +312,18 @@
 
 .tablesHeaderWrap {
     margin-bottom: 60px;
-    height: 80px;
-    /* Pre-allocate height to avoid layout shift when sticky */
     position: relative;
     z-index: 50;
+    background: var(--color-bg);
 }
 
 .tablesHeader {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 40px;
-    height: 100%;
+    padding: 60px 0;
+    flex-wrap: wrap;
 }
 
 .stickyContainer {
@@ -333,14 +333,15 @@
 
 .tablesHeaderWrap.isSticky .stickyContainer {
     position: fixed;
-    top: 80px;
+    top: 0;
     left: 0;
     right: 0;
-    background: var(--color-surface);
-    border-bottom: 2px solid var(--color-accent);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     padding: 16px 40px;
     animation: slideDownSticky 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    width: 100%;
 }
 
 @keyframes slideDownSticky {
@@ -358,14 +359,17 @@
 .headerTitles {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     transition: all 0.3s ease;
+    flex: 1;
+    min-width: 0;
 }
 
 .tablesHeaderWrap.isSticky .headerTitles {
     flex-direction: row;
     align-items: center;
     gap: 16px;
+    flex: 0 1 auto;
 }
 
 .sectionTitle {
@@ -380,8 +384,9 @@
 }
 
 .tablesHeaderWrap .sectionTitle {
-    margin-bottom: 12px;
+    margin-bottom: 0;
     font-size: clamp(24px, 2.5vw, 32px);
+    margin-top: 0;
 }
 
 .tablesHeaderWrap .sectionTitle::after {
@@ -390,10 +395,7 @@
 
 .tablesHeaderWrap.isSticky .sectionTitle {
     margin-bottom: 0;
-}
-
-.tablesHeaderWrap.isSticky .sectionTitle {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .tablesHeaderWrap.isSticky .sectionTitle::after {
@@ -420,7 +422,8 @@
 
 .searchWrap {
     position: relative;
-    width: 380px;
+    width: 100%;
+    max-width: 380px;
     flex-shrink: 0;
 }
 
@@ -965,11 +968,11 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
-        height: auto;
+        padding: 40px 0;
     }
 
     .tablesHeaderWrap {
-        height: auto;
+        margin-bottom: 40px;
     }
 
     .tablesHeaderWrap.isSticky .stickyContainer {
