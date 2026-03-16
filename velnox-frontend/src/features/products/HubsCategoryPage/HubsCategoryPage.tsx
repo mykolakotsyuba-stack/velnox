@@ -142,6 +142,23 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
 
+    const searchHeaderRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!searchHeaderRef.current) return;
+            const elementOffsetTop = searchHeaderRef.current.offsetTop;
+            if (window.scrollY > elementOffsetTop - 80) {
+                searchHeaderRef.current.classList.add(styles.isSticky);
+            } else {
+                searchHeaderRef.current.classList.remove(styles.isSticky);
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     useEffect(() => {
         const fetchTables = async () => {
             try {
@@ -239,30 +256,30 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 </div>
             </section>
 
-            {/* STICKY SEARCH */}
-            <section className={styles.tablesHeader}>
-                <div className={styles.container}>
-                    <div className={styles.tablesHeaderInner}>
+            {/* STICKY SEARCH — identical structure to bearings page */}
+            <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
+                <div className={`${styles.container} ${styles.stickyContainer}`}>
+                    <div className={styles.tablesHeader}>
                         <div className={styles.headerTitles}>
                             <h2 className={styles.sectionTitle}>{t('hubsPage.block2.title')}</h2>
                             <p className={styles.tablesIntro}>{t('hubsPage.block2.intro')}</p>
                         </div>
                         <div className={styles.searchWrap}>
                             <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <circle cx="11" cy="11" r="8" />
-                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                             <input
                                 type="text"
+                                className={styles.searchInput}
                                 placeholder={t('hubsPage.block2.search_placeholder')}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className={styles.searchInput}
                             />
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
             {/* TABLES SECTION */}
             <section className={styles.tablesSection} ref={app1Ref.ref}>

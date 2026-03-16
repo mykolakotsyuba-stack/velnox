@@ -2076,64 +2076,6 @@
     margin-bottom: 40px;
 }
 
-/* STICKY SEARCH HEADER */
-.tablesHeader {
-    position: sticky;
-    top: 0;
-    background: var(--color-bg);
-    z-index: 100;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px 0;
-    margin-bottom: 60px;
-}
-
-.tablesHeader .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 40px;
-}
-
-.tablesHeader .sectionTitle {
-    font-size: 28px;
-    margin-bottom: 8px;
-}
-
-.introText {
-    color: #999;
-    margin-bottom: 24px;
-    max-width: 800px;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.searchWrapper {
-    margin-bottom: 0;
-    display: flex;
-    gap: 12px;
-}
-
-.searchInput {
-    flex: 1;
-    max-width: 500px;
-    padding: 14px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    font-size: 15px;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--color-text);
-    transition: all 0.3s ease;
-}
-
-.searchInput::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.searchInput:focus {
-    outline: none;
-    border-color: var(--color-accent, #10b981);
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-}
 
 .diagramPlaceholder {
     margin-bottom: 30px;
@@ -2203,37 +2145,6 @@
 }
 
 
-/* ────────────────────────────────────────────────────────
-   TABLES HEADER INNER (flex: title+search side by side)
-──────────────────────────────────────────────────────── */
-.tablesHeaderInner {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 40px;
-    flex-wrap: wrap;
-}
-
-.tablesHeaderInner .headerTitles {
-    flex: 1;
-    min-width: 0;
-}
-
-.tablesHeaderInner .searchWrap {
-    flex-shrink: 0;
-    width: 100%;
-    max-width: 380px;
-}
-
-@media (max-width: 768px) {
-    .tablesHeaderInner {
-        flex-direction: column;
-        gap: 20px;
-    }
-    .tablesHeaderInner .searchWrap {
-        max-width: 100%;
-    }
-}
 
 /* ────────────────────────────────────────────────────────
    SORTABLE TABLE HEADERS
