@@ -2419,3 +2419,66 @@
         min-height: 140px;
     }
 }
+
+/* ────────────────────────────────────────────────────────
+   TABLES HEADER INNER (flex: title+search side by side)
+──────────────────────────────────────────────────────── */
+.tablesHeaderInner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.tablesHeaderInner .headerTitles {
+    flex: 1;
+    min-width: 0;
+}
+
+.tablesHeaderInner .searchWrap {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 380px;
+}
+
+@media (max-width: 768px) {
+    .tablesHeaderInner {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .tablesHeaderInner .searchWrap {
+        max-width: 100%;
+    }
+}
+
+/* ────────────────────────────────────────────────────────
+   SORTABLE TABLE HEADERS
+──────────────────────────────────────────────────────── */
+.sortableTh {
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.sortableTh:hover {
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    color: var(--color-text);
+}
+
+.sortIcon {
+    margin-left: 4px;
+    font-size: 10px;
+    opacity: 0.6;
+    display: inline-block;
+}
+
+/* ────────────────────────────────────────────────────────
+   PART NUMBER CELL
+──────────────────────────────────────────────────────── */
+.partNumCell {
+    font-weight: 700;
+    color: var(--color-accent);
+    white-space: nowrap;
+}
+
