@@ -281,9 +281,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
 
-    // API base URL
-    const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-
     // Table data states
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
@@ -295,6 +292,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
     useEffect(() => {
         const fetchTableData = async () => {
             try {
+                const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
                 const [res2, res3, res4, res5] = await Promise.all([
                     fetch(`${apiBase}/v1/products/tables/performance`),
                     fetch(`${apiBase}/v1/products/tables/cross-references`),
@@ -314,7 +312,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
         };
 
         fetchTableData();
-    }, [apiBase]);
+    }, []);
 
     // Table 1: BUQ Dimensional Specs
     const filteredT1 = useMemo(() => {
