@@ -44,15 +44,14 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
 
-    const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-
     useEffect(() => {
         const fetchTables = async () => {
             try {
+                const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
                 const [res1, res2, res3] = await Promise.all([
-                    fetch(`${apiBase}/v1/products/tables/hubs-table1`),
-                    fetch(`${apiBase}/v1/products/tables/hubs-table2`),
-                    fetch(`${apiBase}/v1/products/tables/hubs-table3`),
+                    fetch(`${base}/v1/products/tables/hubs-table1`),
+                    fetch(`${base}/v1/products/tables/hubs-table2`),
+                    fetch(`${base}/v1/products/tables/hubs-table3`),
                 ]);
 
                 const [data1, data2, data3] = await Promise.all([
@@ -69,7 +68,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             }
         };
         fetchTables();
-    }, [apiBase]);
+    }, []);
 
     const filteredT1 = useMemo(() => {
         if (!searchQuery) return table1Data;
