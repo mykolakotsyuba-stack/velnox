@@ -1,0 +1,19 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "12345678"
+
+# 1. SSH and run seeding
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@mail.irbis.ua
+expect {
+    "password:" {
+        send "$password\r"
+    }
+}
+
+expect "$ "
+send "cd /srv/projects/velnox/api\r"
+expect "$ "
+send "php artisan db:seed --class=DatabaseSeeder\r"
+expect "$ "
+send "exit\r"
+expect eof
