@@ -1,0 +1,131 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.fieldGroup label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.input, .textarea {
+    background: rgba(var(--color-bg-rgb), 0.5);
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    transition: border-color 0.3s, background-color 0.3s;
+    outline: none;
+}
+
+.input:focus, .textarea:focus {
+    border-color: var(--color-primary);
+    background: rgba(var(--color-primary-rgb), 0.02);
+}
+
+.textarea {
+    resize: none;
+}
+
+.submitBtn {
+    background: #2E2981;
+    color: white;
+    border: none;
+    padding: 1.25rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1.5rem;
+    border-radius: 0px; /* Engineering minimalism - sharp corners */
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.submitBtn:hover {
+    background: #3c35a6;
+    transform: translateX(5px);
+}
+
+.submitBtn:active {
+    transform: translateY(0);
+}
+
+.submitBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* circular drawing style loader */
+.loader {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: drawCircle 1s linear infinite;
+}
+
+@keyframes drawCircle {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.successMessage {
+    text-align: center;
+    padding: 3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.successIcon {
+    color: #4CAF50;
+    margin-bottom: 0.5rem;
+}
+
+.successMessage h3 {
+    font-size: 1.25rem;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+    max-width: 400px;
+}
+
+.resetButton {
+    background: none;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 2px;
+}
+
+.resetButton:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

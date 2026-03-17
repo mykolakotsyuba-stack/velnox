@@ -1,0 +1,211 @@
+.wrapper {
+    position: relative;
+    min-height: calc(100vh - 80px); /* header height */
+    background-color: #F9F9F9; /* Smokey white/gray */
+    overflow: hidden;
+    padding-top: 5rem;
+    padding-bottom: 8rem;
+    color: #2E2981; /* Velnox Deep Blue */
+}
+
+.gridOverlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: 
+        linear-gradient(rgba(46, 41, 129, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 41, 129, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+/* Engineering blueprint-like watermark */
+.gridOverlay::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 800px;
+    height: 800px;
+    background-image: url('https://raw.githubusercontent.com/lucide-react/lucide/main/icons/settings-2.svg'); /* Temporary placeholder for blueprint look */
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.02;
+    transform: rotate(15deg);
+    pointer-events: none;
+}
+
+.container {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    z-index: 1;
+}
+
+.headerSection {
+    margin-bottom: 6rem;
+    max-width: 750px;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #2E2981;
+    margin-bottom: 2rem;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: #475569;
+    line-height: 1.6;
+    max-width: 600px;
+    border-left: 2px solid #2E2981;
+    padding-left: 1.5rem;
+}
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: start;
+}
+
+.contactBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+}
+
+.contactTitle {
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #64748b;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.emailLink {
+    display: inline-block;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #2E2981;
+    text-decoration: none;
+    transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.emailLink:hover {
+    color: #64748b;
+}
+
+.infoBlock {
+    margin-top: 2rem;
+}
+
+.trustBlock {
+    margin-top: 4rem;
+    padding: 2rem;
+    background: white;
+    border: 1px solid rgba(46, 41, 129, 0.1);
+    position: relative;
+}
+
+.trustBlock::before {
+    content: 'ENGINEERING';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: #F9F9F9;
+    padding: 0 10px;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: #2E2981;
+    font-weight: 700;
+}
+
+.trustText {
+    font-size: 0.9375rem;
+    color: #475569;
+    line-height: 1.7;
+    font-style: italic;
+}
+
+.formSection {
+    background: white;
+    padding: 4rem;
+    border: 1px solid rgba(46, 41, 129, 0.1);
+    box-shadow: 20px 20px 0px rgba(46, 41, 129, 0.02);
+}
+
+.formHeader {
+    margin-bottom: 3.5rem;
+}
+
+.formTitle {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #2E2981;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+}
+
+.formSubtitle {
+    font-size: 0.9375rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.footer {
+    margin-top: 10rem;
+    padding: 3rem 0;
+    border-top: 1px solid rgba(46, 41, 129, 0.05);
+    text-align: center;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #64748b;
+}
+
+@media (max-width: 1024px) {
+    .contentGrid {
+        grid-template-columns: 1fr;
+        gap: 6rem;
+    }
+    
+    .title {
+        font-size: 2.75rem;
+    }
+    
+    .emailLink {
+        font-size: 2.25rem;
+    }
+
+    .formSection {
+        padding: 3rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .wrapper {
+        padding-top: 3rem;
+    }
+    
+    .headerSection {
+        margin-bottom: 4rem;
+    }
+
+    .title {
+        font-size: 2.25rem;
+    }
+
+    .emailLink {
+        font-size: 1.5rem;
+    }
+    
+    .formSection {
+        padding: 2rem 1.5rem;
+    }
+}
