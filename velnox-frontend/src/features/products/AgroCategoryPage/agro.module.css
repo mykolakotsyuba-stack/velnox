@@ -2860,14 +2860,14 @@
 
 .specialParallaxImg {
     object-fit: cover;
-    filter: brightness(0.8) contrast(1.1);
+    filter: brightness(1.0) contrast(1.05);
 }
 
 .specialParallaxOverlay {
     position: absolute;
     inset: 0;
     background: #0a192f; /* VELNOX Deep Blue */
-    opacity: 0.88;
+    opacity: 0.72;
     z-index: 2;
 }
 
