@@ -213,9 +213,26 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         'd (mm)', 'D (mm)', 'B (mm)', 'd1 (mm)', 'r1,2 (mm)',
         'Cdyn (kN)', 'Co (kN)', 'Pu (kN)', 'Mass (kg)',
     ];
+    const table1Labels: Record<string, string> = {
+        'Part Number': 'Part No',
+        'Bearing designation': 'Bearing',
+        'Brand name': 'Brand',
+        'Cross-Reference': 'Cross-Ref',
+        'd (mm)': 'd',
+        'D (mm)': 'D',
+        'B (mm)': 'B',
+        'd1 (mm)': 'd1',
+        'r1,2 (mm)': 'r1,2',
+        'Cdyn (kN)': 'Cdyn',
+        'Co (kN)': 'Co',
+        'Pu (kN)': 'Pu',
+        'Mass (kg)': 'Mass',
+    };
     /* ── TABLE 2 & 3: заповнити після отримання даних ── */
     const table2Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (mm)', 'D (mm)', 'B (mm)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)', 'Mass (kg)'];
+    const table2Labels: Record<string, string> = { 'Part Number': 'Part No', 'Bearing designation': 'Bearing', 'Brand name': 'Brand', 'Cross-Reference': 'Cross-Ref', 'd (mm)': 'd', 'D (mm)': 'D', 'B (mm)': 'B', 'Cdyn (kN)': 'Cdyn', 'Co (kN)': 'Co', 'Pu (kN)': 'Pu', 'Mass (kg)': 'Mass' };
     const table3Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (mm)', 'D (mm)', 'B (mm)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)', 'Mass (kg)'];
+    const table3Labels: Record<string, string> = { ...table2Labels };
 
     return (
         <main className={styles.page}>
@@ -330,7 +347,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <thead>
                                     <tr>
                                         {table1Cols.map(col => (
-                                            <Th key={col} col={col} label={col} toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                            <Th key={col} col={col} label={table1Labels[col] ?? col} toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         ))}
                                         <th className={styles.actionCol} />
                                     </tr>
@@ -396,7 +413,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <thead>
                                     <tr>
                                         {table2Cols.map(col => (
-                                            <Th key={col} col={col} label={col} toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                            <Th key={col} col={col} label={table2Labels[col] ?? col} toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         ))}
                                         <th className={styles.actionCol} />
                                     </tr>
@@ -462,7 +479,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <thead>
                                     <tr>
                                         {table3Cols.map(col => (
-                                            <Th key={col} col={col} label={col} toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                            <Th key={col} col={col} label={table3Labels[col] ?? col} toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         ))}
                                         <th className={styles.actionCol} />
                                     </tr>
