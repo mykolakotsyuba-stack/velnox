@@ -134,15 +134,28 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     const [table3Data, setTable3Data] = useState<any[]>([]);
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
+    const specialBlockRef = useRef<HTMLDivElement>(null);
+    const [parallaxOffset, setParallaxOffset] = useState(0);
 
     useEffect(() => {
         const handleScroll = () => {
-            if (!searchHeaderRef.current) return;
-            const elementOffsetTop = searchHeaderRef.current.offsetTop;
-            if (window.scrollY > elementOffsetTop - 80) {
-                searchHeaderRef.current.classList.add(styles.isSticky);
-            } else {
-                searchHeaderRef.current.classList.remove(styles.isSticky);
+            if (searchHeaderRef.current) {
+                const elementOffsetTop = searchHeaderRef.current.offsetTop;
+                if (window.scrollY > elementOffsetTop - 80) {
+                    searchHeaderRef.current.classList.add(styles.isSticky);
+                } else {
+                    searchHeaderRef.current.classList.remove(styles.isSticky);
+                }
+            }
+
+            if (specialBlockRef.current) {
+                const rect = specialBlockRef.current.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                if (rect.top < windowHeight && rect.bottom > 0) {
+                    // Calculate parallax: start moving when the block enters the viewport
+                    const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+                    setParallaxOffset(scrollProgress * 150 - 75); // Range from -75px to 75px
+                }
             }
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -382,8 +395,31 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             {/* ════════════════════════════════════════════
                 SPECIAL AGRO BEARINGS BLOCK
             ════════════════════════════════════════════ */}
-            <section ref={specialRef.ref} className={`${styles.specialBlock} ${specialRef.inView ? styles.specialVisible : ''}`}>
-                {/* Dark radial-gradient background */}
+            <section 
+                ref={(node) => {
+                    // @ts-ignore
+                    specialRef.ref.current = node;
+                    // @ts-ignore
+                    specialBlockRef.current = node;
+                }} 
+                className={`${styles.specialBlock} ${specialRef.inView ? styles.specialVisible : ''}`}
+            >
+                {/* Parallax Background */}
+                <div 
+                    className={styles.specialParallaxContainer}
+                    style={{ transform: `translateY(${parallaxOffset}px)` }}
+                >
+                    <div className={styles.specialParallaxOverlay} />
+                    <Image
+                        src="/images/agro/agro-parallax-bg.png"
+                        alt="Agro field background"
+                        fill
+                        className={styles.specialParallaxImg}
+                        priority={false}
+                    />
+                </div>
+
+                {/* Dark radial-gradient foreground overlay for depth */}
                 <div className={styles.specialBg} />
 
                 {/* Top hero text */}

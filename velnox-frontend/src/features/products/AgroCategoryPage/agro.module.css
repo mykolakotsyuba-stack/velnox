@@ -2843,10 +2843,32 @@
     position: absolute;
     inset: 0;
     background: radial-gradient(ellipse 70% 60% at 50% 55%,
-        rgba(30, 64, 175, 0.18) 0%,
-        rgba(15, 23, 42, 0.6) 50%,
+        rgba(30, 64, 175, 0.12) 0%,
+        rgba(15, 23, 42, 0.4) 50%,
         transparent 100%);
     pointer-events: none;
+    z-index: 2;
+}
+
+.specialParallaxContainer {
+    position: absolute;
+    inset: -100px 0; /* Extra height for parallax travel */
+    z-index: 1;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.specialParallaxImg {
+    object-fit: cover;
+    filter: brightness(0.8) contrast(1.1);
+}
+
+.specialParallaxOverlay {
+    position: absolute;
+    inset: 0;
+    background: #0a192f; /* VELNOX Deep Blue */
+    opacity: 0.88;
+    z-index: 2;
 }
 
 /* ── Hero text ── */
