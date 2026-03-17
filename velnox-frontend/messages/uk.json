@@ -496,5 +496,57 @@
       "submit": "НАДІСЛАТИ НА РОЗРАХУНОК",
       "success": "Запит надіслано успішно. Ми зв'яжемося з вами найближчим часом."
     }
+  },
+  "agroPage": {
+    "hero": {
+      "title": "TODO: Заголовок сторінки агро",
+      "subtitle": "TODO: Підзаголовок",
+      "desc": "TODO: Опис"
+    },
+    "block1": {
+      "title": "TODO: Чому VELNOX?",
+      "card1_title": "TODO: Картка 1",
+      "card1_desc": "TODO: Опис картки 1",
+      "card2_title": "TODO: Картка 2",
+      "card2_desc": "TODO: Опис картки 2",
+      "card3_title": "TODO: Картка 3",
+      "card3_desc": "TODO: Опис картки 3"
+    },
+    "block2": {
+      "title": "TODO: Технічні специфікації",
+      "intro": "TODO: Вступний текст",
+      "search_placeholder": "Пошук за артикулом або розміром...",
+      "btn_request": "Запит",
+      "table1": {
+        "title": "TODO: Таблиця 1",
+        "desc": "TODO: Опис 1"
+      },
+      "table2": {
+        "title": "TODO: Таблиця 2",
+        "desc": "TODO: Опис 2"
+      },
+      "table3": {
+        "title": "TODO: Таблиця 3",
+        "desc": "TODO: Опис 3"
+      }
+    },
+    "app1": {
+      "title": "TODO: Блок 1",
+      "desc": "TODO:",
+      "applications": "TODO:",
+      "oem_focus": "TODO:"
+    },
+    "app2": {
+      "title": "TODO: Блок 2",
+      "desc": "TODO:",
+      "applications": "TODO:",
+      "oem_focus": "TODO:"
+    },
+    "app3": {
+      "title": "TODO: Блок 3",
+      "desc": "TODO:",
+      "applications": "TODO:",
+      "oem_focus": "TODO:"
+    }
   }
 }
