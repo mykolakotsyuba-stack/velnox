@@ -39,20 +39,26 @@
       "cta_engineer": "Porozmawiaj z inżynierem"
     },
     "industries": {
-      "tag": "Ekspertyza branżowa",
-      "title": "Rozwiązania dostosowane do standardów branży.",
-      "desc": "Każda branża ma własne krytyczne czynniki awarii. Projektujemy uszczelnienia i dobieramy smary na podstawie rzeczywistych warunków Twojego środowiska pracy.",
-      "agro": {
-        "title": "Sektor rolno-przemysłowy",
-        "text": "Ochrona przed Ŝciernym pyłem, wilgocią i obciążeniami udarowymi. Węzły bezobsługowe z minimalnym przestojem w warunkach polowych."
+      "tag": "EKSPERTYZA BRANŻOWA",
+      "title": "Rozwiązania dla maszyn rolniczych",
+      "desc": "Rozwiązania inżynieryjne dostosowane до dużych obciążeń i ekstremalnych środowisk.",
+      "harrow": {
+        "title": "BRONY TALERZOWE",
+        "text": "Wzmocnione piasty do intensywnej uprawy gleby.",
+        "oem": "HORSCH, LEMKEN, BEDNAR.",
+        "more": "Więcej"
       },
-      "construction": {
-        "title": "Sprzęt budowlany i specjalny",
-        "text": "Odporność na ekstremalne obciążenia promieniowe i osiowe. Węzły zaprojektowane do pracy w warunkach silnych udarów i wibracji."
+      "cultivator": {
+        "title": "KULTYWATORY",
+        "text": "Bezobsługowe piasty z niezależnym zawieszeniem.",
+        "oem": "BEDNAR, KÖCKERLING, KUHN.",
+        "more": "Więcej"
       },
-      "industrial": {
-        "title": "Sprzęt przemysłowy",
-        "text": "Rozwiązania wysokoobrotowe z minimalnym współczynnikiem tarcia i skutecznym odprowadzaniem ciepła."
+      "seeder": {
+        "title": "SIEWNIKI",
+        "text": "Wysokoprecyzyjne zespoły dla stabilnej głębokości siewu.",
+        "oem": "VADERSTAD, GASPARDO, QUIVOGNE.",
+        "more": "Więcej"
       }
     },
     "process": {
@@ -74,14 +80,30 @@
         }
       }
     },
-    "quality": {
-      "tag": "Kontrola inżynieryjna",
-      "title": "Zerowa tolerancja na braki.",
-      "desc": "Gwarantujemy stabilność geometrii i składu chemicznego stali w każdej partii. Ścisła kontrola wejściowa materiałów i wielopoziomowe testy.",
-      "metric1": "Kontrola geometrii",
-      "metric3": "Dokładność pomiaru",
-      "metric4": "Godziny wsparcia inżynieryjnego",
-      "download_btn": "Pobierz protokoły testów"
+    "stats": {
+      "tag": "METRYKI TECHNICZNE",
+      "title": "Sprawdzone w polu. Stworzone dla ciężkich gleb.",
+      "desc": "Każda partia piast VELNOX przechodzi testy stanowiskowe symulujące najtrudniejsze warunki pracy maszyn rolniczych. Gwarantujemy idealną dokładność wymiarową i absolutną ochronę łożysk przed ścierniwem.",
+      "button": "Pobierz prezentację",
+      "metrics": {
+        "compatibility": {
+          "value": "100",
+          "unit": "%",
+          "title": "Kompatybilność geometryczna",
+          "desc": "Dokładne dopasowanie do punktów montażowych producentów OEM (instalacja Plug & Play)."
+        },
+        "resource": {
+          "value": "2000",
+          "suffix": "+",
+          "title": "Motogodziny resursu",
+          "desc": "Nieprzerwana praca w polu bez konieczności ponownego smarowania lub demontażu jednostki."
+        },
+        "sealings": {
+          "value": "ZERO",
+          "title": "Wycieki i pył",
+          "desc": "Wielowarstwowy kasetowy system uszczelnień gwarantuje 100% szczelność w błocie i wodzie."
+        }
+      }
     },
     "cta": {
       "tag": "Zacznij teraz",
@@ -89,6 +111,23 @@
       "desc": "Skontaktuj się z naszymi konstruktorami w sprawie doboru zamienników, obliczenia resursu lub zamówienia partii testowej.",
       "btn_catalog": "Przejdź do katalogu",
       "btn_engineer": "Skontaktuj się z inżynierem"
+    },
+    "oem_optimization": {
+      "tag": "OPTYMALIZACJA OEM",
+      "title": "Optymalizacja OEM: od części zamiennej do gotowego węzła",
+      "desc": "Nie tylko dostarczamy łożyska — oferujemy gotowe podzespoły inżynieryjne, które w pełni integrują się z Twoim sprzętem.",
+      "step1": {
+        "title": "1. Audyt techniczny",
+        "text": "Analiza słabych punktów i przyczyn awarii oryginalnych podzespołów."
+      },
+      "step2": {
+        "title": "2. Dokładny dobór",
+        "text": "Szybki dobór w 100% kompatybilnych podzespołów wg numerów OEM."
+      },
+      "step3": {
+        "title": "3. Gotowe zestawy KIT",
+        "text": "Gotowe do montażu zestawy (piasta + system mocowania + kołnierze)."
+      }
     }
   },
   "distributors": {

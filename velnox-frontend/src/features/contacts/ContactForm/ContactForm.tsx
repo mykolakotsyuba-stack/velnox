@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Paperclip } from 'lucide-react';
 import styles from './ContactForm.module.css';
 
 export function ContactForm() {
@@ -61,6 +61,18 @@ export function ContactForm() {
             </div>
 
             <div className={styles.fieldGroup}>
+                <label htmlFor="phone">{t('phone')}</label>
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    placeholder={t('phone_ph')}
+                    required 
+                    className={styles.input}
+                />
+            </div>
+
+            <div className={styles.fieldGroup}>
                 <label htmlFor="company">{t('company')}</label>
                 <input 
                     type="text" 
@@ -81,6 +93,17 @@ export function ContactForm() {
                     rows={4}
                     className={styles.textarea}
                 />
+            </div>
+
+            <div className={styles.fileUpload}>
+                <label className={styles.fileLabel}>
+                    <input type="file" className={styles.fileInput} />
+                    <Paperclip size={18} />
+                    <div className={styles.fileTexts}>
+                        <span className={styles.fileAction}>{t('file_label')}</span>
+                        <span className={styles.fileDesc}>{t('file_desc')}</span>
+                    </div>
+                </label>
             </div>
 
             <button 

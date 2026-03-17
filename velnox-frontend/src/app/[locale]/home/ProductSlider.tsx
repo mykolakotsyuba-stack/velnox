@@ -1,20 +1,24 @@
 'use client';
 
+import Link from 'next/link';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import styles from './ProductSlider.module.css';
 
 interface Slide {
-    img: string;
     bgImg: string;
     tag: string;
     title: string;
     body: string;
     spec: string;
+    cta1?: string;
+    cta2?: string;
+    link1: string;
+    link2: string;
 }
 
-export function ProductSlider() {
+export function ProductSlider({ locale }: { locale: string }) {
     const t = useTranslations('home.slider');
     const [active, setActive] = useState(0);
     const [animDir, setAnimDir] = useState<'left' | 'right'>('right');
@@ -23,28 +27,37 @@ export function ProductSlider() {
 
     const SLIDES: Slide[] = [
         {
-            img: '/velnox/images/fg_agro.png',
-            bgImg: '/velnox/images/bg_agro.png',
+            bgImg: '/velnox/images/bg_seeder_highspeed.png',
             tag: t('slide1.tag'),
             title: t('slide1.title'),
             body: t('slide1.body'),
             spec: t('slide1.spec'),
+            cta1: t('slide1.cta1'),
+            cta2: t('slide1.cta2'),
+            link1: `/${locale}/products/agro`,
+            link2: `/${locale}/contacts`,
         },
         {
-            img: '/velnox/images/fg_heavy.png',
-            bgImg: '/velnox/images/bg_heavy.png',
+            bgImg: '/velnox/images/bg_agro.png',
             tag: t('slide2.tag'),
             title: t('slide2.title'),
             body: t('slide2.body'),
             spec: t('slide2.spec'),
+            cta1: t('slide2.cta1'),
+            cta2: t('slide2.cta2'),
+            link1: `/${locale}/products/bearings`,
+            link2: `/${locale}/contacts`,
         },
         {
-            img: '/velnox/images/fg_custom.png',
-            bgImg: '/velnox/images/bg_custom.png',
+            bgImg: '/velnox/images/bg_hub_kit_macro.png',
             tag: t('slide3.tag'),
             title: t('slide3.title'),
             body: t('slide3.body'),
             spec: t('slide3.spec'),
+            cta1: t('slide3.cta1'),
+            cta2: t('slide3.cta2'),
+            link1: `/${locale}/distributors`,
+            link2: `/${locale}/contacts`,
         },
     ];
 
@@ -112,28 +125,16 @@ export function ProductSlider() {
                     </div>
 
                     <div className={styles.slideActions}>
-                        <a href="#products" className={styles.slideBtn}>
-                            {t('cta_details')}
+                        <Link href={slide.link1} className={styles.slideBtn}>
+                            {slide.cta1 || t('cta_details')}
                             <svg viewBox="0 0 16 16" fill="none" width="14">
                                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                        </a>
-                        <a href="#contacts" className={styles.slideBtnGhost}>{t('cta_engineer')}</a>
+                        </Link>
+                        <Link href={slide.link2} className={styles.slideBtnGhost}>
+                            {slide.cta2 || t('cta_engineer')}
+                        </Link>
                     </div>
-                </div>
-
-                {/* Right: product image */}
-                <div className={`${styles.slideVisual} ${isAnimating ? styles.visualHide : styles.visualShow}`}>
-                    <div className={styles.visualGlow} />
-                    <Image
-                        src={slide.img}
-                        alt={slide.title}
-                        width={580}
-                        height={580}
-                        style={{ '--mask-url': `url(${slide.img})` } as any}
-                        className={styles.slideImg}
-                        priority={active === 0}
-                    />
                 </div>
             </div>
 

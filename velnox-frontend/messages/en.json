@@ -39,20 +39,26 @@
       "cta_engineer": "Talk to an engineer"
     },
     "industries": {
-      "tag": "Industry Expertise",
-      "title": "Solutions Adapted to Industry Standards.",
-      "desc": "Every industry has its own critical failure factors. We design seals and select lubricants based on real conditions of your operating environment.",
-      "agro": {
-        "title": "Agro-Industrial Sector",
-        "text": "Protection from abrasive dust, moisture and impact loads. Maintenance-free assemblies with minimal downtime in field conditions."
+      "tag": "INDUSTRY EXPERTISE",
+      "title": "Solutions for Agricultural Machinery",
+      "desc": "Engineering solutions tailored for high workloads and extreme environments.",
+      "harrow": {
+        "title": "DISC HARROWS",
+        "text": "Reinforced hubs for intensive soil cultivation.",
+        "oem": "HORSCH, LEMKEN, BEDNAR.",
+        "more": "Learn More"
       },
-      "construction": {
-        "title": "Construction & Special Equipment",
-        "text": "Resistance to extreme radial and axial loads. Assemblies designed for operation under heavy impact and vibration."
+      "cultivator": {
+        "title": "CULTIVATORS",
+        "text": "Maintenance-free hubs with independent suspension.",
+        "oem": "BEDNAR, KÖCKERLING, KUHN.",
+        "more": "Learn More"
       },
-      "industrial": {
-        "title": "Industrial Equipment",
-        "text": "High-speed solutions with minimal friction coefficient and efficient heat dissipation."
+      "seeder": {
+        "title": "SEEDERS",
+        "text": "High-precision units for stable seeding depth.",
+        "oem": "VADERSTAD, GASPARDO, QUIVOGNE.",
+        "more": "Learn More"
       }
     },
     "process": {
@@ -74,14 +80,30 @@
         }
       }
     },
-    "quality": {
-      "tag": "Engineering Control",
-      "title": "Zero Tolerance for Defects.",
-      "desc": "We guarantee steel geometry and chemical composition stability in every batch. Strict incoming material control and multi-level testing.",
-      "metric1": "Geometry inspection",
-      "metric3": "Measurement precision",
-      "metric4": "Hours of engineering support",
-      "download_btn": "Download Test Protocols"
+    "stats": {
+      "tag": "TECHNICAL METRICS",
+      "title": "Field Tested. Built for Heavy Soils.",
+      "desc": "Each batch of VELNOX hubs undergoes bench tests simulating the harshest agricultural machinery operating conditions. We guarantee perfect dimensional accuracy and absolute bearing protection against abrasives.",
+      "button": "Download Presentation",
+      "metrics": {
+        "compatibility": {
+          "value": "100",
+          "unit": "%",
+          "title": "Geometric Compatibility",
+          "desc": "Exact match with OEM manufacturer mounting points (Plug & Play installation)."
+        },
+        "resource": {
+          "value": "2000",
+          "suffix": "+",
+          "title": "Machine Hours Resource",
+          "desc": "Uninterrupted operation in the field without the need for relubrication or unit disassembly."
+        },
+        "sealings": {
+          "value": "ZERO",
+          "title": "Leaking & Dust",
+          "desc": "Multi-layer cassette sealing system guarantees 100% tightness in mud and water."
+        }
+      }
     },
     "cta": {
       "tag": "Get Started",
@@ -89,6 +111,23 @@
       "desc": "Contact our engineers for analogue selection, service life calculation, or ordering a test batch.",
       "btn_catalog": "Go to Catalogue",
       "btn_engineer": "Contact Engineer"
+    },
+    "oem_optimization": {
+      "tag": "OEM OPTIMIZATION",
+      "title": "OEM-Optimization: From Spare Part to Complete Unit",
+      "desc": "We don’t just supply bearings—we offer complete engineering assemblies that fully integrate into your machinery.",
+      "step1": {
+        "title": "1. Technical Audit",
+        "text": "Analyzing weak points and failure causes of original units. Offering reinforced VELNOX solutions."
+      },
+      "step2": {
+        "title": "2. Precise Selection",
+        "text": "Quick selection of 100% compatible units by OEM numbers (Horsch, Vaderstad, Bednar, Kuhn)."
+      },
+      "step3": {
+        "title": "3. Ready KIT-Sets",
+        "text": "Ready-to-install mounting kits (bearing hub + fastening system + flanges)."
+      }
     }
   },
   "distributors": {

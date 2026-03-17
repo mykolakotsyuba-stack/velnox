@@ -55,15 +55,23 @@ function useRipple() {
 }
 
 /* ─── Metric card with counter ──────────────────────────────────────── */
-function MetricCard({ value, label, suffix, active, delay }: {
-    value: number; label: string; suffix: string; active: boolean; delay: number;
+function MetricCard({ value, label, suffix, desc, icon, active, delay }: {
+    value: number | string; label: string; suffix?: string; desc?: string; icon?: React.ReactNode; active: boolean; delay: number;
 }) {
-    const count = useCounter(value, active);
+    const isNumeric = typeof value === 'number';
+    const target = isNumeric ? (value as number) : 0;
+    const count = useCounter(target, active);
+    
     return (
         <div className={`${styles.metricCard} ${active ? styles.metricCardVisible : ''}`}
             style={{ transitionDelay: `${delay}s` }}>
-            <div className={styles.metricValue}>{count}<span className={styles.metricSuffix}>{suffix}</span></div>
+            {icon && <div className={styles.metricIcon}>{icon}</div>}
+            <div className={styles.metricValue}>
+                {isNumeric ? count : value}
+                {suffix && <span className={styles.metricSuffix}>{suffix}</span>}
+            </div>
             <div className={styles.metricLabel}>{label}</div>
+            {desc && <p className={styles.metricDesc}>{desc}</p>}
         </div>
     );
 }
@@ -119,7 +127,8 @@ export function HomePage({ locale }: { locale: string }) {
                     <path d="M24 36h16M32 24v12" />
                 </svg>
             ),
-            key: 'agro',
+            key: 'harrow',
+            bg: '/velnox/images/industry-harrow.png',
         },
         {
             icon: (
@@ -130,7 +139,8 @@ export function HomePage({ locale }: { locale: string }) {
                     <circle cx="14" cy="52" r="4" /><circle cx="44" cy="52" r="4" />
                 </svg>
             ),
-            key: 'construction',
+            key: 'cultivator',
+            bg: '/velnox/images/industry-cultivator.png',
         },
         {
             icon: (
@@ -140,7 +150,8 @@ export function HomePage({ locale }: { locale: string }) {
                     <path d="M8 24v-8M56 24v-8M4 40v8M60 40v8" />
                 </svg>
             ),
-            key: 'industrial',
+            key: 'seeder',
+            bg: '/velnox/images/industry-seeder.png',
         },
     ];
 
@@ -154,7 +165,7 @@ export function HomePage({ locale }: { locale: string }) {
         <div className={styles.page}>
 
             {/* ══ PRODUCT SLIDER — FIRST SCREEN ══ */}
-            <ProductSlider />
+            <ProductSlider locale={locale} />
 
             {/* ══════════════════════
                 SEARCH / ACTION HERO
@@ -275,16 +286,40 @@ export function HomePage({ locale }: { locale: string }) {
                                 style={{ transitionDelay: `${i * 0.15}s` }}
                                 onMouseEnter={() => setHoveredCard(i)}
                                 onMouseLeave={() => setHoveredCard(null)}
+                                onClick={() => {
+                                    if (hoveredCard === i) {
+                                        // Second tap: navigate
+                                        window.location.href = `/${locale}/products/agro`;
+                                    } else {
+                                        // First tap: set as hovered
+                                        setHoveredCard(i);
+                                    }
+                                }}
                             >
-                                {/* Background photo overlay */}
-                                <div className={`${styles.cardPhotoBg} ${hoveredCard === i ? styles.cardPhotoBgVisible : ''}`}
-                                    style={{ backgroundImage: `url(/velnox/images/industry-${ind.key}.jpg)` }} />
-                                <div className={styles.cardContent}>
-                                    <div className={`${styles.cardIcon} ${hoveredCard === i ? styles.cardIconFilled : ''}`}>
+                                {/* Photo background */}
+                                <div className={styles.cardPhotoBg} style={{ backgroundImage: `url(${ind.bg})` }} />
+                                
+                                {/* Default dark gradient at bottom */}
+                                <div className={styles.cardDefaultOverlay} aria-hidden />
+
+                                {/* Hover State Blue Reveal */}
+                                <div className={`${styles.cardHoverOverlay} ${hoveredCard === i ? styles.fadeUp : ''}`} style={{ opacity: hoveredCard === i ? 1 : 0 }}>
+                                    <div className={styles.cardIcon}>
                                         {ind.icon}
                                     </div>
+                                    <div className={styles.cardHoverBody}>
+                                        <p className={styles.cardText}>
+                                            {t(`industries.${ind.key}.text`)}
+                                        </p>
+                                        <p className={styles.cardOem}>
+                                            OEM: {t(`industries.${ind.key}.oem`)}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Title bar (Always visible, part of the content animation) */}
+                                <div className={styles.cardContent}>
                                     <h3 className={styles.cardTitle}>{t(`industries.${ind.key}.title`)}</h3>
-                                    <p className={styles.cardText}>{t(`industries.${ind.key}.text`)}</p>
                                 </div>
                             </div>
                         ))}
@@ -293,67 +328,140 @@ export function HomePage({ locale }: { locale: string }) {
             </section>
 
             {/* ══════════════════════
-                BLOCK 3 — OEM PROCESS
+                BLOCK 3 — OEM OPTIMIZATION (Parallax)
             ══════════════════════ */}
-            <section className={styles.process} ref={processRef.ref as React.RefObject<HTMLElement>}>
-                <div className={styles.sectionInner}>
-                    <div className={`${styles.sectionHead} ${processRef.inView ? styles.fadeUp : ''}`}>
-                        <span className={styles.sectionTag}>{t('process.tag')}</span>
-                        <h2 className={styles.sectionTitle}>{t('process.title')}</h2>
-                        <p className={styles.sectionDesc}>{t('process.desc')}</p>
+            <section className={styles.oemOptimization}>
+                <div className={styles.oemOverlay} aria-hidden />
+                
+                <div className={styles.oemInner} ref={processRef.ref as React.RefObject<HTMLDivElement>}>
+                    <div className={`${styles.oemHeader} ${processRef.inView ? styles.oemHeaderVisible : ''}`}>
+                        <span className={styles.sectionTag}>{t('oem_optimization.tag')}</span>
+                        <h2>{t('oem_optimization.title')}</h2>
+                        <p>{t('oem_optimization.desc')}</p>
                     </div>
 
-                    <div className={styles.processTrack}>
-                        {/* Progress bar connecting steps */}
-                        <div className={styles.progressRail}>
-                            <div
-                                className={styles.progressFill}
-                                style={{ width: progressStep === 0 ? '0%' : progressStep === 1 ? '16%' : progressStep === 2 ? '50%' : '100%' }}
-                            />
+                    <div className={styles.oemGrid}>
+                        {/* Step 1: Audit */}
+                        <div 
+                            className={`${styles.oemStep} ${processRef.inView ? styles.oemStepVisible : ''}`}
+                            style={{ transitionDelay: '0.1s' }}
+                        >
+                            <div className={styles.oemIcon}>
+                                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <circle cx="36" cy="36" r="16" />
+                                    <path d="M48 48l12 12M30 36h12M36 30v12" strokeLinecap="round" />
+                                    <path d="M25 65h30" strokeLinecap="round" />
+                                </svg>
+                            </div>
+                            <h3>{t('oem_optimization.step1.title')}</h3>
+                            <p>{t('oem_optimization.step1.text')}</p>
                         </div>
 
-                        {PROCESS_STEPS.map((step, i) => (
-                            <div
-                                key={step.key}
-                                className={`${styles.processStep} ${progressStep > i ? styles.stepActive : ''}`}
-                            >
-                                <div className={styles.stepBubble}>
-                                    <span className={styles.stepEmoji}>{step.icon}</span>
-                                    <div className={styles.stepNum}>{i + 1}</div>
-                                </div>
-                                <h3 className={styles.stepTitle}>{t(`process.steps.${step.key}.title`)}</h3>
-                                <p className={styles.stepText}>{t(`process.steps.${step.key}.text`)}</p>
+                        {/* Step 2: Selection */}
+                        <div 
+                            className={`${styles.oemStep} ${processRef.inView ? styles.oemStepVisible : ''}`}
+                            style={{ transitionDelay: '0.3s' }}
+                        >
+                            <div className={styles.oemIcon}>
+                                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M20 30h40M60 30l-10-10M60 30l-10 10M60 50H20M20 50l10-10M20 50l10 10" strokeLinecap="round" strokeLinejoin="round" />
+                                    <rect x="25" y="15" width="30" height="50" rx="3" opacity="0.2" />
+                                </svg>
                             </div>
-                        ))}
+                            <h3>{t('oem_optimization.step2.title')}</h3>
+                            <p>{t('oem_optimization.step2.text')}</p>
+                        </div>
+
+                        {/* Step 3: Supply */}
+                        <div 
+                            className={`${styles.oemStep} ${processRef.inView ? styles.oemStepVisible : ''}`}
+                            style={{ transitionDelay: '0.5s' }}
+                        >
+                            <div className={styles.oemIcon}>
+                                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M20 40l20-10 20 10-20 10-20-10z" strokeLinejoin="round" />
+                                    <path d="M20 40v15l20 10 20-10V40" strokeLinejoin="round" />
+                                    <path d="M40 50v15" strokeLinecap="round" />
+                                    <circle cx="48" cy="22" r="3" fill="currentColor" />
+                                    <circle cx="32" cy="22" r="3" fill="currentColor" />
+                                </svg>
+                            </div>
+                            <h3>{t('oem_optimization.step3.title')}</h3>
+                            <p>{t('oem_optimization.step3.text')}</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* ══════════════════════
-                BLOCK 4 — QUALITY
+                BLOCK 4 — STATS & RELIABILITY
             ══════════════════════ */}
             <section className={styles.quality} ref={qualityRef.ref as React.RefObject<HTMLElement>}>
                 <div className={styles.sectionInner}>
                     <div className={`${styles.sectionHead} ${qualityRef.inView ? styles.fadeUp : ''}`}>
-                        <span className={styles.sectionTag}>{t('quality.tag')}</span>
-                        <h2 className={styles.sectionTitle}>{t('quality.title')}</h2>
-                        <p className={styles.sectionDesc}>{t('quality.desc')}</p>
+                        <span className={styles.sectionTag}>{t('stats.tag')}</span>
+                        <h2 className={styles.sectionTitle}>{t('stats.title')}</h2>
+                        <p className={styles.sectionDesc}>{t('stats.desc')}</p>
                     </div>
 
                     <div className={styles.metricsGrid}>
-                        <MetricCard value={100} suffix="%" label={t('quality.metric1')} active={qualityRef.inView} delay={0} />
-                        <MetricCard value={9001} suffix="" label="ISO" active={qualityRef.inView} delay={0.12} />
-                        <MetricCard value={1} suffix="μm" label={t('quality.metric3')} active={qualityRef.inView} delay={0.24} />
-                        <MetricCard value={24} suffix="h" label={t('quality.metric4')} active={qualityRef.inView} delay={0.36} />
+                        {/* Metric 1: Compatibility */}
+                        <MetricCard 
+                            value={100} 
+                            suffix="%" 
+                            label={t('stats.metrics.compatibility.title')} 
+                            desc={t('stats.metrics.compatibility.desc')}
+                            icon={
+                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M10 20a10 10 0 1 1 0 20 10 10 0 0 1 0-20M38 20a10 10 0 1 1 0 20 10 10 0 0 1 0-20" opacity="0.2" />
+                                    <path d="M24 10v28M10 24h28" />
+                                    <path d="M14 14l20 20M34 14L14 34" strokeWidth="1" />
+                                </svg>
+                            }
+                            active={qualityRef.inView} 
+                            delay={0.1} 
+                        />
+                        {/* Metric 2: Resource */}
+                        <MetricCard 
+                            value={2000} 
+                            suffix="+" 
+                            label={t('stats.metrics.resource.title')} 
+                            desc={t('stats.metrics.resource.desc')}
+                            icon={
+                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <circle cx="24" cy="24" r="18" />
+                                    <path d="M24 12v12l8 4" />
+                                    <path d="M42 24a18 18 0 0 1-18 18" strokeWidth="4" opacity="0.1" />
+                                    <path d="M14 6l-2-2M34 6l2-2" />
+                                </svg>
+                            }
+                            active={qualityRef.inView} 
+                            delay={0.2} 
+                        />
+                        {/* Metric 3: Sealings */}
+                        <MetricCard 
+                            value="ZERO" 
+                            label={t('stats.metrics.sealings.title')} 
+                            desc={t('stats.metrics.sealings.desc')}
+                            icon={
+                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M24 4l16 8v12c0 10-16 18-16 18S8 34 8 24V12l16-8z" />
+                                    <path d="M24 28a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor" />
+                                    <path d="M30 14l-12 12" opacity="0.5" />
+                                </svg>
+                            }
+                            active={qualityRef.inView} 
+                            delay={0.3} 
+                        />
                     </div>
 
                     <div className={`${styles.qualityCta} ${qualityRef.inView ? styles.fadeUp : ''}`} style={{ transitionDelay: '0.5s' }}>
-                        <a href={`/${locale}/protocols.pdf`} className={styles.pdfBtn} target="_blank" rel="noopener">
+                        <a href={`/${locale}/presentation.pdf`} className={styles.pdfBtn}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="18">
                                 <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
                                 <path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                            {t('quality.download_btn')}
+                            {t('stats.button')}
                         </a>
                     </div>
                 </div>

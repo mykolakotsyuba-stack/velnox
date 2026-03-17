@@ -1,0 +1,19 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "12345678"
+
+# 1. SSH and check git status on root velnox
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@mail.irbis.ua
+expect {
+    "password:" {
+        send "$password\r"
+    }
+}
+
+expect "$ "
+send "cd /srv/projects/velnox && git status\r"
+expect "$ "
+send "ls -la /srv/projects/velnox\r"
+expect "$ "
+send "exit\r"
+expect eof
