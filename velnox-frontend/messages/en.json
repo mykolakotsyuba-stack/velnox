@@ -346,35 +346,66 @@
     "packer_roller": {
       "title": "Packer Roller",
       "sealing_title": "Combined Sealing System",
-      "content": "Packer rollers operate under continuous contact with soil, moisture and abrasive particles, resulting in constant radial loads and a highly contaminated working environment. Bearing units used in packer rollers must therefore ensure reliable operation under slow rotational speeds, high static loads and frequent shock impacts.\n\nVELNOX bearing solutions for packer rollers are designed with reinforced housings, enhanced sealing systems and optimized internal clearances to withstand heavy loads and aggressive operating conditions. Special attention is given to contamination protection and long service life with minimal maintenance requirements.\n\nThese characteristics make VELNOX bearings a reliable solution for packer rollers used in modern agricultural machinery, ensuring stable performance and reduced downtime th  "hubsPage": {
-    ...
-  },
-  "contacts": {
-    "hero": {
-      "title": "Contacts",
-      "text": "Send us your technical specification or a request for node selection. Our engineers will respond within one business day."
-    },
-    "primary": {
-      "title": "Technical and general inquiries:",
-      "email": "info@velnox.com"
-    },
-    "form": {
-      "title": "VELNOX Engineering Support",
-      "subtitle": "We focus on solving specific engineering tasks for OEM manufacturers and professional distributors. Send your specifications for unit calculation.",
-      "name": "Name",
-      "name_ph": "Your name",
-      "email": "E-mail",
-      "email_ph": "example@company.com",
-      "company": "Company / Industry",
-      "company_ph": "e.g. Agricultural machinery manufacturer",
-      "message": "Message",
-      "message_ph": "Describe the task, specify OEM number or dimensions",
-      "submit": "Send Engineering Request",
-      "success": "Request sent successfully. We will contact you shortly."
+      "content": "Packer rollers operate under continuous contact with soil, moisture and abrasive particles, resulting in constant radial loads and a highly contaminated working environment. Bearing units used in packer rollers must therefore ensure reliable operation under slow rotational speeds, high static loads and frequent shock impacts.\n\nVELNOX bearing solutions for packer rollers are designed with reinforced housings, enhanced sealing systems and optimized internal clearances to withstand heavy loads and aggressive operating conditions. Special attention is given to contamination protection and long service life with minimal maintenance requirements.\n\nThese characteristics make VELNOX bearings a reliable solution for packer rollers used in modern agricultural machinery, ensuring stable performance and reduced downtime throughout the working season."
     }
-  }
-}
-btn_contact": "Talk to Engineer"
+  },
+  "hubsPage": {
+    "hero": {
+      "title": "VELNOX Bearing Hubs",
+      "subtitle": "Engineered units for intensive operation in aggressive environments",
+      "desc": "VELNOX hubs are engineered for direct replacement of original hub nodes from leading European and American agricultural machinery manufacturers. The primary focus is on multi-level sealing systems and stable operation under high axial loads."
+    },
+    "block1": {
+      "title": "Why OEM Manufacturers Choose VELNOX Hubs?",
+      "card1_title": "Contamination Protection",
+      "card1_desc": "Hubs designed to operate in extreme dust and moisture conditions. Multi-level cassette sealing prevents soil moisture and abrasives from entering the unit.",
+      "card2_title": "Geometric Compatibility",
+      "card2_desc": "100% geometric analogs of original HORSCH, Köckerling, Bednar, Vaderstad hubs. Direct installation without structural changes to machinery.",
+      "card3_title": "Guaranteed Service Life",
+      "card3_desc": "Maintenance-free units with minimal play. Guaranteed service life of 2000+ hours in the field without lubrication or disassembly."
+    },
+    "block2": {
+      "title": "Technical Specifications & Hub Parameters",
+      "intro": "VELNOX technical guide for quick OEM engineer reference. Tables contain complete parameters for hub selection for specific applications.",
+      "search_placeholder": "Search by part number or size...",
+      "table1": {
+        "title": "Table 1: Disc Harrow Hubs 28071300 VX",
+        "desc": "Units for heavy disc harrows HORSCH Joker, Focus, Terrano series. Field operation with maximum axial load."
+      },
+      "table2": {
+        "title": "Table 2: Cutting Node Hubs BAA-0004 VX",
+        "desc": "Maintenance-free units for compact disc harrows and cultivators Bednar, Köckerling, Gaspardo."
+      },
+      "table3": {
+        "title": "Table 3: Seeder Hubs PL-140 VX",
+        "desc": "High-precision units for Vaderstad seeders and other high-speed aggregates."
+      },
+      "btn_request": "Request"
+    },
+    "app1": {
+      "title": "Hubs for Disc Harrows and Heavy Cultivators",
+      "desc": "Unit designed for operation in extreme dust and moisture conditions. Used in soil preparation aggregates where each disc requires independent rotation under load.",
+      "applications": "Deep looseners, heavy disc harrows, combined aggregates",
+      "oem_focus": "Full compatibility with HORSCH equipment (Joker, Focus, Terrano series)"
+    },
+    "app2": {
+      "title": "Hubs for Cutting Nodes with Independent Suspension",
+      "desc": "Maintenance-free bearing units providing precise blade angle of attack. Design includes built-in cassette sealing eliminating lubrication needs throughout service life.",
+      "applications": "Compact disc harrows, pre-seeding cultivators",
+      "oem_focus": "Replacement hubs for Bednar, Köckerling, Gaspardo, Kuhn, Lemken"
+    },
+    "app3": {
+      "title": "Hubs for High-Speed Seeders and Press Wheels",
+      "desc": "High-precision rotation units. Minimal play ensures stable seeding depth even at high operating speeds.",
+      "applications": "Seeding complexes, grain and vegetable seeder sections",
+      "oem_focus": "Optimized for Vaderstad (Rapid series), Agrisem equipment"
+    },
+    "block3": {
+      "title": "Ready for Integration",
+      "text": "VELNOX hubs are a complete OEM solution requiring no changes to design documentation. All parameters are calculated and tested for real field conditions.",
+      "btn_pdf": "Download PDF",
+      "btn_cad": "CAD Models",
+      "btn_contact": "Talk to Engineer"
     }
   }
 }
