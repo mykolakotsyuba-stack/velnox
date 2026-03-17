@@ -2811,3 +2811,246 @@
 .blueprintLayoutRight {
     justify-content: flex-end;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   SPECIAL AGRO BEARINGS BLOCK
+═══════════════════════════════════════════════════════════ */
+
+@keyframes bearingFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50%       { opacity: 0.7; transform: scale(1.1); }
+}
+
+@keyframes lineGrow {
+    from { stroke-dashoffset: 200; opacity: 0; }
+    to   { stroke-dashoffset: 0;   opacity: 1; }
+}
+
+.specialBlock {
+    position: relative;
+    overflow: hidden;
+    background: #0d1117;
+    padding: 100px 0 80px;
+    margin: 60px 0;
+}
+
+.specialBg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 55%,
+        rgba(30, 64, 175, 0.18) 0%,
+        rgba(15, 23, 42, 0.6) 50%,
+        transparent 100%);
+    pointer-events: none;
+}
+
+/* ── Hero text ── */
+.specialHero {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 60px;
+    padding: 0 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.specialVisible .specialHero { opacity: 1; transform: translateY(0); }
+
+.specialTagline {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #38bdf8;
+    margin-bottom: 20px;
+    padding: 5px 14px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 20px;
+    background: rgba(56, 189, 248, 0.06);
+}
+
+.specialTitle {
+    font-size: clamp(26px, 3.5vw, 42px);
+    font-weight: 900;
+    color: #f1f5f9;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+}
+
+.specialLead {
+    font-size: 17px;
+    font-weight: 500;
+    color: #94a3b8;
+    margin-bottom: 12px;
+}
+
+.specialDesc {
+    font-size: 15px;
+    color: #64748b;
+    line-height: 1.75;
+}
+
+/* ── Layout: 3 cards + center bearing ── */
+.specialLayout {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 340px 1fr;
+    grid-template-rows: auto auto;
+    gap: 32px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    align-items: center;
+}
+
+/* Card base */
+.specialCard {
+    position: relative;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    border-radius: 12px;
+    padding: 24px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s;
+}
+.specialCard:hover {
+    border-color: rgba(56, 189, 248, 0.45);
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0.1);
+}
+
+.specialVisible .specialCard1 { opacity: 1; transform: translateY(0); transition-delay: 0.3s; grid-column: 1; grid-row: 1; }
+.specialVisible .specialCard2 { opacity: 1; transform: translateY(0); transition-delay: 0.5s; grid-column: 3; grid-row: 1; }
+.specialVisible .specialCard3 { opacity: 1; transform: translateY(0); transition-delay: 0.7s; grid-column: 1 / span 3; max-width: 400px; margin: 0 auto; }
+
+/* Connector line pseudo-element */
+.scLine {
+    position: absolute;
+    top: 50%;
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(56,189,248,0.5), rgba(56,189,248,0));
+}
+.specialCard1 .scLine { right: -40px; }
+.specialCard2 .scLine { left: -40px; background: linear-gradient(270deg, rgba(56,189,248,0.5), rgba(56,189,248,0)); }
+
+.scIcon {
+    color: #38bdf8;
+    margin-bottom: 12px;
+}
+
+.scTitle {
+    font-size: 15px;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-bottom: 12px;
+}
+
+.scList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.scList li {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.5;
+    padding-left: 16px;
+    position: relative;
+}
+.scList li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #38bdf8;
+    font-size: 10px;
+    top: 2px;
+}
+
+/* ── Central bearing ── */
+.specialBearingWrap {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.6s ease 0.1s;
+}
+.specialVisible .specialBearingWrap { opacity: 1; }
+
+.specialBearingGlow {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30, 64, 175, 0.25) 0%, transparent 70%);
+    animation: glowPulse 4s ease-in-out infinite;
+}
+
+.specialBearingSvg {
+    width: 300px;
+    height: 300px;
+    animation: bearingFloat 5s ease-in-out infinite;
+    filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.25));
+}
+
+/* ── CTA ── */
+.specialCta {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: 60px;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.9s;
+}
+.specialVisible .specialCta { opacity: 1; }
+
+.specialCtaBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #1d4ed8;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 32px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    letter-spacing: 0.02em;
+}
+.specialCtaBtn:hover {
+    background: #2563eb;
+    box-shadow: 0 0 24px rgba(37, 99, 235, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .specialLayout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .specialBearingWrap { grid-column: 1; grid-row: 1; }
+    .specialVisible .specialCard1 { grid-column: 1; grid-row: 2; }
+    .specialVisible .specialCard2 { grid-column: 1; grid-row: 3; }
+    .specialVisible .specialCard3 { grid-column: 1; grid-row: 4; max-width: 100%; }
+    .scLine { display: none; }
+}
