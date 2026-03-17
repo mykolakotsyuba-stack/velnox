@@ -289,6 +289,80 @@ class ProductController extends Controller
     }
 
     /**
+     * Agro Table 1: Series 1726 bearings — GET /api/v1/products/tables/agro-table1
+     */
+    public function tableAgroTable1(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereJsonContains('specs->table_group', 'agro-table1')
+            ->get()
+            ->map(fn($p) => [
+                'Part Number'        => $p->article,
+                'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
+                'Brand name'         => $p->specs['brand_name'] ?? '-',
+                'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
+                'd (mm)'             => $p->specs['d_mm'] ?? '-',
+                'D (mm)'             => $p->specs['D_mm'] ?? '-',
+                'B (mm)'             => $p->specs['B_mm'] ?? '-',
+                'd1 (mm)'            => $p->specs['d1_mm'] ?? '-',
+                'r1,2 (mm)'          => $p->specs['r_mm'] ?? '-',
+                'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
+                'Co (kN)'            => $p->specs['co_kn'] ?? '-',
+                'Pu (kN)'            => $p->specs['pu_kn'] ?? '-',
+                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
+            ]);
+        return response()->json($products);
+    }
+
+    /**
+     * Agro Table 2 — GET /api/v1/products/tables/agro-table2
+     */
+    public function tableAgroTable2(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereJsonContains('specs->table_group', 'agro-table2')
+            ->get()
+            ->map(fn($p) => [
+                'Part Number'        => $p->article,
+                'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
+                'Brand name'         => $p->specs['brand_name'] ?? '-',
+                'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
+                'd (mm)'             => $p->specs['d_mm'] ?? '-',
+                'D (mm)'             => $p->specs['D_mm'] ?? '-',
+                'B (mm)'             => $p->specs['B_mm'] ?? '-',
+                'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
+                'Co (kN)'            => $p->specs['co_kn'] ?? '-',
+                'Pu (kN)'            => $p->specs['pu_kn'] ?? '-',
+                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
+            ]);
+        return response()->json($products);
+    }
+
+    /**
+     * Agro Table 3 — GET /api/v1/products/tables/agro-table3
+     */
+    public function tableAgroTable3(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereJsonContains('specs->table_group', 'agro-table3')
+            ->get()
+            ->map(fn($p) => [
+                'Part Number'        => $p->article,
+                'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
+                'Brand name'         => $p->specs['brand_name'] ?? '-',
+                'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
+                'd (mm)'             => $p->specs['d_mm'] ?? '-',
+                'D (mm)'             => $p->specs['D_mm'] ?? '-',
+                'B (mm)'             => $p->specs['B_mm'] ?? '-',
+                'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
+                'Co (kN)'            => $p->specs['co_kn'] ?? '-',
+                'Pu (kN)'            => $p->specs['pu_kn'] ?? '-',
+                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
+            ]);
+        return response()->json($products);
+    }
+
+    /**
      * Імпорт товарів з 1С (захищений Sanctum-токеном)
      * POST /api/v1/import/products
      * Body: JSON-масив товарів

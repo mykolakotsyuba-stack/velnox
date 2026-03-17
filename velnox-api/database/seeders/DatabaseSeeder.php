@@ -558,6 +558,73 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // ===== AGRO TABLE 1: Series 1726 Agricultural Bearings =====
+        $agroCategory = Category::where('slug', 'agro')->first();
+        if ($agroCategory) {
+            $agro1 = [
+                ['slug' => '1726206-2rs1-vx', 'article' => '1726206-2RS1 VX',
+                 'bearing' => "1726206 2RS\n1726206 2RS\n1726206 2RS1\n206 NPPB\nXG206NPPB\n6206 S EE\nCS 206 2RS\nUD 206",
+                 'brand' => "TIMKEN\nNSK-RHP\nSKF\nINA\nSNR\nNTE\nFBJ\nZKL",
+                 'cross' => "10330 Dominoni\n211156.0 CLAAS\n2152620 Rauch\n81023064 KUHN\n831087M1 AGCO\nJD10386 JD\nYP800030 KUHN",
+                 'd' => 30, 'D' => 62, 'B' => 16, 'd1' => 39.7, 'r' => 1.0, 'cdyn' => 19.5, 'co' => 11.2, 'pu' => 0.48, 'mass' => 0.18],
+                ['slug' => '1726207-2rs1-vx', 'article' => '1726207-2RS1 VX',
+                 'bearing' => "1726207 2RS\n1726207 2RS1\n207 NPPB\nXG207NPPB\n6207 SEE\nCS 207 2RS\nG207-XL-NPPB",
+                 'brand' => "TIMKEN\nNSK-RHP\nSKF\nINA\nSNR\nFBJ\nINA",
+                 'cross' => "03.2026.00 Capello\n12-058340 Ziegler\n1407629R91 CASE\n4655.1 MONOSEM\n81043576 KUHN\n831822M1 MF\nB96.00264",
+                 'd' => 35, 'D' => 72, 'B' => 17, 'd1' => 46.1, 'r' => 1.0, 'cdyn' => 25.5, 'co' => 15.3, 'pu' => 0.66, 'mass' => 0.25],
+                ['slug' => '1726208-2rs1-vx', 'article' => '1726208-2RS1 VX',
+                 'bearing' => "1726208 2RS\n1726208 2RS1\nXG208NPPB\n6208 S EE\nCS 208 2RS\nG208-XL-NPPB\nUD 208",
+                 'brand' => "TIMKEN\nSKF\nSKF\nSNR\nFBJ\nINA\nZKL",
+                 'cross' => "025292 Geringhoff\n30161042 Monosem\n4655.1A Monosem\n730004600 LUK\nAZ23315 JD\nF04010184 GASPARDO",
+                 'd' => 40, 'D' => 80, 'B' => 18, 'd1' => 52.0, 'r' => 1.1, 'cdyn' => 30.7, 'co' => 19.0, 'pu' => 0.8, 'mass' => 0.32],
+                ['slug' => '1726209-2rs1-vx', 'article' => '1726209-2RS1 VX',
+                 'bearing' => "1726209 2RS\n1726209 2RS1\n209 NPPB\nXG209NPPB\nCS 209 2RS",
+                 'brand' => "TIMKEN\nNSK-RHP\nSKF\nINA\nFBJ",
+                 'cross' => "000212102.0 CLAAS\n02.1032.00 CAPELLO\n12-058421 ZIEGLER\n81004584 NH\n831134M1 MF\nZ4009820 KUHN",
+                 'd' => 45, 'D' => 85, 'B' => 19, 'd1' => 56.6, 'r' => 1.1, 'cdyn' => 32.5, 'co' => 20.4, 'pu' => 0.92, 'mass' => 0.37],
+                ['slug' => '1726210-2rs1-vx', 'article' => '1726210-2RS1 VX',
+                 'bearing' => "1726210 2RS\n1726210 2RS1\n210 NPPB\nXG210NPPB\nCS 210 2RS",
+                 'brand' => "TIMKEN\nNSK-RHP\nSKF\nINA\nFBJ",
+                 'cross' => "11330 Dominoni\n81005000 KUHN\n81005099 KUHN\n1726210 2RS1",
+                 'd' => 50, 'D' => 90, 'B' => 20, 'd1' => 62.5, 'r' => 1.1, 'cdyn' => 35.1, 'co' => 23.2, 'pu' => 0.98, 'mass' => 0.41],
+                ['slug' => '1726306-2rs1-vx', 'article' => '1726306-2RS1 VX',
+                 'bearing' => "1726306 2RS1\nCS306LLU\nCS306DDU\n76306-2RS\n6306SEE\n1726306-2RS\n1726306 2S.T",
+                 'brand' => "SKF\nNTN\nNSK\nFAG\nSNR\nRHP\nFKL",
+                 'cross' => "580306 ZMZ\n1726306 2RS1",
+                 'd' => 30, 'D' => 72, 'B' => 19, 'd1' => 44.6, 'r' => 1.1, 'cdyn' => 28.1, 'co' => 16.0, 'pu' => 0.67, 'mass' => 0.30],
+                ['slug' => '1726309-2rs1-vx', 'article' => '1726309-2RS1 VX',
+                 'bearing' => "1726309 2RS\n1726309 2RS1\nCS309LLU\nCS309DDU\n76309-2RS\n309NPPB",
+                 'brand' => "TIMKEN\nNSK\nSKF\nNTN\nFAG\nIMT\nSNR",
+                 'cross' => "F04010225R GASPARDO\n43400468 GASPARDO\n23400434 GASPARDO\n76100409 GASPARDO\n61100438 GASPARDO\nMG43400468 GASPARDO\n1726309 2RS1 ZARAMAK",
+                 'd' => 45, 'D' => 100, 'B' => 25, 'd1' => 62.1, 'r' => 1.5, 'cdyn' => 52.7, 'co' => 31.5, 'pu' => 1.34, 'mass' => 0.73],
+            ];
+            foreach ($agro1 as $item) {
+                Product::updateOrCreate(
+                    ['slug' => $item['slug']],
+                    [
+                        'article'     => $item['article'],
+                        'category_id' => $agroCategory->id,
+                        'specs'       => [
+                            'table_group'         => 'agro-table1',
+                            'bearing_designation' => $item['bearing'],
+                            'brand_name'          => $item['brand'],
+                            'cross_reference'     => $item['cross'],
+                            'd_mm'  => $item['d'],
+                            'D_mm'  => $item['D'],
+                            'B_mm'  => $item['B'],
+                            'd1_mm' => $item['d1'],
+                            'r_mm'  => $item['r'],
+                            'cdyn_kn' => $item['cdyn'],
+                            'co_kn'   => $item['co'],
+                            'pu_kn'   => $item['pu'],
+                            'mass_kg' => $item['mass'],
+                        ],
+                        'is_active' => true,
+                    ]
+                );
+            }
+        }
+
         // ===== ДЕМО-СТАТТЯ =====
         NewsArticle::updateOrCreate(
             ['slug' => 'oem-bearing-selection-guide'],

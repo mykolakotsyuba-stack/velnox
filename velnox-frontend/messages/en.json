@@ -449,51 +449,51 @@
   },
   "agroPage": {
     "hero": {
-      "title": "TODO: Заголовок сторінки агро",
-      "subtitle": "TODO: Підзаголовок",
-      "desc": "TODO: Опис"
+      "title": "VELNOX Agro Bearings. Series 1726.",
+      "subtitle": "Special series bearings for agricultural machinery. Direct OEM replacement for CLAAS, John Deere, KUHN, Gaspardo, Capello.",
+      "desc": "Series 1726 — agricultural bearings with extended inner ring tolerances, designed for seeders, headers and disc units in abrasive dust and moisture conditions."
     },
     "block1": {
-      "title": "TODO: Чому VELNOX?",
-      "card1_title": "TODO: Картка 1",
-      "card1_desc": "TODO: Опис картки 1",
-      "card2_title": "TODO: Картка 2",
-      "card2_desc": "TODO: Опис картки 2",
-      "card3_title": "TODO: Картка 3",
-      "card3_desc": "TODO: Опис картки 3"
+      "title": "Why OEM manufacturers choose VELNOX agro bearings?",
+      "card1_title": "Agro seals 2RS1",
+      "card1_desc": "Double contact seals on both sides. Protection against dust, dirt and moisture in field conditions.",
+      "card2_title": "OEM Cross-Reference",
+      "card2_desc": "Direct replacement for CLAAS, JD, KUHN, Capello, Gaspardo, MF, NH bearings without design changes.",
+      "card3_title": "Extended bore d1",
+      "card3_desc": "Special design with extended inner ring bore — key feature of the 1726 series for agricultural applications."
     },
     "block2": {
-      "title": "TODO: Технічні специфікації",
-      "intro": "TODO: Вступний текст",
-      "search_placeholder": "Пошук за артикулом або розміром...",
-      "btn_request": "Запит",
+      "title": "Technical specifications and bearing parameters",
+      "intro": "VELNOX technical reference for selecting Series 1726 agro bearings. Full parameters and OEM cross-references.",
+      "search_placeholder": "Search by part number, size or OEM reference...",
+      "btn_request": "Request",
       "table1": {
-        "title": "TODO: Таблиця 1",
-        "desc": "TODO: Опис 1"
+        "title": "Table 1: Agricultural bearings series 1726 (2RS1)",
+        "desc": "Double-sealed bearings for seeders, headers and disc units from CLAAS, John Deere, KUHN and other OEM manufacturers."
       },
       "table2": {
-        "title": "TODO: Таблиця 2",
-        "desc": "TODO: Опис 2"
+        "title": "TODO: Table 2",
+        "desc": "TODO: Description 2"
       },
       "table3": {
-        "title": "TODO: Таблиця 3",
-        "desc": "TODO: Опис 3"
+        "title": "TODO: Table 3",
+        "desc": "TODO: Description 3"
       }
     },
     "app1": {
-      "title": "TODO: Блок 1",
-      "desc": "TODO:",
-      "applications": "TODO:",
-      "oem_focus": "TODO:"
+      "title": "Bearings for seeders, headers and disc units",
+      "desc": "Series 1726 — special series bearings for agricultural applications. Extended inner ring diameter (d1) ensures optimal fit and increased service life in disc and seeding section nodes.",
+      "applications": "Precision seeders, disc harrows, headers, fertilizer spreaders, sprayers",
+      "oem_focus": "Direct OEM replacement for CLAAS, John Deere, KUHN, Capello, Gaspardo, AGCO, MF, New Holland"
     },
     "app2": {
-      "title": "TODO: Блок 2",
+      "title": "TODO: Block 2",
       "desc": "TODO:",
       "applications": "TODO:",
       "oem_focus": "TODO:"
     },
     "app3": {
-      "title": "TODO: Блок 3",
+      "title": "TODO: Block 3",
       "desc": "TODO:",
       "applications": "TODO:",
       "oem_focus": "TODO:"

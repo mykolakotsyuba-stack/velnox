@@ -207,20 +207,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         );
     }
 
-    /* ── TABLE COLUMNS: заповни після отримання даних ── */
-    // TODO: Замінити колонки на реальні з ТЗ після отримання даних
+    /* ── TABLE 1: Series 1726 agro bearings ── */
     const table1Cols = [
-        'Part Number', 'Bearing designation', 'Brand name',
-        // ↓ Додай потрібні колонки тут
+        'Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference',
+        'd (mm)', 'D (mm)', 'B (mm)', 'd1 (mm)', 'r1,2 (mm)',
+        'Cdyn (kN)', 'Co (kN)', 'Pu (kN)', 'Mass (kg)',
     ];
-    const table2Cols = [
-        'Part Number', 'Bearing designation', 'Brand name',
-        // ↓ Додай потрібні колонки тут
-    ];
-    const table3Cols = [
-        'Part Number', 'Bearing designation', 'Brand name',
-        // ↓ Додай потрібні колонки тут
-    ];
+    /* ── TABLE 2 & 3: заповнити після отримання даних ── */
+    const table2Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (mm)', 'D (mm)', 'B (mm)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)', 'Mass (kg)'];
+    const table3Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (mm)', 'D (mm)', 'B (mm)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)', 'Mass (kg)'];
 
     return (
         <main className={styles.page}>
@@ -321,7 +316,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                     <div className={styles.tableBlock}>
                         <h3>{t('agroPage.block2.table1.title')}</h3>
                         <p className={styles.tableDesc}>{t('agroPage.block2.table1.desc')}</p>
-                        <div className={styles.diagramPlaceholder}>[ СХЕМА ]</div>
+                        <div className={styles.tableDiagramContainer}>
+                            <Image
+                                src="/velnox/images/agro/scheme-table1.png"
+                                alt="Agro bearing series 1726 cross-section"
+                                width={700}
+                                height={320}
+                                style={{ maxWidth: '100%', height: 'auto' }}
+                            />
+                        </div>
                         <div className={styles.tableScroll}>
                             <table className={styles.techTable}>
                                 <thead>

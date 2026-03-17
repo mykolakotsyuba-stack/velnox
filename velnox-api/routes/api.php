@@ -35,6 +35,11 @@ Route::prefix('v1')->group(function () {
     Route::get('/products/tables/hubs-table2', [ProductController::class, 'tableHubsTable2']);
     Route::get('/products/tables/hubs-table3', [ProductController::class, 'tableHubsTable3']);
 
+    // Tables для сторінки agro (мають йти ДО {slug} маршруту!)
+    Route::get('/products/tables/agro-table1', [ProductController::class, 'tableAgroTable1']);
+    Route::get('/products/tables/agro-table2', [ProductController::class, 'tableAgroTable2']);
+    Route::get('/products/tables/agro-table3', [ProductController::class, 'tableAgroTable3']);
+
     Route::get('/products/{slug}', [ProductController::class, 'show']); // ?locale=en
 
     // Новини
