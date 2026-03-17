@@ -411,7 +411,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 >
                     <div className={styles.specialParallaxOverlay} />
                     <Image
-                        src="/images/agro/agro-parallax-bg.png"
+                        src="/velnox/images/agro/agro-parallax-bg.png"
                         alt="Agro field background"
                         fill
                         className={styles.specialParallaxImg}
