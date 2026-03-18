@@ -60,10 +60,11 @@ class KitTableSeeder extends Seeder
 
             while (($data = fgetcsv($handle, 2000, ';')) !== FALSE) {
                 $rowCount++;
-                if ($rowCount <= 3) continue; // Skip headers (usually 3 lines)
-
-                // Check if the row has a Part Number (first column)
-                if (empty($data[0])) continue;
+                
+                // Skip if first column is empty or matches header or sub-header
+                if (empty($data[0]) || $data[0] === 'Part Number' || str_contains($data[0], '(mm)')) {
+                    continue;
+                }
 
                 $specs = ['table_group' => "kit-table$num"];
                 foreach ($cols as $index => $key) {
@@ -72,6 +73,8 @@ class KitTableSeeder extends Seeder
 
                 $article = $data[0];
                 $slug = Str::slug($article . "-kit-t$num");
+
+                $this->command->info("Creating product: $article (slug: $slug) for table $num");
 
                 Product::updateOrCreate(
                     ['slug' => $slug],
@@ -83,8 +86,8 @@ class KitTableSeeder extends Seeder
                     ]
                 );
             }
+            $this->command->info("Finished table $num: processed $rowCount rows");
             fclose($handle);
-            $this->command->info("Imported kit-table$num from $filename");
         }
     }
 }

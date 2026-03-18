@@ -3113,7 +3113,7 @@
     vertical-align: top;
 }
 
-:global(.analogues-list) {
+.analoguesCell :global(.analogues-list) {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -3122,13 +3122,13 @@
     gap: 2px;
 }
 
-:global(.analogues-list) li {
+.analoguesCell :global(.analogues-list) li {
     padding: 1px 0;
     color: var(--color-text-muted);
     font-size: 11px;
     border-bottom: 1px dotted color-mix(in srgb, var(--color-border) 60%, transparent);
 }
 
-:global(.analogues-list) li:last-child {
+.analoguesCell :global(.analogues-list) li:last-child {
     border-bottom: none;
 }
