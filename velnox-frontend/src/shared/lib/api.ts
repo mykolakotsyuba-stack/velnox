@@ -23,8 +23,8 @@ export async function apiFetch<T>(
 
     const response = await fetch(url.toString(), {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        // Next.js: вимкнуто кешування для розробки (можна повернути 60 пізніше)
-        next: { revalidate: 0 },
+        // Next.js: cache for 60 seconds
+        next: { revalidate: 60 },
         ...options,
     });
 
