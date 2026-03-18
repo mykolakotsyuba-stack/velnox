@@ -568,21 +568,17 @@
     text-decoration: underline;
 }
 
-.actionCol {
-    width: 120px;
-    text-align: right;
-}
-
 .reqBtn {
     background: transparent;
     border: 1px solid var(--color-accent);
     color: var(--color-accent);
-    padding: 6px 16px;
+    padding: 8px 16px;
     border-radius: 4px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .reqBtn:hover {
@@ -659,8 +655,20 @@
 
 @media (min-width: 1025px) {
     .techTable {
-        min-width: 1200px; /* Ensure 1200px minimum width to prevent squashing on desktop */
-        table-layout: auto; /* Return to auto for better content-based width fitting on desktop */
+        width: 100%;
+        table-layout: auto; 
+    }
+
+    .techTable td, .techTable th {
+        white-space: normal; 
+        line-height: 1.5; 
+        padding: 12px 14px;
+    }
+
+    .actionCol {
+        width: 1%; 
+        white-space: nowrap !important;
+        padding-left: 20px !important;
     }
 
     /* Specific column adjustments for Table 1 common view */
@@ -2810,4 +2818,53 @@
 }
 .blueprintLayoutRight {
     justify-content: flex-end;
+}
+
+
+/* ─── Bore diameter filter select ─── */
+.boreSelect {
+    appearance: none;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 10px 16px;
+    color: var(--color-text);
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    margin-top: 8px;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.boreSelect:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 15%, transparent);
+}
+
+/* ─── Analogues cell (Cross-Reference) ─── */
+.analoguesCell {
+    font-size: 11px !important;
+    line-height: 1.5;
+    vertical-align: top;
+}
+
+:global(.analogues-list) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+:global(.analogues-list) li {
+    padding: 1px 0;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    border-bottom: 1px dotted color-mix(in srgb, var(--color-border) 60%, transparent);
+}
+
+:global(.analogues-list) li:last-child {
+    border-bottom: none;
 }

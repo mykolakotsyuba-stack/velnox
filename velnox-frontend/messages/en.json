@@ -370,10 +370,10 @@
     },
     "sealing_info": {
       "tag": "Sealing",
-      "title": "TRIPLE-LIP + DOUBLE-LIP SEALING SYSTEM",
-      "p1": "VELNOX bearing units are equipped with a combined sealing system featuring a triple-lip seal and an additional double-lip seal on both sides of the bearing.",
-      "p2": "The triple-lip seal provides primary protection against dust, dirt and moisture, while the double-lip seal acts as a secondary barrier, limiting contaminant penetration under severe operating conditions.",
-      "p3": "The use of reinforced sealing systems on both sides of the bearing allows VELNOX units to operate reliably across a wider range of applications and environmental conditions, particularly in agriculture."
+      "title": "Combined Sealing System",
+      "p1": "VELNOX bearing units are equipped with a combined sealing system: a triple-lip seal is complemented by a double-lip seal, forming a multi-level protection against external influences. The triple-lip seal provides primary protection against dust, dirt and moisture, while the double-lip seal acts as a secondary barrier, limiting contamination entry under intensive operating conditions. The use of the reinforced sealing system extends the application range of VELNOX bearing units and ensures stable operation in agricultural environments.",
+      "p2": "",
+      "p3": ""
     },
     "block3": {
       "title": "Ready for Integration into Your Project",
@@ -383,9 +383,9 @@
       "btn_contact": "Contact Engineer"
     },
     "packer_roller": {
-      "title": "Packer Roller",
+      "title": "Press Wheels",
       "sealing_title": "Combined Sealing System",
-      "content": "Packer rollers operate under continuous contact with soil, moisture and abrasive particles, resulting in constant radial loads and a highly contaminated working environment. Bearing units used in packer rollers must therefore ensure reliable operation under slow rotational speeds, high static loads and frequent shock impacts.\n\nVELNOX bearing solutions for packer rollers are designed with reinforced housings, enhanced sealing systems and optimized internal clearances to withstand heavy loads and aggressive operating conditions. Special attention is given to contamination protection and long service life with minimal maintenance requirements.\n\nThese characteristics make VELNOX bearings a reliable solution for packer rollers used in modern agricultural machinery, ensuring stable performance and reduced downtime throughout the working season."
+      "content": "Press wheels operate in constant contact with soil, moisture and abrasive particles, generating high radial loads and conditions of intensive contamination. Bearing units for such applications must provide stable operation at low rotational speeds, high static loads and shock impacts.\n\nVELNOX solutions for press wheels are developed taking into account real operating conditions: reinforced housings, effective sealing systems and optimized internal clearances ensure reliable operation of units in difficult field conditions. The design is focused on reducing the impact of contamination and extending service life with minimum maintenance.\n\nVELNOX bearing units are used in press wheels of agricultural machinery, ensuring stable operation of equipment and reducing downtime throughout the entire season."
     }
   },
   "hubsPage": {

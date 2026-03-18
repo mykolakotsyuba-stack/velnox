@@ -102,6 +102,22 @@ function SortIcon({ dir }: { dir: SortDir }) {
     );
 }
 
+
+/* ─── Render analogues as structured list ─── */
+function renderAnalogues(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const items = val
+        .split(/[;,\/]|\n/)
+        .map(s => s.trim())
+        .filter(Boolean);
+    if (items.length <= 1) return <span>{val}</span>;
+    return (
+        <ul className="analogues-list">
+            {items.map((item, i) => <li key={i}>{item}</li>)}
+        </ul>
+    );
+}
+
 function useSortableTable(data: any[]) {
     const [sortCol, setSortCol] = useState<string | null>(null);
     const [sortDir, setSortDir] = useState<SortDir>(null);
@@ -139,6 +155,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [boreDiamFilter, setBoreDiamFilter] = useState('');
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
@@ -197,6 +214,17 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         const q = searchQuery.toLowerCase();
         return table3Data.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
     }, [searchQuery, table3Data]);
+
+    
+    // Unique bore diameter values across all tables
+    const boreDiamOptions = useMemo(() => {
+        const all = new Set<string>();
+        [...table1Data, ...table2Data, ...table3Data, ...table4Data].forEach(r => {
+            const v = r['d (mm)'] ?? r['d (inch)'];
+            if (v != null) all.add(String(v));
+        });
+        return [...all].filter(Boolean).sort((a, b) => parseFloat(a) - parseFloat(b));
+    }, [table1Data, table2Data, table3Data, table4Data]);
 
     const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
     const { sorted: sortedT2, sortCol: sc2, sortDir: sd2, toggle: tog2 } = useSortableTable(filteredT2);
@@ -400,6 +428,17 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
+                            <select
+                                className={styles.boreSelect}
+                                value={boreDiamFilter}
+                                onChange={e => setBoreDiamFilter(e.target.value)}
+                                aria-label="Фільтр за d (мм)"
+                            >
+                                <option value="">d (мм) — всі</option>
+                                {boreDiamOptions.map(v => (
+                                    <option key={v} value={v}>{v} мм</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -442,7 +481,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     {sortedT1.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td data-label="Bearing" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation']}</td>
+                                            <td data-label="Bearing" style={{ fontSize: '12px' }}>{row['Bearing designation']}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name']}</td>
                                             <td data-label="J">{row['J (mm)']}</td>
                                             <td data-label="D">{row['D (mm)']}</td>
@@ -545,7 +584,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     {sortedT2.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td data-label="Bearing" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation']}</td>
+                                            <td data-label="Bearing" style={{ fontSize: '12px' }}>{row['Bearing designation']}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name']}</td>
                                             <td data-label="J">{row['J (mm)']}</td>
                                             <td data-label="D">{row['D (mm)']}</td>
@@ -634,7 +673,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     {sortedT3.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td data-label="Bearing" style={{ fontSize: '12px', whiteSpace: 'pre-line' }}>{row['Bearing designation']}</td>
+                                            <td data-label="Bearing" style={{ fontSize: '12px' }}>{row['Bearing designation']}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name']}</td>
                                             <td data-label="J">{row['J (mm)']}</td>
                                             <td data-label="D">{row['D (mm)']}</td>

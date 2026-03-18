@@ -72,6 +72,22 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
 /* ─── Sortable Table ─── */
 type SortDir = 'asc' | 'desc' | null;
 
+
+/* ─── Render analogues as structured list ─── */
+function renderAnalogues(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const items = val
+        .split(/[;,\/]|\n/)
+        .map(s => s.trim())
+        .filter(Boolean);
+    if (items.length <= 1) return <span>{val}</span>;
+    return (
+        <ul className="analogues-list">
+            {items.map((item, i) => <li key={i}>{item}</li>)}
+        </ul>
+    );
+}
+
 function useSortableTable(data: any[]) {
     const [sortCol, setSortCol] = useState<string | null>(null);
     const [sortDir, setSortDir] = useState<SortDir>(null);
@@ -214,15 +230,15 @@ function KitTable({ tableNum, data, searchQuery, onRequest, t }: {
                     <tbody>
                         {sortedData.map((row, i) => (
                             <tr key={i}>
-                                {cols.map(({ col }) => (
+                                {cols.map(({ col, label }) => (
                                     <td key={col}
                                         className={col === 'Part Number' ? styles.partNumCell : undefined}
-                                        style={col === 'Bearing designation' || col === 'Cross-Reference' ? { fontSize: '12px', whiteSpace: 'pre-line' } : undefined}
+                                        data-label={label}
                                     >
                                         {row[col] ?? '-'}
                                     </td>
                                 ))}
-                                <td className={styles.actionCol}>
+                                <td className={styles.actionCol} data-label="">
                                     <button className={styles.reqBtn} onClick={() => onRequest(row['Part Number'] || '')}>
                                         {t('kitPage.block2.btn_request')}
                                     </button>
@@ -244,9 +260,13 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
     const t = useTranslations();
     const heroRef = useInView(0.12);
     const approachRef = useInView(0.1);
+    const app1Ref = useInView(0.2);
+    const app2Ref = useInView(0.2);
+    const app3Ref = useInView(0.2);
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [boreDiamFilter, setBoreDiamFilter] = useState('');
     const [tablesData, setTablesData] = useState<Record<number, any[]>>({});
     const searchHeaderRef = useRef<HTMLDivElement>(null);
 
@@ -336,16 +356,89 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
                 </div>
             </div>
 
-            {/* ALL TABLES */}
+            {/* ── APP BLOCK 1 ── */}
+            <section ref={app1Ref.ref} className={app1Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection}>
+                <div className={styles.appWatermark}>KIT 1</div>
+                <div className={styles.appInner}>
+                    <div className={styles.appHeader}>
+                        <h2 className={styles.appTitle}>{t('kitPage.app1.title')}</h2>
+                    </div>
+                    <div className={styles.appBody}>
+                        <p className={`${styles.appPara} ${styles.appParaLead} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
+                            {t('kitPage.app1.desc')}
+                        </p>
+                        <p className={`${styles.appPara} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
+                            <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('kitPage.app1.applications')}
+                        </p>
+                        <p className={`${styles.appPara} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
+                            <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('kitPage.app1.oem_focus')}
+                        </p>
+                    </div>
+                </div>
+            </section>
+
             <section className={styles.tablesSection}>
-                <div className={styles.container}>
-                    {TABLE_NUMBERS.map(n => (
-                        <KitTable key={n} tableNum={n}
-                            data={tablesData[n] ?? []}
-                            searchQuery={searchQuery}
-                            onRequest={setModalProduct}
-                            t={t}
-                        />
+                <div className={styles.tableSectionContainer}>
+                    {[1, 2, 3].map(n => (
+                        <KitTable key={n} tableNum={n} data={tablesData[n] ?? []} searchQuery={searchQuery} onRequest={setModalProduct} t={t} />
+                    ))}
+                </div>
+            </section>
+
+            {/* ── APP BLOCK 2 ── */}
+            <section ref={app2Ref.ref} className={app2Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection}>
+                <div className={styles.appWatermark}>KIT 2</div>
+                <div className={styles.appInner}>
+                    <div className={styles.appHeader}>
+                        <h2 className={styles.appTitle}>{t('kitPage.app2.title')}</h2>
+                    </div>
+                    <div className={styles.appBody}>
+                        <p className={`${styles.appPara} ${styles.appParaLead} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
+                            {t('kitPage.app2.desc')}
+                        </p>
+                        <p className={`${styles.appPara} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
+                            <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('kitPage.app2.applications')}
+                        </p>
+                        <p className={`${styles.appPara} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
+                            <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('kitPage.app2.oem_focus')}
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section className={styles.tablesSection}>
+                <div className={styles.tableSectionContainer}>
+                    {[5, 6, 7].map(n => (
+                        <KitTable key={n} tableNum={n} data={tablesData[n] ?? []} searchQuery={searchQuery} onRequest={setModalProduct} t={t} />
+                    ))}
+                </div>
+            </section>
+
+            {/* ── APP BLOCK 3 ── */}
+            <section ref={app3Ref.ref} className={app3Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection}>
+                <div className={styles.appWatermark}>KIT 3</div>
+                <div className={styles.appInner}>
+                    <div className={styles.appHeader}>
+                        <h2 className={styles.appTitle}>{t('kitPage.app3.title')}</h2>
+                    </div>
+                    <div className={styles.appBody}>
+                        <p className={`${styles.appPara} ${styles.appParaLead} ${app3Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
+                            {t('kitPage.app3.desc')}
+                        </p>
+                        <p className={`${styles.appPara} ${app3Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
+                            <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('kitPage.app3.applications')}
+                        </p>
+                        <p className={`${styles.appPara} ${app3Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
+                            <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('kitPage.app3.oem_focus')}
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section className={styles.tablesSection}>
+                <div className={styles.tableSectionContainer}>
+                    {[8, 9, 10, 11, 12].map(n => (
+                        <KitTable key={n} tableNum={n} data={tablesData[n] ?? []} searchQuery={searchQuery} onRequest={setModalProduct} t={t} />
                     ))}
                 </div>
             </section>

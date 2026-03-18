@@ -93,6 +93,22 @@ function SortIcon({ dir }: { dir: SortDir }) {
     return <span className={styles.sortIcon} aria-hidden>{dir === 'asc' ? '↑' : dir === 'desc' ? '↓' : '↕'}</span>;
 }
 
+
+/* ─── Render analogues as structured list ─── */
+function renderAnalogues(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const items = val
+        .split(/[;,\/]|\n/)
+        .map(s => s.trim())
+        .filter(Boolean);
+    if (items.length <= 1) return <span>{val}</span>;
+    return (
+        <ul className="analogues-list">
+            {items.map((item, i) => <li key={i}>{item}</li>)}
+        </ul>
+    );
+}
+
 function useSortableTable(data: any[]) {
     const [sortCol, setSortCol] = useState<string | null>(null);
     const [sortDir, setSortDir] = useState<SortDir>(null);
@@ -129,6 +145,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [boreDiamFilter, setBoreDiamFilter] = useState('');
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
@@ -187,28 +204,63 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     }, []);
 
     const filteredT1 = useMemo(() => {
-        if (!searchQuery) return table1Data;
-        const q = searchQuery.toLowerCase();
-        return table1Data.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
-    }, [searchQuery, table1Data]);
+        let rows = table1Data;
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
+        }
+        if (boreDiamFilter) {
+            rows = rows.filter(row => String(row['d (mm)'] ?? '') === boreDiamFilter);
+        }
+        return rows;
+    }, [searchQuery, boreDiamFilter, table1Data]);
 
     const filteredT2 = useMemo(() => {
-        if (!searchQuery) return table2Data;
-        const q = searchQuery.toLowerCase();
-        return table2Data.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
-    }, [searchQuery, table2Data]);
+        let rows = table2Data;
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
+        }
+        if (boreDiamFilter) {
+            rows = rows.filter(row => String(row['d (mm)'] ?? '') === boreDiamFilter);
+        }
+        return rows;
+    }, [searchQuery, boreDiamFilter, table2Data]);
 
     const filteredT3 = useMemo(() => {
-        if (!searchQuery) return table3Data;
-        const q = searchQuery.toLowerCase();
-        return table3Data.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
-    }, [searchQuery, table3Data]);
+        let rows = table3Data;
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
+        }
+        if (boreDiamFilter) {
+            rows = rows.filter(row => String(row['d (mm)'] ?? '') === boreDiamFilter);
+        }
+        return rows;
+    }, [searchQuery, boreDiamFilter, table3Data]);
 
     const filteredT4 = useMemo(() => {
-        if (!searchQuery) return table4Data;
-        const q = searchQuery.toLowerCase();
-        return table4Data.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
-    }, [searchQuery, table4Data]);
+        let rows = table4Data;
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
+        }
+        if (boreDiamFilter) {
+            rows = rows.filter(row => String(row['d (mm)'] ?? '') === boreDiamFilter);
+        }
+        return rows;
+    }, [searchQuery, boreDiamFilter, table4Data]);
+
+    
+    // Unique bore diameter values across all tables
+    const boreDiamOptions = useMemo(() => {
+        const all = new Set<string>();
+        [...table1Data, ...table2Data, ...table3Data, ...table4Data].forEach(r => {
+            const v = r['d (mm)'] ?? r['d (inch)'];
+            if (v != null) all.add(String(v));
+        });
+        return [...all].filter(Boolean).sort((a, b) => parseFloat(a) - parseFloat(b));
+    }, [table1Data, table2Data, table3Data, table4Data]);
 
     const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
     const { sorted: sortedT2, sortCol: sc2, sortDir: sd2, toggle: tog2 } = useSortableTable(filteredT2);
@@ -348,6 +400,17 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 value={searchQuery}
                                 onChange={e => setSearchQuery(e.target.value)}
                             />
+                            <select
+                                className={styles.boreSelect}
+                                value={boreDiamFilter}
+                                onChange={e => setBoreDiamFilter(e.target.value)}
+                                aria-label="Фільтр за d (мм)"
+                            >
+                                <option value="">d (мм) — всі</option>
+                                {boreDiamOptions.map(v => (
+                                    <option key={v} value={v}>{v} мм</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -355,7 +418,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
 
             {/* ── TABLES ── */}
             <section className={styles.tablesSection}>
-                <div className={styles.container}>
+                <div className={styles.tableSectionContainer}>
 
                     {/* TABLE 1 */}
                     <div className={styles.tableBlock}>
@@ -384,11 +447,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                     {sortedT1.map((row, i) => (
                                         <tr key={i}>
                                             {table1Cols.map(col => (
-                                                <td key={col} className={col === 'Part Number' ? styles.partNumCell : undefined}>
+                                                <td 
+                                                    key={col} 
+                                                    className={col === 'Part Number' ? styles.partNumCell : undefined}
+                                                    data-label={table1Labels[col] ?? col}
+                                                >
                                                     {row[col] ?? '-'}
                                                 </td>
                                             ))}
-                                            <td className={styles.actionCol}>
+                                            <td className={styles.actionCol} data-label="">
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('agroPage.block2.btn_request')}
                                                 </button>
@@ -587,7 +654,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             </section>
 
             <section className={styles.tablesSection}>
-                <div className={styles.container}>
+                <div className={styles.tableSectionContainer}>
 
                     {/* TABLE 2 */}
                     <div className={styles.tableBlock}>
@@ -608,11 +675,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                     {sortedT2.map((row, i) => (
                                         <tr key={i}>
                                             {table2Cols.map(col => (
-                                                <td key={col} className={col === 'Part Number' ? styles.partNumCell : undefined}>
+                                                <td 
+                                                    key={col} 
+                                                    className={col === 'Part Number' ? styles.partNumCell : undefined}
+                                                    data-label={table2Labels[col] ?? col}
+                                                >
                                                     {row[col] ?? '-'}
                                                 </td>
                                             ))}
-                                            <td className={styles.actionCol}>
+                                            <td className={styles.actionCol} data-label="">
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('agroPage.block2.btn_request')}
                                                 </button>
@@ -653,7 +724,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             </section>
 
             <section className={styles.tablesSection}>
-                <div className={styles.container}>
+                <div className={styles.tableSectionContainer}>
 
                     {/* TABLE 3 */}
                     <div className={styles.tableBlock}>
@@ -674,11 +745,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                     {sortedT3.map((row, i) => (
                                         <tr key={i}>
                                             {table3Cols.map(col => (
-                                                <td key={col} className={col === 'Part Number' ? styles.partNumCell : undefined}>
+                                                <td 
+                                                    key={col} 
+                                                    className={col === 'Part Number' ? styles.partNumCell : undefined}
+                                                    data-label={table3Labels[col] ?? col}
+                                                >
                                                     {row[col] ?? '-'}
                                                 </td>
                                             ))}
-                                            <td className={styles.actionCol}>
+                                            <td className={styles.actionCol} data-label="">
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('agroPage.block2.btn_request')}
                                                 </button>
@@ -698,7 +773,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
 
             {/* ── TABLE 4 ── */}
             <section className={styles.tablesSection}>
-                <div className={styles.container}>
+                <div className={styles.tableSectionContainer}>
                     <div className={styles.tableBlock}>
                         <h3>{t('agroPage.block2.table4.title')}</h3>
                         <p className={styles.tableDesc}>{t('agroPage.block2.table4.desc')}</p>
@@ -717,12 +792,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                     {sortedT4.map((row, i) => (
                                         <tr key={i}>
                                             {table4Cols.map(col => (
-                                                <td key={col} className={col === 'Part Number' ? styles.partNumCell : undefined}
-                                                    style={col === 'Bearing designation' || col === 'Cross-Reference' ? { fontSize: '12px', whiteSpace: 'pre-line' } : undefined}>
+                                                <td 
+                                                    key={col} 
+                                                    className={col === 'Part Number' ? styles.partNumCell : undefined}
+                                                    data-label={table4Labels[col] ?? col}
+                                                >
                                                     {row[col] ?? '-'}
                                                 </td>
                                             ))}
-                                            <td className={styles.actionCol}>
+                                            <td className={styles.actionCol} data-label="">
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('agroPage.block2.btn_request')}
                                                 </button>

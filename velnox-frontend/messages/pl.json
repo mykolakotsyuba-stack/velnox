@@ -370,10 +370,10 @@
     },
     "sealing_info": {
       "tag": "Uszczelnienie",
-      "title": "SYSTEM USZCZELNIEŃ TRÓJWARGOWYCH + DWUWARGOWYCH",
-      "p1": "Zespoły łożyskowe VELNOX są wyposażone w kombinowany system uszczelnień, obejmujący uszczelnienie trójwargowe oraz dodatkowe uszczelnienie dwuwargowe po obu stronach łożyska.",
-      "p2": "Uszczelnienie trójwargowe zapewnia podstawową ochronę przed pyłem, brudem i wilgocią, natomiast uszczelnienie dwuwargowe pełni funkcję dodatkowej bariery, ograniczającej przenikanie zanieczyszczeń w trudnych warunkach eksploatacji.",
-      "p3": "Zastosowanie wzmocnionych systemów uszczelnień po obu stronach łożyska pozwala na niezawodną pracę zespołów VELNOX w szerszym zakresie zastosowań i warunków środowiskowych, w szczególności w rolnictwie."
+      "title": "Kombinowany system uszczelnień",
+      "p1": "Jednostki łożyskowe VELNOX wyposażone są w kombinowany system uszczelnień: uszczelnienie trójwargowe uzupełnione dwuwargowym, co tworzy wielopoziomową ochronę przed wpływami zewnętrznymi. Uszczelnienie trójwargowe zapewnia podstawową ochronę przed pyłem, brudem i wilgocią, natomiast dwuwargowe pełni funkcję dodatkowej bariery ograniczającej przenikanie zanieczyszczeń w warunkach intensywnej eksploatacji. Zastosowanie wzmocnionego systemu uszczelnień rozszerza zakres zastosowań jednostek łożyskowych VELNOX i zapewnia stabilną pracę w środowisku rolniczym.",
+      "p2": "",
+      "p3": ""
     },
     "block3": {
       "title": "Gotowi do integracji w Twój projekt",
@@ -383,9 +383,9 @@
       "btn_contact": "Skontaktuj się z inżynierem"
     },
     "packer_roller": {
-      "title": "Uszczelnienie i ochrona wałów (Packer Roller)",
+      "title": "Wały dogniatające (prasy)",
       "sealing_title": "Kombinowany system uszczelnień",
-      "content": "Wały dogniatające (Packer rollers) pracują w ciągłym kontakcie z glebą, wilgocią i cząstkami ściernymi, co prowadzi do stałych obciążeń promieniowych i silnego zanieczyszczenia środowiska pracy. Zespoły łożyskowe stosowane w wałach muszą zatem zapewniać niezawodną pracę przy niskich prędkościach obrotowych, dużych obciążeniach statycznych i częstych uderzeniach.\n\nRozwiązania łożyskowe VELNOX dla wałów dogniatających zostały zaprojektowane ze wzmocnionymi oprawami, ulepszonymi systemami uszczelnień i zoptymalizowanymi luzami wewnętrznymi, aby wytrzymać duże obciążenia i agresywne warunki eksploatacji. Szczególną uwagę poświęcono ochronie przed zanieczyszczeniami i zapewnieniu długiej żywotności przy minimalnych wymaganiach serwisowych.\n\nCharakterystyka ta sprawia, że łożyska VELNOX są niezawodnym rozwiązaniem dla wałów dogniatających stosowanych w nowoczesnych maszynach rolniczych, zapewniając stabilną pracę i redukcję przestojów w całym sezonie prac polowych."
+      "content": "Wały dogniatające pracują w ciągłym kontakcie z glebą, wilgocią i cząstkami ściernymi, generując wysokie obciążenia promieniowe i warunki intensywnego zanieczyszczenia. Jednostki łożyskowe do takich zastosowań muszą zapewniać stabilną pracę przy niskich prędkościach obrotowych, dużych obciążeniach statycznych i uderzeniach.\n\nRozwiązania VELNOX dla wałów dogniatających opracowane z uwzględnieniem rzeczywistych warunków eksploatacji: wzmocnione oprawy, skuteczne systemy uszczelnień i zoptymalizowane luzy wewnętrzne zapewniają niezawodną pracę jednostek w trudnych warunkach polowych. Konstrukcja ukierunkowana na zmniejszenie wpływu zanieczyszczeń i wydłużenie resursu przy minimalnej obsłudze.\n\nZespoły łożyskowe VELNOX stosowane są w wałach dogniatających maszyn rolniczych, zapewniając stabilną pracę agregatów i redukcję przestojów przez cały sezon."
     }
   },
   "hubsPage": {

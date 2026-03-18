@@ -455,7 +455,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-block);
-    padding: 32px;
+    padding: 24px 20px; /* Reduced padding to give more space for table */
     box-shadow: var(--shadow-block);
 }
 
@@ -497,7 +497,7 @@
 }
 
 .tableScroll {
-    overflow-x: visible;
+    overflow-x: auto; /* Allow horizontal scroll if content still exceeds broad container */
     -webkit-overflow-scrolling: touch;
     border: 1px solid var(--color-border);
     border-radius: 6px;
@@ -520,9 +520,9 @@
 .techTable th {
     overflow-wrap: break-word;
     word-wrap: break-word;
-    word-break: break-word;
-    white-space: normal;
-    min-width: 60px; /* Ensure some space for labels */
+    word-break: normal;
+    white-space: normal; /* Let it wrap on mobile card view */
+    min-width: 40px;
 }
 
 .techTable th {
@@ -568,21 +568,17 @@
     text-decoration: underline;
 }
 
-.actionCol {
-    width: 120px;
-    text-align: right;
-}
-
 .reqBtn {
     background: transparent;
     border: 1px solid var(--color-accent);
     color: var(--color-accent);
-    padding: 6px 16px;
+    padding: 8px 16px;
     border-radius: 4px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .reqBtn:hover {
@@ -659,14 +655,25 @@
 
 @media (min-width: 1025px) {
     .techTable {
-        min-width: 1200px; /* Ensure 1200px minimum width to prevent squashing on desktop */
-        table-layout: auto; /* Return to auto for better content-based width fitting on desktop */
+        width: 100%; /* Strict 100% width to avoid horizontal scroll */
+        table-layout: auto; 
+    }
+
+    .techTable td, .techTable th {
+        white-space: normal; /* Allow wrapping */
+        line-height: 1.5; /* Better readability for wrapped text */
+        padding: 12px 14px;
+    }
+
+    .actionCol {
+        width: 1%; /* Shrink to fit button */
+        white-space: nowrap !important;
+        padding-left: 20px !important;
     }
 
     /* Specific column adjustments for Table 1 common view */
     .techTable th:nth-child(1), .techTable td:nth-child(1) { width: 140px; } /* Part Number */
     .techTable th:nth-child(2), .techTable td:nth-child(2) { width: 140px; } /* Cross-Ref */
-    .techTable th:nth-child(3), .techTable td:nth-child(3) { width: 90px; }  /* Brand */
     
     .techTable td {
         vertical-align: middle;
@@ -3075,4 +3082,53 @@
     .specialVisible .specialCard2 { grid-column: 1; grid-row: 3; }
     .specialVisible .specialCard3 { grid-column: 1; grid-row: 4; max-width: 100%; }
     .scLine { display: none; }
+}
+
+
+/* ─── Bore diameter filter select ─── */
+.boreSelect {
+    appearance: none;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 10px 16px;
+    color: var(--color-text);
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    margin-top: 8px;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.boreSelect:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 15%, transparent);
+}
+
+/* ─── Analogues cell (Cross-Reference) ─── */
+.analoguesCell {
+    font-size: 11px !important;
+    line-height: 1.5;
+    vertical-align: top;
+}
+
+:global(.analogues-list) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+:global(.analogues-list) li {
+    padding: 1px 0;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    border-bottom: 1px dotted color-mix(in srgb, var(--color-border) 60%, transparent);
+}
+
+:global(.analogues-list) li:last-child {
+    border-bottom: none;
 }
