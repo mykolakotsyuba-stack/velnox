@@ -10,6 +10,15 @@ interface CategoryPageProps {
     params: { locale: Locale; category: string };
 }
 
+export function generateStaticParams() {
+    return [
+        { category: 'bearings' },
+        { category: 'hubs' },
+        { category: 'agro' },
+        { category: 'kit' },
+    ];
+}
+
 export default async function CategoryPage({ params: { locale, category } }: CategoryPageProps) {
     if (category === 'bearings') {
         const { data: bearings } = await fetchProducts({ locale, category: 'bearings', per_page: 1000 });

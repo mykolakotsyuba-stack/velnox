@@ -103,17 +103,21 @@ function SortIcon({ dir }: { dir: SortDir }) {
 }
 
 
-/* ─── Render analogues as structured list ─── */
-function renderAnalogues(val: string | null | undefined) {
-    if (!val || val === '-') return <span>—</span>;
+/* ─── Render structured list for tight cells ─── */
+function renderTightCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span style={{ whiteSpace: 'nowrap' }}>—</span>;
     const items = val
-        .split(/[;,\/]|\n/)
+        .split(/\n|;/)
         .map(s => s.trim())
         .filter(Boolean);
-    if (items.length <= 1) return <span>{val}</span>;
+    if (items.length <= 1) return <span style={{ whiteSpace: 'nowrap' }}>{val}</span>;
     return (
-        <ul className="analogues-list">
-            {items.map((item, i) => <li key={i}>{item}</li>)}
+        <ul className="analogues-list" style={{ paddingLeft: '16px', margin: 0 }}>
+            {items.map((item, i) => (
+                <li key={i} style={{ whiteSpace: 'nowrap', marginBottom: '4px' }}>
+                    {item}
+                </li>
+            ))}
         </ul>
     );
 }
@@ -155,7 +159,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [boreDiamFilter, setBoreDiamFilter] = useState('');
+    const [boreDiamFilters, setBoreDiamFilters] = useState<string[]>([]);
+    const [openFilterCol, setOpenFilterCol] = useState<string | null>(null);
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
@@ -197,34 +202,59 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         fetchTables();
     }, []);
 
+    // Helper for bore diameter filtering
+    const handleBoreFilterChange = useCallback((v: string) => {
+        setBoreDiamFilters(prev => 
+            prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]
+        );
+    }, []);
+
     const filteredT1 = useMemo(() => {
-        if (!searchQuery) return table1Data;
-        const q = searchQuery.toLowerCase();
-        return table1Data.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-    }, [searchQuery, table1Data]);
+        let rows = table1Data;
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
+        }
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
+        }
+        return rows;
+    }, [searchQuery, boreDiamFilters, table1Data]);
 
     const filteredT2 = useMemo(() => {
-        if (!searchQuery) return table2Data;
-        const q = searchQuery.toLowerCase();
-        return table2Data.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-    }, [searchQuery, table2Data]);
+        let rows = table2Data;
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
+        }
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
+        }
+        return rows;
+    }, [searchQuery, boreDiamFilters, table2Data]);
 
     const filteredT3 = useMemo(() => {
-        if (!searchQuery) return table3Data;
-        const q = searchQuery.toLowerCase();
-        return table3Data.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-    }, [searchQuery, table3Data]);
+        let rows = table3Data;
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
+        }
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
+        }
+        return rows;
+    }, [searchQuery, boreDiamFilters, table3Data]);
 
     
     // Unique bore diameter values across all tables
     const boreDiamOptions = useMemo(() => {
         const all = new Set<string>();
-        [...table1Data, ...table2Data, ...table3Data, ...table4Data].forEach(r => {
+        [...table1Data, ...table2Data, ...table3Data].forEach(r => {
             const v = r['d (mm)'] ?? r['d (inch)'];
             if (v != null) all.add(String(v));
         });
         return [...all].filter(Boolean).sort((a, b) => parseFloat(a) - parseFloat(b));
-    }, [table1Data, table2Data, table3Data, table4Data]);
+    }, [table1Data, table2Data, table3Data]);
 
     const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
     const { sorted: sortedT2, sortCol: sc2, sortDir: sd2, toggle: tog2 } = useSortableTable(filteredT2);
@@ -234,10 +264,62 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
     const app2Class = app2Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
     const app3Class = app3Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
 
-    function Th({ col, label, toggle, sortCol, sortDir }: { col: string; label: string; toggle: (c: string) => void; sortCol: string | null; sortDir: SortDir }) {
+    function Th({ 
+        col, label, toggle, sortCol, sortDir, 
+        hasFilter, filterOptions, selectedFilters, onFilterChange 
+    }: { 
+        col: string; label: string; 
+        toggle: (c: string) => void; 
+        sortCol: string | null; sortDir: SortDir;
+        hasFilter?: boolean; filterOptions?: string[]; 
+        selectedFilters?: string[]; onFilterChange?: (v: string) => void;
+    }) {
+        const isFilterOpen = openFilterCol === col;
+        
         return (
-            <th className={styles.sortableTh} onClick={() => toggle(col)}>
-                {label} <SortIcon dir={sortCol === col ? sortDir : null} />
+            <th className={styles.sortableTh} style={{ position: 'relative' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => toggle(col)}>
+                        {label} <SortIcon dir={sortCol === col ? sortDir : null} />
+                    </div>
+                    {hasFilter && (
+                        <div style={{ position: 'relative' }}>
+                            <button 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenFilterCol(isFilterOpen ? null : col);
+                                }}
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: selectedFilters?.length ? 'var(--color-accent)' : 'inherit' }}
+                            >
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                                </svg>
+                            </button>
+                            {isFilterOpen && (
+                                <div style={{
+                                    position: 'absolute', top: '100%', left: 0, marginTop: '8px',
+                                    background: 'var(--color-surface)', border: '1px solid var(--color-border)',
+                                    borderRadius: '6px', padding: '12px', zIndex: 100,
+                                    width: '180px', maxHeight: '250px', overflowY: 'auto',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                }} onClick={e => e.stopPropagation()}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                        {filterOptions?.map(opt => (
+                                            <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+                                                <input 
+                                                    type="checkbox" 
+                                                    checked={selectedFilters?.includes(opt) || false}
+                                                    onChange={() => onFilterChange?.(opt)}
+                                                />
+                                                {opt} мм
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </th>
         );
     }
@@ -428,17 +510,6 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <select
-                                className={styles.boreSelect}
-                                value={boreDiamFilter}
-                                onChange={e => setBoreDiamFilter(e.target.value)}
-                                aria-label="Фільтр за d (мм)"
-                            >
-                                <option value="">d (мм) — всі</option>
-                                {boreDiamOptions.map(v => (
-                                    <option key={v} value={v}>{v} мм</option>
-                                ))}
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -463,7 +534,10 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                         <Th col="J (mm)" label="J" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="D (mm)" label="D" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="D1 (mm)" label="D1" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="d (mm)" label="d" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th 
+                                            col="d (mm)" label="d" toggle={tog1} sortCol={sc1} sortDir={sd1} 
+                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
+                                        />
                                         <Th col="C (mm)" label="C" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="H/T" label="H/T" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="G" label="G" toggle={tog1} sortCol={sc1} sortDir={sd1} />
@@ -481,7 +555,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     {sortedT1.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td data-label="Bearing" style={{ fontSize: '12px' }}>{row['Bearing designation']}</td>
+                                            <td data-label="Bearing" style={{ fontSize: '12px' }}>{renderTightCell(row['Bearing designation'])}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name']}</td>
                                             <td data-label="J">{row['J (mm)']}</td>
                                             <td data-label="D">{row['D (mm)']}</td>
@@ -566,7 +640,10 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                         <Th col="J (mm)" label="J" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="D (mm)" label="D" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="H/T" label="H/T" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="d (mm)" label="d" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th 
+                                            col="d (mm)" label="d" toggle={tog2} sortCol={sc2} sortDir={sd2} 
+                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
+                                        />
                                         <Th col="C (mm)" label="C" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="M" label="M" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="L (mm)" label="L" toggle={tog2} sortCol={sc2} sortDir={sd2} />
@@ -584,7 +661,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     {sortedT2.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td data-label="Bearing" style={{ fontSize: '12px' }}>{row['Bearing designation']}</td>
+                                            <td data-label="Bearing" style={{ fontSize: '12px' }}>{renderTightCell(row['Bearing designation'])}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name']}</td>
                                             <td data-label="J">{row['J (mm)']}</td>
                                             <td data-label="D">{row['D (mm)']}</td>
@@ -658,7 +735,10 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                         <Th col="J (mm)" label="J" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="D (mm)" label="D" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="D1 (mm)" label="D1" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="d (mm)" label="d" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th 
+                                            col="d (mm)" label="d" toggle={tog3} sortCol={sc3} sortDir={sd3} 
+                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
+                                        />
                                         <Th col="H/T" label="H/T" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="L (mm)" label="L" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="B (mm)" label="B" toggle={tog3} sortCol={sc3} sortDir={sd3} />
@@ -673,7 +753,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     {sortedT3.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td data-label="Bearing" style={{ fontSize: '12px' }}>{row['Bearing designation']}</td>
+                                            <td data-label="Bearing" style={{ fontSize: '12px' }}>{renderTightCell(row['Bearing designation'])}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name']}</td>
                                             <td data-label="J">{row['J (mm)']}</td>
                                             <td data-label="D">{row['D (mm)']}</td>

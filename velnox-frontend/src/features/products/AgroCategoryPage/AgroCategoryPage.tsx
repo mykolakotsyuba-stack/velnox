@@ -94,17 +94,21 @@ function SortIcon({ dir }: { dir: SortDir }) {
 }
 
 
-/* ─── Render analogues as structured list ─── */
-function renderAnalogues(val: string | null | undefined) {
-    if (!val || val === '-') return <span>—</span>;
+/* ─── Render structured list for tight cells ─── */
+function renderTightCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span style={{ whiteSpace: 'nowrap' }}>—</span>;
     const items = val
-        .split(/[;,\/]|\n/)
+        .split(/\n|;/)
         .map(s => s.trim())
         .filter(Boolean);
-    if (items.length <= 1) return <span>{val}</span>;
+    if (items.length <= 1) return <span style={{ whiteSpace: 'nowrap' }}>{val}</span>;
     return (
-        <ul className="analogues-list">
-            {items.map((item, i) => <li key={i}>{item}</li>)}
+        <ul className="analogues-list" style={{ paddingLeft: '16px', margin: 0 }}>
+            {items.map((item, i) => (
+                <li key={i} style={{ whiteSpace: 'nowrap', marginBottom: '4px' }}>
+                    {item}
+                </li>
+            ))}
         </ul>
     );
 }
@@ -145,7 +149,9 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [boreDiamFilter, setBoreDiamFilter] = useState('');
+    const [boreDiamFilters, setBoreDiamFilters] = useState<string[]>([]);
+    const [openFilterCol, setOpenFilterCol] = useState<string | null>(null);
+
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
@@ -203,17 +209,24 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         fetchTables();
     }, []);
 
+    // Helper for bore diameter filtering
+    const handleBoreFilterChange = useCallback((v: string) => {
+        setBoreDiamFilters(prev => 
+            prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]
+        );
+    }, []);
+
     const filteredT1 = useMemo(() => {
         let rows = table1Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
             rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
         }
-        if (boreDiamFilter) {
-            rows = rows.filter(row => String(row['d (mm)'] ?? '') === boreDiamFilter);
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
         }
         return rows;
-    }, [searchQuery, boreDiamFilter, table1Data]);
+    }, [searchQuery, boreDiamFilters, table1Data]);
 
     const filteredT2 = useMemo(() => {
         let rows = table2Data;
@@ -221,11 +234,11 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             const q = searchQuery.toLowerCase();
             rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
         }
-        if (boreDiamFilter) {
-            rows = rows.filter(row => String(row['d (mm)'] ?? '') === boreDiamFilter);
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
         }
         return rows;
-    }, [searchQuery, boreDiamFilter, table2Data]);
+    }, [searchQuery, boreDiamFilters, table2Data]);
 
     const filteredT3 = useMemo(() => {
         let rows = table3Data;
@@ -233,11 +246,11 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             const q = searchQuery.toLowerCase();
             rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
         }
-        if (boreDiamFilter) {
-            rows = rows.filter(row => String(row['d (mm)'] ?? '') === boreDiamFilter);
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
         }
         return rows;
-    }, [searchQuery, boreDiamFilter, table3Data]);
+    }, [searchQuery, boreDiamFilters, table3Data]);
 
     const filteredT4 = useMemo(() => {
         let rows = table4Data;
@@ -245,11 +258,11 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             const q = searchQuery.toLowerCase();
             rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
         }
-        if (boreDiamFilter) {
-            rows = rows.filter(row => String(row['d (mm)'] ?? '') === boreDiamFilter);
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
         }
         return rows;
-    }, [searchQuery, boreDiamFilter, table4Data]);
+    }, [searchQuery, boreDiamFilters, table4Data]);
 
     
     // Unique bore diameter values across all tables
@@ -271,14 +284,62 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     const app2Class = app2Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
     const app3Class = app3Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
 
-    function Th({ col, label, toggle, sortCol, sortDir }: {
-        col: string; label: string;
-        toggle: (c: string) => void;
+    function Th({ 
+        col, label, toggle, sortCol, sortDir, 
+        hasFilter, filterOptions, selectedFilters, onFilterChange 
+    }: { 
+        col: string; label: string; 
+        toggle: (c: string) => void; 
         sortCol: string | null; sortDir: SortDir;
+        hasFilter?: boolean; filterOptions?: string[]; 
+        selectedFilters?: string[]; onFilterChange?: (v: string) => void;
     }) {
+        const isFilterOpen = openFilterCol === col;
+        
         return (
-            <th className={styles.sortableTh} onClick={() => toggle(col)}>
-                {label} <SortIcon dir={sortCol === col ? sortDir : null} />
+            <th className={styles.sortableTh} style={{ position: 'relative' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => toggle(col)}>
+                        {label} <SortIcon dir={sortCol === col ? sortDir : null} />
+                    </div>
+                    {hasFilter && (
+                        <div style={{ position: 'relative' }}>
+                            <button 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenFilterCol(isFilterOpen ? null : col);
+                                }}
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: selectedFilters?.length ? 'var(--color-accent)' : 'inherit' }}
+                            >
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                                </svg>
+                            </button>
+                            {isFilterOpen && (
+                                <div style={{
+                                    position: 'absolute', top: '100%', left: 0, marginTop: '8px',
+                                    background: 'var(--color-surface)', border: '1px solid var(--color-border)',
+                                    borderRadius: '6px', padding: '12px', zIndex: 100,
+                                    width: '180px', maxHeight: '250px', overflowY: 'auto',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                }} onClick={e => e.stopPropagation()}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                        {filterOptions?.map(opt => (
+                                            <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+                                                <input 
+                                                    type="checkbox" 
+                                                    checked={selectedFilters?.includes(opt) || false}
+                                                    onChange={() => onFilterChange?.(opt)}
+                                                />
+                                                {opt} мм
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </th>
         );
     }
@@ -400,17 +461,6 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 value={searchQuery}
                                 onChange={e => setSearchQuery(e.target.value)}
                             />
-                            <select
-                                className={styles.boreSelect}
-                                value={boreDiamFilter}
-                                onChange={e => setBoreDiamFilter(e.target.value)}
-                                aria-label="Фільтр за d (мм)"
-                            >
-                                <option value="">d (мм) — всі</option>
-                                {boreDiamOptions.map(v => (
-                                    <option key={v} value={v}>{v} мм</option>
-                                ))}
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -438,7 +488,13 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <thead>
                                     <tr>
                                         {table1Cols.map(col => (
-                                            <Th key={col} col={col} label={table1Labels[col] ?? col} toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                            <Th 
+                                                key={col} col={col} label={table1Labels[col] ?? col} toggle={tog1} sortCol={sc1} sortDir={sd1} 
+                                                hasFilter={col === 'd (mm)'}
+                                                filterOptions={col === 'd (mm)' ? boreDiamOptions : undefined}
+                                                selectedFilters={col === 'd (mm)' ? boreDiamFilters : undefined}
+                                                onFilterChange={col === 'd (mm)' ? handleBoreFilterChange : undefined}
+                                            />
                                         ))}
                                         <th className={styles.actionCol} />
                                     </tr>
@@ -449,10 +505,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                             {table1Cols.map(col => (
                                                 <td 
                                                     key={col} 
-                                                    className={col === 'Part Number' ? styles.partNumCell : undefined}
+                                                    className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
                                                     data-label={table1Labels[col] ?? col}
                                                 >
-                                                    {row[col] ?? '-'}
+                                                    {col === 'Cross-Reference' || col === 'Bearing designation' ? renderTightCell(row[col]) : (row[col] ?? '-')}
                                                 </td>
                                             ))}
                                             <td className={styles.actionCol} data-label="">
@@ -666,7 +722,13 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <thead>
                                     <tr>
                                         {table2Cols.map(col => (
-                                            <Th key={col} col={col} label={table2Labels[col] ?? col} toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                            <Th 
+                                                key={col} col={col} label={table2Labels[col] ?? col} toggle={tog2} sortCol={sc2} sortDir={sd2} 
+                                                hasFilter={col === 'd (mm)'}
+                                                filterOptions={col === 'd (mm)' ? boreDiamOptions : undefined}
+                                                selectedFilters={col === 'd (mm)' ? boreDiamFilters : undefined}
+                                                onFilterChange={col === 'd (mm)' ? handleBoreFilterChange : undefined}
+                                            />
                                         ))}
                                         <th className={styles.actionCol} />
                                     </tr>
@@ -677,10 +739,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                             {table2Cols.map(col => (
                                                 <td 
                                                     key={col} 
-                                                    className={col === 'Part Number' ? styles.partNumCell : undefined}
+                                                    className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
                                                     data-label={table2Labels[col] ?? col}
                                                 >
-                                                    {row[col] ?? '-'}
+                                                    {col === 'Cross-Reference' || col === 'Bearing designation' ? renderTightCell(row[col]) : (row[col] ?? '-')}
                                                 </td>
                                             ))}
                                             <td className={styles.actionCol} data-label="">
@@ -736,7 +798,13 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <thead>
                                     <tr>
                                         {table3Cols.map(col => (
-                                            <Th key={col} col={col} label={table3Labels[col] ?? col} toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                            <Th 
+                                                key={col} col={col} label={table3Labels[col] ?? col} toggle={tog3} sortCol={sc3} sortDir={sd3} 
+                                                hasFilter={col === 'd (mm)'}
+                                                filterOptions={col === 'd (mm)' ? boreDiamOptions : undefined}
+                                                selectedFilters={col === 'd (mm)' ? boreDiamFilters : undefined}
+                                                onFilterChange={col === 'd (mm)' ? handleBoreFilterChange : undefined}
+                                            />
                                         ))}
                                         <th className={styles.actionCol} />
                                     </tr>
@@ -747,10 +815,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                             {table3Cols.map(col => (
                                                 <td 
                                                     key={col} 
-                                                    className={col === 'Part Number' ? styles.partNumCell : undefined}
+                                                    className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
                                                     data-label={table3Labels[col] ?? col}
                                                 >
-                                                    {row[col] ?? '-'}
+                                                    {col === 'Cross-Reference' || col === 'Bearing designation' ? renderTightCell(row[col]) : (row[col] ?? '-')}
                                                 </td>
                                             ))}
                                             <td className={styles.actionCol} data-label="">
@@ -783,7 +851,13 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <thead>
                                     <tr>
                                         {table4Cols.map(col => (
-                                            <Th key={col} col={col} label={table4Labels[col] ?? col} toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                            <Th 
+                                                key={col} col={col} label={table4Labels[col] ?? col} toggle={tog4} sortCol={sc4} sortDir={sd4} 
+                                                hasFilter={col === 'd (mm)'}
+                                                filterOptions={col === 'd (mm)' ? boreDiamOptions : undefined}
+                                                selectedFilters={col === 'd (mm)' ? boreDiamFilters : undefined}
+                                                onFilterChange={col === 'd (mm)' ? handleBoreFilterChange : undefined}
+                                            />
                                         ))}
                                         <th className={styles.actionCol} />
                                     </tr>
@@ -794,10 +868,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                             {table4Cols.map(col => (
                                                 <td 
                                                     key={col} 
-                                                    className={col === 'Part Number' ? styles.partNumCell : undefined}
+                                                    className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
                                                     data-label={table4Labels[col] ?? col}
                                                 >
-                                                    {row[col] ?? '-'}
+                                                    {col === 'Cross-Reference' || col === 'Bearing designation' ? renderTightCell(row[col]) : (row[col] ?? '-')}
                                                 </td>
                                             ))}
                                             <td className={styles.actionCol} data-label="">

@@ -99,17 +99,21 @@ function SortIcon({ dir }: { dir: SortDir }) {
     );
 }
 
-/* ─── Render analogues as structured list ─── */
-function renderAnalogues(val: string | null | undefined) {
-    if (!val || val === '-') return <span>—</span>;
+/* ─── Render structured list for tight cells ─── */
+function renderTightCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span style={{ whiteSpace: 'nowrap' }}>—</span>;
     const items = val
-        .split(/[;,/]|\n/)
+        .split(/\n|;/)
         .map(s => s.trim())
         .filter(Boolean);
-    if (items.length <= 1) return <span>{val}</span>;
+    if (items.length <= 1) return <span style={{ whiteSpace: 'nowrap' }}>{val}</span>;
     return (
-        <ul className="analogues-list">
-            {items.map((item, i) => <li key={i}>{item}</li>)}
+        <ul className="analogues-list" style={{ paddingLeft: '16px', margin: 0 }}>
+            {items.map((item, i) => (
+                <li key={i} style={{ whiteSpace: 'nowrap', marginBottom: '4px' }}>
+                    {item}
+                </li>
+            ))}
         </ul>
     );
 }
@@ -333,7 +337,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [boreDiamFilter, setBoreDiamFilter] = useState('');
+    const [boreDiamFilters, setBoreDiamFilters] = useState<string[]>([]);
+    const [openFilterCol, setOpenFilterCol] = useState<string | null>(null);
 
     // Table data states
     const [table2Data, setTable2Data] = useState<any[]>([]);
@@ -342,10 +347,62 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
     const [table5Data, setTable5Data] = useState<any[]>([]);
     const [loadingTables, setLoadingTables] = useState(true);
 
-    function Th({ col, label, toggle, sortCol, sortDir }: { col: string; label: string; toggle: (c: string) => void; sortCol: string | null; sortDir: SortDir }) {
+    function Th({ 
+        col, label, toggle, sortCol, sortDir, 
+        hasFilter, filterOptions, selectedFilters, onFilterChange 
+    }: { 
+        col: string; label: string; 
+        toggle: (c: string) => void; 
+        sortCol: string | null; sortDir: SortDir;
+        hasFilter?: boolean; filterOptions?: string[]; 
+        selectedFilters?: string[]; onFilterChange?: (v: string) => void;
+    }) {
+        const isFilterOpen = openFilterCol === col;
+        
         return (
-            <th className={styles.sortableTh} onClick={() => toggle(col)}>
-                {label} <SortIcon dir={sortCol === col ? sortDir : null} />
+            <th className={styles.sortableTh} style={{ position: 'relative' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => toggle(col)}>
+                        {label} <SortIcon dir={sortCol === col ? sortDir : null} />
+                    </div>
+                    {hasFilter && (
+                        <div style={{ position: 'relative' }}>
+                            <button 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenFilterCol(isFilterOpen ? null : col);
+                                }}
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: selectedFilters?.length ? 'var(--color-accent)' : 'inherit' }}
+                            >
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                                </svg>
+                            </button>
+                            {isFilterOpen && (
+                                <div style={{
+                                    position: 'absolute', top: '100%', left: 0, marginTop: '8px',
+                                    background: 'var(--color-surface)', border: '1px solid var(--color-border)',
+                                    borderRadius: '6px', padding: '12px', zIndex: 100,
+                                    width: '180px', maxHeight: '250px', overflowY: 'auto',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                }} onClick={e => e.stopPropagation()}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                        {filterOptions?.map(opt => (
+                                            <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
+                                                <input 
+                                                    type="checkbox" 
+                                                    checked={selectedFilters?.includes(opt) || false}
+                                                    onChange={() => onFilterChange?.(opt)}
+                                                />
+                                                {opt} мм
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
             </th>
         );
     }
@@ -376,6 +433,13 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
         fetchTableData();
     }, []);
 
+    // Helper for bore diameter filtering
+    const handleBoreFilterChange = useCallback((v: string) => {
+        setBoreDiamFilters(prev => 
+            prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]
+        );
+    }, []);
+
     // Table 1: BUQ Dimensional Specs
     const filteredT1 = useMemo(() => {
         const typedBuq = buqData as typeof buqData;
@@ -386,11 +450,11 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
             );
         }
-        if (boreDiamFilter) {
-            rows = rows.filter(row => String(row.d_mm ?? '') === boreDiamFilter);
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row.d_mm ?? '')));
         }
         return rows;
-    }, [searchQuery, boreDiamFilter]);
+    }, [searchQuery, boreDiamFilters]);
 
     // Table 2: Performance data — from API
     const filteredT2 = useMemo(() => {
@@ -401,11 +465,11 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
             );
         }
-        if (boreDiamFilter) {
-            rows = rows.filter(row => String(row['Bore diameter d (mm)'] ?? '') === boreDiamFilter);
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['Bore diameter d (mm)'] ?? '')));
         }
         return rows;
-    }, [searchQuery, boreDiamFilter, table2Data]);
+    }, [searchQuery, boreDiamFilters, table2Data]);
 
     // Table 3: Cross-references & applications — from API
     const filteredT3 = useMemo(() => {
@@ -416,11 +480,11 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
             );
         }
-        if (boreDiamFilter) {
-            rows = rows.filter(row => String(row['Bore diameter d (mm)'] ?? '') === boreDiamFilter);
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['Bore diameter d (mm)'] ?? '')));
         }
         return rows;
-    }, [searchQuery, boreDiamFilter, table3Data]);
+    }, [searchQuery, boreDiamFilters, table3Data]);
 
     // Table 4: Additional specs — from API
     const filteredT4 = useMemo(() => {
@@ -431,11 +495,11 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
             );
         }
-        if (boreDiamFilter) {
-            rows = rows.filter(row => String(row['Bore diameter d (mm)'] ?? '') === boreDiamFilter);
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['Bore diameter d (mm)'] ?? '')));
         }
         return rows;
-    }, [searchQuery, boreDiamFilter, table4Data]);
+    }, [searchQuery, boreDiamFilters, table4Data]);
 
     // Table 5: Additional specs — from API
     const filteredT5 = useMemo(() => {
@@ -446,11 +510,11 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
             );
         }
-        if (boreDiamFilter) {
-            rows = rows.filter(row => String(row['Bore diameter d (mm)'] ?? '') === boreDiamFilter);
+        if (boreDiamFilters.length > 0) {
+            rows = rows.filter(row => boreDiamFilters.includes(String(row['Bore diameter d (mm)'] ?? '')));
         }
         return rows;
-    }, [searchQuery, boreDiamFilter, table5Data]);
+    }, [searchQuery, boreDiamFilters, table5Data]);
 
     // Unique bore diameter values across all tables
     const boreDiamOptions = useMemo(() => {
@@ -579,17 +643,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         value={searchQuery}
                                         onChange={e => setSearchQuery(e.target.value)}
                                     />
-                                    <select
-                                        className={styles.boreSelect}
-                                        value={boreDiamFilter}
-                                        onChange={e => setBoreDiamFilter(e.target.value)}
-                                        aria-label="Фільтр за d (мм)"
-                                    >
-                                        <option value="">d (мм) — всі</option>
-                                        {boreDiamOptions.map(v => (
-                                            <option key={v} value={v}>{v} мм</option>
-                                        ))}
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -606,7 +659,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <Th col="article" label="Part Number" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="cross_ref" label="Cross-Reference" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="brand" label="Brand" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="d_mm" label="d (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th 
+                                            col="d_mm" label="d (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} 
+                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
+                                        />
                                         <Th col="d_inch" label="d (inch)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="A1" label="A1 (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="A2" label="A2 (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
@@ -629,7 +685,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                                     {row.article}
                                                 </Link>
                                             </td>
-                                            <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderAnalogues(row.cross_ref)}</td>
+                                            <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderTightCell(row.cross_ref)}</td>
                                             <td data-label="Brand">{row.brand}</td>
                                             <td data-label="d (mm)">{row.d_mm}</td>
                                             <td data-label="d (inch)">{row.d_inch ?? '—'}</td>
@@ -690,7 +746,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <Th col="Bearing designation" label="Designation" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="Brand name" label="Brand" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="Cross-Refference" label="Cross-Ref" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Bore diameter d (mm)" label="Bore d" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th 
+                                            col="Bore diameter d (mm)" label="Bore d" toggle={tog2} sortCol={sc2} sortDir={sd2} 
+                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
+                                        />
                                         <Th col="Total housing width A1 (mm)" label="A1" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="Housing flange thickness A2 (mm)" label="A2" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="Distance between the holes J (mm)" label="J" toggle={tog2} sortCol={sc2} sortDir={sd2} />
@@ -707,9 +766,9 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     {sortedT2.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part No" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
-                                            <td data-label="Designation" style={{ fontSize: '12px' }}>{row['Bearing designation'] || '-'}</td>
+                                            <td data-label="Designation">{renderTightCell(row['Bearing designation'])}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name'] || '-'}</td>
-                                            <td data-label="Cross-Ref" className={styles.analoguesCell}>{renderAnalogues(row['Cross-Refference'])}</td>
+                                            <td data-label="Cross-Ref" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
                                             <td data-label="Bore d">{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td data-label="A1">{row['Total housing width A1 (mm)'] || '-'}</td>
                                             <td data-label="A2">{row['Housing flange thickness A2 (mm)'] || '-'}</td>
@@ -781,7 +840,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <Th col="Bearing designation" label="Bearing Designation" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="Brand \nname" label="Brand" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="Cross-Refference" label="Cross-Reference" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Bore diameter d (mm)" label="Bore d (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th 
+                                            col="Bore diameter d (mm)" label="Bore d (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} 
+                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
+                                        />
                                         <Th col="Total length L (mm)" label="Length L (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="Distance between the holes J (mm)" label="J (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="Hole / Thread H/T (mm)" label="H/T (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
@@ -798,9 +860,9 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     {sortedT3.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
-                                            <td data-label="Bearing Designation" style={{ fontSize: '12px' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
-                                            <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderAnalogues(row['Cross-Refference'])}</td>
+                                            <td data-label="Bearing Designation">{renderTightCell(row['Bearing designation'])}</td>
+                                            <td data-label="Brand">{row['Brand \nname'] || '-'}</td>
+                                            <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
                                             <td data-label="Bore d (mm)">{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td data-label="Length L (mm)">{row['Total length L (mm)'] || '-'}</td>
                                             <td data-label="J (mm)">{row['Distance between the holes J (mm)'] || '-'}</td>
@@ -873,7 +935,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <Th col="Bearing designation" label="Bearing Designation" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th col="Brand \\nname" label="Brand" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th col="Cross-Refference" label="Cross-Reference" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Bore diameter d (mm)" label="Bore d (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th 
+                                            col="Bore diameter d (mm)" label="Bore d (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} 
+                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
+                                        />
                                         <Th col="Centering diameter d1 (mm)" label="d1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th col="Housing overall width L1 (mm)" label="L1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th col="Distance between the holes J1 (mm)" label="J1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
@@ -897,7 +962,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
                                             <td data-label="Bearing Designation" style={{ fontSize: '12px' }}>{row['Bearing designation'] || '-'}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
-                                            <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderAnalogues(row['Cross-Refference'])}</td>
+                                            <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
                                             <td data-label="Bore d (mm)">{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td data-label="d1 (mm)">{row['Centering diameter d1 (mm)'] || '-'}</td>
                                             <td data-label="L1 (mm)">{row['Housing overall width L1 (mm)'] || '-'}</td>
@@ -979,7 +1044,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Part No" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
                                             <td data-label="Designation" style={{ fontSize: '12px' }}>{row['Bearing designation'] || '-'}</td>
                                             <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
-                                            <td data-label="Cross-Ref" className={styles.analoguesCell}>{renderAnalogues(row['Cross-Refference'])}</td>
+                                            <td data-label="Cross-Ref" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
                                             <td data-label="Bore d">{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td data-label="Out D">{row['Outside diameter D (mm)'] || '-'}</td>
                                             <td data-label="Pitch J">{row['Pitch circle diameter J (mm)'] || '-'}</td>
