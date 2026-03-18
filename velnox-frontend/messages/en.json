@@ -472,31 +472,35 @@
         "desc": "Double-sealed bearings for seeders, headers and disc units from CLAAS, John Deere, KUHN and other OEM manufacturers."
       },
       "table2": {
-        "title": "TODO: Table 2",
-        "desc": "TODO: Description 2"
+        "title": "Table 2: DHU 1½R209 VX — Round bore, disc harrows",
+        "desc": "Flanged units for disc harrows with round bore. Direct replacement for JD, KUHN, KRAUSE, Great Plains."
       },
       "table3": {
-        "title": "TODO: Table 3",
-        "desc": "TODO: Description 3"
+        "title": "Table 3: DHU 1¼S209 VX — Square bore",
+        "desc": "Square bore units for disc harrow assemblies. Replacement for KUHN, KRAUSE, CASE, Sunflower."
+      },
+      "table4": {
+        "title": "Table 4: AA30941 VX — JD disc harrow assembly",
+        "desc": "Complete disc harrow unit for John Deere. Includes housing and GW209PPB13 bearing."
       }
     },
     "app1": {
-      "title": "Bearings for seeders, headers and disc units",
-      "desc": "Series 1726 — special series bearings for agricultural applications. Extended inner ring diameter (d1) ensures optimal fit and increased service life in disc and seeding section nodes.",
-      "applications": "Precision seeders, disc harrows, headers, fertilizer spreaders, sprayers",
-      "oem_focus": "Direct OEM replacement for CLAAS, John Deere, KUHN, Capello, Gaspardo, AGCO, MF, New Holland"
+      "title": "Standard agro bearings series 1726",
+      "desc": "2RS1 double-sealed bearings for seeders, headers and cultivators.",
+      "applications": "Seeders, headers, cultivators, spreaders",
+      "oem_focus": "CLAAS, JD, KUHN, Capello, Gaspardo, MF, NH"
     },
     "app2": {
-      "title": "TODO: Block 2",
-      "desc": "TODO:",
-      "applications": "TODO:",
-      "oem_focus": "TODO:"
+      "title": "DHU flanged units for disc harrows",
+      "desc": "DHU (Disc Harrow Unit) units with series 209 bearing for heavy disc harrows.",
+      "applications": "Heavy disc harrows, tillage equipment",
+      "oem_focus": "John Deere, KUHN, KRAUSE, Great Plains, CASE, Sunflower"
     },
     "app3": {
-      "title": "TODO: Block 3",
-      "desc": "TODO:",
-      "applications": "TODO:",
-      "oem_focus": "TODO:"
+      "title": "AA-series units for tillage equipment",
+      "desc": "Complete disc harrow units AA-series for JD equipment. Include housing, bearing and seals.",
+      "applications": "John Deere disc harrows",
+      "oem_focus": "Direct replacement AA30941 John Deere"
     }
   }
 }

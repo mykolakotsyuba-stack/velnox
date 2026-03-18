@@ -625,6 +625,77 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // ===== AGRO TABLE 2: DHU 1 1/2R209 VX (Round bore disc harrow unit) =====
+        if ($agroCategory) {
+            Product::updateOrCreate(
+                ['slug' => 'dhu-1-12r209-vx'],
+                [
+                    'article'     => 'DHU 1 1/2R209 VX',
+                    'category_id' => $agroCategory->id,
+                    'specs'       => [
+                        'table_group'         => 'agro-table2',
+                        'bearing_designation' => "DHU 1 1/2 R209\nDHU 1 1/2 R209 FD209RB\nFD 209-1 1/2 RD\nST 491 B\nPER.GFD209RPPB52\nGWST209PPB38",
+                        'brand_name'          => "TIMKEN\nCT-AGRI\nRBF\nPEER\nPEER\nFKL",
+                        'cross_reference'     => "1934-12-0 KRAUSE\n40-109 KRAUSE\n822-208C Great Plains\nAA53919 JD\nAN280333 JD\nQ4045130 KUHN",
+                        'd_inch' => '1.5004', 'd_mm' => 38.11,
+                        'B_mm' => 42.85, 'C_mm' => 22.0, 'Da_mm' => 97.0,
+                        'L_mm' => 127.0, 'A_mm' => 39.0, 'A1_mm' => 3.5,
+                        'J_mm' => 127.0, 'N_mm' => 13.5,
+                        'fr_kn' => 7.7, 'fa_kn' => 3.8,
+                        'mass_kg' => 1.63, 'cdyn_kn' => 32.5, 'co_kn' => 20.4,
+                    ],
+                    'is_active' => true,
+                ]
+            );
+        }
+
+        // ===== AGRO TABLE 3: DHU 1 1/4 S209 VX (Square bore disc harrow unit) =====
+        if ($agroCategory) {
+            Product::updateOrCreate(
+                ['slug' => 'dhu-1-14s209-vx'],
+                [
+                    'article'     => 'DHU1 1/4 S209 VX',
+                    'category_id' => $agroCategory->id,
+                    'specs'       => [
+                        'table_group'         => 'agro-table3',
+                        'bearing_designation' => "DHU 1 1/4 S209\nDHU 1 1/4 S209 FD209RK\nFD 209-1 1/4 SQ\nGFD209SPPB51\nFD 209K51-1 1/4 SQ-A342\nGWST 209 PPB29",
+                        'brand_name'          => "TIMKEN\nCT-AGRI\nRBF\nPEER\nPEER\nFKL",
+                        'cross_reference'     => "40-128 KRAUSE\n822-209C GP\n84151226 CASE\nFK311007 SUNFLOWER\nQ4008320 KUHN\nQ4044290 KUHN",
+                        'd_inch' => '1.3976', 'd_mm' => 35.5,
+                        'B_mm' => 42.85, 'C_mm' => 22.0, 'a_mm' => 32.8, 'Da_mm' => 97.0,
+                        'L_mm' => 127.0, 'A_mm' => 39.0, 'A1_mm' => 3.5,
+                        'J_mm' => 127.0, 'N_mm' => 13.5, 'M_mm' => 17.5,
+                        'fr_kn' => 7.7, 'fa_kn' => 3.8,
+                        'mass_kg' => 1.63, 'cdyn_kn' => 32.5, 'co_kn' => 20.4, 'pu_kn' => 0.857,
+                    ],
+                    'is_active' => true,
+                ]
+            );
+        }
+
+        // ===== AGRO TABLE 4: AA30941 VX (JD disc harrow assembly) =====
+        if ($agroCategory) {
+            Product::updateOrCreate(
+                ['slug' => 'aa30941-vx'],
+                [
+                    'article'     => 'AA30941 VX',
+                    'category_id' => $agroCategory->id,
+                    'specs'       => [
+                        'table_group'         => 'agro-table4',
+                        'bearing_designation' => "AA30941\nGWST 209 PPB13\nP30941\nST 209-1 3/4",
+                        'brand_name'          => "CT-AGRI\nFKL\nKABAT\nRBF\nKABAT",
+                        'cross_reference'     => "A33968 Gasket\nA34792 Housing\nA34793 Housing\nAA27172 Housing\nAA30941 JD Assembly\nJD7806 Grease Nipple\nGW209PPB13 bearing",
+                        'd_inch' => '1.781', 'd_mm' => 45.24,
+                        'B_mm' => 36.53, 'A_mm' => 48.5, 'A1_mm' => 3.5,
+                        'C_mm' => 30.1, 'Da_mm' => 93.0, 'D_mm' => 150.0,
+                        'J_mm' => 120.5, 'N_mm' => 13.5,
+                        'mass_kg' => 1.836, 'cdyn_kn' => 32.5, 'co_kn' => 20.4, 'pu_kn' => 0.857,
+                    ],
+                    'is_active' => true,
+                ]
+            );
+        }
+
         // ===== ДЕМО-СТАТТЯ =====
         NewsArticle::updateOrCreate(
             ['slug' => 'oem-bearing-selection-guide'],

@@ -315,7 +315,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Agro Table 2 — GET /api/v1/products/tables/agro-table2
+     * Agro Table 2: DHU R-type — GET /api/v1/products/tables/agro-table2
      */
     public function tableAgroTable2(Request $request): JsonResponse
     {
@@ -327,19 +327,27 @@ class ProductController extends Controller
                 'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
                 'Brand name'         => $p->specs['brand_name'] ?? '-',
                 'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
+                'd (inch)'           => $p->specs['d_inch'] ?? '-',
                 'd (mm)'             => $p->specs['d_mm'] ?? '-',
-                'D (mm)'             => $p->specs['D_mm'] ?? '-',
                 'B (mm)'             => $p->specs['B_mm'] ?? '-',
+                'C (mm)'             => $p->specs['C_mm'] ?? '-',
+                'Da (mm)'            => $p->specs['Da_mm'] ?? '-',
+                'L (mm)'             => $p->specs['L_mm'] ?? '-',
+                'A (mm)'             => $p->specs['A_mm'] ?? '-',
+                'A1 (mm)'            => $p->specs['A1_mm'] ?? '-',
+                'J (mm)'             => $p->specs['J_mm'] ?? '-',
+                'N (mm)'             => $p->specs['N_mm'] ?? '-',
+                'Fr (kN)'            => $p->specs['fr_kn'] ?? '-',
+                'Fa (kN)'            => $p->specs['fa_kn'] ?? '-',
+                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
                 'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
                 'Co (kN)'            => $p->specs['co_kn'] ?? '-',
-                'Pu (kN)'            => $p->specs['pu_kn'] ?? '-',
-                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
             ]);
         return response()->json($products);
     }
 
     /**
-     * Agro Table 3 — GET /api/v1/products/tables/agro-table3
+     * Agro Table 3: DHU S-type (square bore) — GET /api/v1/products/tables/agro-table3
      */
     public function tableAgroTable3(Request $request): JsonResponse
     {
@@ -351,13 +359,55 @@ class ProductController extends Controller
                 'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
                 'Brand name'         => $p->specs['brand_name'] ?? '-',
                 'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
+                'd (inch)'           => $p->specs['d_inch'] ?? '-',
                 'd (mm)'             => $p->specs['d_mm'] ?? '-',
-                'D (mm)'             => $p->specs['D_mm'] ?? '-',
                 'B (mm)'             => $p->specs['B_mm'] ?? '-',
+                'C (mm)'             => $p->specs['C_mm'] ?? '-',
+                'a (mm)'             => $p->specs['a_mm'] ?? '-',
+                'Da (mm)'            => $p->specs['Da_mm'] ?? '-',
+                'L (mm)'             => $p->specs['L_mm'] ?? '-',
+                'A (mm)'             => $p->specs['A_mm'] ?? '-',
+                'A1 (mm)'            => $p->specs['A1_mm'] ?? '-',
+                'J (mm)'             => $p->specs['J_mm'] ?? '-',
+                'N (mm)'             => $p->specs['N_mm'] ?? '-',
+                'M (mm)'             => $p->specs['M_mm'] ?? '-',
+                'Fr (kN)'            => $p->specs['fr_kn'] ?? '-',
+                'Fa (kN)'            => $p->specs['fa_kn'] ?? '-',
+                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
                 'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
                 'Co (kN)'            => $p->specs['co_kn'] ?? '-',
                 'Pu (kN)'            => $p->specs['pu_kn'] ?? '-',
+            ]);
+        return response()->json($products);
+    }
+
+    /**
+     * Agro Table 4: AA-type assembly — GET /api/v1/products/tables/agro-table4
+     */
+    public function tableAgroTable4(Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereJsonContains('specs->table_group', 'agro-table4')
+            ->get()
+            ->map(fn($p) => [
+                'Part Number'        => $p->article,
+                'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
+                'Brand name'         => $p->specs['brand_name'] ?? '-',
+                'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
+                'd (inch)'           => $p->specs['d_inch'] ?? '-',
+                'd (mm)'             => $p->specs['d_mm'] ?? '-',
+                'B (mm)'             => $p->specs['B_mm'] ?? '-',
+                'A (mm)'             => $p->specs['A_mm'] ?? '-',
+                'A1 (mm)'            => $p->specs['A1_mm'] ?? '-',
+                'C (mm)'             => $p->specs['C_mm'] ?? '-',
+                'Da (mm)'            => $p->specs['Da_mm'] ?? '-',
+                'D (mm)'             => $p->specs['D_mm'] ?? '-',
+                'J (mm)'             => $p->specs['J_mm'] ?? '-',
+                'N (mm)'             => $p->specs['N_mm'] ?? '-',
                 'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
+                'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
+                'Co (kN)'            => $p->specs['co_kn'] ?? '-',
+                'Pu (kN)'            => $p->specs['pu_kn'] ?? '-',
             ]);
         return response()->json($products);
     }

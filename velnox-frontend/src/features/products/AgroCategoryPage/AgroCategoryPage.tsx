@@ -132,6 +132,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
+    const [table4Data, setTable4Data] = useState<any[]>([]);
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
     const specialBlockRef = useRef<HTMLDivElement>(null);
@@ -167,15 +168,17 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         const fetchTables = async () => {
             try {
                 const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-                const [res1, res2, res3] = await Promise.all([
+                const [res1, res2, res3, res4] = await Promise.all([
                     fetch(`${base}/v1/products/tables/agro-table1`),
                     fetch(`${base}/v1/products/tables/agro-table2`),
                     fetch(`${base}/v1/products/tables/agro-table3`),
+                    fetch(`${base}/v1/products/tables/agro-table4`),
                 ]);
-                const [d1, d2, d3] = await Promise.all([res1.json(), res2.json(), res3.json()]);
+                const [d1, d2, d3, d4] = await Promise.all([res1.json(), res2.json(), res3.json(), res4.json()]);
                 setTable1Data(Array.isArray(d1) ? d1 : []);
                 setTable2Data(Array.isArray(d2) ? d2 : []);
                 setTable3Data(Array.isArray(d3) ? d3 : []);
+                setTable4Data(Array.isArray(d4) ? d4 : []);
             } catch (err) {
                 console.error('Error fetching agro tables:', err);
             }
@@ -201,9 +204,16 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         return table3Data.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
     }, [searchQuery, table3Data]);
 
+    const filteredT4 = useMemo(() => {
+        if (!searchQuery) return table4Data;
+        const q = searchQuery.toLowerCase();
+        return table4Data.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
+    }, [searchQuery, table4Data]);
+
     const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
     const { sorted: sortedT2, sortCol: sc2, sortDir: sd2, toggle: tog2 } = useSortableTable(filteredT2);
     const { sorted: sortedT3, sortCol: sc3, sortDir: sd3, toggle: tog3 } = useSortableTable(filteredT3);
+    const { sorted: sortedT4, sortCol: sc4, sortDir: sd4, toggle: tog4 } = useSortableTable(filteredT4);
 
     const app1Class = app1Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
     const app2Class = app2Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
@@ -242,11 +252,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         'Pu (kN)': 'Pu',
         'Mass (kg)': 'Mass',
     };
-    /* ── TABLE 2 & 3: заповнити після отримання даних ── */
-    const table2Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (mm)', 'D (mm)', 'B (mm)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)', 'Mass (kg)'];
-    const table2Labels: Record<string, string> = { 'Part Number': 'Part No', 'Bearing designation': 'Bearing', 'Brand name': 'Brand', 'Cross-Reference': 'Cross-Ref', 'd (mm)': 'd', 'D (mm)': 'D', 'B (mm)': 'B', 'Cdyn (kN)': 'Cdyn', 'Co (kN)': 'Co', 'Pu (kN)': 'Pu', 'Mass (kg)': 'Mass' };
-    const table3Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (mm)', 'D (mm)', 'B (mm)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)', 'Mass (kg)'];
-    const table3Labels: Record<string, string> = { ...table2Labels };
+    /* ── TABLE 2: DHU R-type (round bore) ── */
+    const table2Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (inch)', 'd (mm)', 'B (mm)', 'C (mm)', 'Da (mm)', 'L (mm)', 'A (mm)', 'A1 (mm)', 'J (mm)', 'N (mm)', 'Fr (kN)', 'Fa (kN)', 'Mass (kg)', 'Cdyn (kN)', 'Co (kN)'];
+    const table2Labels: Record<string, string> = { 'Part Number': 'Part No', 'Bearing designation': 'Bearing', 'Brand name': 'Brand', 'Cross-Reference': 'Cross-Ref', 'd (inch)': 'd"', 'd (mm)': 'd', 'B (mm)': 'B', 'C (mm)': 'C', 'Da (mm)': 'Da', 'L (mm)': 'L', 'A (mm)': 'A', 'A1 (mm)': 'A1', 'J (mm)': 'J', 'N (mm)': 'N', 'Fr (kN)': 'Fr', 'Fa (kN)': 'Fa', 'Mass (kg)': 'Mass', 'Cdyn (kN)': 'Cdyn', 'Co (kN)': 'Co' };
+    /* ── TABLE 3: DHU S-type (square bore) ── */
+    const table3Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (inch)', 'd (mm)', 'B (mm)', 'C (mm)', 'a (mm)', 'Da (mm)', 'L (mm)', 'A (mm)', 'A1 (mm)', 'J (mm)', 'N (mm)', 'M (mm)', 'Fr (kN)', 'Fa (kN)', 'Mass (kg)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)'];
+    const table3Labels: Record<string, string> = { ...table2Labels, 'a (mm)': 'a', 'M (mm)': 'M', 'Pu (kN)': 'Pu' };
+    /* ── TABLE 4: AA-series assembly ── */
+    const table4Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (inch)', 'd (mm)', 'B (mm)', 'A (mm)', 'A1 (mm)', 'C (mm)', 'Da (mm)', 'D (mm)', 'J (mm)', 'N (mm)', 'Mass (kg)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)'];
+    const table4Labels: Record<string, string> = { 'Part Number': 'Part No', 'Bearing designation': 'Bearing', 'Brand name': 'Brand', 'Cross-Reference': 'Cross-Ref', 'd (inch)': 'd"', 'd (mm)': 'd', 'B (mm)': 'B', 'A (mm)': 'A', 'A1 (mm)': 'A1', 'C (mm)': 'C', 'Da (mm)': 'Da', 'D (mm)': 'D', 'J (mm)': 'J', 'N (mm)': 'N', 'Mass (kg)': 'Mass', 'Cdyn (kN)': 'Cdyn', 'Co (kN)': 'Co', 'Pu (kN)': 'Pu' };
 
     return (
         <main className={styles.page}>
@@ -679,6 +693,49 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         </div>
                     </div>
 
+                </div>
+            </section>
+
+            {/* ── TABLE 4 ── */}
+            <section className={styles.tablesSection}>
+                <div className={styles.container}>
+                    <div className={styles.tableBlock}>
+                        <h3>{t('agroPage.block2.table4.title')}</h3>
+                        <p className={styles.tableDesc}>{t('agroPage.block2.table4.desc')}</p>
+                        <div className={styles.diagramPlaceholder}>[ СХЕМА ]</div>
+                        <div className={styles.tableScroll}>
+                            <table className={styles.techTable}>
+                                <thead>
+                                    <tr>
+                                        {table4Cols.map(col => (
+                                            <Th key={col} col={col} label={table4Labels[col] ?? col} toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        ))}
+                                        <th className={styles.actionCol} />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {sortedT4.map((row, i) => (
+                                        <tr key={i}>
+                                            {table4Cols.map(col => (
+                                                <td key={col} className={col === 'Part Number' ? styles.partNumCell : undefined}
+                                                    style={col === 'Bearing designation' || col === 'Cross-Reference' ? { fontSize: '12px', whiteSpace: 'pre-line' } : undefined}>
+                                                    {row[col] ?? '-'}
+                                                </td>
+                                            ))}
+                                            <td className={styles.actionCol}>
+                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
+                                                    {t('agroPage.block2.btn_request')}
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {sortedT4.length === 0 && (
+                                        <tr><td colSpan={table4Cols.length + 1} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>

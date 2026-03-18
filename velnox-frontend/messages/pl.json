@@ -472,31 +472,35 @@
         "desc": "Łożyska dwustronnie uszczelnione do siewników, kombajnów i agregatów tarczowych CLAAS, John Deere, KUHN."
       },
       "table2": {
-        "title": "TODO: Tabela 2",
-        "desc": "TODO: Opis 2"
+        "title": "Tabela 2: DHU 1½R209 VX — Okrągły otwór, brony tarczowe",
+        "desc": "Jednostki kołnierzowe do bron tarczowych z okrągłym otworem. Zamiennik JD, KUHN, KRAUSE, Great Plains."
       },
       "table3": {
-        "title": "TODO: Tabela 3",
-        "desc": "TODO: Opis 3"
+        "title": "Tabela 3: DHU 1¼S209 VX — Kwadratowy otwór",
+        "desc": "Jednostki z kwadratowym otworem do agregatów tarczowych. Zamiennik KUHN, KRAUSE, CASE, Sunflower."
+      },
+      "table4": {
+        "title": "Tabela 4: AA30941 VX — Jednostka brony tarczowej JD",
+        "desc": "Kompletna jednostka brony tarczowej John Deere. Zawiera obudowę i łożysko GW209PPB13."
       }
     },
     "app1": {
-      "title": "Łożyska do siewników, kombajnów i agregatów tarczowych",
-      "desc": "Seria 1726 — łożyska specjalnej serii do zastosowań rolniczych. Rozszerzony średnica pierścienia wewnętrznego (d1) zapewnia optymalne osadzenie i wydłużoną żywotność.",
-      "applications": "Siewniki precyzyjne, brony tarczowe, kombajny, rozsiewacze nawozów",
-      "oem_focus": "Bezpośredni zamiennik OEM CLAAS, John Deere, KUHN, Capello, Gaspardo, AGCO, MF, New Holland"
+      "title": "Standardowe łożyska agro serii 1726",
+      "desc": "Łożyska 2RS1 do siewników, kombajnów i kultywatorów.",
+      "applications": "Siewniki, kombajny, kultywatory",
+      "oem_focus": "CLAAS, JD, KUHN, Capello, Gaspardo, MF, NH"
     },
     "app2": {
-      "title": "TODO: Blok 2",
-      "desc": "TODO:",
-      "applications": "TODO:",
-      "oem_focus": "TODO:"
+      "title": "Jednostki kołnierzowe DHU do bron tarczowych",
+      "desc": "Jednostki DHU z łożyskiem serii 209 do ciężkich bron tarczowych.",
+      "applications": "Ciężkie brony tarczowe, maszyny uprawowe",
+      "oem_focus": "John Deere, KUHN, KRAUSE, Great Plains, CASE, Sunflower"
     },
     "app3": {
-      "title": "TODO: Blok 3",
-      "desc": "TODO:",
-      "applications": "TODO:",
-      "oem_focus": "TODO:"
+      "title": "Jednostki AA do maszyn uprawowych",
+      "desc": "Kompletne jednostki bron tarczowych AA do maszyn JD. Zawierają obudowę, łożysko i uszczelnienia.",
+      "applications": "Brony tarczowe John Deere",
+      "oem_focus": "Bezpośredni zamiennik AA30941 John Deere"
     }
   }
 }
