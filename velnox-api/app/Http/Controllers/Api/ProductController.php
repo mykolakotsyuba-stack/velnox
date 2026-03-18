@@ -413,6 +413,20 @@ class ProductController extends Controller
     }
 
     /**
+     * Універсальний метод для отримання даних будь-якої таблиці за її групою
+     * GET /api/v1/products/tables/{group}
+     */
+    public function tableByGroup(string $group, Request $request): JsonResponse
+    {
+        $products = Product::where('is_active', true)
+            ->whereJsonContains('specs->table_group', $group)
+            ->get()
+            ->map(fn($p) => $p->specs);
+
+        return response()->json($products);
+    }
+
+    /**
      * Імпорт товарів з 1С (захищений Sanctum-токеном)
      * POST /api/v1/import/products
      * Body: JSON-масив товарів

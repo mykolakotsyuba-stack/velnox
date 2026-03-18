@@ -41,6 +41,9 @@ Route::prefix('v1')->group(function () {
     Route::get('/products/tables/agro-table3', [ProductController::class, 'tableAgroTable3']);
     Route::get('/products/tables/agro-table4', [ProductController::class, 'tableAgroTable4']);
 
+    // Универсальный маршрут для KIT-таблиць та інших груп
+    Route::get('/products/tables/{group}', [ProductController::class, 'tableByGroup']);
+
     Route::get('/products/{slug}', [ProductController::class, 'show']); // ?locale=en
 
     // Новини
