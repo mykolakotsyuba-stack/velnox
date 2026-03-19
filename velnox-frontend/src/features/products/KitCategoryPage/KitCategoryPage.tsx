@@ -198,9 +198,9 @@ function KitTable({ tableNum, data, searchQuery, filters, allOptions, setFilters
     tableNum: number;
     data: any[];
     searchQuery: string;
-    boreDiamFilters: string[];
-    boreDiamOptions: string[];
-    setBoreDiamFilters: React.Dispatch<React.SetStateAction<string[]>>;
+    filters: Record<string, string[]>;
+    allOptions: Record<string, string[]>;
+    setFilters: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
     onRequest: (part: string) => void;
     t: ReturnType<typeof useTranslations>;
 }) {
@@ -223,8 +223,14 @@ function KitTable({ tableNum, data, searchQuery, filters, allOptions, setFilters
         }, [data, searchQuery, filters])
     );
 
-    const handleFilterChange = (v: string) => {
-        setBoreDiamFilters(prev => prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]);
+    const handleFilterChange = (col: string, val: string) => {
+        setFilters(prev => {
+            const colFilters = prev[col] || [];
+            const newFilters = colFilters.includes(val)
+                ? colFilters.filter(x => x !== val)
+                : [...colFilters, val];
+            return { ...prev, [col]: newFilters };
+        });
     };
 
     return (

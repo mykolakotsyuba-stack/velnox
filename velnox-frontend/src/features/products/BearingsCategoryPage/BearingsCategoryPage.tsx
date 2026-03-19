@@ -445,7 +445,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
     // Table 1: BUQ Dimensional Specs
     const filteredT1 = useMemo(() => {
-        let rows = table1Data;
+        let rows = buqData as any[];
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
             rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
@@ -456,7 +456,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             }
         });
         return rows;
-    }, [searchQuery, filters, table1Data]);
+    }, [searchQuery, filters]);
 
     // Table 2: Performance data — from API
     const filteredT2 = useMemo(() => {
