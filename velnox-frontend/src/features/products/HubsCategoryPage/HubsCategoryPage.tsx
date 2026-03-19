@@ -159,7 +159,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [boreDiamFilters, setBoreDiamFilters] = useState<string[]>([]);
+    const [filters, setFilters] = useState<Record<string, string[]>>({});
     const [openFilterCol, setOpenFilterCol] = useState<string | null>(null);
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
@@ -202,11 +202,14 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         fetchTables();
     }, []);
 
-    // Helper for bore diameter filtering
-    const handleBoreFilterChange = useCallback((v: string) => {
-        setBoreDiamFilters(prev => 
-            prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]
-        );
+        const handleFilterChange = useCallback((col: string, val: string) => {
+        setFilters(prev => {
+            const colFilters = prev[col] || [];
+            const newFilters = colFilters.includes(val)
+                ? colFilters.filter(x => x !== val)
+                : [...colFilters, val];
+            return { ...prev, [col]: newFilters };
+        });
     }, []);
 
     const filteredT1 = useMemo(() => {
@@ -215,11 +218,13 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             const q = searchQuery.toLowerCase();
             rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table1Data]);
+    }, [searchQuery, filters, table1Data]);
 
     const filteredT2 = useMemo(() => {
         let rows = table2Data;
@@ -227,11 +232,13 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             const q = searchQuery.toLowerCase();
             rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table2Data]);
+    }, [searchQuery, filters, table2Data]);
 
     const filteredT3 = useMemo(() => {
         let rows = table3Data;
@@ -239,21 +246,37 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             const q = searchQuery.toLowerCase();
             rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table3Data]);
+    }, [searchQuery, filters, table3Data]);
 
     
     // Unique bore diameter values across all tables
-    const boreDiamOptions = useMemo(() => {
-        const all = new Set<string>();
+    const allOptions = useMemo(() => {
+        const all: Record<string, Set<string>> = {};
         [...table1Data, ...table2Data, ...table3Data].forEach(r => {
-            const v = r['d (mm)'] ?? r['d (inch)'];
-            if (v != null) all.add(String(v));
+            Object.keys(r).forEach(k => {
+                const v = r[k];
+                if (v != null && String(v).trim() !== '' && String(v).trim() !== '-') {
+                    if (!all[k]) all[k] = new Set();
+                    all[k].add(String(v));
+                }
+            });
         });
-        return [...all].filter(Boolean).sort((a, b) => parseFloat(a) - parseFloat(b));
+        const result: Record<string, string[]> = {};
+        Object.keys(all).forEach(k => {
+            result[k] = [...all[k]].sort((a, b) => {
+                const numA = parseFloat(a);
+                const numB = parseFloat(b);
+                if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+                return a.localeCompare(b);
+            });
+        });
+        return result;
     }, [table1Data, table2Data, table3Data]);
 
     const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
@@ -272,7 +295,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         toggle: (c: string) => void; 
         sortCol: string | null; sortDir: SortDir;
         hasFilter?: boolean; filterOptions?: string[]; 
-        selectedFilters?: string[]; onFilterChange?: (v: string) => void;
+        selectedFilters?: string[]; onFilterChange?: (col: string, val: string) => void;
     }) {
         const isFilterOpen = openFilterCol === col;
         
@@ -309,9 +332,9 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                                 <input 
                                                     type="checkbox" 
                                                     checked={selectedFilters?.includes(opt) || false}
-                                                    onChange={() => onFilterChange?.(opt)}
+                                                    onChange={() => onFilterChange?.(col, opt)}
                                                 />
-                                                {opt} мм
+                                                {opt}
                                             </label>
                                         ))}
                                     </div>
@@ -530,24 +553,24 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     <tr>
                                         <Th col="Part Number" label="Part Number" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="Bearing designation" label="Bearing" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Brand name" label="Brand" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="J (mm)" label="J" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="D (mm)" label="D" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="D1 (mm)" label="D1" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="Brand name" label="Brand" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Brand name'] || []} selectedFilters={filters['Brand name'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="J (mm)" label="J" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['J (mm)'] || []} selectedFilters={filters['J (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D (mm)" label="D" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['D (mm)'] || []} selectedFilters={filters['D (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D1 (mm)" label="D1" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['D1 (mm)'] || []} selectedFilters={filters['D1 (mm)'] || []} onFilterChange={handleFilterChange} />
                                         <Th 
                                             col="d (mm)" label="d" toggle={tog1} sortCol={sc1} sortDir={sd1} 
-                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
-                                        />
-                                        <Th col="C (mm)" label="C" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="H/T" label="H/T" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="G" label="G" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="L (mm)" label="L" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="L1 (mm)" label="L1" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="F (mm)" label="F" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Mass (kg)" label="Mass" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Cdyn (kN)" label="Cdyn" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Co (kN)" label="Co" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Pu (kN)" label="Pu" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                            
+                                        hasFilter filterOptions={allOptions['d (mm)'] || []} selectedFilters={filters['d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="C (mm)" label="C" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['C (mm)'] || []} selectedFilters={filters['C (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="H/T" label="H/T" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['H/T'] || []} selectedFilters={filters['H/T'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="G" label="G" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['G'] || []} selectedFilters={filters['G'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L (mm)" label="L" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L (mm)'] || []} selectedFilters={filters['L (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L1 (mm)" label="L1" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L1 (mm)'] || []} selectedFilters={filters['L1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="F (mm)" label="F" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['F (mm)'] || []} selectedFilters={filters['F (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Mass (kg)" label="Mass" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Mass (kg)'] || []} selectedFilters={filters['Mass (kg)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Cdyn (kN)" label="Cdyn" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Cdyn (kN)'] || []} selectedFilters={filters['Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Co (kN)" label="Co" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Co (kN)'] || []} selectedFilters={filters['Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Pu (kN)" label="Pu" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Pu (kN)'] || []} selectedFilters={filters['Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
@@ -636,24 +659,24 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     <tr>
                                         <Th col="Part Number" label="Part Number" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="Bearing designation" label="Bearing" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Brand name" label="Brand" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="J (mm)" label="J" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="D (mm)" label="D" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="H/T" label="H/T" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Brand name" label="Brand" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Brand name'] || []} selectedFilters={filters['Brand name'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="J (mm)" label="J" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['J (mm)'] || []} selectedFilters={filters['J (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D (mm)" label="D" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['D (mm)'] || []} selectedFilters={filters['D (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="H/T" label="H/T" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['H/T'] || []} selectedFilters={filters['H/T'] || []} onFilterChange={handleFilterChange} />
                                         <Th 
                                             col="d (mm)" label="d" toggle={tog2} sortCol={sc2} sortDir={sd2} 
-                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
-                                        />
-                                        <Th col="C (mm)" label="C" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="M" label="M" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="L (mm)" label="L" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="L1 (mm)" label="L1" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="E (mm)" label="E" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="F (mm)" label="F" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Mass (kg)" label="Mass" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Cdyn (kN)" label="Cdyn" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Co (kN)" label="Co" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Pu (kN)" label="Pu" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                            
+                                        hasFilter filterOptions={allOptions['d (mm)'] || []} selectedFilters={filters['d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="C (mm)" label="C" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['C (mm)'] || []} selectedFilters={filters['C (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="M" label="M" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['M'] || []} selectedFilters={filters['M'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L (mm)" label="L" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['L (mm)'] || []} selectedFilters={filters['L (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L1 (mm)" label="L1" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['L1 (mm)'] || []} selectedFilters={filters['L1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="E (mm)" label="E" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['E (mm)'] || []} selectedFilters={filters['E (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="F (mm)" label="F" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['F (mm)'] || []} selectedFilters={filters['F (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Mass (kg)" label="Mass" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Mass (kg)'] || []} selectedFilters={filters['Mass (kg)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Cdyn (kN)" label="Cdyn" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Cdyn (kN)'] || []} selectedFilters={filters['Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Co (kN)" label="Co" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Co (kN)'] || []} selectedFilters={filters['Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Pu (kN)" label="Pu" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Pu (kN)'] || []} selectedFilters={filters['Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
@@ -731,21 +754,21 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     <tr>
                                         <Th col="Part Number" label="Part Number" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="Bearing designation" label="Bearing" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Brand name" label="Brand" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="J (mm)" label="J" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="D (mm)" label="D" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="D1 (mm)" label="D1" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Brand name" label="Brand" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Brand name'] || []} selectedFilters={filters['Brand name'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="J (mm)" label="J" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['J (mm)'] || []} selectedFilters={filters['J (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D (mm)" label="D" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['D (mm)'] || []} selectedFilters={filters['D (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D1 (mm)" label="D1" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['D1 (mm)'] || []} selectedFilters={filters['D1 (mm)'] || []} onFilterChange={handleFilterChange} />
                                         <Th 
                                             col="d (mm)" label="d" toggle={tog3} sortCol={sc3} sortDir={sd3} 
-                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
-                                        />
-                                        <Th col="H/T" label="H/T" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="L (mm)" label="L" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="B (mm)" label="B" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Mass (kg)" label="Mass" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Cdyn (kN)" label="Cdyn" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Co (kN)" label="Co" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Pu (kN)" label="Pu" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                            
+                                        hasFilter filterOptions={allOptions['d (mm)'] || []} selectedFilters={filters['d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="H/T" label="H/T" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['H/T'] || []} selectedFilters={filters['H/T'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L (mm)" label="L" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['L (mm)'] || []} selectedFilters={filters['L (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="B (mm)" label="B" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['B (mm)'] || []} selectedFilters={filters['B (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Mass (kg)" label="Mass" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Mass (kg)'] || []} selectedFilters={filters['Mass (kg)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Cdyn (kN)" label="Cdyn" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Cdyn (kN)'] || []} selectedFilters={filters['Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Co (kN)" label="Co" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Co (kN)'] || []} selectedFilters={filters['Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Pu (kN)" label="Pu" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Pu (kN)'] || []} selectedFilters={filters['Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>

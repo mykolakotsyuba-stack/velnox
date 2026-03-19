@@ -194,7 +194,7 @@ const TABLE_COLS: Record<number, { col: string; label: string }[]> = {
 const TABLE_NUMBERS = [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12];
 
 /* ─── Single Table Component ─── */
-function KitTable({ tableNum, data, searchQuery, boreDiamFilters, boreDiamOptions, setBoreDiamFilters, onRequest, t }: {
+function KitTable({ tableNum, data, searchQuery, filters, allOptions, setFilters, onRequest, t }: {
     tableNum: number;
     data: any[];
     searchQuery: string;
@@ -214,11 +214,13 @@ function KitTable({ tableNum, data, searchQuery, boreDiamFilters, boreDiamOption
                 const q = searchQuery.toLowerCase();
                 rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
             }
-            if (boreDiamFilters.length > 0) {
-                rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
-            }
+            Object.entries(filters).forEach(([col, activeVals]) => {
+                if (activeVals.length > 0) {
+                    rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+                }
+            });
             return rows;
-        }, [data, searchQuery, boreDiamFilters])
+        }, [data, searchQuery, filters])
     );
 
     const handleFilterChange = (v: string) => {
@@ -236,7 +238,7 @@ function KitTable({ tableNum, data, searchQuery, boreDiamFilters, boreDiamOption
                     <thead>
                         <tr>
                             {cols.map(({ col, label }) => {
-                                const hasFilter = col === 'd (mm)';
+                                const hasFilter = !['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col);
                                 const isFilterOpen = openFilterCol === col;
                                 return (
                                     <th key={col} className={styles.sortableTh} style={{ position: 'relative' }}>
@@ -254,7 +256,7 @@ function KitTable({ tableNum, data, searchQuery, boreDiamFilters, boreDiamOption
                                                             e.stopPropagation();
                                                             setOpenFilterCol(isFilterOpen ? null : col);
                                                         }}
-                                                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: boreDiamFilters.length ? 'var(--color-accent)' : 'inherit' }}
+                                                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: (filters[col] && filters[col].length) ? 'var(--color-accent)' : 'inherit' }}
                                                     >
                                                         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
                                                             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -269,14 +271,14 @@ function KitTable({ tableNum, data, searchQuery, boreDiamFilters, boreDiamOption
                                                             boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                                                         }} onClick={e => e.stopPropagation()}>
                                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                                                {boreDiamOptions.map(opt => (
+                                                                {(allOptions[col] || []).map(opt => (
                                                                     <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
                                                                         <input 
                                                                             type="checkbox" 
-                                                                            checked={boreDiamFilters.includes(opt)}
-                                                                            onChange={() => handleFilterChange(opt)}
+                                                                            checked={(filters[col] || []).includes(opt)}
+                                                                            onChange={() => handleFilterChange(col, opt)}
                                                                         />
-                                                                        {opt} мм
+                                                                        {opt}
                                                                     </label>
                                                                 ))}
                                                             </div>
@@ -330,20 +332,34 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [boreDiamFilters, setBoreDiamFilters] = useState<string[]>([]);
+    const [filters, setFilters] = useState<Record<string, string[]>>({});
     const [tablesData, setTablesData] = useState<Record<number, any[]>>({});
     const searchHeaderRef = useRef<HTMLDivElement>(null);
 
     // Unique bore diameter values across all tables
-    const boreDiamOptions = useMemo(() => {
-        const all = new Set<string>();
+    const allOptions = useMemo(() => {
+        const all: Record<string, Set<string>> = {};
         Object.values(tablesData).forEach(table => {
             table.forEach(r => {
-                const v = r['d (mm)'];
-                if (v != null) all.add(String(v));
+                Object.keys(r).forEach(k => {
+                    const v = r[k];
+                    if (v != null && String(v).trim() !== '' && String(v).trim() !== '-') {
+                        if (!all[k]) all[k] = new Set();
+                        all[k].add(String(v));
+                    }
+                });
             });
         });
-        return [...all].filter(Boolean).sort((a, b) => parseFloat(a) - parseFloat(b));
+        const result: Record<string, string[]> = {};
+        Object.keys(all).forEach(k => {
+            result[k] = [...all[k]].sort((a, b) => {
+                const numA = parseFloat(a);
+                const numB = parseFloat(b);
+                if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+                return a.localeCompare(b);
+            });
+        });
+        return result;
     }, [tablesData]);
 
     useEffect(() => {
@@ -456,7 +472,7 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
                     {[1, 2, 3].map(n => (
-                        <KitTable key={n} tableNum={n} data={tablesData[n] ?? []} searchQuery={searchQuery} boreDiamFilters={boreDiamFilters} boreDiamOptions={boreDiamOptions} setBoreDiamFilters={setBoreDiamFilters} onRequest={setModalProduct} t={t} />
+                        <KitTable key={n} tableNum={n} data={tablesData[n] ?? []} searchQuery={searchQuery} filters={filters} allOptions={allOptions} setFilters={setFilters} onRequest={setModalProduct} t={t} />
                     ))}
                 </div>
             </section>
@@ -485,7 +501,7 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
                     {[5, 6, 7].map(n => (
-                        <KitTable key={n} tableNum={n} data={tablesData[n] ?? []} searchQuery={searchQuery} boreDiamFilters={boreDiamFilters} boreDiamOptions={boreDiamOptions} setBoreDiamFilters={setBoreDiamFilters} onRequest={setModalProduct} t={t} />
+                        <KitTable key={n} tableNum={n} data={tablesData[n] ?? []} searchQuery={searchQuery} filters={filters} allOptions={allOptions} setFilters={setFilters} onRequest={setModalProduct} t={t} />
                     ))}
                 </div>
             </section>
@@ -514,7 +530,7 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
                     {[8, 9, 10, 11, 12].map(n => (
-                        <KitTable key={n} tableNum={n} data={tablesData[n] ?? []} searchQuery={searchQuery} boreDiamFilters={boreDiamFilters} boreDiamOptions={boreDiamOptions} setBoreDiamFilters={setBoreDiamFilters} onRequest={setModalProduct} t={t} />
+                        <KitTable key={n} tableNum={n} data={tablesData[n] ?? []} searchQuery={searchQuery} filters={filters} allOptions={allOptions} setFilters={setFilters} onRequest={setModalProduct} t={t} />
                     ))}
                 </div>
             </section>

@@ -149,7 +149,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [boreDiamFilters, setBoreDiamFilters] = useState<string[]>([]);
+    const [filters, setFilters] = useState<Record<string, string[]>>({});
     const [openFilterCol, setOpenFilterCol] = useState<string | null>(null);
 
     const [table1Data, setTable1Data] = useState<any[]>([]);
@@ -209,70 +209,95 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         fetchTables();
     }, []);
 
-    // Helper for bore diameter filtering
-    const handleBoreFilterChange = useCallback((v: string) => {
-        setBoreDiamFilters(prev => 
-            prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]
-        );
+        const handleFilterChange = useCallback((col: string, val: string) => {
+        setFilters(prev => {
+            const colFilters = prev[col] || [];
+            const newFilters = colFilters.includes(val)
+                ? colFilters.filter(x => x !== val)
+                : [...colFilters, val];
+            return { ...prev, [col]: newFilters };
+        });
     }, []);
 
     const filteredT1 = useMemo(() => {
         let rows = table1Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table1Data]);
+    }, [searchQuery, filters, table1Data]);
 
     const filteredT2 = useMemo(() => {
         let rows = table2Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table2Data]);
+    }, [searchQuery, filters, table2Data]);
 
     const filteredT3 = useMemo(() => {
         let rows = table3Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table3Data]);
+    }, [searchQuery, filters, table3Data]);
 
     const filteredT4 = useMemo(() => {
         let rows = table4Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table4Data]);
+    }, [searchQuery, filters, table4Data]);
 
     
     // Unique bore diameter values across all tables
-    const boreDiamOptions = useMemo(() => {
-        const all = new Set<string>();
+    const allOptions = useMemo(() => {
+        const all: Record<string, Set<string>> = {};
         [...table1Data, ...table2Data, ...table3Data, ...table4Data].forEach(r => {
-            const v = r['d (mm)'] ?? r['d (inch)'];
-            if (v != null) all.add(String(v));
+            Object.keys(r).forEach(k => {
+                const v = r[k];
+                if (v != null && String(v).trim() !== '' && String(v).trim() !== '-') {
+                    if (!all[k]) all[k] = new Set();
+                    all[k].add(String(v));
+                }
+            });
         });
-        return [...all].filter(Boolean).sort((a, b) => parseFloat(a) - parseFloat(b));
+        const result: Record<string, string[]> = {};
+        Object.keys(all).forEach(k => {
+            result[k] = [...all[k]].sort((a, b) => {
+                const numA = parseFloat(a);
+                const numB = parseFloat(b);
+                if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+                return a.localeCompare(b);
+            });
+        });
+        return result;
     }, [table1Data, table2Data, table3Data, table4Data]);
 
     const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
@@ -292,7 +317,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         toggle: (c: string) => void; 
         sortCol: string | null; sortDir: SortDir;
         hasFilter?: boolean; filterOptions?: string[]; 
-        selectedFilters?: string[]; onFilterChange?: (v: string) => void;
+        selectedFilters?: string[]; onFilterChange?: (col: string, val: string) => void;
     }) {
         const isFilterOpen = openFilterCol === col;
         
@@ -329,9 +354,9 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                                 <input 
                                                     type="checkbox" 
                                                     checked={selectedFilters?.includes(opt) || false}
-                                                    onChange={() => onFilterChange?.(opt)}
+                                                    onChange={() => onFilterChange?.(col, opt)}
                                                 />
-                                                {opt} мм
+                                                {opt}
                                             </label>
                                         ))}
                                     </div>
@@ -490,10 +515,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                         {table1Cols.map(col => (
                                             <Th 
                                                 key={col} col={col} label={table1Labels[col] ?? col} toggle={tog1} sortCol={sc1} sortDir={sd1} 
-                                                hasFilter={col === 'd (mm)'}
-                                                filterOptions={col === 'd (mm)' ? boreDiamOptions : undefined}
-                                                selectedFilters={col === 'd (mm)' ? boreDiamFilters : undefined}
-                                                onFilterChange={col === 'd (mm)' ? handleBoreFilterChange : undefined}
+                                                hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
+                                                filterOptions={allOptions[col]}
+                                                selectedFilters={filters[col]}
+                                                onFilterChange={handleFilterChange}
                                             />
                                         ))}
                                         <th className={styles.actionCol} />
@@ -724,10 +749,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                         {table2Cols.map(col => (
                                             <Th 
                                                 key={col} col={col} label={table2Labels[col] ?? col} toggle={tog2} sortCol={sc2} sortDir={sd2} 
-                                                hasFilter={col === 'd (mm)'}
-                                                filterOptions={col === 'd (mm)' ? boreDiamOptions : undefined}
-                                                selectedFilters={col === 'd (mm)' ? boreDiamFilters : undefined}
-                                                onFilterChange={col === 'd (mm)' ? handleBoreFilterChange : undefined}
+                                                hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
+                                                filterOptions={allOptions[col]}
+                                                selectedFilters={filters[col]}
+                                                onFilterChange={handleFilterChange}
                                             />
                                         ))}
                                         <th className={styles.actionCol} />
@@ -800,10 +825,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                         {table3Cols.map(col => (
                                             <Th 
                                                 key={col} col={col} label={table3Labels[col] ?? col} toggle={tog3} sortCol={sc3} sortDir={sd3} 
-                                                hasFilter={col === 'd (mm)'}
-                                                filterOptions={col === 'd (mm)' ? boreDiamOptions : undefined}
-                                                selectedFilters={col === 'd (mm)' ? boreDiamFilters : undefined}
-                                                onFilterChange={col === 'd (mm)' ? handleBoreFilterChange : undefined}
+                                                hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
+                                                filterOptions={allOptions[col]}
+                                                selectedFilters={filters[col]}
+                                                onFilterChange={handleFilterChange}
                                             />
                                         ))}
                                         <th className={styles.actionCol} />
@@ -853,10 +878,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                         {table4Cols.map(col => (
                                             <Th 
                                                 key={col} col={col} label={table4Labels[col] ?? col} toggle={tog4} sortCol={sc4} sortDir={sd4} 
-                                                hasFilter={col === 'd (mm)'}
-                                                filterOptions={col === 'd (mm)' ? boreDiamOptions : undefined}
-                                                selectedFilters={col === 'd (mm)' ? boreDiamFilters : undefined}
-                                                onFilterChange={col === 'd (mm)' ? handleBoreFilterChange : undefined}
+                                                hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
+                                                filterOptions={allOptions[col]}
+                                                selectedFilters={filters[col]}
+                                                onFilterChange={handleFilterChange}
                                             />
                                         ))}
                                         <th className={styles.actionCol} />

@@ -337,7 +337,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [boreDiamFilters, setBoreDiamFilters] = useState<string[]>([]);
+    const [filters, setFilters] = useState<Record<string, string[]>>({});
     const [openFilterCol, setOpenFilterCol] = useState<string | null>(null);
 
     // Table data states
@@ -355,7 +355,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
         toggle: (c: string) => void; 
         sortCol: string | null; sortDir: SortDir;
         hasFilter?: boolean; filterOptions?: string[]; 
-        selectedFilters?: string[]; onFilterChange?: (v: string) => void;
+        selectedFilters?: string[]; onFilterChange?: (col: string, val: string) => void;
     }) {
         const isFilterOpen = openFilterCol === col;
         
@@ -392,9 +392,9 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                                 <input 
                                                     type="checkbox" 
                                                     checked={selectedFilters?.includes(opt) || false}
-                                                    onChange={() => onFilterChange?.(opt)}
+                                                    onChange={() => onFilterChange?.(col, opt)}
                                                 />
-                                                {opt} мм
+                                                {opt}
                                             </label>
                                         ))}
                                     </div>
@@ -433,98 +433,114 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
         fetchTableData();
     }, []);
 
-    // Helper for bore diameter filtering
-    const handleBoreFilterChange = useCallback((v: string) => {
-        setBoreDiamFilters(prev => 
-            prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]
-        );
+        const handleFilterChange = useCallback((col: string, val: string) => {
+        setFilters(prev => {
+            const colFilters = prev[col] || [];
+            const newFilters = colFilters.includes(val)
+                ? colFilters.filter(x => x !== val)
+                : [...colFilters, val];
+            return { ...prev, [col]: newFilters };
+        });
     }, []);
 
     // Table 1: BUQ Dimensional Specs
     const filteredT1 = useMemo(() => {
-        const typedBuq = buqData as typeof buqData;
-        let rows: typeof buqData = typedBuq;
+        let rows = table1Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            rows = rows.filter(row =>
-                Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
-            );
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row.d_mm ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters]);
+    }, [searchQuery, filters, table1Data]);
 
     // Table 2: Performance data — from API
     const filteredT2 = useMemo(() => {
         let rows = table2Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            rows = rows.filter(row =>
-                Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
-            );
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['Bore diameter d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table2Data]);
+    }, [searchQuery, filters, table2Data]);
 
     // Table 3: Cross-references & applications — from API
     const filteredT3 = useMemo(() => {
         let rows = table3Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            rows = rows.filter(row =>
-                Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
-            );
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['Bore diameter d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table3Data]);
+    }, [searchQuery, filters, table3Data]);
 
     // Table 4: Additional specs — from API
     const filteredT4 = useMemo(() => {
         let rows = table4Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            rows = rows.filter(row =>
-                Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
-            );
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['Bore diameter d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table4Data]);
+    }, [searchQuery, filters, table4Data]);
 
     // Table 5: Additional specs — from API
     const filteredT5 = useMemo(() => {
         let rows = table5Data;
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
-            rows = rows.filter(row =>
-                Object.values(row).some(val => val && String(val).toLowerCase().includes(q))
-            );
+            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
         }
-        if (boreDiamFilters.length > 0) {
-            rows = rows.filter(row => boreDiamFilters.includes(String(row['Bore diameter d (mm)'] ?? '')));
-        }
+        Object.entries(filters).forEach(([col, activeVals]) => {
+            if (activeVals.length > 0) {
+                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
+            }
+        });
         return rows;
-    }, [searchQuery, boreDiamFilters, table5Data]);
+    }, [searchQuery, filters, table5Data]);
 
     // Unique bore diameter values across all tables
-    const boreDiamOptions = useMemo(() => {
-        const all = new Set<string>();
-        (buqData as any[]).forEach(r => { if (r.d_mm != null) all.add(String(r.d_mm)); });
-        [...table2Data, ...table3Data, ...table4Data, ...table5Data].forEach(r => {
-            const v = r['Bore diameter d (mm)'];
-            if (v != null) all.add(String(v));
+    const allOptions = useMemo(() => {
+        const all: Record<string, Set<string>> = {};
+        const buq = buqData as any[];
+        [...buq, ...table2Data, ...table3Data, ...table4Data, ...table5Data].forEach(r => {
+            Object.keys(r).forEach(k => {
+                const v = r[k];
+                if (v != null && String(v).trim() !== '' && String(v).trim() !== '-') {
+                    if (!all[k]) all[k] = new Set();
+                    all[k].add(String(v));
+                }
+            });
         });
-        return [...all].filter(Boolean).sort((a, b) => parseFloat(a) - parseFloat(b));
+        const result: Record<string, string[]> = {};
+        Object.keys(all).forEach(k => {
+            result[k] = [...all[k]].sort((a, b) => {
+                const numA = parseFloat(a);
+                const numB = parseFloat(b);
+                if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+                return a.localeCompare(b);
+            });
+        });
+        return result;
     }, [table2Data, table3Data, table4Data, table5Data]);
 
     const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
@@ -658,22 +674,22 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     <tr>
                                         <Th col="article" label="Part Number" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="cross_ref" label="Cross-Reference" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="brand" label="Brand" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="brand" label="Brand" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['brand'] || []} selectedFilters={filters['brand'] || []} onFilterChange={handleFilterChange} />
                                         <Th 
                                             col="d_mm" label="d (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} 
-                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
-                                        />
-                                        <Th col="d_inch" label="d (inch)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="A1" label="A1 (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="A2" label="A2 (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="J" label="J (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="L" label="L (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="N" label="N (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="A" label="A (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="mass_kg" label="Mass (kg)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Cdyn" label="Cdyn (kN)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Co" label="Co (kN)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Pu" label="Pu (kN)" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                            
+                                        hasFilter filterOptions={allOptions['d_mm'] || []} selectedFilters={filters['d_mm'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="d_inch" label="d (inch)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['d_inch'] || []} selectedFilters={filters['d_inch'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="A1" label="A1 (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A1'] || []} selectedFilters={filters['A1'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="A2" label="A2 (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A2'] || []} selectedFilters={filters['A2'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="J" label="J (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['J'] || []} selectedFilters={filters['J'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L" label="L (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L'] || []} selectedFilters={filters['L'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="N" label="N (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['N'] || []} selectedFilters={filters['N'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="A" label="A (mm)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A'] || []} selectedFilters={filters['A'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="mass_kg" label="Mass (kg)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Cdyn" label="Cdyn (kN)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Cdyn'] || []} selectedFilters={filters['Cdyn'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Co" label="Co (kN)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Co'] || []} selectedFilters={filters['Co'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Pu" label="Pu (kN)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Pu'] || []} selectedFilters={filters['Pu'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
@@ -744,22 +760,22 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     <tr>
                                         <Th col="Part Number" label="Part No" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th col="Bearing designation" label="Designation" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Brand name" label="Brand" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="Brand name" label="Brand" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Brand name'] || []} selectedFilters={filters['Brand name'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="Cross-Refference" label="Cross-Ref" toggle={tog2} sortCol={sc2} sortDir={sd2} />
                                         <Th 
                                             col="Bore diameter d (mm)" label="Bore d" toggle={tog2} sortCol={sc2} sortDir={sd2} 
-                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
-                                        />
-                                        <Th col="Total housing width A1 (mm)" label="A1" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Housing flange thickness A2 (mm)" label="A2" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Distance between the holes J (mm)" label="J" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Total length L (mm)" label="L" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Hole / Thread H/T" label="H/T" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Overall width A (mm)" label="A" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Mass kg" label="Mass" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Static load rating Co (kN)" label="Co" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Fatigue load limit Pu (kN)" label="Pu" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                            
+                                        hasFilter filterOptions={allOptions['Bore diameter d (mm)'] || []} selectedFilters={filters['Bore diameter d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Total housing width A1 (mm)" label="A1" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Total housing width A1 (mm)'] || []} selectedFilters={filters['Total housing width A1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Housing flange thickness A2 (mm)" label="A2" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Housing flange thickness A2 (mm)'] || []} selectedFilters={filters['Housing flange thickness A2 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Distance between the holes J (mm)" label="J" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Distance between the holes J (mm)'] || []} selectedFilters={filters['Distance between the holes J (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Total length L (mm)" label="L" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Total length L (mm)'] || []} selectedFilters={filters['Total length L (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Hole / Thread H/T" label="H/T" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Hole / Thread H/T'] || []} selectedFilters={filters['Hole / Thread H/T'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Overall width A (mm)" label="A" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Overall width A (mm)'] || []} selectedFilters={filters['Overall width A (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Mass kg" label="Mass" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Mass kg'] || []} selectedFilters={filters['Mass kg'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Dynamic load rating Cdyn (kN)'] || []} selectedFilters={filters['Dynamic load rating Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Static load rating Co (kN)" label="Co" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Static load rating Co (kN)'] || []} selectedFilters={filters['Static load rating Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Fatigue load limit Pu (kN)" label="Pu" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Fatigue load limit Pu (kN)'] || []} selectedFilters={filters['Fatigue load limit Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -838,22 +854,22 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     <tr>
                                         <Th col="Part Number" label="Part Number" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="Bearing designation" label="Bearing Designation" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Brand \nname" label="Brand" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="Brand \nname" label="Brand" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Brand \nname'] || []} selectedFilters={filters['Brand \nname'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="Cross-Refference" label="Cross-Reference" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th 
                                             col="Bore diameter d (mm)" label="Bore d (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} 
-                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
-                                        />
-                                        <Th col="Total length L (mm)" label="Length L (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Distance between the holes J (mm)" label="J (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Hole / Thread H/T (mm)" label="H/T (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Overall width A (mm)" label="A (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Total housing width A1 (mm)" label="A1 (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Housing flange thickness A2 (mm)" label="A2 (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Width inner ring B (mm)" label="B (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Static load rating Co (kN)" label="Co (kN)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn (kN)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Fatigue load limit Pu (kN)" label="Pu (kN)" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                            
+                                        hasFilter filterOptions={allOptions['Bore diameter d (mm)'] || []} selectedFilters={filters['Bore diameter d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Total length L (mm)" label="Length L (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Total length L (mm)'] || []} selectedFilters={filters['Total length L (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Distance between the holes J (mm)" label="J (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Distance between the holes J (mm)'] || []} selectedFilters={filters['Distance between the holes J (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Hole / Thread H/T (mm)" label="H/T (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Hole / Thread H/T (mm)'] || []} selectedFilters={filters['Hole / Thread H/T (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Overall width A (mm)" label="A (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Overall width A (mm)'] || []} selectedFilters={filters['Overall width A (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Total housing width A1 (mm)" label="A1 (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Total housing width A1 (mm)'] || []} selectedFilters={filters['Total housing width A1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Housing flange thickness A2 (mm)" label="A2 (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Housing flange thickness A2 (mm)'] || []} selectedFilters={filters['Housing flange thickness A2 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Width inner ring B (mm)" label="B (mm)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Width inner ring B (mm)'] || []} selectedFilters={filters['Width inner ring B (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Static load rating Co (kN)" label="Co (kN)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Static load rating Co (kN)'] || []} selectedFilters={filters['Static load rating Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn (kN)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Dynamic load rating Cdyn (kN)'] || []} selectedFilters={filters['Dynamic load rating Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Fatigue load limit Pu (kN)" label="Pu (kN)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Fatigue load limit Pu (kN)'] || []} selectedFilters={filters['Fatigue load limit Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -933,27 +949,27 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     <tr>
                                         <Th col="Part Number" label="Part Number" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th col="Bearing designation" label="Bearing Designation" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Brand \\nname" label="Brand" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                        <Th col="Brand \\nname" label="Brand" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Brand \\nname'] || []} selectedFilters={filters['Brand \\nname'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="Cross-Refference" label="Cross-Reference" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th 
                                             col="Bore diameter d (mm)" label="Bore d (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} 
-                                            hasFilter filterOptions={boreDiamOptions} selectedFilters={boreDiamFilters} onFilterChange={handleBoreFilterChange}
-                                        />
-                                        <Th col="Centering diameter d1 (mm)" label="d1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Housing overall width L1 (mm)" label="L1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Distance between the holes J1 (mm)" label="J1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Housing overall width L2 (mm)" label="L2 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Distance between the holes J2 (mm)" label="J2 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Overall width A (mm)" label="A (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Flange width A1 (mm)" label="A1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Flange width A2 (mm)" label="A2 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Centering diameter height A3 (mm)" label="A3 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Threaded hole size T" label="T" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Hole diameter H (mm)" label="H (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Mass kg" label="Mass (kg)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Static load rating Co (kN)" label="Co (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="Fatigue load limit Pu (kN)" label="Pu (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} />
+                                            
+                                        hasFilter filterOptions={allOptions['Bore diameter d (mm)'] || []} selectedFilters={filters['Bore diameter d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Centering diameter d1 (mm)" label="d1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Centering diameter d1 (mm)'] || []} selectedFilters={filters['Centering diameter d1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Housing overall width L1 (mm)" label="L1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Housing overall width L1 (mm)'] || []} selectedFilters={filters['Housing overall width L1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Distance between the holes J1 (mm)" label="J1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Distance between the holes J1 (mm)'] || []} selectedFilters={filters['Distance between the holes J1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Housing overall width L2 (mm)" label="L2 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Housing overall width L2 (mm)'] || []} selectedFilters={filters['Housing overall width L2 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Distance between the holes J2 (mm)" label="J2 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Distance between the holes J2 (mm)'] || []} selectedFilters={filters['Distance between the holes J2 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Overall width A (mm)" label="A (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Overall width A (mm)'] || []} selectedFilters={filters['Overall width A (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Flange width A1 (mm)" label="A1 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Flange width A1 (mm)'] || []} selectedFilters={filters['Flange width A1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Flange width A2 (mm)" label="A2 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Flange width A2 (mm)'] || []} selectedFilters={filters['Flange width A2 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Centering diameter height A3 (mm)" label="A3 (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Centering diameter height A3 (mm)'] || []} selectedFilters={filters['Centering diameter height A3 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Threaded hole size T" label="T" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Threaded hole size T'] || []} selectedFilters={filters['Threaded hole size T'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Hole diameter H (mm)" label="H (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Hole diameter H (mm)'] || []} selectedFilters={filters['Hole diameter H (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Mass kg" label="Mass (kg)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Mass kg'] || []} selectedFilters={filters['Mass kg'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Dynamic load rating Cdyn (kN)'] || []} selectedFilters={filters['Dynamic load rating Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Static load rating Co (kN)" label="Co (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Static load rating Co (kN)'] || []} selectedFilters={filters['Static load rating Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Fatigue load limit Pu (kN)" label="Pu (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Fatigue load limit Pu (kN)'] || []} selectedFilters={filters['Fatigue load limit Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1023,19 +1039,19 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     <tr>
                                         <Th col="Part Number" label="Part No" toggle={tog5} sortCol={sc5} sortDir={sd5} />
                                         <Th col="Bearing designation" label="Designation" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Brand \\nname" label="Brand" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Brand \\nname" label="Brand" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Brand \\nname'] || []} selectedFilters={filters['Brand \\nname'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="Cross-Refference" label="Cross-Ref" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Bore diameter d (mm)" label="Bore d" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Outside diameter D (mm)" label="Out D" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Pitch circle diameter J (mm)" label="Pitch J" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Hole / Thread H/T" label="H/T" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Overall width A (mm)" label="A" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Housing flange thickness A2 (mm)" label="A2" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Width inner ring B (mm)" label="B" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Mass kg" label="Mass" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Static load rating Co (kN)" label="Co" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="Fatigue load limit Pu (kN)" label="Pu" toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="Bore diameter d (mm)" label="Bore d" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Bore diameter d (mm)'] || []} selectedFilters={filters['Bore diameter d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Outside diameter D (mm)" label="Out D" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Outside diameter D (mm)'] || []} selectedFilters={filters['Outside diameter D (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Pitch circle diameter J (mm)" label="Pitch J" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Pitch circle diameter J (mm)'] || []} selectedFilters={filters['Pitch circle diameter J (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Hole / Thread H/T" label="H/T" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Hole / Thread H/T'] || []} selectedFilters={filters['Hole / Thread H/T'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Overall width A (mm)" label="A" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Overall width A (mm)'] || []} selectedFilters={filters['Overall width A (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Housing flange thickness A2 (mm)" label="A2" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Housing flange thickness A2 (mm)'] || []} selectedFilters={filters['Housing flange thickness A2 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Width inner ring B (mm)" label="B" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Width inner ring B (mm)'] || []} selectedFilters={filters['Width inner ring B (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Mass kg" label="Mass" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Mass kg'] || []} selectedFilters={filters['Mass kg'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Static load rating Co (kN)" label="Co" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Static load rating Co (kN)'] || []} selectedFilters={filters['Static load rating Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Dynamic load rating Cdyn (kN)'] || []} selectedFilters={filters['Dynamic load rating Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Fatigue load limit Pu (kN)" label="Pu" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['Fatigue load limit Pu (kN)'] || []} selectedFilters={filters['Fatigue load limit Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                     </tr>
                                 </thead>
                                 <tbody>
