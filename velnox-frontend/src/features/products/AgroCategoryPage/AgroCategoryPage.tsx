@@ -445,24 +445,27 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── APP BLOCK 1 (placeholder — замінити фото та текст) ── */}
-            <section ref={app1Ref.ref} className={app1Class}>
-                <div className={styles.appWatermark}>AGRO</div>
-                <div className={styles.appInner}>
-                    <div className={styles.appHeader}>
-                        <span className={styles.appTag}>TODO: TAG 1</span>
-                        <h2 className={styles.appTitle}>{t('agroPage.app1.title')}</h2>
-                    </div>
-                    <div className={styles.appBody}>
-                        <p className={`${styles.appPara} ${styles.appParaLead} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
-                            {t('agroPage.app1.desc')}
-                        </p>
-                        <p className={`${styles.appPara} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
-                            <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('agroPage.app1.applications')}
-                        </p>
-                        <p className={`${styles.appPara} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
-                            <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('agroPage.app1.oem_focus')}
-                        </p>
+            {/* ── APP BLOCK 1: Image Backed ── */}
+            <section ref={app1Ref.ref} className={styles.appBlockImage}>
+                <div className={styles.appBlockBg}>
+                    <Image src="/velnox/images/agro/agro-app1-bg.png" alt="Agro Seeder in field" fill style={{ objectFit: 'cover' }} />
+                </div>
+                <div className={styles.appBlockOverlay} />
+                <div className={`${styles.appBlockContent} ${app1Ref.inView ? styles.animIn : ''}`}>
+                    <div className={styles.appBlockText}>
+                        <span className={styles.appBlockTag}>AGRO BEARINGS</span>
+                        <h2 className={styles.appBlockTitle}>{t('agroPage.app1.title')}</h2>
+                        <p className={styles.appBlockDesc}>{t('agroPage.app1.desc')}</p>
+                        
+                        <div>
+                            <span className={styles.appBlockKeyword}>Сфера застосування:</span>
+                            <p className={styles.appBlockList}>{t('agroPage.app1.applications')}</p>
+                        </div>
+                        
+                        <div>
+                            <span className={styles.appBlockKeyword}>OEM-фокус:</span>
+                            <p className={styles.appBlockList}>{t('agroPage.app1.oem_focus')}</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -712,24 +715,27 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── APP BLOCK 2 ── */}
-            <section ref={app2Ref.ref} className={app2Class}>
-                <div className={styles.appWatermark}>AGRO 2</div>
-                <div className={styles.appInner}>
-                    <div className={styles.appHeader}>
-                        <span className={styles.appTag}>TODO: TAG 2</span>
-                        <h2 className={styles.appTitle}>{t('agroPage.app2.title')}</h2>
-                    </div>
-                    <div className={styles.appBody}>
-                        <p className={`${styles.appPara} ${styles.appParaLead} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
-                            {t('agroPage.app2.desc')}
-                        </p>
-                        <p className={`${styles.appPara} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
-                            <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('agroPage.app2.applications')}
-                        </p>
-                        <p className={`${styles.appPara} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
-                            <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('agroPage.app2.oem_focus')}
-                        </p>
+            {/* ── APP BLOCK 2: Image Backed ── */}
+            <section ref={app2Ref.ref} className={styles.appBlockImage}>
+                <div className={styles.appBlockBg}>
+                    <Image src="/velnox/images/agro/agro-app2-bg.png" alt="Combine harvester in field" fill style={{ objectFit: 'cover' }} />
+                </div>
+                <div className={styles.appBlockOverlay} />
+                <div className={`${styles.appBlockContent} ${app2Ref.inView ? styles.animIn : ''}`}>
+                    <div className={styles.appBlockText}>
+                        <span className={styles.appBlockTag}>HARVESTING</span>
+                        <h2 className={styles.appBlockTitle}>{t('agroPage.app2.title')}</h2>
+                        <p className={styles.appBlockDesc}>{t('agroPage.app2.desc')}</p>
+                        
+                        <div>
+                            <span className={styles.appBlockKeyword}>Сфера застосування:</span>
+                            <p className={styles.appBlockList}>{t('agroPage.app2.applications')}</p>
+                        </div>
+                        
+                        <div>
+                            <span className={styles.appBlockKeyword}>OEM-фокус:</span>
+                            <p className={styles.appBlockList}>{t('agroPage.app2.oem_focus')}</p>
+                        </div>
                     </div>
                 </div>
             </section>

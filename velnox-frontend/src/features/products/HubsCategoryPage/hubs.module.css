@@ -2868,3 +2868,16 @@
 .analoguesCell :global(.analogues-list) li:last-child {
     border-bottom: none;
 }
+
+/* --- OVERRIDES FOR LAYOUT FIX --- */
+.tablesHeader {
+    flex-wrap: nowrap !important;
+}
+
+@media (min-width: 1025px) {
+    .techTable th {
+        white-space: nowrap !important;
+        overflow-wrap: normal !important;
+        word-break: normal !important;
+    }
+}

@@ -98,6 +98,10 @@ export function AboutPage({ locale }: { locale: string }) {
     const qualitySection = useInView(0.1);
     const audienceSection = useInView(0.08);
 
+    /* Philosophy card hovers */
+    const [phiHovered1, setPhiHovered1] = useState(false);
+    const [phiHovered2, setPhiHovered2] = useState(false);
+
     return (
         <div className={styles.page}>
 
@@ -227,12 +231,18 @@ export function AboutPage({ locale }: { locale: string }) {
                     </div>
 
                     <div className={styles.philosophyGrid}>
-                        <div className={`${styles.philosophyCard} ${philosophySection.inView ? styles.phiCardVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
-                            <div className={styles.phiCardBg}>
+                        <div
+                            className={`${styles.philosophyCard} ${philosophySection.inView ? styles.phiCardVisible : ''}`}
+                            style={{ transitionDelay: '0.1s' }}
+                            onMouseEnter={() => setPhiHovered1(true)}
+                            onMouseLeave={() => setPhiHovered1(false)}
+                        >
+                            <div className={`${styles.phiCardBg} ${phiHovered1 ? styles.phiCardBgActive : ''}`}>
                                 <Image src="/velnox/images/about/phi_left.png" alt="Blueprint" fill className={styles.phiCardImg} />
+                                <div className={styles.phiCardOverlay} />
                             </div>
                             <div className={styles.phiCardAccent} />
-                            <div className={styles.phiIcon}>
+                            <div className={`${styles.phiIcon} ${phiHovered1 ? styles.phiIconActive : ''}`}>
                                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                                     <circle cx="14" cy="14" r="9" stroke="currentColor" strokeWidth="1.5" />
                                     <circle cx="14" cy="14" r="4" stroke="currentColor" strokeWidth="1.5" />
@@ -242,16 +252,24 @@ export function AboutPage({ locale }: { locale: string }) {
                                     <line x1="14" y1="23" x2="14" y2="26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                                 </svg>
                             </div>
-                            <h3 className={styles.phiCardTitle}>{t('philosophy.p1_title')}</h3>
-                            <p className={styles.phiCardText}>{t('philosophy.p1_text')}</p>
+                            <div className={styles.phiCardContent}>
+                                <h3 className={styles.phiCardTitle}>{t('philosophy.p1_title')}</h3>
+                                <p className={`${styles.phiCardText} ${phiHovered1 ? styles.phiCardTextVisible : ''}`}>{t('philosophy.p1_text')}</p>
+                            </div>
                         </div>
 
-                        <div className={`${styles.philosophyCard} ${philosophySection.inView ? styles.phiCardVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
-                            <div className={styles.phiCardBg}>
+                        <div
+                            className={`${styles.philosophyCard} ${philosophySection.inView ? styles.phiCardVisible : ''}`}
+                            style={{ transitionDelay: '0.25s' }}
+                            onMouseEnter={() => setPhiHovered2(true)}
+                            onMouseLeave={() => setPhiHovered2(false)}
+                        >
+                            <div className={`${styles.phiCardBg} ${phiHovered2 ? styles.phiCardBgActive : ''}`}>
                                 <Image src="/velnox/images/about/industry-agro.jpg" alt="Action" fill className={styles.phiCardImg} />
+                                <div className={styles.phiCardOverlay} />
                             </div>
                             <div className={styles.phiCardAccent} />
-                            <div className={styles.phiIcon}>
+                            <div className={`${styles.phiIcon} ${phiHovered2 ? styles.phiIconActive : ''}`}>
                                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                                     <rect x="3" y="3" width="9" height="9" stroke="currentColor" strokeWidth="1.5" />
                                     <rect x="16" y="3" width="9" height="9" stroke="currentColor" strokeWidth="1.5" />
@@ -259,8 +277,10 @@ export function AboutPage({ locale }: { locale: string }) {
                                     <rect x="16" y="16" width="9" height="9" stroke="currentColor" strokeWidth="1.5" />
                                 </svg>
                             </div>
-                            <h3 className={styles.phiCardTitle}>{t('philosophy.p2_title')}</h3>
-                            <p className={styles.phiCardText}>{t('philosophy.p2_text')}</p>
+                            <div className={styles.phiCardContent}>
+                                <h3 className={styles.phiCardTitle}>{t('philosophy.p2_title')}</h3>
+                                <p className={`${styles.phiCardText} ${phiHovered2 ? styles.phiCardTextVisible : ''}`}>{t('philosophy.p2_text')}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

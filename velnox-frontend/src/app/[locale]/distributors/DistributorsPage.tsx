@@ -127,11 +127,11 @@ export function DistributorsPage() {
     }, [showModal]);
 
     const DISTRIBUTORS = [
-        { name: 'TECH SOLUTIONS Sp. z o.o.', country: 'Польща', logo: 'https://nte-bearings.com/wp-content/uploads/2025/02/techsolutions-europe-logo-1462363501.png', flag: '🇵🇱' },
-        { name: 'ТОВ «ТТК»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/ttk-logo-smaller.png', flag: '🇺🇦' },
-        { name: 'ПП «Промподшипник»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/prompsh-logo-bigger.png', flag: '🇺🇦' },
-        { name: 'ТОВ «Промкомпонент»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/04/promcomponent-logo-small.png', flag: '🇺🇦' },
-        { name: 'ТОВ «ТД ІРБІС»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/logo-irbis-new-3.png', flag: '🇺🇦' },
+        { name: 'TECH SOLUTIONS Sp. z o.o.', country: 'Польща', logo: 'https://nte-bearings.com/wp-content/uploads/2025/02/techsolutions-europe-logo-1462363501.png', flag: '🇵🇱', isAuthorized: true },
+        { name: 'ТОВ «ТТК»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/ttk-logo-smaller.png', flag: '🇺🇦', isAuthorized: false },
+        { name: 'ПП «Промподшипник»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/prompsh-logo-bigger.png', flag: '🇺🇦', isAuthorized: false },
+        { name: 'ТОВ «Промкомпонент»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/04/promcomponent-logo-small.png', flag: '🇺🇦', isAuthorized: false },
+        { name: 'ТОВ «ТД ІРБІС»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/logo-irbis-new-3.png', flag: '🇺🇦', isAuthorized: false },
     ];
 
     return (
@@ -196,7 +196,7 @@ export function DistributorsPage() {
                         {DISTRIBUTORS.map((d, i) => (
                             <div
                                 key={d.name}
-                                className={`${styles.distCard} ${gridRef.inView ? styles.distCardIn : ''}`}
+                                className={`${styles.distCard} ${gridRef.inView ? styles.distCardIn : ''} ${d.isAuthorized ? styles.distCardAuth : ''}`}
                                 style={{ transitionDelay: `${i * 0.12}s` }}
                             >
                                 {/* Scan-line sweep on hover */}
@@ -261,34 +261,53 @@ export function DistributorsPage() {
                         {([
                             {
                                 key: 'criteria1',
-                                num: '500',
-                                unit: 'm²',
+                                num: 'TOP',
+                                unit: 'brand',
                                 icon: (
                                     <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <rect x="4" y="16" width="32" height="20" rx="2" />
-                                        <path d="M4 20l8-8h16l8 8" />
-                                        <rect x="15" y="26" width="10" height="10" />
-                                        <path d="M20 16v-6M16 10h8" />
+                                        <path d="M20 4l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" />
+                                        <circle cx="20" cy="20" r="16" strokeDasharray="4 3" opacity="0.3" />
                                     </svg>
                                 )
                             },
                             {
                                 key: 'criteria2',
-                                num: '2+',
-                                unit: 'eng',
+                                num: 'ADS',
+                                unit: 'support',
                                 icon: (
                                     <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <circle cx="20" cy="14" r="6" />
-                                        <path d="M8 36c0-6.627 5.373-12 12-12s12 5.373 12 12" />
-                                        <path d="M28 8a4 4 0 010 12" />
-                                        <path d="M12 8a4 4 0 000 12" />
+                                        <path d="M4 12v24h32V12l-16-8-16 8z" />
+                                        <path d="M10 20h20M10 26h20M10 32h10" opacity="0.4" />
                                     </svg>
                                 )
                             },
                             {
                                 key: 'criteria3',
-                                num: '12mo',
-                                unit: '',
+                                num: 'TECH',
+                                unit: 'expert',
+                                icon: (
+                                    <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <circle cx="20" cy="20" r="8" />
+                                        <path d="M20 8v4M20 28v4M8 20h4M28 20h4M11.5 11.5l2.8 2.8M25.7 25.7l2.8 2.8M11.5 28.5l2.8-2.8M25.7 14.3l2.8-2.8" />
+                                    </svg>
+                                )
+                            },
+                            {
+                                key: 'criteria4',
+                                num: 'EDU',
+                                unit: 'cert',
+                                icon: (
+                                    <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M4 12l16-8 16 8-16 8-16-8z" />
+                                        <path d="M4 12v12c0 8.8 16 12 16 12s16-3.2 16-12V12" />
+                                        <path d="M20 20v16" opacity="0.3" />
+                                    </svg>
+                                )
+                            },
+                            {
+                                key: 'criteria5',
+                                num: 'LOG',
+                                unit: 'fast',
                                 icon: (
                                     <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                         <rect x="4" y="20" width="22" height="14" rx="2" />
@@ -300,13 +319,14 @@ export function DistributorsPage() {
                                 )
                             },
                             {
-                                key: 'criteria4',
-                                num: 'ISO',
-                                unit: '9001',
+                                key: 'criteria6',
+                                num: 'REG',
+                                unit: 'excl',
                                 icon: (
                                     <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M20 4l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" />
-                                        <circle cx="20" cy="20" r="16" strokeDasharray="4 3" />
+                                        <circle cx="20" cy="20" r="16" />
+                                        <path d="M12 20h16M20 12v16" opacity="0.4" />
+                                        <path d="M20 4a16 16 0 010 32M4 20a16 16 0 0132 0" opacity="0.2" />
                                     </svg>
                                 )
                             },

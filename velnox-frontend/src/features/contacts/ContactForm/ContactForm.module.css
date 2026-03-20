@@ -12,21 +12,22 @@
 }
 
 .fieldGroup label {
-    font-size: 0.75rem; /* Smaller labels */
-    font-weight: 500;
-    color: var(--color-text-secondary);
+    font-size: 0.85rem; /* Larger labels */
+    font-weight: 600;
+    color: #2E2981;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
 }
 
 .input, .textarea {
-    background: rgba(var(--color-bg-rgb), 0.5);
-    border: none;
-    border-bottom: 1px solid var(--color-border);
-    padding: 0.4rem 0; /* Reduced padding */
-    font-size: 0.875rem; /* Smaller font */
+    background: rgba(var(--color-bg-rgb), 0.3);
+    border: 1px solid var(--color-border);
+    border-radius: 8px; /* Added rounded corners */
+    padding: 0.75rem 1rem; /* Better padding */
+    font-size: 1rem; /* Standard font size */
     color: var(--color-text-primary);
-    transition: border-color 0.3s, background-color 0.3s;
+    transition: all 0.3s ease;
     outline: none;
 }
 
@@ -40,22 +41,23 @@
 }
 
 .submitBtn {
-    background: #2E2981;
+    background: #00953E; /* Changed to Velnox Green for impact */
     color: white;
     border: none;
-    padding: 1rem 2rem; /* Reduced padding */
-    font-size: 0.875rem;
-    font-weight: 700;
+    padding: 1.25rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 800;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-top: 0.5rem; /* Reduced margin */
-    border-radius: 0px;
+    margin-top: 1.5rem;
+    border-radius: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
+    box-shadow: 0 4px 20px rgba(0, 149, 62, 0.25);
 }
 
 .submitBtn:hover {
@@ -127,17 +129,18 @@
 .fileLabel {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    border: 1px dashed var(--color-border);
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px dashed var(--color-border);
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: rgba(var(--color-bg-rgb), 0.3);
+    background: #fff;
 }
 
 .fileLabel:hover {
-    border-color: #2E2981;
-    background: rgba(46, 41, 129, 0.05);
+    border-color: #00953E;
+    background: rgba(0, 149, 62, 0.05);
 }
 
 .fileInput {
@@ -151,15 +154,15 @@
 }
 
 .fileAction {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    color: #2E2981;
+    color: #00953E;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .fileDesc {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: var(--color-text-secondary);
 }
 

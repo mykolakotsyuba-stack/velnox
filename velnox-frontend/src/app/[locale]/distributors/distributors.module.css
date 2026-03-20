@@ -569,10 +569,17 @@
     transform: scaleX(1);
 }
 
-.distCard:hover {
+.distCard:hover,
+.distCardAuth {
     background: var(--color-surface);
     box-shadow: 0 12px 60px rgba(37, 99, 235, 0.13), inset 0 0 30px rgba(37, 99, 235, 0.04);
     transform: translateY(-6px) scale(1.02);
+    border-color: var(--color-accent);
+}
+
+/* Authorized card specific glow */
+.distCardAuth {
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.15), inset 0 0 20px rgba(37, 99, 235, 0.05);
 }
 
 /* Scanline sweep element */
@@ -610,9 +617,9 @@
     width: auto;
     height: auto;
     object-fit: contain;
-    filter: grayscale(100%);
-    opacity: 0.65;
-    transition: filter 0.4s ease, opacity 0.4s ease;
+    /* Removed grayscale, logos are now colored by default */
+    opacity: 0.9;
+    transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .distCard:hover .cardLogo {
@@ -849,7 +856,7 @@
 /* Criteria grid */
 .criteriaGrid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
 }
 
