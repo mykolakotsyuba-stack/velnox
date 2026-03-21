@@ -497,11 +497,12 @@
 }
 
 .tableScroll {
-    overflow-x: visible;
+    overflow-x: auto; /* Enable horizontal scroll */
     -webkit-overflow-scrolling: touch;
     border: 1px solid var(--color-border);
     border-radius: 6px;
     margin-bottom: 20px;
+    min-width: 100%; /* Ensure container takes full width */
 }
 
 .tableScroll.noScroll {
@@ -511,9 +512,10 @@
 
 .techTable {
     width: 100%;
+    min-width: 100%; /* Allow table to squish to fit screen */
     border-collapse: collapse;
     text-align: left;
-    table-layout: auto; /* Let browser decide widths naturally */
+    table-layout: auto;
 }
 
 .techTable td,
@@ -521,7 +523,7 @@
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
-    white-space: normal;
+    white-space: normal; /* Allow text wrapping */
     min-width: 60px; /* Ensure some space for labels */
 }
 
@@ -667,7 +669,6 @@
 
     .actionCol {
         width: 1%; 
-        white-space: nowrap !important;
         padding-left: 20px !important;
     }
 
@@ -2869,15 +2870,3 @@
     border-bottom: none;
 }
 
-/* --- OVERRIDES FOR LAYOUT FIX --- */
-.tablesHeader {
-    flex-wrap: nowrap !important;
-}
-
-@media (min-width: 1025px) {
-    .techTable th {
-        white-space: nowrap !important;
-        overflow-wrap: normal !important;
-        word-break: normal !important;
-    }
-}
