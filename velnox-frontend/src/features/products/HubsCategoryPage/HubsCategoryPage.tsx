@@ -412,76 +412,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                         />
                         <div className={styles.blueprintDarkOverlay} />
 
-                        {/* Blueprint SVG — absolutely positioned over the wheel hub */}
-                        <div className={`${styles.blueprintSvgWrap} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
-                            <svg viewBox="0 0 320 320" className={styles.blueprintSvg} aria-hidden>
-                                <defs>
-                                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                        <feGaussianBlur stdDeviation="3" result="blur" />
-                                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                    </filter>
-                                </defs>
 
-                                {/* Outer housing (D = 127.3mm) */}
-                                <circle className={`${styles.bpCircle} ${styles.bpC1}`} cx="160" cy="160" r="120" filter="url(#glow)" />
-                                {/* Housing inner */}
-                                <circle className={`${styles.bpCircle} ${styles.bpC2}`} cx="160" cy="160" r="96" strokeDasharray="6 4" />
-                                {/* Bearing outer race */}
-                                <circle className={`${styles.bpCircle} ${styles.bpC3}`} cx="160" cy="160" r="74" filter="url(#glow)" />
-                                {/* Bearing inner race */}
-                                <circle className={`${styles.bpCircle} ${styles.bpC4}`} cx="160" cy="160" r="52" />
-                                {/* Bore (d = 55.7mm) */}
-                                <circle className={`${styles.bpCircle} ${styles.bpBore}`} cx="160" cy="160" r="28" filter="url(#glow)" />
-
-                                {/* Center crosshair */}
-                                <line className={styles.bpDim} x1="120" y1="160" x2="200" y2="160" />
-                                <line className={styles.bpDim} x1="160" y1="120" x2="160" y2="200" />
-                                <circle cx="160" cy="160" r="3" fill="#38bdf8" opacity="0.9" />
-
-                                {/* Bolt holes — 4 × M12 at J=106mm */}
-                                {[0, 90, 180, 270].map((angle) => {
-                                    const r = 86;
-                                    const rad = (angle * Math.PI) / 180;
-                                    return <circle key={angle} className={`${styles.bpHole} ${styles.bpC5}`}
-                                        cx={160 + r * Math.cos(rad)} cy={160 + r * Math.sin(rad)} r="8" />;
-                                })}
-
-                                {/* D label */}
-                                <line className={styles.bpDim} x1="160" y1="36" x2="160" y2="15" />
-                                <line className={styles.bpDim} x1="160" y1="15" x2="280" y2="15" />
-                                <text className={styles.bpLabel} x="284" y="19">D = 127.3</text>
-
-                                {/* d label */}
-                                <line className={styles.bpDim} x1="160" y1="132" x2="160" y2="110" />
-                                <line className={styles.bpDim} x1="160" y1="110" x2="280" y2="110" />
-                                <text className={styles.bpLabel} x="284" y="114">d = 55.7</text>
-
-                                {/* H/T label */}
-                                <line className={styles.bpDim} x1="246" y1="160" x2="270" y2="190" />
-                                <text className={styles.bpLabel} x="274" y="194">H/T M12</text>
-
-                                {/* Left labels */}
-                                <line className={styles.bpLeader} x1="60" y1="110" x2="30" y2="85" />
-                                <text className={styles.bpLabelLeft} x="28" y="81">КОРПУС</text>
-                                <text className={styles.bpLabelLeft} x="28" y="93">З ЧАВУНУ</text>
-
-                                <line className={styles.bpLeader} x1="86" y1="155" x2="30" y2="150" />
-                                <text className={styles.bpLabelLeft} x="28" y="146">КАСЕТНЕ</text>
-                                <text className={styles.bpLabelLeft} x="28" y="158">УЩІЛЬНЕННЯ</text>
-
-                                <line className={styles.bpLeader} x1="108" y1="195" x2="30" y2="225" />
-                                <text className={styles.bpLabelLeft} x="28" y="221">ВНУТРІШНІЙ</text>
-                                <text className={styles.bpLabelLeft} x="28" y="233">ПІДШИПНИК</text>
-
-                                {/* Hot points */}
-                                <circle className={`${styles.bpHotPulse} ${styles.bpHP1}`} cx="160" cy="40" r="6" />
-                                <circle className={styles.bpHotDot} cx="160" cy="40" r="4" />
-                                <circle className={`${styles.bpHotPulse} ${styles.bpHP2}`} cx="86" cy="160" r="6" />
-                                <circle className={styles.bpHotDot} cx="86" cy="160" r="4" />
-
-                                <text className={styles.bpWatermark} x="160" y="312">VELNOX © 2026</text>
-                            </svg>
-                        </div>
 
                         <div className={styles.blueprintLayout}>
                             {/* LEFT: Text */}
@@ -502,22 +433,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                         <span className={styles.blueprintMetaValue}>{t('hubsPage.app1.oem_focus')}</span>
                                     </div>
                                 </div>
-                                <div className={styles.blueprintSpecs}>
-                                    <div className={styles.blueprintSpec}>
-                                        <span className={styles.blueprintSpecVal}>48.8 kN</span>
-                                        <span className={styles.blueprintSpecLabel}>Cdyn</span>
-                                    </div>
-                                    <div className={styles.blueprintSpecDivider} />
-                                    <div className={styles.blueprintSpec}>
-                                        <span className={styles.blueprintSpecVal}>35.3 kN</span>
-                                        <span className={styles.blueprintSpecLabel}>Co static</span>
-                                    </div>
-                                    <div className={styles.blueprintSpecDivider} />
-                                    <div className={styles.blueprintSpec}>
-                                        <span className={styles.blueprintSpecVal}>3.81 kg</span>
-                                        <span className={styles.blueprintSpecLabel}>Mass</span>
-                                    </div>
-                                </div>
+
                             </div>
 
                         </div>
