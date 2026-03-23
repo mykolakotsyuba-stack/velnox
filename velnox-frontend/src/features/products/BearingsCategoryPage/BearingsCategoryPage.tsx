@@ -664,7 +664,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
             {/* 3. TECHNICAL TABLES */}
             <section className={styles.tablesSection} ref={tablesRef.ref}>
-                <div className={`${styles.container} ${tablesRef.inView ? styles.animIn : ''}`}>
+                <div className={`${styles.tableSectionContainer} ${tablesRef.inView ? styles.animIn : ''}`}>
                     {/* ─── BUQ Drawing Composite (above Table 1) ─── */}
                     <div className={styles.buqDrawingBlock}>
                         <div className={styles.buqDrawingTitle}>ТЕХНІЧНЕ КРЕСЛЕННЯ — BUQ SERIES</div>
@@ -1009,9 +1009,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <Th col="Threaded hole size T" label="T" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Threaded hole size T'] || []} selectedFilters={filters['Threaded hole size T'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="Hole diameter H (mm)" label="H (mm)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Hole diameter H (mm)'] || []} selectedFilters={filters['Hole diameter H (mm)'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="Mass kg" label="Mass (kg)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Mass kg'] || []} selectedFilters={filters['Mass kg'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Dynamic load rating Cdyn (kN)" label="Cdyn (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Dynamic load rating Cdyn (kN)'] || []} selectedFilters={filters['Dynamic load rating Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Static load rating Co (kN)" label="Co (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Static load rating Co (kN)'] || []} selectedFilters={filters['Static load rating Co (kN)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Fatigue load limit Pu (kN)" label="Pu (kN)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['Fatigue load limit Pu (kN)'] || []} selectedFilters={filters['Fatigue load limit Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1034,13 +1031,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="T">{row['Threaded hole size T'] || '-'}</td>
                                             <td data-label="H (mm)">{row['Hole diameter H (mm)'] || '-'}</td>
                                             <td data-label="Mass (kg)">{row['Mass kg'] || '-'}</td>
-                                            <td data-label="Cdyn (kN)">{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
-                                            <td data-label="Co (kN)">{row['Static load rating Co (kN)'] || '-'}</td>
-                                            <td data-label="Pu (kN)">{row['Fatigue load limit Pu (kN)'] || '-'}</td>
                                         </tr>
                                     ))}
                                     {filteredT4.length === 0 && (
-                                        <tr><td colSpan={17} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={14} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
