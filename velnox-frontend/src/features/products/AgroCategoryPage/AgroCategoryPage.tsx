@@ -96,18 +96,46 @@ function SortIcon({ dir }: { dir: SortDir }) {
 
 /* ─── Render structured list for tight cells ─── */
 function renderTightCell(val: string | null | undefined) {
-    if (!val || val === '-') return <span style={{ whiteSpace: 'nowrap' }}>—</span>;
-    const items = val
-        .split(/\n|;/)
-        .map(s => s.trim())
-        .filter(Boolean);
-    if (items.length <= 1) return <span style={{ whiteSpace: 'nowrap' }}>{val}</span>;
+    if (!val || val === '-') return <span>—</span>;
+    const items = val.split(/\n|;/).map(s => s.trim()).filter(Boolean);
+    if (items.length <= 1) return <span>{val}</span>;
     return (
-        <ul className="analogues-list" style={{ paddingLeft: '16px', margin: 0 }}>
+        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
             {items.map((item, i) => (
-                <li key={i} style={{ whiteSpace: 'nowrap', marginBottom: '4px' }}>
-                    {item}
-                </li>
+                <li key={i} style={{ marginBottom: '2px' }}>{item}</li>
+            ))}
+        </ul>
+    );
+}
+
+/* ─── Brand cell: кожен бренд з нового рядка ─── */
+function renderBrandCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const brands = val.split(/\n|\//).map(s => s.trim()).filter(Boolean);
+    if (brands.length <= 1) return <span>{val}</span>;
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            {brands.map((brand, i) => <span key={i}>{brand}</span>)}
+        </div>
+    );
+}
+
+/* ─── Designation cell: список + перенос після дужки ) ─── */
+function renderDesignationCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const items = val.split(/\n/).map(s => s.trim()).filter(Boolean);
+    const renderWithParenBreaks = (text: string) => {
+        const parts = text.split(') ');
+        if (parts.length <= 1) return <>{text}</>;
+        return <>{parts.map((part, j) => (
+            <span key={j}>{j < parts.length - 1 ? part + ')' : part}{j < parts.length - 1 && <br />}</span>
+        ))}</>;
+    };
+    if (items.length <= 1) return <span>{renderWithParenBreaks(items[0] ?? val)}</span>;
+    return (
+        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
+            {items.map((item, i) => (
+                <li key={i} style={{ marginBottom: '2px' }}>{renderWithParenBreaks(item)}</li>
             ))}
         </ul>
     );
@@ -518,8 +546,8 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <thead>
                                     <tr>
                                         {table1Cols.map(col => (
-                                            <Th 
-                                                key={col} col={col} label={table1Labels[col] ?? col} toggle={tog1} sortCol={sc1} sortDir={sd1} 
+                                            <Th
+                                                key={col} col={col} label={table1Labels[col] ?? col} toggle={tog1} sortCol={sc1} sortDir={sd1}
                                                 hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
                                                 filterOptions={allOptions[col]}
                                                 selectedFilters={filters[col]}
@@ -533,12 +561,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                     {sortedT1.map((row, i) => (
                                         <tr key={i}>
                                             {table1Cols.map(col => (
-                                                <td 
-                                                    key={col} 
+                                                <td
+                                                    key={col}
                                                     className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
                                                     data-label={table1Labels[col] ?? col}
                                                 >
-                                                    {col === 'Cross-Reference' || col === 'Bearing designation' ? renderTightCell(row[col]) : (row[col] ?? '-')}
+                                                    {col === 'Cross-Reference' ? renderTightCell(row[col])
+                                                     : col === 'Bearing designation' ? renderDesignationCell(row[col])
+                                                     : col === 'Brand name' ? renderBrandCell(row[col])
+                                                     : (row[col] ?? '-')}
                                                 </td>
                                             ))}
                                             <td className={styles.actionCol} data-label="">
@@ -751,12 +782,12 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         <p className={styles.tableDesc}>{t('agroPage.block2.table2.desc')}</p>
                         <div className={styles.diagramPlaceholder}>[ СХЕМА ]</div>
                         <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
+                            <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
                                     <tr>
                                         {table2Cols.map(col => (
-                                            <Th 
-                                                key={col} col={col} label={table2Labels[col] ?? col} toggle={tog2} sortCol={sc2} sortDir={sd2} 
+                                            <Th
+                                                key={col} col={col} label={table2Labels[col] ?? col} toggle={tog2} sortCol={sc2} sortDir={sd2}
                                                 hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
                                                 filterOptions={allOptions[col]}
                                                 selectedFilters={filters[col]}
@@ -770,12 +801,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                     {sortedT2.map((row, i) => (
                                         <tr key={i}>
                                             {table2Cols.map(col => (
-                                                <td 
-                                                    key={col} 
+                                                <td
+                                                    key={col}
                                                     className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
                                                     data-label={table2Labels[col] ?? col}
                                                 >
-                                                    {col === 'Cross-Reference' || col === 'Bearing designation' ? renderTightCell(row[col]) : (row[col] ?? '-')}
+                                                    {col === 'Cross-Reference' ? renderTightCell(row[col])
+                                                     : col === 'Bearing designation' ? renderDesignationCell(row[col])
+                                                     : col === 'Brand name' ? renderBrandCell(row[col])
+                                                     : (row[col] ?? '-')}
                                                 </td>
                                             ))}
                                             <td className={styles.actionCol} data-label="">
@@ -827,12 +861,12 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         <p className={styles.tableDesc}>{t('agroPage.block2.table3.desc')}</p>
                         <div className={styles.diagramPlaceholder}>[ СХЕМА ]</div>
                         <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
+                            <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
                                     <tr>
                                         {table3Cols.map(col => (
-                                            <Th 
-                                                key={col} col={col} label={table3Labels[col] ?? col} toggle={tog3} sortCol={sc3} sortDir={sd3} 
+                                            <Th
+                                                key={col} col={col} label={table3Labels[col] ?? col} toggle={tog3} sortCol={sc3} sortDir={sd3}
                                                 hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
                                                 filterOptions={allOptions[col]}
                                                 selectedFilters={filters[col]}
@@ -846,12 +880,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                     {sortedT3.map((row, i) => (
                                         <tr key={i}>
                                             {table3Cols.map(col => (
-                                                <td 
-                                                    key={col} 
+                                                <td
+                                                    key={col}
                                                     className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
                                                     data-label={table3Labels[col] ?? col}
                                                 >
-                                                    {col === 'Cross-Reference' || col === 'Bearing designation' ? renderTightCell(row[col]) : (row[col] ?? '-')}
+                                                    {col === 'Cross-Reference' ? renderTightCell(row[col])
+                                                     : col === 'Bearing designation' ? renderDesignationCell(row[col])
+                                                     : col === 'Brand name' ? renderBrandCell(row[col])
+                                                     : (row[col] ?? '-')}
                                                 </td>
                                             ))}
                                             <td className={styles.actionCol} data-label="">
@@ -880,12 +917,12 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         <p className={styles.tableDesc}>{t('agroPage.block2.table4.desc')}</p>
                         <div className={styles.diagramPlaceholder}>[ СХЕМА ]</div>
                         <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
+                            <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
                                     <tr>
                                         {table4Cols.map(col => (
-                                            <Th 
-                                                key={col} col={col} label={table4Labels[col] ?? col} toggle={tog4} sortCol={sc4} sortDir={sd4} 
+                                            <Th
+                                                key={col} col={col} label={table4Labels[col] ?? col} toggle={tog4} sortCol={sc4} sortDir={sd4}
                                                 hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
                                                 filterOptions={allOptions[col]}
                                                 selectedFilters={filters[col]}
@@ -899,12 +936,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                     {sortedT4.map((row, i) => (
                                         <tr key={i}>
                                             {table4Cols.map(col => (
-                                                <td 
-                                                    key={col} 
+                                                <td
+                                                    key={col}
                                                     className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
                                                     data-label={table4Labels[col] ?? col}
                                                 >
-                                                    {col === 'Cross-Reference' || col === 'Bearing designation' ? renderTightCell(row[col]) : (row[col] ?? '-')}
+                                                    {col === 'Cross-Reference' ? renderTightCell(row[col])
+                                                     : col === 'Bearing designation' ? renderDesignationCell(row[col])
+                                                     : col === 'Brand name' ? renderBrandCell(row[col])
+                                                     : (row[col] ?? '-')}
                                                 </td>
                                             ))}
                                             <td className={styles.actionCol} data-label="">

@@ -519,34 +519,32 @@
     table-layout: auto;
 }
 
-.techTable td,
-.techTable th {
+.techTable td {
     overflow-wrap: break-word;
     word-wrap: break-word;
-    word-break: normal;
-    white-space: normal; /* Allow text wrapping */
+    word-break: break-word;
+    white-space: normal;
     min-width: 40px;
+    padding: 8px 6px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    background: transparent;
+    transition: background 0.2s ease;
+    line-height: 1.4;
+    vertical-align: top;
 }
 
 .techTable th {
     background: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
-    padding: 10px 8px; /* Compact padding */
-    font-size: 11px; /* Smaller font */
+    padding: 10px 6px;
+    font-size: 11px;
     font-weight: 700;
     color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.02em;
     border-bottom: 2px solid var(--color-border);
-}
-
-.techTable td {
-    padding: 10px 8px; /* Compact padding */
-    font-size: 12px; /* Small readable font */
-    color: var(--color-text-muted);
-    border-bottom: 1px solid var(--color-border);
-    background: transparent;
-    transition: background 0.2s ease;
-    line-height: 1.3;
+    white-space: nowrap;
 }
 
 .techTable tr:last-child td {
@@ -658,28 +656,33 @@
 
 @media (min-width: 1025px) {
     .techTable {
-        width: 100%; /* Strict 100% width to avoid horizontal scroll */
-        table-layout: auto; 
+        width: 100%;
+        table-layout: auto;
     }
 
-    .techTable td, .techTable th {
-        white-space: normal; /* Allow wrapping */
-        line-height: 1.5; /* Better readability for wrapped text */
-        padding: 12px 14px;
+    .techTable td {
+        white-space: normal;
+        line-height: 1.4;
+        padding: 8px 6px;
+        vertical-align: top;
+    }
+
+    .techTable th {
+        white-space: nowrap;
+        padding: 8px 6px;
     }
 
     .actionCol {
-        width: 1%; /* Shrink to fit button */
-        padding-left: 20px !important;
+        width: 1%;
+        padding-left: 12px !important;
     }
 
-    /* Specific column adjustments for Table 1 common view */
-    .techTable th:nth-child(1), .techTable td:nth-child(1) { width: 140px; } /* Part Number */
-    .techTable th:nth-child(2), .techTable td:nth-child(2) { width: 140px; } /* Cross-Ref */
-    
-    .techTable td {
-        vertical-align: middle;
-    }
+    /* Колонка 1: Part Number */
+    .techTable th:nth-child(1), .techTable td:nth-child(1) { width: 120px; min-width: 100px; }
+    /* Колонка 2: Bearing/Designation */
+    .techTable th:nth-child(2), .techTable td:nth-child(2) { min-width: 120px; }
+    /* Колонка 3: Brand */
+    .techTable th:nth-child(3), .techTable td:nth-child(3) { width: 70px; min-width: 60px; }
 }
 
 /* Grid Table for Sealing */
@@ -1560,11 +1563,24 @@
 }
 
 .techTableCompact th, .techTableCompact td {
-    padding: 10px 4px !important;
-    font-size: 11px !important;
+    padding: 8px 6px;
+    font-size: 12px;
 }
 .techTableCompact th {
-    font-size: 11px !important;
+    font-size: 11px;
+}
+
+/* Extra-compact: таблиці з 15+ колонками */
+.techTableWide th {
+    font-size: 10px;
+    padding-left: 4px;
+    padding-right: 4px;
+    letter-spacing: 0.01em;
+}
+.techTableWide td {
+    font-size: 11px;
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 /* ────────────────────────────────────────────────────────
