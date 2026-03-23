@@ -475,26 +475,38 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── APP BLOCK 1: Image Backed ── */}
-            <section ref={app1Ref.ref} className={styles.appBlockImage}>
-                <div className={styles.appBlockBg}>
-                    <Image src="/velnox/images/agro/agro-app1-bg.png" alt="Agro Seeder in field" fill style={{ objectFit: 'cover' }} />
-                </div>
-                <div className={styles.appBlockOverlay} />
-                <div className={`${styles.appBlockContent} ${app1Ref.inView ? styles.animIn : ''}`}>
-                    <div className={styles.appBlockText}>
-                        <span className={styles.appBlockTag}>AGRO BEARINGS</span>
-                        <h2 className={styles.appBlockTitle}>{t('agroPage.app1.title')}</h2>
-                        <p className={styles.appBlockDesc}>{t('agroPage.app1.desc')}</p>
-                        
-                        <div>
-                            <span className={styles.appBlockKeyword}>Сфера застосування:</span>
-                            <p className={styles.appBlockList}>{t('agroPage.app1.applications')}</p>
-                        </div>
-                        
-                        <div>
-                            <span className={styles.appBlockKeyword}>OEM-фокус:</span>
-                            <p className={styles.appBlockList}>{t('agroPage.app1.oem_focus')}</p>
+            {/* ── APP BLOCK 1: Blueprint Style ── */}
+            <section ref={app1Ref.ref} className={`${styles.blueprintSection} ${app1Ref.inView ? styles.animIn : ''}`}>
+                <div className={styles.blueprintBgContainer}>
+                    <Image
+                        src="/velnox/images/agro/blueprint-bg-1.png"
+                        alt="Agro Bearings"
+                        fill
+                        priority
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
+                    />
+                    <div className={styles.blueprintDarkOverlay} />
+                    
+                    <div className={styles.blueprintLayout}>
+                        {/* LEFT: Text */}
+                        <div className={styles.blueprintText}>
+                            <span className={styles.blueprintTag}>
+                                <span className={styles.blueprintTagLine} />
+                                AGRO BEARINGS
+                            </span>
+                            <h2 className={styles.blueprintTitle}>{t('agroPage.app1.title')}</h2>
+                            <p className={styles.blueprintLead}>{t('agroPage.app1.desc')}</p>
+                            
+                            <div className={styles.blueprintMeta}>
+                                <div className={styles.blueprintMetaItem}>
+                                    <span className={styles.blueprintMetaLabel}>Сфера застосування</span>
+                                    <span className={styles.blueprintMetaValue}>{t('agroPage.app1.applications')}</span>
+                                </div>
+                                <div className={styles.blueprintMetaItem}>
+                                    <span className={styles.blueprintMetaLabel}>OEM-фокус</span>
+                                    <span className={styles.blueprintMetaValue}>{t('agroPage.app1.oem_focus')}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
