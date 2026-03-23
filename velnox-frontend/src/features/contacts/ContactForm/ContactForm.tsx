@@ -42,7 +42,6 @@ export function ContactForm() {
                     type="text" 
                     id="name" 
                     name="name" 
-                    placeholder={t('name_ph')}
                     required 
                     className={styles.input}
                 />
@@ -54,7 +53,6 @@ export function ContactForm() {
                     type="email" 
                     id="email" 
                     name="email" 
-                    placeholder={t('email_ph')}
                     required 
                     className={styles.input}
                 />
@@ -66,7 +64,6 @@ export function ContactForm() {
                     type="tel" 
                     id="phone" 
                     name="phone" 
-                    placeholder={t('phone_ph')}
                     required 
                     className={styles.input}
                 />
@@ -78,7 +75,6 @@ export function ContactForm() {
                     type="text" 
                     id="company" 
                     name="company" 
-                    placeholder={t('company_ph')}
                     className={styles.input}
                 />
             </div>
@@ -88,7 +84,6 @@ export function ContactForm() {
                 <textarea 
                     id="message" 
                     name="message" 
-                    placeholder={t('message_ph')}
                     required 
                     rows={4}
                     className={styles.textarea}
