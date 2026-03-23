@@ -646,31 +646,40 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 </div>
             </section>
 
-            <section className={styles.tablesSection}>
-                <div className={styles.container}>
-
-                    {/* ── APP BLOCK 3 ── */}
-                    <section className={app3Class} ref={app3Ref.ref}>
-                        <div className={styles.appWatermark}>SEEDERS</div>
-                        <div className={styles.appInner}>
-                            <div className={styles.appHeader}>
-                                <span className={styles.appTag}>HIGH-SPEED SEEDERS</span>
-                                <h2 className={styles.appTitle}>{t('hubsPage.app3.title')}</h2>
+            {/* ── APP BLOCK 3 ── */}
+            <section ref={app3Ref.ref} className={`${styles.blueprintBlock} ${app3Ref.inView ? styles.blueprintVisible : ''}`}>
+                <Image
+                    src="/velnox/images/hubs/seeder-field.png"
+                    alt=""
+                    fill
+                    priority={false}
+                    style={{ objectFit: 'cover', objectPosition: 'center 60%' }}
+                />
+                <div className={styles.blueprintDarkOverlay} />
+                <div className={styles.blueprintLayout}>
+                    <div className={styles.blueprintText}>
+                        <span className={styles.blueprintTag}>
+                            <span className={styles.blueprintTagLine} />
+                            HIGH-SPEED SEEDERS
+                        </span>
+                        <h2 className={styles.blueprintTitle}>{t('hubsPage.app3.title')}</h2>
+                        <p className={styles.blueprintLead}>{t('hubsPage.app3.desc')}</p>
+                        <div className={styles.blueprintMeta}>
+                            <div className={styles.blueprintMetaItem}>
+                                <span className={styles.blueprintMetaLabel}>Сфера застосування</span>
+                                <span className={styles.blueprintMetaValue}>{t('hubsPage.app3.applications')}</span>
                             </div>
-                            <div className={styles.appBody}>
-                                <p className={`${styles.appPara} ${styles.appParaLead} ${app3Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
-                                    {t('hubsPage.app3.desc')}
-                                </p>
-                                <p className={`${styles.appPara} ${app3Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
-                                    <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('hubsPage.app3.applications')}
-                                </p>
-                                <p className={`${styles.appPara} ${app3Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
-                                    <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('hubsPage.app3.oem_focus')}
-                                </p>
+                            <div className={styles.blueprintMetaItem}>
+                                <span className={styles.blueprintMetaLabel}>OEM-сумісність</span>
+                                <span className={styles.blueprintMetaValue}>{t('hubsPage.app3.oem_focus')}</span>
                             </div>
                         </div>
-                    </section>
+                    </div>
+                </div>
+            </section>
 
+            <section className={styles.tablesSection}>
+                <div className={styles.container}>
                     {/* TABLE 3 */}
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table3.title')}</h3>
