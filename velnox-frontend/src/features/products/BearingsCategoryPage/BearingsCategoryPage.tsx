@@ -118,6 +118,46 @@ function renderTightCell(val: string | null | undefined) {
     );
 }
 
+/* ─── Brand cell: each brand on its own line ─── */
+function renderBrandCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const brands = val.split(/\n|\//).map(s => s.trim()).filter(Boolean);
+    if (brands.length <= 1) return <span>{val}</span>;
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            {brands.map((brand, i) => <span key={i}>{brand}</span>)}
+        </div>
+    );
+}
+
+/* ─── Designation cell: list items + break after closing paren ─── */
+function renderDesignationCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const items = val.split(/\n/).map(s => s.trim()).filter(Boolean);
+
+    const renderWithParenBreaks = (text: string) => {
+        const parts = text.split(') ');
+        if (parts.length <= 1) return <>{text}</>;
+        return <>
+            {parts.map((part, j) => (
+                <span key={j}>
+                    {j < parts.length - 1 ? part + ')' : part}
+                    {j < parts.length - 1 && <br />}
+                </span>
+            ))}
+        </>;
+    };
+
+    if (items.length <= 1) return <span>{renderWithParenBreaks(items[0] ?? val)}</span>;
+    return (
+        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
+            {items.map((item, i) => (
+                <li key={i} style={{ marginBottom: '2px' }}>{renderWithParenBreaks(item)}</li>
+            ))}
+        </ul>
+    );
+}
+
 function useSortableTable(data: any[]) {
     const [sortCol, setSortCol] = useState<string | null>(null);
     const [sortDir, setSortDir] = useState<SortDir>(null);
@@ -704,7 +744,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                                 </Link>
                                             </td>
                                             <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderTightCell(row.cross_ref)}</td>
-                                            <td data-label="Brand">{row.brand}</td>
+                                            <td data-label="Brand">{renderBrandCell(row.brand)}</td>
                                             <td data-label="d (mm)">{row.d_mm}</td>
                                             <td data-label="d (inch)">{row.d_inch ?? '—'}</td>
                                             <td data-label="A1 (mm)">{row.A1}</td>
@@ -785,7 +825,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <tr key={i}>
                                             <td data-label="Part No" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
                                             <td data-label="Designation">{renderTightCell(row['Bearing designation'])}</td>
-                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand name'] || '-'}</td>
+                                            <td data-label="Brand">{renderBrandCell(row['Brand name'])}</td>
                                             <td data-label="Cross-Ref" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
                                             <td data-label="Bore d">{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td data-label="A1">{row['Total housing width A1 (mm)'] || '-'}</td>
@@ -879,7 +919,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <tr key={i}>
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
                                             <td data-label="Bearing Designation">{renderTightCell(row['Bearing designation'])}</td>
-                                            <td data-label="Brand">{row['Brand \nname'] || '-'}</td>
+                                            <td data-label="Brand">{renderBrandCell(row['Brand \nname'])}</td>
                                             <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
                                             <td data-label="Bore d (mm)">{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td data-label="Length L (mm)">{row['Total length L (mm)'] || '-'}</td>
@@ -909,7 +949,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
             {/* ─── Sealing Info Block (Requested) ─── */}
             <section className={styles.tablesSection}>
-                <div className={styles.container}>
+                <div className={styles.tableSectionContainer}>
                     <div className={`${styles.buqDrawingBlock} ${styles.sealingInfoBlock}`}>
                         <div className={styles.sealingInfoTag}>{t('sealing_info.tag')}</div>
                         <div className={styles.sealingInfoTitle}>
@@ -946,7 +986,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <h3>{t('block2.table4.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table4.desc')}</p>
                         <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
+                            <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
                                     <tr>
                                         <Th col="Part Number" label="Part Number" toggle={tog4} sortCol={sc4} sortDir={sd4} />
@@ -978,8 +1018,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     {sortedT4.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
-                                            <td data-label="Bearing Designation" style={{ fontSize: '12px' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
+                                            <td data-label="Bearing Designation">{renderDesignationCell(row['Bearing designation'])}</td>
+                                            <td data-label="Brand">{renderBrandCell(row['Brand \\nname'])}</td>
                                             <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
                                             <td data-label="Bore d (mm)">{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td data-label="d1 (mm)">{row['Centering diameter d1 (mm)'] || '-'}</td>
@@ -1060,8 +1100,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     {sortedT5.map((row, i) => (
                                         <tr key={i}>
                                             <td data-label="Part No" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
-                                            <td data-label="Designation" style={{ fontSize: '12px' }}>{row['Bearing designation'] || '-'}</td>
-                                            <td data-label="Brand" style={{ fontSize: '12px' }}>{row['Brand \\nname'] || '-'}</td>
+                                            <td data-label="Designation">{renderDesignationCell(row['Bearing designation'])}</td>
+                                            <td data-label="Brand">{renderBrandCell(row['Brand \\nname'])}</td>
                                             <td data-label="Cross-Ref" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
                                             <td data-label="Bore d">{row['Bore diameter d (mm)'] || '-'}</td>
                                             <td data-label="Out D">{row['Outside diameter D (mm)'] || '-'}</td>

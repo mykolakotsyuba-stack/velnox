@@ -1594,6 +1594,19 @@
     font-size: 11px;
 }
 
+/* Extra-compact variant for very wide tables (20+ columns) */
+.techTableWide th {
+    font-size: 10px;
+    padding-left: 4px;
+    padding-right: 4px;
+    letter-spacing: 0.01em;
+}
+.techTableWide td {
+    font-size: 11px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
 /* ────────────────────────────────────────────────────────
    PACKER ROLLER BLOCK
 ──────────────────────────────────────────────────────── */
