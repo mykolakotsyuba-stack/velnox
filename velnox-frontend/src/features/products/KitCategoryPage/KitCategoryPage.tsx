@@ -75,18 +75,48 @@ type SortDir = 'asc' | 'desc' | null;
 
 /* ─── Render structured list for tight cells ─── */
 function renderTightCell(val: string | null | undefined) {
-    if (!val || val === '-') return <span style={{ whiteSpace: 'nowrap' }}>—</span>;
-    const items = val
-        .split(/\n|;/)
-        .map(s => s.trim())
-        .filter(Boolean);
-    if (items.length <= 1) return <span style={{ whiteSpace: 'nowrap' }}>{val}</span>;
+    if (!val || val === '-') return <span>—</span>;
+    const items = val.split(/\n|;/).map(s => s.trim()).filter(Boolean);
+    if (items.length <= 1) return <span>{val}</span>;
     return (
-        <ul className="analogues-list" style={{ paddingLeft: '16px', margin: 0 }}>
+        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
             {items.map((item, i) => (
-                <li key={i} style={{ whiteSpace: 'nowrap', marginBottom: '4px' }}>
-                    {item}
-                </li>
+                <li key={i} style={{ marginBottom: '2px' }}>{item}</li>
+            ))}
+        </ul>
+    );
+}
+
+/* ─── Brand cell: кожен бренд з нового рядка ─── */
+function renderBrandCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const brands = val.split(/\n|\//).map(s => s.trim()).filter(Boolean);
+    if (brands.length <= 1) return <span>{val}</span>;
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            {brands.map((brand, i) => <span key={i}>{brand}</span>)}
+        </div>
+    );
+}
+
+/* ─── Designation cell: список + перенос після ). Розбиває по \n і " / " (НЕ по "/" у дробах типу 1/4) ─── */
+function renderDesignationCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const items: string[] = [];
+    val.split(/\n/).map(s => s.trim()).filter(Boolean)
+        .forEach(line => line.split(' / ').forEach(p => { const t = p.trim(); if (t) items.push(t); }));
+    const renderWithParenBreaks = (text: string) => {
+        const parts = text.split(') ');
+        if (parts.length <= 1) return <>{text}</>;
+        return <>{parts.map((part, j) => (
+            <span key={j}>{j < parts.length - 1 ? part + ')' : part}{j < parts.length - 1 && <br />}</span>
+        ))}</>;
+    };
+    if (items.length <= 1) return <span>{renderWithParenBreaks(items[0] ?? val)}</span>;
+    return (
+        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
+            {items.map((item, i) => (
+                <li key={i} style={{ marginBottom: '2px' }}>{renderWithParenBreaks(item)}</li>
             ))}
         </ul>
     );
@@ -233,6 +263,10 @@ function KitTable({ tableNum, data, searchQuery, filters, allOptions, setFilters
         });
     };
 
+    const tableClass = cols.length >= 13
+        ? `${styles.techTable} ${styles.techTableWide}`
+        : styles.techTable;
+
     return (
         <div className={styles.tableBlock}>
             <h3>{t(`kitPage.block2.table${tableNum}.title`)}</h3>
@@ -240,7 +274,7 @@ function KitTable({ tableNum, data, searchQuery, filters, allOptions, setFilters
             {/* Diagram placeholder — replace with Image when scheme is available */}
             <div className={styles.diagramPlaceholder}>[ СХЕМА ТАБЛИЦІ {tableNum} ]</div>
             <div className={styles.tableScroll}>
-                <table className={styles.techTable}>
+                <table className={tableClass}>
                     <thead>
                         <tr>
                             {cols.map(({ col, label }) => {
@@ -307,7 +341,10 @@ function KitTable({ tableNum, data, searchQuery, filters, allOptions, setFilters
                                         className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
                                         data-label={label}
                                     >
-                                        {col === 'Cross-Reference' || col === 'Bearing designation' ? renderTightCell(row[col]) : (row[col] ?? '-')}
+                                        {col === 'Cross-Reference' ? renderTightCell(row[col])
+                                     : col === 'Bearing designation' ? renderDesignationCell(row[col])
+                                     : col === 'Brand name' ? renderBrandCell(row[col])
+                                     : (row[col] ?? '-')}
                                     </td>
                                 ))}
                                 <td className={styles.actionCol} data-label="">

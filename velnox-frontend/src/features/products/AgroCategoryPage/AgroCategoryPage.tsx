@@ -120,10 +120,12 @@ function renderBrandCell(val: string | null | undefined) {
     );
 }
 
-/* ─── Designation cell: список + перенос після дужки ) ─── */
+/* ─── Designation cell: список + перенос після ). Розбиває по \n і " / " (НЕ по "/" у дробах типу 1/4) ─── */
 function renderDesignationCell(val: string | null | undefined) {
     if (!val || val === '-') return <span>—</span>;
-    const items = val.split(/\n/).map(s => s.trim()).filter(Boolean);
+    const items: string[] = [];
+    val.split(/\n/).map(s => s.trim()).filter(Boolean)
+        .forEach(line => line.split(' / ').forEach(p => { const t = p.trim(); if (t) items.push(t); }));
     const renderWithParenBreaks = (text: string) => {
         const parts = text.split(') ');
         if (parts.length <= 1) return <>{text}</>;
