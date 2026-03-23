@@ -331,14 +331,16 @@
 
 .tablesHeaderWrap.isSticky .stickyContainer {
     position: fixed;
-    top: 80px;
+    top: 100px;
     left: 0;
     right: 0;
+    z-index: 90;
     background: var(--color-surface);
     border-bottom: 2px solid var(--color-accent);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    padding: 16px 40px;
+    padding: 16px 0;
     animation: slideDownSticky 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    width: 100%;
 }
 
 @keyframes slideDownSticky {
@@ -406,14 +408,13 @@
     transition: all 0.3s ease;
 }
 
+.tablesHeaderWrap.isSticky .tablesHeader {
+    padding: 0;
+    align-items: center;
+}
+
 .tablesHeaderWrap.isSticky .tablesIntro {
-    font-size: 14px;
-    opacity: 0.7;
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 300px;
+    display: none;
 }
 
 .searchWrap {
@@ -2277,7 +2278,7 @@
 .blueprintLead {
     font-size: 16px;
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.85);
     margin: 0 0 32px;
     max-width: 500px;
     opacity: 0;
@@ -2801,10 +2802,10 @@
     background: linear-gradient(
         90deg,
         rgba(5, 12, 18, 0.00) 0%,
-        rgba(5, 12, 18, 0.10) 35%,
-        rgba(5, 12, 18, 0.75) 55%,
-        rgba(5, 12, 18, 0.92) 75%,
-        rgba(5, 12, 18, 0.95) 100%
+        rgba(5, 12, 18, 0.40) 30%,
+        rgba(5, 12, 18, 0.85) 50%,
+        rgba(5, 12, 18, 0.95) 75%,
+        rgba(5, 12, 18, 0.98) 100%
     );
     z-index: 1;
 }
