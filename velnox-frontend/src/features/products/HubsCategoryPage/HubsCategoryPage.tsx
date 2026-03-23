@@ -171,7 +171,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         const handleScroll = () => {
             if (!searchHeaderRef.current) return;
             const elementOffsetTop = searchHeaderRef.current.offsetTop;
-            if (window.scrollY > elementOffsetTop - 80) {
+            if (window.scrollY > elementOffsetTop - 100) {
                 searchHeaderRef.current.classList.add(styles.isSticky);
             } else {
                 searchHeaderRef.current.classList.remove(styles.isSticky);
@@ -365,6 +365,16 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                         <p className={styles.heroSubtitle}>{t('hubsPage.hero.subtitle')}</p>
                         <p className={styles.heroDescription}>{t('hubsPage.hero.desc')}</p>
                     </div>
+                    <div className={styles.heroImageWrap}>
+                        <Image
+                            src="/velnox/images/hubs/hero-hub.png"
+                            alt="VELNOX Bearing Hub"
+                            width={520}
+                            height={520}
+                            priority
+                            className={styles.heroImage}
+                        />
+                    </div>
                 </div>
             </section>
 
@@ -515,24 +525,26 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
             {/* STICKY SEARCH — after blueprint block */}
             <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
-                <div className={`${styles.container} ${styles.stickyContainer}`}>
-                    <div className={styles.tablesHeader}>
-                        <div className={styles.headerTitles}>
-                            <h2 className={styles.sectionTitle}>{t('hubsPage.block2.title')}</h2>
-                            <p className={styles.tablesIntro}>{t('hubsPage.block2.intro')}</p>
-                        </div>
-                        <div className={styles.searchWrap}>
-                            <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                            <input
-                                type="text"
-                                className={styles.searchInput}
-                                placeholder={t('hubsPage.block2.search_placeholder')}
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
+                <div className={styles.stickyContainer}>
+                    <div className={styles.container}>
+                        <div className={styles.tablesHeader}>
+                            <div className={styles.headerTitles}>
+                                <h2 className={styles.sectionTitle}>{t('hubsPage.block2.title')}</h2>
+                                <p className={styles.tablesIntro}>{t('hubsPage.block2.intro')}</p>
+                            </div>
+                            <div className={styles.searchWrap}>
+                                <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input
+                                    type="text"
+                                    className={styles.searchInput}
+                                    placeholder={t('hubsPage.block2.search_placeholder')}
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
