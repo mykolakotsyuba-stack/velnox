@@ -372,7 +372,7 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
         const handleScroll = () => {
             if (!searchHeaderRef.current) return;
             const top = searchHeaderRef.current.offsetTop;
-            searchHeaderRef.current.classList.toggle(styles.isSticky, window.scrollY > top - 80);
+            searchHeaderRef.current.classList.toggle(styles.isSticky, window.scrollY > top - 100);
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
@@ -436,19 +436,21 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
 
             {/* STICKY SEARCH */}
             <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
-                <div className={`${styles.container} ${styles.stickyContainer}`}>
-                    <div className={styles.tablesHeader}>
-                        <div className={styles.headerTitles}>
-                            <h2 className={styles.sectionTitle}>{t('kitPage.block2.title')}</h2>
-                            <p className={styles.tablesIntro}>{t('kitPage.block2.intro')}</p>
-                        </div>
-                        <div className={styles.searchWrap}>
-                            <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-                            </svg>
-                            <input type="text" className={styles.searchInput}
-                                placeholder={t('kitPage.block2.search_placeholder')}
-                                value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                <div className={styles.stickyContainer}>
+                    <div className={styles.container}>
+                        <div className={styles.tablesHeader}>
+                            <div className={styles.headerTitles}>
+                                <h2 className={styles.sectionTitle}>{t('kitPage.block2.title')}</h2>
+                                <p className={styles.tablesIntro}>{t('kitPage.block2.intro')}</p>
+                            </div>
+                            <div className={styles.searchWrap}>
+                                <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                                <input type="text" className={styles.searchInput}
+                                    placeholder={t('kitPage.block2.search_placeholder')}
+                                    value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                            </div>
                         </div>
                     </div>
                 </div>

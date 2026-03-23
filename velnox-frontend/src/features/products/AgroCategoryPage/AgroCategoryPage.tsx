@@ -165,7 +165,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         const handleScroll = () => {
             if (searchHeaderRef.current) {
                 const elementOffsetTop = searchHeaderRef.current.offsetTop;
-                if (window.scrollY > elementOffsetTop - 80) {
+                if (window.scrollY > elementOffsetTop - 100) {
                     searchHeaderRef.current.classList.add(styles.isSticky);
                 } else {
                     searchHeaderRef.current.classList.remove(styles.isSticky);
@@ -472,23 +472,25 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
 
             {/* ── STICKY SEARCH ── */}
             <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
-                <div className={`${styles.container} ${styles.stickyContainer}`}>
-                    <div className={styles.tablesHeader}>
-                        <div className={styles.headerTitles}>
-                            <h2 className={styles.sectionTitle}>{t('agroPage.block2.title')}</h2>
-                            <p className={styles.tablesIntro}>{t('agroPage.block2.intro')}</p>
-                        </div>
-                        <div className={styles.searchWrap}>
-                            <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-                            </svg>
-                            <input
-                                type="text"
-                                className={styles.searchInput}
-                                placeholder={t('agroPage.block2.search_placeholder')}
-                                value={searchQuery}
-                                onChange={e => setSearchQuery(e.target.value)}
-                            />
+                <div className={styles.stickyContainer}>
+                    <div className={styles.container}>
+                        <div className={styles.tablesHeader}>
+                            <div className={styles.headerTitles}>
+                                <h2 className={styles.sectionTitle}>{t('agroPage.block2.title')}</h2>
+                                <p className={styles.tablesIntro}>{t('agroPage.block2.intro')}</p>
+                            </div>
+                            <div className={styles.searchWrap}>
+                                <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                                <input
+                                    type="text"
+                                    className={styles.searchInput}
+                                    placeholder={t('agroPage.block2.search_placeholder')}
+                                    value={searchQuery}
+                                    onChange={e => setSearchQuery(e.target.value)}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

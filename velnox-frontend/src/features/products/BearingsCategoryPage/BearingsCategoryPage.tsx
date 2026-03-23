@@ -101,16 +101,16 @@ function SortIcon({ dir }: { dir: SortDir }) {
 
 /* ─── Render structured list for tight cells ─── */
 function renderTightCell(val: string | null | undefined) {
-    if (!val || val === '-') return <span style={{ whiteSpace: 'nowrap' }}>—</span>;
+    if (!val || val === '-') return <span>—</span>;
     const items = val
         .split(/\n|;/)
         .map(s => s.trim())
         .filter(Boolean);
-    if (items.length <= 1) return <span style={{ whiteSpace: 'nowrap' }}>{val}</span>;
+    if (items.length <= 1) return <span>{val}</span>;
     return (
-        <ul className="analogues-list" style={{ paddingLeft: '16px', margin: 0 }}>
+        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
             {items.map((item, i) => (
-                <li key={i} style={{ whiteSpace: 'nowrap', marginBottom: '4px' }}>
+                <li key={i} style={{ marginBottom: '2px' }}>
                     {item}
                 </li>
             ))}
@@ -324,7 +324,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
         const handleScroll = () => {
             if (!searchHeaderRef.current) return;
             const elementOffsetTop = searchHeaderRef.current.offsetTop;
-            if (window.scrollY > elementOffsetTop - 80) {
+            if (window.scrollY > elementOffsetTop - 100) {
                 searchHeaderRef.current.classList.add(styles.isSticky);
             } else {
                 searchHeaderRef.current.classList.remove(styles.isSticky);
@@ -641,24 +641,26 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     </div>
 
                     <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
-                        <div className={`${styles.container} ${styles.stickyContainer}`}>
-                            <div className={styles.tablesHeader}>
-                                <div className={styles.headerTitles}>
-                                    <h2 className={styles.sectionTitle}>{t('block2.title')}</h2>
-                                    <p className={styles.tablesIntro}>{t('block2.intro')}</p>
-                                </div>
-                                <div className={styles.searchWrap}>
-                                    <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <circle cx="11" cy="11" r="8"></circle>
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                    </svg>
-                                    <input
-                                        type="text"
-                                        className={styles.searchInput}
-                                        placeholder={t('block2.search_placeholder')}
-                                        value={searchQuery}
-                                        onChange={e => setSearchQuery(e.target.value)}
-                                    />
+                        <div className={styles.stickyContainer}>
+                            <div className={styles.container}>
+                                <div className={styles.tablesHeader}>
+                                    <div className={styles.headerTitles}>
+                                        <h2 className={styles.sectionTitle}>{t('block2.title')}</h2>
+                                        <p className={styles.tablesIntro}>{t('block2.intro')}</p>
+                                    </div>
+                                    <div className={styles.searchWrap}>
+                                        <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                        <input
+                                            type="text"
+                                            className={styles.searchInput}
+                                            placeholder={t('block2.search_placeholder')}
+                                            value={searchQuery}
+                                            onChange={e => setSearchQuery(e.target.value)}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
