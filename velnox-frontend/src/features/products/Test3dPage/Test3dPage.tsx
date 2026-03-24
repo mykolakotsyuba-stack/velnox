@@ -27,6 +27,9 @@ declare global {
     }
 }
 
+// Next.js basePath="/velnox" → public/ static files served at /velnox/...
+const BASE = '/velnox';
+
 /* ─── Product data ─── */
 interface ProductSpec {
     key: string;
@@ -183,9 +186,6 @@ function useModelViewerScript(): boolean {
 /* ─── 3D Viewer Component ───
    Click-to-load: WebGL не запускається до явного кліку користувача.
    Запобігає зависанню сторінки при автоматичному рендері. ─── */
-// Next.js basePath = '/velnox' → public/ файли доступні за /velnox/models/
-const BASE = '/velnox';
-
 const FILE_SIZES: Record<string, string> = {
     'IL20-80-6H-B16': '2.0',
     'IL25-80-6T-M16-T': '3.8',
