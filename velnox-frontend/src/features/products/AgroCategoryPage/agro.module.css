@@ -2946,40 +2946,88 @@
     line-height: 1.75;
 }
 
-/* ── Layout: 3 cards + center bearing ── */
-.specialLayout {
+/* ── Layout: Clean Feature Grid ── */
+.specialFeaturesGrid {
     position: relative;
     z-index: 2;
-    display: grid;
-    grid-template-columns: 1fr 340px 1fr;
-    grid-template-rows: auto auto;
-    gap: 32px 24px;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 40px auto 0;
     padding: 0 40px;
-    align-items: center;
-}
-
-/* Card base */
-.specialCard {
-    position: relative;
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(56, 189, 248, 0.15);
-    border-radius: 12px;
-    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s, box-shadow 0.3s;
-}
-.specialCard:hover {
-    border-color: rgba(56, 189, 248, 0.45);
-    box-shadow: 0 0 24px rgba(56, 189, 248, 0.1);
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
 }
 
-.specialVisible .specialCard1 { opacity: 1; transform: translateY(0); transition-delay: 0.3s; grid-column: 1; grid-row: 1; }
-.specialVisible .specialCard2 { opacity: 1; transform: translateY(0); transition-delay: 0.5s; grid-column: 3; grid-row: 1; }
-.specialVisible .specialCard3 { opacity: 1; transform: translateY(0); transition-delay: 0.7s; grid-column: 1 / span 3; max-width: 400px; margin: 0 auto; }
+.specialVisible .specialFeaturesGrid {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.featureItem {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.featureIcon {
+    color: #38bdf8;
+    margin-bottom: 24px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.featureTitle {
+    font-size: 20px;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+}
+
+.featureList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.featureList li {
+    font-size: 15px;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.featureList li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    background: #38bdf8;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+    .specialFeaturesGrid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding: 0 30px;
+    }
+    
+    .featureIcon {
+        margin-bottom: 16px;
+    }
+}
 
 /* Connector line pseudo-element */
 .scLine {

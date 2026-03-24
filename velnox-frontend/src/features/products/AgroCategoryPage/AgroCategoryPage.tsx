@@ -642,109 +642,55 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                     </p>
                 </div>
 
-                {/* Layout: cards + bearing */}
-                <div className={styles.specialLayout}>
-
-                    {/* ── Card 1: Longevity (top-left) ── */}
-                    <div className={`${styles.specialCard} ${styles.specialCard1}`}>
-                        <div className={styles.scIcon}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28">
+                {/* ── New Clean Layout: Features Grid ── */}
+                <div className={styles.specialFeaturesGrid}>
+                    
+                    {/* Feature 1: Longevity */}
+                    <div className={styles.featureItem}>
+                        <div className={styles.featureIcon}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="32">
                                 <path d="M12 2l8 4v5c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V6l8-4z" />
                                 <circle cx="12" cy="11" r="3" />
                             </svg>
                         </div>
-                        <h3 className={styles.scTitle}>Подовжений термін служби</h3>
-                        <ul className={styles.scList}>
+                        <h3 className={styles.featureTitle}>Подовжений термін служби</h3>
+                        <ul className={styles.featureList}>
                             <li>Посилена багатокромкова система ущільнення</li>
                             <li>Оптимізована геометрія для динамічних навантажень</li>
                             <li>Високоточні доріжки кочення</li>
                         </ul>
-                        <div className={styles.scLine} aria-hidden />
                     </div>
 
-                    {/* ── Card 2: Housing (top-right) ── */}
-                    <div className={`${styles.specialCard} ${styles.specialCard2}`}>
-                        <div className={styles.scIcon}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28">
+                    {/* Feature 2: Housing */}
+                    <div className={styles.featureItem}>
+                        <div className={styles.featureIcon}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="32">
                                 <rect x="3" y="3" width="18" height="18" rx="2" />
                                 <path d="M3 9h18M9 21V9" />
                             </svg>
                         </div>
-                        <h3 className={styles.scTitle}>Посилена конструкція корпусу</h3>
-                        <ul className={styles.scList}>
+                        <h3 className={styles.featureTitle}>Посилена конструкція корпусу</h3>
+                        <ul className={styles.featureList}>
                             <li>Корпус із високоміцної сталі</li>
                             <li>Розмірна стабільність під ударними навантаженнями</li>
                             <li>Посилені монтажні зони для важких умов</li>
                         </ul>
-                        <div className={styles.scLine} aria-hidden />
                     </div>
 
-                    {/* ── Central bearing SVG ── */}
-                    <div className={styles.specialBearingWrap}>
-                        <div className={styles.specialBearingGlow} />
-                        <svg viewBox="0 0 300 300" className={styles.specialBearingSvg} aria-hidden>
-                            {/* Outer ring */}
-                            <circle cx="150" cy="150" r="120" fill="none" stroke="#334155" strokeWidth="24" />
-                            <circle cx="150" cy="150" r="132" fill="none" stroke="#1e293b" strokeWidth="2" />
-                            <circle cx="150" cy="150" r="108" fill="none" stroke="#1e293b" strokeWidth="2" />
-                            {/* Seal left */}
-                            <path d="M30 136 Q28 150 30 164" stroke="#38bdf8" strokeWidth="3" fill="none" strokeLinecap="round" />
-                            <path d="M36 132 Q33 150 36 168" stroke="#38bdf8" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.5" />
-                            {/* Seal right */}
-                            <path d="M270 136 Q272 150 270 164" stroke="#38bdf8" strokeWidth="3" fill="none" strokeLinecap="round" />
-                            <path d="M264 132 Q267 150 264 168" stroke="#38bdf8" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.5" />
-                            {/* Rolling elements — 10 balls */}
-                            {Array.from({ length: 10 }).map((_, i) => {
-                                const angle = (i * 36 * Math.PI) / 180;
-                                const r = 84;
-                                return (
-                                    <circle key={i}
-                                        cx={150 + r * Math.cos(angle)}
-                                        cy={150 + r * Math.sin(angle)}
-                                        r="12"
-                                        fill="#1e3a5f"
-                                        stroke="#38bdf8"
-                                        strokeWidth="1.5"
-                                        opacity="0.9"
-                                    />
-                                );
-                            })}
-                            {/* Inner ring */}
-                            <circle cx="150" cy="150" r="60" fill="none" stroke="#334155" strokeWidth="20" />
-                            <circle cx="150" cy="150" r="70" fill="none" stroke="#1e293b" strokeWidth="1.5" />
-                            <circle cx="150" cy="150" r="50" fill="none" stroke="#1e293b" strokeWidth="1.5" />
-                            {/* Bore */}
-                            <circle cx="150" cy="150" r="40" fill="#0f172a" stroke="#38bdf8" strokeWidth="2" />
-                            <circle cx="150" cy="150" r="3" fill="#38bdf8" />
-                            {/* Center glow ring */}
-                            <circle cx="150" cy="150" r="40" fill="none" stroke="#38bdf8" strokeWidth="1" opacity="0.4" />
-                            {/* Label: D */}
-                            <line x1="150" y1="22" x2="150" y2="10" stroke="#38bdf8" strokeWidth="1" strokeDasharray="2 2" opacity="0.6" />
-                            <text x="158" y="10" fill="#93c5fd" fontSize="10" fontFamily="monospace">D</text>
-                            {/* Label: d */}
-                            <line x1="150" y1="110" x2="150" y2="95" stroke="#38bdf8" strokeWidth="1" strokeDasharray="2 2" opacity="0.6" />
-                            <text x="158" y="95" fill="#93c5fd" fontSize="10" fontFamily="monospace">d</text>
-                            {/* Label: B */}
-                            <line x1="270" y1="150" x2="285" y2="150" stroke="#38bdf8" strokeWidth="1" strokeDasharray="2 2" opacity="0.6" />
-                            <text x="288" y="154" fill="#93c5fd" fontSize="10" fontFamily="monospace">B</text>
-                        </svg>
-                    </div>
-
-                    {/* ── Card 3: Performance (bottom) ── */}
-                    <div className={`${styles.specialCard} ${styles.specialCard3}`}>
-                        <div className={styles.scIcon}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="28">
+                    {/* Feature 3: Performance */}
+                    <div className={styles.featureItem}>
+                        <div className={styles.featureIcon}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="32">
                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                                 <polyline points="22 4 12 14.01 9 11.01" />
                             </svg>
                         </div>
-                        <h3 className={styles.scTitle}>Підтверджена ефективність</h3>
-                        <ul className={styles.scList}>
+                        <h3 className={styles.featureTitle}>Підтверджена ефективність</h3>
+                        <ul className={styles.featureList}>
                             <li>Розроблені для роботи при перекосах</li>
                             <li>Стійкі до гноївки, ґрунту та грубих забруднень</li>
                             <li>Стабільна робота при радіальних та осьових навантаженнях</li>
                         </ul>
-                        <div className={styles.scLine} aria-hidden />
                     </div>
 
                 </div>
