@@ -55,7 +55,7 @@ const PRODUCTS: ProductData[] = [
         designation: 'Фланцева муфта IL серії',
         type: 'Flange Coupling — IL Series',
         description: 'Жорстка фланцева муфта для з\'єднання валів у агромашинах та промисловому обладнанні. 6 кріпильних отворів стандарту B16 забезпечують надійне болтове з\'єднання фланців.',
-        model: '/models/IL20-80-6H-B16.glb',
+        model: `${BASE}/models/IL20-80-6H-B16.glb`,
         specs: [
             { key: 'd', label: 'Bore Diameter d', value: '20', unit: 'mm', highlight: true },
             { key: 'D', label: 'Flange Diameter D', value: '80', unit: 'mm', highlight: true },
@@ -86,7 +86,7 @@ const PRODUCTS: ProductData[] = [
         designation: 'Фланцева муфта IL серії',
         type: 'Flange Coupling — IL Series',
         description: 'Фланцева муфта з різьбовими отворами M16 для з\'єднання валів діаметром 25 мм. Конструкція T-типу з 6 різьбовими отворами забезпечує підвищену міцність з\'єднання.',
-        model: '/models/IL25-80-6T-M16-T.glb',
+        model: `${BASE}/models/IL25-80-6T-M16-T.glb`,
         specs: [
             { key: 'd', label: 'Bore Diameter d', value: '25', unit: 'mm', highlight: true },
             { key: 'D', label: 'Flange Diameter D', value: '80', unit: 'mm', highlight: true },
@@ -117,7 +117,7 @@ const PRODUCTS: ProductData[] = [
         designation: 'Важконавантажена фланцева муфта',
         type: 'Heavy-Duty Flange Coupling — IL Series',
         description: 'Важконавантажена фланцева муфта для великих валів діаметром 40 мм. Збільшений фланець 98 мм з 4 різьбовими отворами M22 розрахований на передачу високих крутних моментів.',
-        model: '/models/IL40-98-4T-M22.glb',
+        model: `${BASE}/models/IL40-98-4T-M22.glb`,
         specs: [
             { key: 'd', label: 'Bore Diameter d', value: '40', unit: 'mm', highlight: true },
             { key: 'D', label: 'Flange Diameter D', value: '98', unit: 'mm', highlight: true },
@@ -183,6 +183,9 @@ function useModelViewerScript(): boolean {
 /* ─── 3D Viewer Component ───
    Click-to-load: WebGL не запускається до явного кліку користувача.
    Запобігає зависанню сторінки при автоматичному рендері. ─── */
+// Next.js basePath = '/velnox' → public/ файли доступні за /velnox/models/
+const BASE = '/velnox';
+
 const FILE_SIZES: Record<string, string> = {
     'IL20-80-6H-B16': '2.0',
     'IL25-80-6T-M16-T': '3.8',
