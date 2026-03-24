@@ -326,6 +326,52 @@
     text-transform: uppercase;
 }
 
+/* ── VIEWER ACTIVATE (click-to-load) ── */
+.viewerActivate {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: color-mix(in srgb, var(--color-surface) 60%, var(--color-bg));
+}
+
+.viewerActivateIcon {
+    color: var(--color-text-muted);
+    opacity: 0.4;
+}
+
+.viewerActivateBtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    background: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+}
+
+.viewerActivateBtn:hover {
+    background: color-mix(in srgb, var(--color-accent) 85%, #000);
+    box-shadow: 0 6px 24px color-mix(in srgb, var(--color-accent) 35%, transparent);
+    transform: translateY(-2px);
+}
+
+.viewerActivateNote {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    margin: 0;
+    opacity: 0.7;
+}
+
 /* ── 3D VIEWER ── */
 .viewerContainer {
     background: color-mix(in srgb, var(--color-surface) 60%, var(--color-bg));

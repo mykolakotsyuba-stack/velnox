@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Script from 'next/script';
 import styles from './test3d.module.css';
 
 /* ─── TypeScript: реєструємо web component <model-viewer> ─── */
@@ -145,31 +144,106 @@ const PRODUCTS: ProductData[] = [
     },
 ];
 
-/* ─── 3D Viewer Component ─── */
+/* ─── Завантажуємо model-viewer через нативний DOM як ES module ───
+   Next.js <Script> ігнорує type="module", тому єдиний надійний спосіб. ─── */
+const MODEL_VIEWER_CDN = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js';
+
+function useModelViewerScript(): boolean {
+    const [ready, setReady] = useState(false);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        // Вже зареєстровано
+        if (customElements.get('model-viewer')) { setReady(true); return; }
+
+        // Вже є в DOM — чекаємо реєстрації
+        if (document.querySelector(`script[src*="model-viewer"]`)) {
+            const id = setInterval(() => {
+                if (customElements.get('model-viewer')) { setReady(true); clearInterval(id); }
+            }, 80);
+            return () => clearInterval(id);
+        }
+
+        // Першe завантаження — inject як справжній ES module
+        const s = document.createElement('script');
+        s.type = 'module';
+        s.src = MODEL_VIEWER_CDN;
+        s.onload = () => {
+            const id = setInterval(() => {
+                if (customElements.get('model-viewer')) { setReady(true); clearInterval(id); }
+            }, 80);
+        };
+        document.head.appendChild(s);
+    }, []);
+
+    return ready;
+}
+
+/* ─── 3D Viewer Component ───
+   Click-to-load: WebGL не запускається до явного кліку користувача.
+   Запобігає зависанню сторінки при автоматичному рендері. ─── */
+const FILE_SIZES: Record<string, string> = {
+    'IL20-80-6H-B16': '2.0',
+    'IL25-80-6T-M16-T': '3.8',
+    'IL40-98-4T-M22': '5.5',
+};
+
 function ModelViewer({ src, label }: { src: string; label: string }) {
+    const [activated, setActivated] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const ref = useRef<HTMLElement>(null);
+    const scriptReady = useModelViewerScript();
 
-    // model-viewer fires native DOM 'load' event — не React synthetic
+    // Слухаємо нативну подію 'load' model-viewer
     useEffect(() => {
         const el = ref.current;
-        if (!el) return;
+        if (!el || !activated) return;
         const onLoad = () => setLoaded(true);
         el.addEventListener('load', onLoad);
         return () => el.removeEventListener('load', onLoad);
-    }, [src]);
+    }, [activated, src]);
 
-    // При зміні src — reset loader
+    // При перемиканні продукту — скидаємо стан
     useEffect(() => {
+        setActivated(false);
         setLoaded(false);
     }, [src]);
+
+    const slug = src.split('/').pop()?.replace('.glb', '') ?? '';
+    const sizeMb = FILE_SIZES[slug] ?? '?';
+
+    if (!activated) {
+        return (
+            <div className={styles.viewerActivate}>
+                <div className={styles.viewerActivateIcon}>
+                    <svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" strokeWidth="1.2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                </div>
+                <button className={styles.viewerActivateBtn} onClick={() => setActivated(true)}>
+                    Завантажити 3D модель
+                </button>
+                <p className={styles.viewerActivateNote}>~{sizeMb} MB · WebGL · інтерактивна</p>
+            </div>
+        );
+    }
+
+    if (!scriptReady) {
+        return (
+            <div className={styles.viewerLoader}>
+                <div className={styles.loaderSpinner} />
+                <span>Ініціалізація 3D рушія…</span>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.viewerWrapper}>
             {!loaded && (
                 <div className={styles.viewerLoader}>
                     <div className={styles.loaderSpinner} />
-                    <span>Завантаження 3D моделі…</span>
+                    <span>Завантаження моделі ({sizeMb} MB)…</span>
                 </div>
             )}
             {/* @ts-ignore — model-viewer web component (Google) */}
@@ -179,11 +253,10 @@ function ModelViewer({ src, label }: { src: string; label: string }) {
                 alt={label}
                 auto-rotate=""
                 camera-controls=""
-                shadow-intensity="1"
-                exposure="0.9"
-                loading="lazy"
-                rotation-per-second="20deg"
-                tone-mapping="commerce"
+                shadow-intensity="0.8"
+                exposure="1"
+                loading="eager"
+                rotation-per-second="18deg"
                 style={{
                     width: '100%',
                     height: '100%',
@@ -192,12 +265,14 @@ function ModelViewer({ src, label }: { src: string; label: string }) {
                     transition: 'opacity 0.5s ease',
                 }}
             />
-            <div className={styles.viewerHint}>
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                </svg>
-                Перетягніть для обертання · Скрол для масштабу
-            </div>
+            {loaded && (
+                <div className={styles.viewerHint}>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                    Перетягніть · Скрол для масштабу
+                </div>
+            )}
         </div>
     );
 }
@@ -209,15 +284,7 @@ export function Test3dPage() {
     const product = PRODUCTS[activeIdx];
 
     return (
-        <>
-            {/* model-viewer CDN — завантажується один раз */}
-            <Script
-                src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"
-                strategy="lazyOnload"
-                type="module"
-            />
-
-            <main className={styles.page}>
+        <main className={styles.page}>
                 {/* ── BREADCRUMB ── */}
                 <div className={styles.breadcrumb}>
                     <a href="/products">Продукти</a>
@@ -394,6 +461,5 @@ export function Test3dPage() {
                     Це тестова сторінка для демонстрації 3D моделей. Не впливає на основний сайт.
                 </div>
             </main>
-        </>
     );
 }
