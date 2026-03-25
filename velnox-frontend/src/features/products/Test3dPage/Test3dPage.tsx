@@ -18,6 +18,7 @@ function DownloadLeadForm({
     const [form, setForm] = useState({ name: '', phone: '', email: '' });
     const [sentEmail, setSentEmail] = useState('');
     const [errMsg, setErrMsg] = useState('');
+    const [fallbackUrl, setFallbackUrl] = useState('');
 
     const handleSubmit = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
@@ -33,8 +34,11 @@ function DownloadLeadForm({
                 }),
             });
             const data = await res.json();
-            if (!res.ok || !data.success) throw new Error(data.message ?? 'error');
+            if (!res.ok || !data.success) throw new Error(data.error ?? 'error');
             setSentEmail(form.email);
+            if (data.mail_fallback && data.download_url) {
+                setFallbackUrl(data.download_url);
+            }
             setState('success');
         } catch (err: any) {
             setErrMsg(err.message === 'mail_error' ? 'Помилка відправки листа. Спробуйте ще.' : 'Сталась помилка. Спробуйте пізніше.');
@@ -117,8 +121,26 @@ function DownloadLeadForm({
                             Посилання для завантаження <strong>{fileLabel}</strong> надіслано на:
                         </p>
                         <p className={styles.leadEmail}>{sentEmail}</p>
-                        <p className={styles.leadNote}>Посилання дійсне 24 години</p>
-                        <button className={styles.leadSubmit} onClick={onClose}>Закрити</button>
+                        {fallbackUrl ? (
+                            <>
+                                <p className={styles.leadHint} style={{ color: '#d97706' }}>
+                                    ⚠️ Не вдалось надіслати email. Скористайтеся посиланням нижче:
+                                </p>
+                                <a
+                                    href={fallbackUrl}
+                                    className={styles.leadSubmit}
+                                    style={{ display: 'block', textDecoration: 'none', textAlign: 'center', marginBottom: 8 }}
+                                >
+                                    Завантажити зараз
+                                </a>
+                                <p className={styles.leadNote}>Посилання дійсне 24 год</p>
+                            </>
+                        ) : (
+                            <>
+                                <p className={styles.leadNote}>Посилання дійсне 24 години</p>
+                                <button className={styles.leadSubmit} onClick={onClose}>Закрити</button>
+                            </>
+                        )}
                     </div>
                 )}
             </div>
