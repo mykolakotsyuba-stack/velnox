@@ -1,7 +1,130 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './test3d.module.css';
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? '/velnox-api/api';
+
+/* ─── Lead форма перед завантаженням 3D моделі ─── */
+type DownloadFormState = 'idle' | 'open' | 'submitting' | 'success' | 'error';
+
+function DownloadLeadForm({
+    fileKey, fileLabel, filePath, utmCampaign, onClose,
+}: {
+    fileKey: string; fileLabel: string; filePath: string; utmCampaign: string;
+    onClose: () => void;
+}) {
+    const [state, setState] = useState<DownloadFormState>('open');
+    const [form, setForm] = useState({ name: '', phone: '', email: '' });
+    const [sentEmail, setSentEmail] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+
+    const handleSubmit = useCallback(async (e: React.FormEvent) => {
+        e.preventDefault();
+        setState('submitting');
+        try {
+            const res = await fetch(`${API_BASE}/v1/downloads/request`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                    name: form.name, phone: form.phone, email: form.email,
+                    file_key: fileKey, file_label: fileLabel, file_path: filePath,
+                    utm_campaign: utmCampaign,
+                }),
+            });
+            const data = await res.json();
+            if (!res.ok || !data.success) throw new Error(data.message ?? 'error');
+            setSentEmail(form.email);
+            setState('success');
+        } catch (err: any) {
+            setErrMsg(err.message === 'mail_error' ? 'Помилка відправки листа. Спробуйте ще.' : 'Сталась помилка. Спробуйте пізніше.');
+            setState('error');
+        }
+    }, [form, fileKey, fileLabel, filePath, utmCampaign]);
+
+    return (
+        <div className={styles.leadBackdrop} onClick={onClose}>
+            <div className={styles.leadModal} onClick={e => e.stopPropagation()}>
+                <button className={styles.leadClose} onClick={onClose} aria-label="Закрити">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
+                    </svg>
+                </button>
+
+                {state !== 'success' && (
+                    <>
+                        <div className={styles.leadHeader}>
+                            <div className={styles.leadIcon}>
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 className={styles.leadTitle}>Завантажити 3D модель</h3>
+                                <p className={styles.leadSub}>{fileLabel} · GLB файл</p>
+                            </div>
+                        </div>
+
+                        <p className={styles.leadHint}>
+                            Вкажіть контактні дані — посилання для завантаження надійде на вашу пошту протягом хвилини.
+                        </p>
+
+                        <form className={styles.leadForm} onSubmit={handleSubmit}>
+                            <div className={styles.leadField}>
+                                <label>Ім&apos;я *</label>
+                                <input required type="text" placeholder="Іван Петренко"
+                                    value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} />
+                            </div>
+                            <div className={styles.leadField}>
+                                <label>Телефон *</label>
+                                <input required type="tel" placeholder="+380..."
+                                    value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} />
+                            </div>
+                            <div className={styles.leadField}>
+                                <label>Email *</label>
+                                <input required type="email" placeholder="contact@company.com"
+                                    value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} />
+                            </div>
+
+                            {state === 'error' && (
+                                <p className={styles.leadError}>{errMsg}</p>
+                            )}
+
+                            <button
+                                type="submit"
+                                className={styles.leadSubmit}
+                                disabled={state === 'submitting'}
+                            >
+                                {state === 'submitting' ? 'Надсилаємо…' : 'Отримати посилання'}
+                            </button>
+                        </form>
+
+                        <p className={styles.leadNote}>
+                            Посилання дійсне 24 год · Ми не передаємо дані третім особам
+                        </p>
+                    </>
+                )}
+
+                {state === 'success' && (
+                    <div className={styles.leadSuccess}>
+                        <div className={styles.leadSuccessIcon}>
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#22c55e" strokeWidth="2.5">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </div>
+                        <h3 className={styles.leadTitle}>Перевірте пошту!</h3>
+                        <p className={styles.leadHint}>
+                            Посилання для завантаження <strong>{fileLabel}</strong> надіслано на:
+                        </p>
+                        <p className={styles.leadEmail}>{sentEmail}</p>
+                        <p className={styles.leadNote}>Посилання дійсне 24 години</p>
+                        <button className={styles.leadSubmit} onClick={onClose}>Закрити</button>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
 
 /* ─── TypeScript: реєструємо web component <model-viewer> ─── */
 declare global {
@@ -284,9 +407,20 @@ function ModelViewer({ src, label }: { src: string; label: string }) {
 export function Test3dPage() {
     const [activeIdx, setActiveIdx] = useState(0);
     const [hoveredSpec, setHoveredSpec] = useState<string | null>(null);
+    const [showDownloadForm, setShowDownloadForm] = useState(false);
     const product = PRODUCTS[activeIdx];
 
     return (
+        <>
+        {showDownloadForm && (
+            <DownloadLeadForm
+                fileKey={product.id}
+                fileLabel={product.partNumber}
+                filePath={product.model}
+                utmCampaign={`il-series-${product.id}`}
+                onClose={() => setShowDownloadForm(false)}
+            />
+        )}
         <main className={styles.page}>
                 {/* ── BREADCRUMB ── */}
                 <div className={styles.breadcrumb}>
@@ -410,7 +544,7 @@ export function Test3dPage() {
                                 </svg>
                                 Замовити / Запит
                             </button>
-                            <button className={styles.ctaSecondary}>
+                            <button className={styles.ctaSecondary} onClick={() => setShowDownloadForm(true)}>
                                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
                                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
                                 </svg>
@@ -464,5 +598,6 @@ export function Test3dPage() {
                     Це тестова сторінка для демонстрації 3D моделей. Не впливає на основний сайт.
                 </div>
             </main>
+        </>
     );
 }
