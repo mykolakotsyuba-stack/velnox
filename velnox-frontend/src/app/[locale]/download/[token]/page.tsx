@@ -11,6 +11,8 @@ export default function DownloadPage() {
     const [fileName, setFileName] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
+    const [fileUrl, setFileUrl] = useState('');
+
     useEffect(() => {
         if (!token) return;
         fetch(`${API}/v1/downloads/${token}`)
@@ -22,14 +24,8 @@ export default function DownloadPage() {
                     return;
                 }
                 setFileName(data.file_label ?? '');
+                setFileUrl(data.file_url ?? '');
                 setStatus('downloading');
-                // Запускаємо завантаження файлу — GA4 фіксує UTM з поточного URL
-                const a = document.createElement('a');
-                a.href = data.file_url;
-                a.download = (data.file_label ?? 'model') + '.glb';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
             })
             .catch(() => {
                 setStatus('error');
@@ -84,20 +80,29 @@ export default function DownloadPage() {
                                 </svg>
                             </div>
                             <h2 style={{ margin: '0 0 8px', fontSize: 20, fontWeight: 700, color: '#1a2e4a' }}>
-                                Завантаження розпочато
+                                Файл готовий до завантаження
                             </h2>
                             <p style={{ margin: '0 0 24px', color: '#6b7280', fontSize: 14 }}>
-                                {fileName && <><strong>{fileName}</strong> · </>}GLB 3D модель
+                                {fileName && <><strong>{fileName}</strong> · </>}GLB · 3D модель
                             </p>
-                            <p style={{ margin: 0, fontSize: 12, color: '#9ca3af' }}>
-                                Якщо завантаження не почалось —{' '}
+                            {fileUrl && (
                                 <a
-                                    href="#"
-                                    style={{ color: '#e8a020' }}
-                                    onClick={e => { e.preventDefault(); window.location.reload(); }}
+                                    href={fileUrl}
+                                    download={`${fileName || 'model'}.glb`}
+                                    style={{
+                                        display: 'inline-block',
+                                        background: '#e8a020', color: '#fff',
+                                        textDecoration: 'none',
+                                        padding: '14px 40px', borderRadius: 8,
+                                        fontWeight: 700, fontSize: 15,
+                                        marginBottom: 16,
+                                    }}
                                 >
-                                    натисніть тут
+                                    Завантажити файл
                                 </a>
+                            )}
+                            <p style={{ margin: 0, fontSize: 12, color: '#9ca3af' }}>
+                                Посилання дійсне 24 год після отримання листа
                             </p>
                         </>
                     )}
