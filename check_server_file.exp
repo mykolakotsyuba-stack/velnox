@@ -1,0 +1,16 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "12345678"
+
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@mail.irbis.ua
+expect {
+    "password:" {
+        send "$password\r"
+    }
+}
+
+expect "$ "
+send "grep -n \"data-label\" /srv/projects/velnox/frontend/src/features/products/AgroCategoryPage/AgroCategoryPage.tsx | head -n 10\r"
+expect "$ "
+send "exit\r"
+expect eof
