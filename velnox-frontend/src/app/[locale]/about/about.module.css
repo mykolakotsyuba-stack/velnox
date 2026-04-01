@@ -9,6 +9,8 @@
     overflow-x: hidden;
     background: #D8E0E8;
     min-height: 100vh;
+    /* Prevent scrollbar appearing/disappearing from shifting layout width */
+    scrollbar-gutter: stable;
 }
 
 /* ──────────────────────────────────────────────────
@@ -485,11 +487,13 @@
 .phiCardContent {
     position: relative;
     z-index: 2;
-    padding: 40px 36px;
+    padding: 32px 28px;
     margin-top: auto;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    /* Fixed height so hover text reveal never shifts layout */
+    min-height: 130px;
 }
 
 .phiCardTitle {
@@ -508,16 +512,15 @@
     line-height: 1.7;
     color: rgba(255, 255, 255, 0.7);
     margin: 0;
-    max-height: 0;
+    /* Always in layout — no height change on hover = no scrollbar flicker */
     opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, font-size 0.3s ease, color 0.3s ease;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .philosophyCard:hover .phiCardText {
-    max-height: 200px;
     opacity: 1;
-    font-size: 16px;
+    transform: translateY(0);
     color: rgba(255, 255, 255, 0.95);
 }
 
@@ -1128,12 +1131,7 @@
 .phiCardImg {
     object-fit: cover;
     pointer-events: none;
-    filter: saturate(1) brightness(1);
-    transition: filter 0.5s ease;
-}
-
-.philosophyCard:hover .phiCardImg {
-    filter: saturate(1.1) brightness(0.4);
+    /* No filter by default — overlay handles darkening */
 }
 
 .phiCardOverlay {
@@ -1150,7 +1148,7 @@
 }
 
 .philosophyCard:hover .phiCardTitle {
-    transform: scale(1.08);
+    color: #00FF66;
 }
 
 .geoSection {
