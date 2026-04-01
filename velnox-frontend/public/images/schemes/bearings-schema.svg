@@ -27257,7 +27257,8 @@ viewBox="7552 -117381 12467 7053"
    <polygon class="fil2 str5" points="17425.18,-116866.32 17543.19,-116748.32 "/>
    <polygon class="fil2 str5" points="17497.12,-116839.93 17603.73,-116733.82 "/>
    <polygon class="fil2 str5" points="17569.58,-116813.01 17596.99,-116786.09 "/>
-   <g id="dim-N" N</text>
+   <g id="dim-N" transform="matrix(1 0 0 1 -1.52655E+003 -1.31565E+005)">
+    <text x="10500" y="14850"  class="fil4 fnt0">N</text>
    </g>
    <g transform="matrix(1 0 0 1 4.22786 -1.31233E+005)">
     <text x="10500" y="14850"  class="fil4 fnt0">A</text>
@@ -27266,18 +27267,23 @@ viewBox="7552 -117381 12467 7053"
    <text id="dim-B" x="15425.7" y="-116291.44" class="fil4 fnt1">B</text>
    <text x="17104.57" y="-117291.57"  class="fil5 fnt1">B</text>
    <text x="15039.23" y="-115285.59"  class="fil4 fnt2">1/4 - 28</text>
-   <g id="dim-LJ" L J</text>
+   <g id="dim-LJ" transform="matrix(1 0 0 1 -2.62298E+003 -1.28937E+005)">
+    <text x="10500" y="14850"  class="fil4 fnt0">L J</text>
    </g>
-   <g id="dim-d" d</text>
+   <g id="dim-d" transform="matrix(1 0 0 1 4965.98 -1.28929E+005)">
+    <text x="10500" y="14850"  class="fil4 fnt0">d</text>
    </g>
-   <g id="dim-L" L</text>
+   <g id="dim-L" transform="matrix(1 0 0 1 197.273 -1.26292E+005)">
+    <text x="10421.52" y="14850"  class="fil4 fnt0">L</text>
    </g>
    <g transform="matrix(1 0 0 1 197.273 -1.26292E+005)">
     <text x="10405.88" y="15191.49"  class="fil4 fnt0">A</text>
    </g>
-   <g id="dim-A2" A2</text>
+   <g id="dim-A2" transform="matrix(1 0 0 1 2538.87 -1.26778E+005)">
+    <text x="10500" y="14850"  class="fil4 fnt0">A2</text>
    </g>
-   <g id="dim-A1" A1</text>
+   <g id="dim-A1" transform="matrix(1 0 0 1 3464.27 -1.26473E+005)">
+    <text x="10500" y="14850"  class="fil4 fnt0">A1</text>
    </g>
    <g transform="matrix(1 0 0 1 3850.92 -1.26134E+005)">
     <text x="10500" y="14850"  class="fil4 fnt0">A</text>
@@ -27301,7 +27307,8 @@ viewBox="7552 -117381 12467 7053"
    <path class="fil6" d="M8375.83 -115625.78l-72.04 43.82 -1.65 -2.47 46.67 -117.48c8.99,-40.95 18.03,-81.88 27.02,-122.83 9,40.95 18.03,81.88 27.02,122.83l46.68 117.48 -1.24 2.47 -72.46 -43.82z"/>
    <polygon class="fil2 str0" points="12368.09,-112202.13 12368.09,-111846.56 "/>
    <polygon class="fil2 str0" points="9006.03,-112202.13 9006.03,-111846.56 "/>
-   <g id="dim-J" J</text>
+   <g id="dim-J" transform="matrix(1 0 0 1 95.4703 -1.26723E+005)">
+    <text x="10500" y="14850"  class="fil4 fnt0">J</text>
    </g>
    <line class="fil2 str7" x1="12195.55" y1="-111854" x2="9176.09" y2= "-111854" />
    <path class="fil6" d="M12159.65 -111854l-43.82 72.04 2.47 1.66 117.48 -46.68c40.96,-8.99 81.88,-18.02 122.83,-27.02 -40.95,-9 -81.87,-18.03 -122.83,-27.02l-117.48 -46.68 -2.47 1.24 43.82 72.46z"/>
