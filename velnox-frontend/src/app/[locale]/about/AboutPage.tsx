@@ -385,7 +385,7 @@ export function AboutPage({ locale }: { locale: string }) {
             <section className={styles.audienceSection} ref={audienceSection.ref}>
                 <div className={styles.audienceOverlay} />
                 <div className={styles.audienceGrid2} aria-hidden />
-                <div className={styles.sectionInner} style={{ position: 'relative', zIndex: 2 }}>
+                <div className={`${styles.sectionInner} ${styles.sectionInnerWide}`} style={{ position: 'relative', zIndex: 2 }}>
                     <div className={`${styles.sectionHeader} ${audienceSection.inView ? styles.fadeUp : ''}`} style={{ textAlign: 'center', marginBottom: '56px' }}>
                         <span className={`${styles.sectionTag} ${styles.sectionTagLight}`} style={{ justifyContent: 'center' }}>{t('audience.tag')}</span>
                         <h2 className={`${styles.sectionTitle} ${styles.sectionTitleLight}`}>{t('audience.title')}</h2>

@@ -18,7 +18,12 @@
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 96px 64px;
+    padding: 80px 64px;
+}
+
+.sectionInnerWide {
+    max-width: 1600px;
+    padding: 48px 64px;
 }
 
 .sectionTag {
@@ -847,8 +852,8 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse at 50% 0%, rgba(0, 149, 62, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse at 0% 100%, rgba(46, 41, 129, 0.3) 0%, transparent 50%);
+        radial-gradient(ellipse at 50% 0%, rgba(0, 149, 62, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse at 0% 100%, rgba(46, 41, 129, 0.3) 0%, transparent 60%);
     pointer-events: none;
 }
 
@@ -884,27 +889,31 @@
 .audienceSectors {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 48px;
-    max-width: 1400px;
+    gap: 24px;
+    margin-bottom: 40px;
+    width: 100%;
+    max-width: 1600px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .audienceSector {
     position: relative;
-    border-radius: 16px;
+    border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #0a091f;
     overflow: hidden;
-    min-height: 280px;
+    min-height: 400px;
     cursor: default;
     opacity: 0;
     transform: translateY(28px);
-    transition: all 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .audienceSector:hover {
-    border-color: rgba(0, 149, 62, 0.4);
+    border-color: rgba(0, 149, 62, 0.6);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    z-index: 10;
 }
 
 .sectorVisible {
@@ -927,10 +936,11 @@
 .sectorContent {
     position: relative;
     z-index: 2;
-    padding: 32px 28px;
+    padding: 40px 32px;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
 }
 
 .sectorIcon {
@@ -1137,13 +1147,14 @@
 /* ADDED FOR IMAGES */
 .sectorImg {
     z-index: 0;
-    filter: saturate(1) opacity(1);
-    transition: filter 0.5s ease, transform 0.8s ease;
+    transform: scale(1.001);
+    will-change: transform;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    object-fit: cover !important;
 }
 
 .audienceSector:hover .sectorImg {
-    filter: saturate(1.1) brightness(0.4);
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .sectorBg {
@@ -1155,15 +1166,16 @@
 .sectorOverlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(0deg, rgba(8, 7, 25, 0.95) 0%, rgba(8, 7, 25, 0.75) 100%);
+    background: linear-gradient(0deg, rgba(8, 7, 25, 0.95) 0%, rgba(8, 7, 25, 0.4) 100%);
     z-index: 1;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease, background 0.4s ease;
+    opacity: 0.8;
+    transition: opacity 0.5s ease, background 0.5s ease;
 }
 
 .audienceSector:hover .sectorOverlay {
     opacity: 1;
+    background: linear-gradient(0deg, rgba(8, 7, 25, 0.95) 0%, rgba(8, 7, 25, 0.1) 100%);
 }
 
 .phiCardBg {
