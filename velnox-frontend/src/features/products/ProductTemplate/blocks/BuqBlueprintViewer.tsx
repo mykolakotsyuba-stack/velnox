@@ -25,16 +25,25 @@ type DimLabel = {
     point: { x: number; y: number };
 };
 
+// fnt0=282px, fnt1=353px. Helvetica uppercase ≈ 0.55×size wide, cap-height ≈ 0.72×size.
+// x offset: +half_text_width to center horizontally on the label
+// y offset: -cap_height/2 to center vertically (text y = baseline)
+const HALF1 = 78;   // half-width of 1 char fnt0
+const HALF2 = 155;  // half-width of 2 chars fnt0
+const CAP0  = 102;  // half cap-height fnt0
+const HALF1_F1 = 97;  // half-width of 1 char fnt1
+const CAP1  = 127;    // half cap-height fnt1
+
 const DIM_LABELS: DimLabel[] = [
-    { key: 'N',      label: 'N',  point: { x: 8973,  y: -116715 } },
-    { key: 'B',      label: 'B',  point: { x: 15426, y: -116291 } },
-    { key: 'd_mm',   label: 'd',  point: { x: 15466, y: -114079 } },
-    { key: 'd_inch', label: 'd',  point: { x: 15466, y: -114079 } },
-    { key: 'J',      label: 'J',  point: { x: 10595, y: -111873 } },
-    { key: 'A2',     label: 'A2', point: { x: 13039, y: -111928 } },
-    { key: 'A1',     label: 'A1', point: { x: 13964, y: -111623 } },
-    { key: 'L',      label: 'L',  point: { x: 10618, y: -111442 } },
-    { key: 'A',      label: 'A',  point: { x: 14351, y: -111284 } },
+    { key: 'N',      label: 'N',  point: { x: 8973  + HALF1,   y: -116715 - CAP0  } },
+    { key: 'B',      label: 'B',  point: { x: 15426 + HALF1_F1, y: -116291 - CAP1 } },
+    { key: 'd_mm',   label: 'd',  point: { x: 15466 + HALF1,   y: -114079 - CAP0  } },
+    { key: 'd_inch', label: 'd',  point: { x: 15466 + HALF1,   y: -114079 - CAP0  } },
+    { key: 'J',      label: 'J',  point: { x: 10595 + HALF1,   y: -111873 - CAP0  } },
+    { key: 'A2',     label: 'A2', point: { x: 13039 + HALF2,   y: -111928 - CAP0  } },
+    { key: 'A1',     label: 'A1', point: { x: 13964 + HALF2,   y: -111623 - CAP0  } },
+    { key: 'L',      label: 'L',  point: { x: 10618 + HALF1,   y: -111442 - CAP0  } },
+    { key: 'A',      label: 'A',  point: { x: 14351 + HALF1,   y: -111284 - CAP0  } },
 ];
 
 // Visual sizes in SVG user units (viewBox width 12467 ≈ 700–900px on screen)
