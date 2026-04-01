@@ -303,7 +303,7 @@ export function AboutPage({ locale }: { locale: string }) {
                                     <div key={i} className={styles.caseItem}>
                                         <div className={styles.casePoint} />
                                         <div className={styles.caseTextWrapper}>
-                                            <h4 className={styles.caseTitle}>{t(`custom.case${i}_title`)}</h4>
+                                            <h3 className={styles.caseTitle}>{t(`custom.case${i}_title`)}</h3>
                                             <p className={styles.caseDesc}>{t(`custom.case${i}_text`)}</p>
                                         </div>
                                     </div>
