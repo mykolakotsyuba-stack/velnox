@@ -297,7 +297,9 @@ export function HomePage({ locale }: { locale: string }) {
                                 }}
                             >
                                 {/* Photo background */}
-                                <div className={styles.cardPhotoBg} style={{ backgroundImage: `url(${ind.bg})` }} />
+                                <div className={styles.cardPhotoBg}>
+                                    <Image src={ind.bg} alt={ind.key} fill style={{ objectFit: 'cover' }} sizes="(max-width: 820px) 100vw, 33vw" quality={75} />
+                                </div>
                                 
                                 {/* Default dark gradient at bottom */}
                                 <div className={styles.cardDefaultOverlay} aria-hidden />

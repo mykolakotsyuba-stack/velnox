@@ -70,7 +70,7 @@
     margin: 0 auto;
     padding: 24px 80px 140px;
     display: grid;
-    grid-template-columns: 50fr 50fr;
+    grid-template-columns: 55fr 45fr;
     align-items: center;
     gap: 80px;
     min-height: calc(100vh - 64px);
@@ -168,7 +168,7 @@
 
 /* Title */
 .slideTitle {
-    font-size: clamp(28px, 3.5vw, 50px);
+    font-size: clamp(32px, 4.5vw, 64px);
     font-weight: 900;
     color: #1E293B;
     /* Dark Blue/Slate */
@@ -179,12 +179,12 @@
 
 /* Body */
 .slideBody {
-    font-size: 16px;
-    line-height: 1.8;
+    font-size: 18px;
+    line-height: 1.7;
     color: #475569;
     /* Muted slate */
     margin-bottom: 28px;
-    max-width: 480px;
+    max-width: 580px;
 }
 
 /* Spec pill */
@@ -336,7 +336,7 @@
     -webkit-mask-size: contain;
     mask-size: contain;
     -webkit-mask-repeat: no-repeat;
-    mask-size: contain;
+    mask-repeat: no-repeat;
     -webkit-mask-position: center;
     mask-position: center;
 
@@ -422,6 +422,10 @@
     box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent) 50%, transparent);
     animation: progressAnim 6s linear forwards;
     transform-origin: left;
+}
+
+.progressPaused {
+    animation-play-state: paused;
 }
 
 @keyframes progressAnim {

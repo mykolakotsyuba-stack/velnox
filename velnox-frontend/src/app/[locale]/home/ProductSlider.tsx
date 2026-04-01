@@ -23,6 +23,7 @@ export function ProductSlider({ locale }: { locale: string }) {
     const [active, setActive] = useState(0);
     const [animDir, setAnimDir] = useState<'left' | 'right'>('right');
     const [isAnimating, setIsAnimating] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const SLIDES: Slide[] = [
@@ -81,24 +82,34 @@ export function ProductSlider({ locale }: { locale: string }) {
 
     // Auto-advance
     useEffect(() => {
+        if (isPaused) return;
         intervalRef.current = setInterval(next, 6000);
         return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-    }, [next]);
+    }, [next, isPaused]);
 
     const resetTimer = useCallback(() => {
         if (intervalRef.current) clearInterval(intervalRef.current);
-        intervalRef.current = setInterval(next, 6000);
-    }, [next]);
+        if (!isPaused) {
+            intervalRef.current = setInterval(next, 6000);
+        }
+    }, [next, isPaused]);
 
     const slide = SLIDES[active];
 
     return (
-        <section className={styles.slider}>
+        <section 
+            className={styles.slider}
+            onMouseDown={() => setIsPaused(true)}
+            onMouseUp={() => setIsPaused(false)}
+            onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
+        >
             {/* Background image (blurred, full bleed) */}
             <div className={styles.sliderBg}>
                 {SLIDES.map((s, i) => (
                     <div key={i} className={`${styles.bgLayer} ${i === active ? styles.bgLayerActive : ''}`}>
-                        <Image src={s.bgImg} alt="" fill style={{ objectFit: 'cover' }} quality={60} />
+                        <Image src={s.bgImg} alt="" fill style={{ objectFit: 'cover' }} quality={60} priority={i === 0} />
                     </div>
                 ))}
                 <div className={styles.bgOverlay} />
@@ -168,7 +179,7 @@ export function ProductSlider({ locale }: { locale: string }) {
 
             {/* Progress bar */}
             <div className={styles.progressBar}>
-                <div key={active} className={styles.progressFill} />
+                <div key={active} className={`${styles.progressFill} ${isPaused ? styles.progressPaused : ''}`} />
             </div>
         </section>
     );
