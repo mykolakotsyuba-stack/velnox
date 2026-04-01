@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from './about.module.css';
 
@@ -27,14 +27,16 @@ function useCounter(target: number, duration = 1800, active = false) {
     const [count, setCount] = useState(0);
     useEffect(() => {
         if (!active) return;
-        let start = 0;
-        const step = Math.ceil(target / (duration / 16));
-        const timer = setInterval(() => {
-            start += step;
-            if (start >= target) { setCount(target); clearInterval(timer); }
-            else setCount(start);
-        }, 16);
-        return () => clearInterval(timer);
+        let startTime: number | null = null;
+        let raf: number;
+        const tick = (ts: number) => {
+            if (!startTime) startTime = ts;
+            const progress = Math.min((ts - startTime) / duration, 1);
+            setCount(Math.round(progress * target));
+            if (progress < 1) raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(raf);
     }, [target, duration, active]);
     return count;
 }
@@ -59,22 +61,24 @@ function StatCard({ icon, value, suffix, label, delay, active }: {
 function AudienceSector({ icon, title, desc, bgImg, index, active }: {
     icon: React.ReactNode; title: string; desc: string; bgImg: string; index: number; active: boolean;
 }) {
-    const [hovered, setHovered] = useState(false);
     return (
         <div
             className={`${styles.audienceSector} ${active ? styles.sectorVisible : ''}`}
             style={{ transitionDelay: `${0.1 + index * 0.12}s` }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
         >
-            <div className={`${styles.sectorBg} ${hovered ? styles.sectorBgActive : ''}`}>
-                <Image src={bgImg} alt={title} fill style={{ objectFit: 'cover' }} className={styles.sectorImg} />
+            <div className={styles.sectorBg}>
+                <Image
+                    src={bgImg} alt={title} fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                    style={{ objectFit: 'cover' }} className={styles.sectorImg}
+                    loading="lazy"
+                />
                 <div className={styles.sectorOverlay} />
             </div>
             <div className={styles.sectorContent}>
                 <div className={styles.sectorIcon}>{icon}</div>
                 <h3 className={styles.sectorTitle}>{title}</h3>
-                <p className={`${styles.sectorDesc} ${hovered ? styles.sectorDescVisible : ''}`}>{desc}</p>
+                <p className={styles.sectorDesc}>{desc}</p>
             </div>
         </div>
     );
@@ -97,10 +101,6 @@ export function AboutPage({ locale }: { locale: string }) {
     const customSection = useInView(0.1);
     const qualitySection = useInView(0.1);
     const audienceSection = useInView(0.08);
-
-    /* Philosophy card hovers */
-    const [phiHovered1, setPhiHovered1] = useState(false);
-    const [phiHovered2, setPhiHovered2] = useState(false);
 
     return (
         <div className={styles.page}>
@@ -130,7 +130,9 @@ export function AboutPage({ locale }: { locale: string }) {
                     {/* Hero visual — Agrihub 3D render */}
                     <div className={`${styles.heroVisual} ${heroVisible ? styles.heroVisualVisible : ''}`}>
                         <div className={styles.heroImageWrapper}>
-                            <Image src="/velnox/images/about/hero_bearing_final.png" alt="VELNOX Engineering" fill className={styles.heroGeneratedImg} priority />
+                            <Image src="/velnox/images/about/hero_bearing_final.png" alt="VELNOX Engineering" fill
+                                sizes="(max-width: 1024px) 100vw, 55vw"
+                                className={styles.heroGeneratedImg} priority />
                             <div className={styles.heroImageOverlay} />
                         </div>
                     </div>
@@ -234,15 +236,15 @@ export function AboutPage({ locale }: { locale: string }) {
                         <div
                             className={`${styles.philosophyCard} ${philosophySection.inView ? styles.phiCardVisible : ''}`}
                             style={{ transitionDelay: '0.1s' }}
-                            onMouseEnter={() => setPhiHovered1(true)}
-                            onMouseLeave={() => setPhiHovered1(false)}
                         >
-                            <div className={`${styles.phiCardBg} ${phiHovered1 ? styles.phiCardBgActive : ''}`}>
-                                <Image src="/velnox/images/about/phi_left.png" alt="Blueprint" fill className={styles.phiCardImg} />
+                            <div className={styles.phiCardBg}>
+                                <Image src="/velnox/images/about/phi_left.png" alt="Blueprint" fill
+                                    sizes="(max-width: 1024px) 100vw, 50vw"
+                                    className={styles.phiCardImg} loading="lazy" />
                                 <div className={styles.phiCardOverlay} />
                             </div>
                             <div className={styles.phiCardAccent} />
-                            <div className={`${styles.phiIcon} ${phiHovered1 ? styles.phiIconActive : ''}`}>
+                            <div className={styles.phiIcon}>
                                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                                     <circle cx="14" cy="14" r="9" stroke="currentColor" strokeWidth="1.5" />
                                     <circle cx="14" cy="14" r="4" stroke="currentColor" strokeWidth="1.5" />
@@ -254,22 +256,22 @@ export function AboutPage({ locale }: { locale: string }) {
                             </div>
                             <div className={styles.phiCardContent}>
                                 <h3 className={styles.phiCardTitle}>{t('philosophy.p1_title')}</h3>
-                                <p className={`${styles.phiCardText} ${phiHovered1 ? styles.phiCardTextVisible : ''}`}>{t('philosophy.p1_text')}</p>
+                                <p className={styles.phiCardText}>{t('philosophy.p1_text')}</p>
                             </div>
                         </div>
 
                         <div
                             className={`${styles.philosophyCard} ${philosophySection.inView ? styles.phiCardVisible : ''}`}
                             style={{ transitionDelay: '0.25s' }}
-                            onMouseEnter={() => setPhiHovered2(true)}
-                            onMouseLeave={() => setPhiHovered2(false)}
                         >
-                            <div className={`${styles.phiCardBg} ${phiHovered2 ? styles.phiCardBgActive : ''}`}>
-                                <Image src="/velnox/images/about/industry-agro.jpg" alt="Action" fill className={styles.phiCardImg} />
+                            <div className={styles.phiCardBg}>
+                                <Image src="/velnox/images/about/industry-agro.jpg" alt="Action" fill
+                                    sizes="(max-width: 1024px) 100vw, 50vw"
+                                    className={styles.phiCardImg} loading="lazy" />
                                 <div className={styles.phiCardOverlay} />
                             </div>
                             <div className={styles.phiCardAccent} />
-                            <div className={`${styles.phiIcon} ${phiHovered2 ? styles.phiIconActive : ''}`}>
+                            <div className={styles.phiIcon}>
                                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                                     <rect x="3" y="3" width="9" height="9" stroke="currentColor" strokeWidth="1.5" />
                                     <rect x="16" y="3" width="9" height="9" stroke="currentColor" strokeWidth="1.5" />
@@ -279,7 +281,7 @@ export function AboutPage({ locale }: { locale: string }) {
                             </div>
                             <div className={styles.phiCardContent}>
                                 <h3 className={styles.phiCardTitle}>{t('philosophy.p2_title')}</h3>
-                                <p className={`${styles.phiCardText} ${phiHovered2 ? styles.phiCardTextVisible : ''}`}>{t('philosophy.p2_text')}</p>
+                                <p className={styles.phiCardText}>{t('philosophy.p2_text')}</p>
                             </div>
                         </div>
                     </div>
@@ -317,7 +319,9 @@ export function AboutPage({ locale }: { locale: string }) {
                         {/* Right: Technical Schema */}
                         <div className={`${styles.customVisual} ${customSection.inView ? styles.customVisualVisible : ''}`}>
                             <div className={styles.schemaContainer}>
-                                <Image src="/velnox/images/about/custom_seal_final.png" alt="Engineering Schema" fill className={styles.schemaImg} />
+                                <Image src="/velnox/images/about/custom_seal_final.png" alt="Engineering Schema" fill
+                                    sizes="(max-width: 1024px) 100vw, 50vw"
+                                    className={styles.schemaImg} loading="lazy" />
                             </div>
                         </div>
                     </div>

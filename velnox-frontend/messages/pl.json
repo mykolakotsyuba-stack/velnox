@@ -208,7 +208,13 @@
       "tag": "Kastomizacja i jakosc",
       "title": "Inzynierska kastomizacja wezlow",
       "text": "Dostosowujemy produkt do zadania klienta, a w szczególności: systemy uszczelnień (pył/wilgoć/ścierniwo, różne rodzaje ochrony), rodzaj i objętość smaru do trybu pracy, materiały i powłoki do warunków korozyjnych, elementy konstrukcyjne i pasowania do węzła i montażu.",
-      "goal": "Cel - przewidywany resurs i minimalizacja przestojow maszyn."
+      "goal": "Cel - przewidywany resurs i minimalizacja przestojow maszyn.",
+      "case1_title": "Optymalizacja dla agresywnych środowisk",
+      "case1_text": "Opracowanie systemów z 5-stopniowym uszczelnieniem kasetowym do pracy w nawozach płynnych (RSM).",
+      "case2_title": "Wzmocnione węzły OEM",
+      "case2_text": "Integracja dwurzędowych łożysk stożkowych do przenoszenia udarowych obciążeń osiowych do 450 kN.",
+      "case3_title": "Adaptacja konstrukcyjna",
+      "case3_text": "Projektowanie kutych korpusów pod niestandardowe miejsca montażowe importowanych bron bez modyfikacji ramy maszyny."
     },
     "quality": {
       "title": "Podejście do jakości",
