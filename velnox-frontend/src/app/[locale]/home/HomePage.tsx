@@ -286,7 +286,71 @@ export function HomePage({ locale }: { locale: string }) {
             </section>
 
             {/* ══════════════════════
-                BLOCK 2 — INDUSTRIES
+                BLOCK 2 — OEM OPTIMIZATION (Parallax)
+            ══════════════════════ */}
+            <section className={styles.oemOptimization}>
+                <div className={styles.oemOverlay} aria-hidden />
+                
+                <div className={styles.oemInner} ref={processRef.ref as React.RefObject<HTMLDivElement>}>
+                    <div className={`${styles.oemHeader} ${processRef.inView ? styles.oemHeaderVisible : ''}`}>
+                        <span className={styles.sectionTag}>{t('oem_optimization.tag')}</span>
+                        <h2>{t('oem_optimization.title')}</h2>
+                        <p>{t('oem_optimization.desc')}</p>
+                    </div>
+
+                    <div className={styles.oemGrid}>
+                        {/* Step 1: Audit */}
+                        <div 
+                            className={`${styles.oemStep} ${processRef.inView ? styles.oemStepVisible : ''}`}
+                            style={{ transitionDelay: '0.1s' }}
+                        >
+                            <div className={styles.oemIcon}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" strokeLinecap="round" strokeLinejoin="round" />
+                                    <circle cx="12" cy="12" r="3" opacity="0.2" />
+                                </svg>
+                            </div>
+                            <h3>{t('oem_optimization.step1.title')}</h3>
+                            <p>{t('oem_optimization.step1.text')}</p>
+                        </div>
+
+                        {/* Step 2: Selection */}
+                        <div 
+                            className={`${styles.oemStep} ${processRef.inView ? styles.oemStepVisible : ''}`}
+                            style={{ transitionDelay: '0.3s' }}
+                        >
+                            <div className={styles.oemIcon}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                    <path d="M7 21l-4-4 4-4M3 17h18M17 3l4 4-4 4M21 7H3" strokeLinecap="round" strokeLinejoin="round" />
+                                    <rect x="8" y="8" width="8" height="8" rx="1" opacity="0.2" />
+                                </svg>
+                            </div>
+                            <h3>{t('oem_optimization.step2.title')}</h3>
+                            <p>{t('oem_optimization.step2.text')}</p>
+                        </div>
+
+                        {/* Step 3: Supply */}
+                        <div 
+                            className={`${styles.oemStep} ${processRef.inView ? styles.oemStepVisible : ''}`}
+                            style={{ transitionDelay: '0.5s' }}
+                        >
+                            <div className={styles.oemIcon}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                    <path d="M21 8l-9-4-9 4 9 4 9-4z" strokeLinejoin="round" />
+                                    <path d="M3 8v8l9 4 9-4V8" strokeLinejoin="round" />
+                                    <path d="M12 12v8" strokeLinecap="round" />
+                                    <path d="M12 4v4" opacity="0.3" />
+                                </svg>
+                            </div>
+                            <h3>{t('oem_optimization.step3.title')}</h3>
+                            <p>{t('oem_optimization.step3.text')}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ══════════════════════
+                BLOCK 3 — INDUSTRIES
             ══════════════════════ */}
             <section className={styles.industries} ref={industryRef.ref as React.RefObject<HTMLElement>}>
                 <div className={styles.sectionInner}>
@@ -356,75 +420,24 @@ export function HomePage({ locale }: { locale: string }) {
             </section>
 
             {/* ══════════════════════
-                BLOCK 3 — OEM OPTIMIZATION (Parallax)
-            ══════════════════════ */}
-            <section className={styles.oemOptimization}>
-                <div className={styles.oemOverlay} aria-hidden />
-                
-                <div className={styles.oemInner} ref={processRef.ref as React.RefObject<HTMLDivElement>}>
-                    <div className={`${styles.oemHeader} ${processRef.inView ? styles.oemHeaderVisible : ''}`}>
-                        <span className={styles.sectionTag}>{t('oem_optimization.tag')}</span>
-                        <h2>{t('oem_optimization.title')}</h2>
-                        <p>{t('oem_optimization.desc')}</p>
-                    </div>
-
-                    <div className={styles.oemGrid}>
-                        {/* Step 1: Audit */}
-                        <div 
-                            className={`${styles.oemStep} ${processRef.inView ? styles.oemStepVisible : ''}`}
-                            style={{ transitionDelay: '0.1s' }}
-                        >
-                            <div className={styles.oemIcon}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" strokeLinecap="round" strokeLinejoin="round" />
-                                    <circle cx="12" cy="12" r="3" opacity="0.2" />
-                                </svg>
-                            </div>
-                            <h3>{t('oem_optimization.step1.title')}</h3>
-                            <p>{t('oem_optimization.step1.text')}</p>
-                        </div>
-
-                        {/* Step 2: Selection */}
-                        <div 
-                            className={`${styles.oemStep} ${processRef.inView ? styles.oemStepVisible : ''}`}
-                            style={{ transitionDelay: '0.3s' }}
-                        >
-                            <div className={styles.oemIcon}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-                                    <path d="M7 21l-4-4 4-4M3 17h18M17 3l4 4-4 4M21 7H3" strokeLinecap="round" strokeLinejoin="round" />
-                                    <rect x="8" y="8" width="8" height="8" rx="1" opacity="0.2" />
-                                </svg>
-                            </div>
-                            <h3>{t('oem_optimization.step2.title')}</h3>
-                            <p>{t('oem_optimization.step2.text')}</p>
-                        </div>
-
-                        {/* Step 3: Supply */}
-                        <div 
-                            className={`${styles.oemStep} ${processRef.inView ? styles.oemStepVisible : ''}`}
-                            style={{ transitionDelay: '0.5s' }}
-                        >
-                            <div className={styles.oemIcon}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-                                    <path d="M21 8l-9-4-9 4 9 4 9-4z" strokeLinejoin="round" />
-                                    <path d="M3 8v8l9 4 9-4V8" strokeLinejoin="round" />
-                                    <path d="M12 12v8" strokeLinecap="round" />
-                                    <path d="M12 4v4" opacity="0.3" />
-                                </svg>
-                            </div>
-                            <h3>{t('oem_optimization.step3.title')}</h3>
-                            <p>{t('oem_optimization.step3.text')}</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* ══════════════════════
                 BLOCK 5 — CTA (Request to Engineer) v2
             ══════════════════════ */}
             <section className={`${styles.cta} ${ctaRef.inView ? styles.ctaVisible : ''}`} ref={ctaRef.ref as React.RefObject<HTMLElement>}>
                 <div className={styles.ctaBgLayer}>
-                    {/* Blueprint Seal Gradient Overlay */}
+                    {/* Background Photo */}
+                    <div className={styles.ctaPhotoBg}>
+                        <Image 
+                            src="/velnox/images/cta-bg.png" 
+                            alt="Engineering background" 
+                            fill 
+                            style={{ objectFit: 'cover' }} 
+                            sizes="100vw"
+                            quality={85}
+                        />
+                    </div>
+                    {/* Gradient Overlay for Text Readability */}
+                    <div className={styles.ctaOverlay} />
+                    {/* Blueprint Seal Blueprint Wireframe */}
                     <div className={styles.ctaBlueprint} />
                 </div>
 
