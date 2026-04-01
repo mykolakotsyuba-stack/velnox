@@ -667,17 +667,15 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             {/* 3. TECHNICAL TABLES */}
             <section className={styles.tablesSection} ref={tablesRef.ref}>
                 <div className={`${styles.tableSectionContainer} ${tablesRef.inView ? styles.animIn : ''}`}>
-                    {/* ─── BUQ Drawing Composite (above Table 1) ─── */}
+                    {/* ─── BUQ Technical Schema (above Table 1) ─── */}
                     <div className={styles.buqDrawingBlock}>
                         <div className={styles.buqDrawingTitle}>ТЕХНІЧНЕ КРЕСЛЕННЯ — BUQ SERIES</div>
                         <div className={styles.buqDrawingCompositeSingle}>
-                            <Image
-                                src="/velnox/images/products/buq-drawing-composite.png"
-                                alt="BUQ Series Blueprint"
-                                width={1200}
-                                height={600}
-                                style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
-                                priority
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="/velnox/images/schemes/bearings-schema.svg"
+                                alt="BUQ Series Technical Drawing"
+                                style={{ width: '100%', height: 'auto', display: 'block' }}
                             />
                         </div>
                     </div>

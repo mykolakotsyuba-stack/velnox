@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { Maximize2, X } from 'lucide-react';
 import type { ProductSpecs } from '@/entities/product/model/types';
 import { useTranslations } from 'next-intl';
@@ -15,38 +14,11 @@ interface BuqBlueprintViewerProps {
     onHoverSpec?: (key: string | null) => void;
 }
 
-/**
- * BuqBlueprintViewer — two-panel blueprint viewer for BUQ flange bearing units.
- * Left panel: front view (Зображення для таблиці 1 -Photoroom.png)
- * Right panel: side cross-section view (Таблиця 1 Частина 2-Photoroom.png)
- *
- * SVG overlay annotations are precisely positioned to match the composite
- * reference drawing (Зведене_Таблиці_1-removebg-preview.png).
- *
- * Dimension labels:
- * Front view:  A (total housing width, top),  N (hole diameter, top-right),
- *              L (total length, bottom),        J (bolt-hole distance, left vertical)
- *              d (bore, center)
- * Side view:   B (width annotation, top),       d (bore, right side)
- *              A1 (housing width, bottom dashed), A2 (flange, bottom),  A (total, bottom)
- */
+// ─── CorelDRAW SVG coordinate system ─────────────────────────────────────────
+// viewBox: 7552 -117381 12467 7053  (width × height in SVG user units)
+// Positions below are actual SVG coordinates of each dimension label
+const SVG_VB = '7552 -117381 12467 7053';
 
-// ─── SVG constants (viewBox 1000×600) ─────────────────────────────────────
-// Front view occupies left panel  ~ x 0–540   y 0–600
-// Side view occupies right panel  ~ x 540–840  y 0–600
-const FRONT = {
-    // Front view occupies left panel
-    x: 20, y: 20, w: 510, h: 560,
-    cx: 260, cy: 300,
-    boreR: 52,
-};
-
-const SIDE = {
-    x: 560, y: 20, w: 230, h: 560,
-    cx: 675,
-};
-
-// ─── Spec label definitions ────────────────────────────────────────────────
 type DimLabel = {
     key: string;
     label: string;
@@ -54,104 +26,50 @@ type DimLabel = {
 };
 
 const DIM_LABELS: DimLabel[] = [
-    { key: 'N', label: 'N', point: { x: 245, y: 29 } },
-    { key: 'J', label: 'J', point: { x: 26, y: 168 } },
-    { key: 'L', label: 'L', point: { x: 7, y: 168 } },
-    { key: 'L', label: 'L', point: { x: 152, y: 301 } },
-    { key: 'd_mm', label: 'd', point: { x: 442, y: 168 } },
-    { key: 'd_inch', label: 'd', point: { x: 442, y: 168 } },
-    { key: 'A2', label: 'A2', point: { x: 341, y: 294 } },
-    { key: 'A1', label: 'A1', point: { x: 350, y: 318 } },
-    { key: 'A', label: 'A', point: { x: 355, y: 341 } },
-    { key: 'B', label: 'B', point: { x: 412, y: 59 } }
+    { key: 'N',      label: 'N',  point: { x: 8973,  y: -116715 } },
+    { key: 'B',      label: 'B',  point: { x: 15426, y: -116291 } },
+    { key: 'd_mm',   label: 'd',  point: { x: 15466, y: -114079 } },
+    { key: 'd_inch', label: 'd',  point: { x: 15466, y: -114079 } },
+    { key: 'J',      label: 'J',  point: { x: 10595, y: -111873 } },
+    { key: 'A2',     label: 'A2', point: { x: 13039, y: -111928 } },
+    { key: 'A1',     label: 'A1', point: { x: 13964, y: -111623 } },
+    { key: 'L',      label: 'L',  point: { x: 10618, y: -111442 } },
+    { key: 'A',      label: 'A',  point: { x: 14351, y: -111284 } },
 ];
 
-function ArrowHead({ x, y, dir }: { x: number; y: number; dir: 'left' | 'right' | 'up' | 'down' | 'none' }) {
-    if (dir === 'none') return null;
-    const pts: Record<string, string> = {
-        left:  `${x},${y} ${x + 7},${y - 3.5} ${x + 7},${y + 3.5}`,
-        right: `${x},${y} ${x - 7},${y - 3.5} ${x - 7},${y + 3.5}`,
-        up:    `${x},${y} ${x - 3.5},${y + 7} ${x + 3.5},${y + 7}`,
-        down:  `${x},${y} ${x - 3.5},${y - 7} ${x + 3.5},${y - 7}`,
-    };
-    return <polygon points={pts[dir]} className={styles.arrowHead} />;
-}
+// Visual sizes in SVG user units (viewBox width 12467 ≈ 700–900px on screen)
+const R = 200;           // highlight circle radius
+const FS = 180;          // font size
+const BOX_H = 380;       // value box height
+const BOX_OFFSET = 460;  // box offset below circle center
+const SW = 28;           // stroke width
 
-function DimensionOverlay({
-    labels, specs, hoveredSpec, onHoverSpec,
-}: {
-    labels: DimLabel[];
-    specs: ProductSpecs;
-    hoveredSpec: string | null;
-    onHoverSpec?: (k: string | null) => void;
-}) {
-    // Some scaling helper if needed, but we use hardcoded 870x540.
+function DimensionOverlay({ specs, hoveredSpec }: { specs: ProductSpecs; hoveredSpec: string | null }) {
+    const activeLabels = DIM_LABELS.filter(d => d.key === hoveredSpec);
+    if (!activeLabels.length) return null;
+
     return (
-        <svg 
-            className={styles.svgOverlay} 
-            viewBox="0 0 629 397" 
+        <svg
+            className={styles.svgOverlay}
+            viewBox={SVG_VB}
             preserveAspectRatio="xMidYMid meet"
             xmlns="http://www.w3.org/2000/svg"
-            style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                zIndex: 50,
-                pointerEvents: 'none'
-            }}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 50, pointerEvents: 'none' }}
         >
-            
-            {/* ── dynamic dimensions ── */}
-            {labels.map((dim, i) => {
-                const isActive = hoveredSpec === dim.key;
-                
-                if (!isActive) return null;
-                
+            {activeLabels.map((dim, i) => {
                 const val = specs[dim.key];
                 const pt = dim.point;
-                
-                // Calculate text box width based on value length roughly
                 const strVal = val != null ? String(val) : '';
-                const boxWidth = Math.max(28, strVal.length * 8 + 12);
+                const boxW = Math.max(620, strVal.length * 150 + 260);
 
                 return (
-                    <g
-                        key={`${dim.key}-${i}`}
-                        style={{ opacity: 1, pointerEvents: 'none' }}
-                    >
-                        {/* Highlight circle directly over the physical letter */}
-                        <circle 
-                            cx={pt.x} 
-                            cy={pt.y} 
-                            r="11" 
-                            fill="rgba(245, 158, 11, 0.3)" 
-                            stroke="#f59e0b" 
-                            strokeWidth="2" 
-                        />
-
-                        {/* Value box placed closely below the letter */}
+                    <g key={`${dim.key}-${i}`} style={{ pointerEvents: 'none' }}>
+                        <circle cx={pt.x} cy={pt.y} r={R} fill="rgba(245,158,11,0.3)" stroke="#f59e0b" strokeWidth={SW} />
                         {val != null && (
-                            <g transform={`translate(${pt.x}, ${pt.y + 20})`}>
-                                <rect 
-                                    x={-boxWidth / 2} 
-                                    y={-10} 
-                                    width={boxWidth} 
-                                    height="20" 
-                                    rx="4" 
-                                    fill="#111" 
-                                    stroke="#f59e0b"
-                                    strokeWidth="1"
-                                />
-                                <text 
-                                    x={0} 
-                                    y={1} 
-                                    style={{fill: '#f59e0b', fontSize: '11px', fontWeight: 'bold'}} 
-                                    textAnchor="middle"
-                                    dominantBaseline="middle"
-                                >
-                                    {val}
+                            <g transform={`translate(${pt.x},${pt.y + BOX_OFFSET})`}>
+                                <rect x={-boxW / 2} y={-BOX_H / 2} width={boxW} height={BOX_H} rx={60} fill="#111" stroke="#f59e0b" strokeWidth={SW * 0.7} />
+                                <text x={0} y={0} fontSize={FS} fill="#f59e0b" fontWeight="bold" textAnchor="middle" dominantBaseline="middle">
+                                    {strVal}
                                 </text>
                             </g>
                         )}
@@ -168,21 +86,14 @@ export function BuqBlueprintViewer({ article, specs, hoveredSpec, onHoverSpec }:
 
     const innerContent = (
         <div className={styles.blueprintInner}>
-            <Image
-                src="/velnox/images/products/buq-drawing-composite.png"
-                alt={`BUQ Blueprint ${article}`}
-                fill
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+                src="/velnox/images/schemes/bearings-schema.svg"
+                alt={`BUQ Series Technical Drawing ${article}`}
                 className={styles.panelImage}
-                style={{ objectFit: 'contain' }}
-                priority
+                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
             />
-            {/* SVG overlay with dimension lines */}
-            <DimensionOverlay
-                labels={DIM_LABELS}
-                specs={specs}
-                hoveredSpec={hoveredSpec}
-                onHoverSpec={onHoverSpec}
-            />
+            <DimensionOverlay specs={specs} hoveredSpec={hoveredSpec} />
         </div>
     );
 
@@ -204,25 +115,16 @@ export function BuqBlueprintViewer({ article, specs, hoveredSpec, onHoverSpec }:
                 </div>
             </section>
 
-            {/* Fullscreen Modal */}
             <div className={`${styles.modalOverlay} ${isFullscreen ? styles.open : ''}`}>
                 <div className={styles.modalContent}>
-                    <button
-                        className={styles.closeButton}
-                        onClick={() => setIsFullscreen(false)}
-                        aria-label="Close fullscreen"
-                    >
+                    <button className={styles.closeButton} onClick={() => setIsFullscreen(false)} aria-label="Close fullscreen">
                         <X size={32} />
                     </button>
                     <div className={styles.modalDrawing}>
                         {innerContent}
                     </div>
                     <div className={styles.modalSpecs}>
-                        <SpecsTable
-                            specs={specs}
-                            hoveredSpec={hoveredSpec}
-                            onHoverSpec={onHoverSpec}
-                        />
+                        <SpecsTable specs={specs} hoveredSpec={hoveredSpec} onHoverSpec={onHoverSpec} />
                     </div>
                 </div>
             </div>
