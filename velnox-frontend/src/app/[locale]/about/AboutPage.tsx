@@ -295,6 +295,19 @@ export function AboutPage({ locale }: { locale: string }) {
                             <span className={styles.sectionTag}>{t('custom.tag')}</span>
                             <h2 className={styles.sectionTitle}>{t('custom.title')}</h2>
                             <p className={styles.customText}>{t('custom.text')}</p>
+                            
+                            <div className={styles.customCases}>
+                                {[1, 2, 3].map((i) => (
+                                    <div key={i} className={styles.caseItem}>
+                                        <div className={styles.casePoint} />
+                                        <div className={styles.caseTextWrapper}>
+                                            <h4 className={styles.caseTitle}>{t(`custom.case${i}_title`)}</h4>
+                                            <p className={styles.caseDesc}>{t(`custom.case${i}_text`)}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
                             <div className={styles.customGoal}>
                                 <span className={styles.goalLine} />
                                 <p>{t('custom.goal')}</p>
@@ -322,11 +335,9 @@ export function AboutPage({ locale }: { locale: string }) {
                                 {
                                     id: 1,
                                     icon: (
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                            <path d="M7 5H17V9H7V5Z" />
-                                            <path d="M7 15H17V19H7V15Z" />
-                                            <path d="M12 9V15" />
-                                            <path d="M9 12H15" />
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M12 2v20M2 12h20M7.5 7.5l9 9M7.5 16.5l9-9"/>
+                                            <circle cx="12" cy="12" r="10"/>
                                         </svg>
                                     ),
                                     title: t('quality.list_item_1')
@@ -334,9 +345,10 @@ export function AboutPage({ locale }: { locale: string }) {
                                 {
                                     id: 2,
                                     icon: (
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                            <circle cx="12" cy="12" r="3" />
-                                            <path d="M12 2V5M12 19V22M2 12H5M19 12H22M5.6 5.6L7.7 7.7M16.3 16.3L18.4 18.4M5.6 18.4L7.7 16.3M16.3 7.7L18.4 5.6" />
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                            <polyline points="3.29 7 12 12 20.71 7"/>
+                                            <line x1="12" y1="22" x2="12" y2="12"/>
                                         </svg>
                                     ),
                                     title: t('quality.list_item_2')
@@ -344,19 +356,19 @@ export function AboutPage({ locale }: { locale: string }) {
                                 {
                                     id: 3,
                                     icon: (
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                            <path d="M3 17V7H21V17" />
-                                            <path d="M7 17V21" />
-                                            <path d="M17 17V21" />
-                                            <path d="M12 7V3" />
-                                            <path d="M8 3H16" />
-                                            <path d="M7 12H17" />
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="20 6 9 17 4 12"/>
+                                            <circle cx="12" cy="12" r="10" strokeDasharray="4 4"/>
                                         </svg>
                                     ),
                                     title: t('quality.list_item_3')
                                 }
-                            ].map((item) => (
-                                <div key={item.id} className={styles.qualityCard}>
+                            ].map((item, idx) => (
+                                <div 
+                                    key={item.id} 
+                                    className={`${styles.qualityCard} ${qualitySection.inView ? styles.qualityCardVisible : ''}`}
+                                    style={{ transitionDelay: `${0.1 + idx * 0.15}s` }}
+                                >
                                     <div className={styles.qCardIcon}>{item.icon}</div>
                                     <div className={styles.qCardContent}>
                                         <span className={styles.qCardText}>{item.title}</span>
