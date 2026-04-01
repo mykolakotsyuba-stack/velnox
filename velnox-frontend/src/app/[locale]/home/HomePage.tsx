@@ -111,12 +111,32 @@ export function HomePage({ locale }: { locale: string }) {
 
     // CTA
     const ctaRef = useInView(0.2);
-    const { ripples: r1, addRipple: rip1 } = useRipple();
-    const { ripples: r2, addRipple: rip2 } = useRipple();
+    
+    // ──────────────────────────────────────────────────────────────────────────
+    // CTA: Request to Engineer
+    // ──────────────────────────────────────────────────────────────────────────
+    const [ctaStatus, setCtaStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+    const [formData, setFormData] = useState({
+        name: '',
+        company: '',
+        email: '',
+        phone: '',
+        type: '',
+        comment: ''
+    });
 
-    const POPULAR = [
-        'LEFG 209 TDT', 'PL-127', '32008 X', 'VKHB 2090', 'BAH-0038 B'
-    ];
+    const handleCtaSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setCtaStatus('loading');
+        // Simulate API call
+        setTimeout(() => {
+            setCtaStatus('success');
+        }, 1800);
+    };
+
+    const updateField = (field: string, value: string) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+    };
 
     const INDUSTRIES = [
         {
@@ -155,12 +175,6 @@ export function HomePage({ locale }: { locale: string }) {
         },
     ];
 
-    const PROCESS_STEPS = [
-        { icon: '🔍', key: 'analyze' },
-        { icon: '📐', key: 'design' },
-        { icon: '⚙️', key: 'produce' },
-    ];
-
     return (
         <div className={styles.page}>
 
@@ -168,103 +182,75 @@ export function HomePage({ locale }: { locale: string }) {
             <ProductSlider locale={locale} />
 
             {/* ══════════════════════
-                SEARCH / ACTION HERO
+                BLOCK 1 — STATS & RELIABILITY (Moved up)
             ══════════════════════ */}
-            <section className={styles.hero}>
-                {/* Blueprint grid bg */}
-                <div className={styles.heroBg} aria-hidden />
-                <div className={`${styles.heroOverlay} ${searchFocused ? styles.heroOverlayDim : ''}`} aria-hidden />
-
-                <div className={styles.heroInner}>
-                    {/* Left: copy + search */}
-                    <div className={styles.heroLeft}>
-                        <div className={`${styles.revealWrap} ${heroIn ? styles.revealed : ''}`}>
-                            <p className={styles.heroEyebrow}>
-                                <span className={styles.eyebrowLine} />
-                                {t('hero.eyebrow')}
-                            </p>
-                        </div>
-                        <div className={`${styles.revealWrap} ${heroIn ? styles.revealed : ''}`} style={{ transitionDelay: '0.1s' }}>
-                            <h1 className={styles.heroTitle}>{t('hero.title')}</h1>
-                        </div>
-                        <div className={`${styles.revealWrap} ${heroIn ? styles.revealed : ''}`} style={{ transitionDelay: '0.2s' }}>
-                            <p className={styles.heroSubtitle}>{t('hero.subtitle')}</p>
-                        </div>
-
-                        {/* Search bar */}
-                        <div className={`${styles.revealWrap} ${heroIn ? styles.revealed : ''}`} style={{ transitionDelay: '0.32s' }}>
-                            <div className={`${styles.searchWrap} ${searchFocused ? styles.searchFocused : ''}`}>
-                                <div className={styles.searchBar}>
-                                    {/* Search icon */}
-                                    <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                                        <circle cx="11" cy="11" r="7" /><path d="M21 21l-4.35-4.35" strokeLinecap="round" />
-                                    </svg>
-
-                                    <input
-                                        type="text"
-                                        className={styles.searchInput}
-                                        placeholder={t('hero.search_placeholder')}
-                                        value={searchVal}
-                                        onChange={e => setSearchVal(e.target.value)}
-                                        onFocus={onFocus}
-                                        onBlur={onBlur}
-                                    />
-
-                                    {/* QR icon */}
-                                    <button className={styles.searchToolBtn} title={t('hero.scan_title')} aria-label={t('hero.scan_title')}>
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                                            <path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3" strokeLinecap="round" strokeLinejoin="round" />
-                                            <rect x="7" y="7" width="4" height="4" rx="0.5" /><rect x="13" y="7" width="4" height="4" rx="0.5" />
-                                            <rect x="7" y="13" width="4" height="4" rx="0.5" /><rect x="13" y="13" width="4" height="4" rx="0.5" />
-                                        </svg>
-                                    </button>
-
-                                    {/* Micrometer / advanced search */}
-                                    <button className={`${styles.searchToolBtn} ${styles.searchAdvanced}`} title={t('hero.advanced_title')} aria-label={t('hero.advanced_title')}>
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                                            <path d="M3 12h2M19 12h2M12 3v2M12 19v2" strokeLinecap="round" />
-                                            <circle cx="12" cy="12" r="4" />
-                                            <path d="M5.6 5.6l1.4 1.4M16.9 16.9l1.5 1.5M5.6 18.4l1.4-1.4M16.9 7.1l1.5-1.5" strokeLinecap="round" />
-                                        </svg>
-                                        <span>{t('hero.advanced_label')}</span>
-                                    </button>
-                                </div>
-
-                                {/* Dropdown */}
-                                {showDropdown && (
-                                    <div className={styles.searchDropdown}>
-                                        <p className={styles.dropdownHeading}>{t('hero.popular_label')}</p>
-                                        {POPULAR.map(q => (
-                                            <button key={q} className={styles.dropdownItem}
-                                                onMouseDown={() => setSearchVal(q)}>
-                                                <svg viewBox="0 0 16 16" width="14" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                                    <circle cx="7" cy="7" r="5" /><path d="M13 13l-2.5-2.5" strokeLinecap="round" />
-                                                </svg>
-                                                {q}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
+            <section className={styles.quality} ref={qualityRef.ref as React.RefObject<HTMLElement>}>
+                <div className={styles.sectionInner}>
+                    <div className={`${styles.sectionHead} ${qualityRef.inView ? styles.fadeUp : ''}`}>
+                        <span className={styles.sectionTag}>{t('stats.tag')}</span>
+                        <h2 className={styles.sectionTitle}>{t('stats.title')}</h2>
+                        <p className={styles.sectionDesc}>{t('stats.desc')}</p>
                     </div>
 
-                    {/* Right: bearing image */}
-                    <div className={`${styles.heroBearing} ${heroIn ? styles.heroBearingIn : ''}`}>
-                        <div className={styles.bearingGlow} />
-                        <Image
-                            src="/velnox/images/bearing-hub-3d.png"
-                            alt="VELNOX PL-127 Bearing Hub"
-                            width={620}
-                            height={620}
-                            priority
-                            className={styles.bearingImg}
+                    <div className={styles.metricsGrid}>
+                        {/* Metric 1: Compatibility */}
+                        <MetricCard 
+                            value={100} 
+                            suffix="%" 
+                            label={t('stats.metrics.compatibility.title')} 
+                            desc={t('stats.metrics.compatibility.desc')}
+                            icon={
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            }
+                            active={qualityRef.inView} 
+                            delay={0.1} 
+                        />
+                        {/* Metric 2: Resource */}
+                        <MetricCard 
+                            value={2000} 
+                            suffix="+" 
+                            label={t('stats.metrics.resource.title')} 
+                            desc={t('stats.metrics.resource.desc')}
+                            icon={
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" strokeLinecap="round" />
+                                    <circle cx="12" cy="12" r="5" />
+                                </svg>
+                            }
+                            active={qualityRef.inView} 
+                            delay={0.2} 
+                        />
+                        {/* Metric 3: Protection (100%) */}
+                        <MetricCard 
+                            value={100} 
+                            suffix="%"
+                            label={t('stats.metrics.sealings.title')} 
+                            desc={t('stats.metrics.sealings.desc')}
+                            icon={
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" />
+                                    <path d="M8 12L11 15L16 9" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M12 6V7M12 17V18" strokeLinecap="round" />
+                                </svg>
+                            }
+                            active={qualityRef.inView} 
+                            delay={0.3} 
                         />
                     </div>
-                </div>
 
-                {/* Scroll hint */}
-                <div className={styles.scrollHint}><span /></div>
+                    <div className={`${styles.qualityCta} ${qualityRef.inView ? styles.fadeUp : ''}`} style={{ transitionDelay: '0.5s' }}>
+                        <a href={`/${locale}/presentation.pdf`} className={styles.pdfBtn}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="18">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                <path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                            {t('stats.button')}
+                        </a>
+                    </div>
+                </div>
             </section>
 
             {/* ══════════════════════
@@ -349,10 +335,9 @@ export function HomePage({ locale }: { locale: string }) {
                             style={{ transitionDelay: '0.1s' }}
                         >
                             <div className={styles.oemIcon}>
-                                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <circle cx="36" cy="36" r="16" />
-                                    <path d="M48 48l12 12M30 36h12M36 30v12" strokeLinecap="round" />
-                                    <path d="M25 65h30" strokeLinecap="round" />
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" strokeLinecap="round" strokeLinejoin="round" />
+                                    <circle cx="12" cy="12" r="3" opacity="0.2" />
                                 </svg>
                             </div>
                             <h3>{t('oem_optimization.step1.title')}</h3>
@@ -365,9 +350,9 @@ export function HomePage({ locale }: { locale: string }) {
                             style={{ transitionDelay: '0.3s' }}
                         >
                             <div className={styles.oemIcon}>
-                                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <path d="M20 30h40M60 30l-10-10M60 30l-10 10M60 50H20M20 50l10-10M20 50l10 10" strokeLinecap="round" strokeLinejoin="round" />
-                                    <rect x="25" y="15" width="30" height="50" rx="3" opacity="0.2" />
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                    <path d="M7 21l-4-4 4-4M3 17h18M17 3l4 4-4 4M21 7H3" strokeLinecap="round" strokeLinejoin="round" />
+                                    <rect x="8" y="8" width="8" height="8" rx="1" opacity="0.2" />
                                 </svg>
                             </div>
                             <h3>{t('oem_optimization.step2.title')}</h3>
@@ -380,12 +365,11 @@ export function HomePage({ locale }: { locale: string }) {
                             style={{ transitionDelay: '0.5s' }}
                         >
                             <div className={styles.oemIcon}>
-                                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <path d="M20 40l20-10 20 10-20 10-20-10z" strokeLinejoin="round" />
-                                    <path d="M20 40v15l20 10 20-10V40" strokeLinejoin="round" />
-                                    <path d="M40 50v15" strokeLinecap="round" />
-                                    <circle cx="48" cy="22" r="3" fill="currentColor" />
-                                    <circle cx="32" cy="22" r="3" fill="currentColor" />
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                    <path d="M21 8l-9-4-9 4 9 4 9-4z" strokeLinejoin="round" />
+                                    <path d="M3 8v8l9 4 9-4V8" strokeLinejoin="round" />
+                                    <path d="M12 12v8" strokeLinecap="round" />
+                                    <path d="M12 4v4" opacity="0.3" />
                                 </svg>
                             </div>
                             <h3>{t('oem_optimization.step3.title')}</h3>
@@ -396,118 +380,131 @@ export function HomePage({ locale }: { locale: string }) {
             </section>
 
             {/* ══════════════════════
-                BLOCK 4 — STATS & RELIABILITY
+                BLOCK 5 — CTA (Request to Engineer)
             ══════════════════════ */}
-            <section className={styles.quality} ref={qualityRef.ref as React.RefObject<HTMLElement>}>
-                <div className={styles.sectionInner}>
-                    <div className={`${styles.sectionHead} ${qualityRef.inView ? styles.fadeUp : ''}`}>
-                        <span className={styles.sectionTag}>{t('stats.tag')}</span>
-                        <h2 className={styles.sectionTitle}>{t('stats.title')}</h2>
-                        <p className={styles.sectionDesc}>{t('stats.desc')}</p>
+            <section className={`${styles.cta} ${ctaRef.inView ? styles.ctaVisible : ''}`} ref={ctaRef.ref as React.RefObject<HTMLElement>}>
+                <div className={styles.ctaBgLayer}>
+                    <div className={styles.ctaGrafix} />
+                    <div className={styles.ctaGrid} />
+                </div>
+
+                <div className={styles.ctaInner}>
+                    <div className={styles.ctaInfo}>
+                        <span className={styles.sectionTag}>{t('cta.tag')}</span>
+                        <h2 className={styles.ctaTitle}>{t('cta.title')}</h2>
+                        <p className={styles.ctaDesc}>{t('cta.desc')}</p>
                     </div>
 
-                    <div className={styles.metricsGrid}>
-                        {/* Metric 1: Compatibility */}
-                        <MetricCard 
-                            value={100} 
-                            suffix="%" 
-                            label={t('stats.metrics.compatibility.title')} 
-                            desc={t('stats.metrics.compatibility.desc')}
-                            icon={
-                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M10 20a10 10 0 1 1 0 20 10 10 0 0 1 0-20M38 20a10 10 0 1 1 0 20 10 10 0 0 1 0-20" opacity="0.2" />
-                                    <path d="M24 10v28M10 24h28" />
-                                    <path d="M14 14l20 20M34 14L14 34" strokeWidth="1" />
+                    <div className={styles.ctaFormCard}>
+                        {ctaStatus === 'success' ? (
+                            <div className={styles.ctaSuccess}>
+                                <svg className={styles.successIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M20 6L9 17L4 12" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                            }
-                            active={qualityRef.inView} 
-                            delay={0.1} 
-                        />
-                        {/* Metric 2: Resource */}
-                        <MetricCard 
-                            value={2000} 
-                            suffix="+" 
-                            label={t('stats.metrics.resource.title')} 
-                            desc={t('stats.metrics.resource.desc')}
-                            icon={
-                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <circle cx="24" cy="24" r="18" />
-                                    <path d="M24 12v12l8 4" />
-                                    <path d="M42 24a18 18 0 0 1-18 18" strokeWidth="4" opacity="0.1" />
-                                    <path d="M14 6l-2-2M34 6l2-2" />
-                                </svg>
-                            }
-                            active={qualityRef.inView} 
-                            delay={0.2} 
-                        />
-                        {/* Metric 3: Sealings */}
-                        <MetricCard 
-                            value="ZERO" 
-                            label={t('stats.metrics.sealings.title')} 
-                            desc={t('stats.metrics.sealings.desc')}
-                            icon={
-                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M24 4l16 8v12c0 10-16 18-16 18S8 34 8 24V12l16-8z" />
-                                    <path d="M24 28a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="currentColor" />
-                                    <path d="M30 14l-12 12" opacity="0.5" />
-                                </svg>
-                            }
-                            active={qualityRef.inView} 
-                            delay={0.3} 
-                        />
-                    </div>
+                                <h3>{t('cta.form.success_title')}</h3>
+                                <p>{t('cta.form.success_desc')}</p>
+                            </div>
+                        ) : (
+                            <form className={styles.formGrid} onSubmit={handleCtaSubmit}>
+                                {/* Name / Position */}
+                                <div className={styles.fieldGroup}>
+                                    <input 
+                                        type="text" 
+                                        className={styles.fieldInput} 
+                                        placeholder=" " 
+                                        required 
+                                        value={formData.name}
+                                        onChange={e => updateField('name', e.target.value)}
+                                    />
+                                    <label className={styles.fieldLabel}>{t('cta.form.name')}</label>
+                                </div>
+                                {/* Company */}
+                                <div className={styles.fieldGroup}>
+                                    <input 
+                                        type="text" 
+                                        className={styles.fieldInput} 
+                                        placeholder=" " 
+                                        required 
+                                        value={formData.company}
+                                        onChange={e => updateField('company', e.target.value)}
+                                    />
+                                    <label className={styles.fieldLabel}>{t('cta.form.company')}</label>
+                                </div>
+                                {/* Email */}
+                                <div className={styles.fieldGroup}>
+                                    <input 
+                                        type="email" 
+                                        className={styles.fieldInput} 
+                                        placeholder=" " 
+                                        required 
+                                        value={formData.email}
+                                        onChange={e => updateField('email', e.target.value)}
+                                    />
+                                    <label className={styles.fieldLabel}>{t('cta.form.email')}</label>
+                                </div>
+                                {/* Phone */}
+                                <div className={styles.fieldGroup}>
+                                    <input 
+                                        type="tel" 
+                                        className={styles.fieldInput} 
+                                        placeholder=" " 
+                                        required 
+                                        value={formData.phone}
+                                        onChange={e => updateField('phone', e.target.value)}
+                                    />
+                                    <label className={styles.fieldLabel}>{t('cta.form.phone')}</label>
+                                </div>
+                                
+                                {/* Request Essence */}
+                                <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
+                                    <select 
+                                        className={styles.fieldSelect} 
+                                        required
+                                        value={formData.type}
+                                        onChange={e => updateField('type', e.target.value)}
+                                    >
+                                        <option value="" disabled>{t('cta.form.type_options.placeholder')}</option>
+                                        <option value="analogue">{t('cta.form.type_options.analogue')}</option>
+                                        <option value="resource">{t('cta.form.type_options.resource')}</option>
+                                        <option value="test">{t('cta.form.type_options.test')}</option>
+                                        <option value="custom">{t('cta.form.type_options.custom')}</option>
+                                    </select>
+                                    <label className={styles.fieldLabel}>{t('cta.form.type')}</label>
+                                </div>
 
-                    <div className={`${styles.qualityCta} ${qualityRef.inView ? styles.fadeUp : ''}`} style={{ transitionDelay: '0.5s' }}>
-                        <a href={`/${locale}/presentation.pdf`} className={styles.pdfBtn}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="18">
-                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                                <path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            {t('stats.button')}
-                        </a>
+                                {/* Comment */}
+                                <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
+                                    <textarea 
+                                        className={styles.fieldTextarea} 
+                                        placeholder=" "
+                                        value={formData.comment}
+                                        onChange={e => updateField('comment', e.target.value)}
+                                    />
+                                    <label className={styles.fieldLabel}>{t('cta.form.comment')}</label>
+                                </div>
+
+                                {/* Submit Button */}
+                                <div className={styles.fullWidth}>
+                                    <button 
+                                        type="submit" 
+                                        className={styles.ctaSubmit}
+                                        disabled={ctaStatus === 'loading'}
+                                    >
+                                        {ctaStatus === 'loading' ? (
+                                            <>
+                                                <div className={styles.loader} />
+                                                <span>{t('cta.form.sending')}</span>
+                                            </>
+                                        ) : (
+                                            <span>{t('cta.form.submit')}</span>
+                                        )}
+                                    </button>
+                                </div>
+                            </form>
+                        )}
                     </div>
                 </div>
             </section>
-
-            {/* ══════════════════════
-                BLOCK 5 — CTA
-            ══════════════════════ */}
-            <section className={styles.cta} ref={ctaRef.ref as React.RefObject<HTMLElement>}>
-                <div className={styles.ctaBgGrid} aria-hidden />
-                <div className={`${styles.ctaInner} ${ctaRef.inView ? styles.ctaVisible : ''}`}>
-                    <span className={styles.sectionTag}>{t('cta.tag')}</span>
-                    <h2 className={styles.ctaTitle}>{t('cta.title')}</h2>
-                    <p className={styles.ctaDesc}>{t('cta.desc')}</p>
-                    <div className={styles.ctaButtons}>
-                        <a
-                            href={`/${locale}/products`}
-                            className={styles.btnPrimary}
-                            onClick={rip1}
-                        >
-                            {r1.map(rp => (
-                                <span key={rp.id} className={styles.ripple}
-                                    style={{ left: rp.x, top: rp.y }} />
-                            ))}
-                            {t('cta.btn_catalog')}
-                            <svg viewBox="0 0 16 16" fill="none" width="16">
-                                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </a>
-                        <a
-                            href={`/${locale}/contacts`}
-                            className={styles.btnOutline}
-                            onClick={rip2}
-                        >
-                            {r2.map(rp => (
-                                <span key={rp.id} className={styles.ripple}
-                                    style={{ left: rp.x, top: rp.y }} />
-                            ))}
-                            {t('cta.btn_engineer')}
-                        </a>
-                    </div>
-                </div>
-            </section>
-
         </div>
     );
 }

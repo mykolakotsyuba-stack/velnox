@@ -89,7 +89,7 @@
         "compatibility": {
           "value": "100",
           "unit": "%",
-          "title": "Geometric Compatibility",
+          "title": "Interchangeability",
           "desc": "Exact match with OEM manufacturer mounting points (Plug & Play installation)."
         },
         "resource": {
@@ -99,18 +99,36 @@
           "desc": "Uninterrupted operation in the field without the need for relubrication or unit disassembly."
         },
         "sealings": {
-          "value": "ZERO",
-          "title": "Leaking & Dust",
+          "value": "100",
+          "unit": "%",
+          "title": "Environmental Protection",
           "desc": "Multi-layer cassette sealing system guarantees 100% tightness in mud and water."
         }
       }
     },
     "cta": {
-      "tag": "Get Started",
+      "tag": "START NOW",
       "title": "Find Your Solution Now.",
-      "desc": "Contact our engineers for analogue selection, service life calculation, or ordering a test batch.",
-      "btn_catalog": "Go to Catalogue",
-      "btn_engineer": "Contact Engineer"
+      "desc": "Contact our engineers for analogous selection, resource calculation, or test batch ordering.",
+      "form": {
+        "name": "Name / Position",
+        "company": "Company (OEM)",
+        "email": "Work E-mail",
+        "phone": "Phone Number",
+        "type": "Request Essence",
+        "type_options": {
+          "placeholder": "Choose request type...",
+          "analogue": "Analogue Selection",
+          "resource": "Resource Calculation",
+          "test": "Test Batch",
+          "custom": "Custom Solution"
+        },
+        "comment": "Comment (article or details)",
+        "submit": "CONTACT AN ENGINEER",
+        "sending": "Sending...",
+        "success_title": "Request sent!",
+        "success_desc": "Our engineer will contact you shortly for a technical consultation."
+      }
     },
     "oem_optimization": {
       "tag": "ASSEMBLY PROCESS",
