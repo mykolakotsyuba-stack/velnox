@@ -6,6 +6,8 @@ import Image from 'next/image';
 import styles from './home.module.css';
 import { ProductSlider } from './ProductSlider';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? '/velnox-api/api';
+
 /* ─── useInView hook ─────────────────────────────────────────────────── */
 function useInView(threshold = 0.15) {
     const ref = useRef<HTMLElement>(null);
@@ -115,27 +117,57 @@ export function HomePage({ locale }: { locale: string }) {
     // ──────────────────────────────────────────────────────────────────────────
     // CTA: Request to Engineer
     // ──────────────────────────────────────────────────────────────────────────
-    const [ctaStatus, setCtaStatus] = useState<'idle' | 'loading' | 'success'>('idle');
-    const [formData, setFormData] = useState({
-        name: '',
-        company: '',
-        email: '',
-        phone: '',
-        type: '',
-        comment: ''
-    });
+    const [ctaStatus, setCtaStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [errMsg, setErrMsg] = useState('');
+    const [contact, setContact] = useState('');
+    const [reqType, setReqType] = useState('');
+    const [file, setFile] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const f = e.target.files[0];
+            setFile(f);
+            if (f.type.startsWith('image/')) {
+                setPreviewUrl(URL.createObjectURL(f));
+            } else {
+                setPreviewUrl(null); // non-image file
+            }
+        }
+    };
 
     const handleCtaSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setCtaStatus('loading');
-        // Simulate API call
-        setTimeout(() => {
-            setCtaStatus('success');
-        }, 1800);
-    };
+        setErrMsg('');
 
-    const updateField = (field: string, value: string) => {
-        setFormData(prev => ({ ...prev, [field]: value }));
+        try {
+            const payload = new FormData();
+            payload.append('contact', contact);
+            payload.append('type', reqType);
+            if (file) {
+                payload.append('file', file);
+            }
+
+            const res = await fetch(`${API_BASE}/v1/leads/engineer`, {
+                method: 'POST',
+                headers: { Accept: 'application/json' },
+                body: payload,
+            });
+
+            const data = await res.json();
+            if (!res.ok || !data.success) throw new Error(data.error ?? 'error');
+            
+            setCtaStatus('success');
+            setContact('');
+            setReqType('');
+            setFile(null);
+            setPreviewUrl(null);
+        } catch (err: any) {
+            setErrMsg('Помилка відправки. Будь ласка, перевірте дані або спробуйте пізніше.');
+            setCtaStatus('error');
+        }
     };
 
     const INDUSTRIES = [
@@ -284,7 +316,15 @@ export function HomePage({ locale }: { locale: string }) {
                             >
                                 {/* Photo background */}
                                 <div className={styles.cardPhotoBg}>
-                                    <Image src={ind.bg} alt={ind.key} fill style={{ objectFit: 'cover' }} sizes="(max-width: 820px) 100vw, 33vw" quality={75} />
+                                    <Image 
+                                        src={ind.bg} 
+                                        alt={ind.key} 
+                                        fill 
+                                        style={{ objectFit: 'cover' }} 
+                                        sizes="(max-width: 820px) 100vw, 33vw" 
+                                        quality={75} 
+                                        priority={i === 0} 
+                                    />
                                 </div>
                                 
                                 {/* Default dark gradient at bottom */}
@@ -380,21 +420,31 @@ export function HomePage({ locale }: { locale: string }) {
             </section>
 
             {/* ══════════════════════
-                BLOCK 5 — CTA (Request to Engineer)
+                BLOCK 5 — CTA (Request to Engineer) v2
             ══════════════════════ */}
             <section className={`${styles.cta} ${ctaRef.inView ? styles.ctaVisible : ''}`} ref={ctaRef.ref as React.RefObject<HTMLElement>}>
                 <div className={styles.ctaBgLayer}>
-                    <div className={styles.ctaGrafix} />
-                    <div className={styles.ctaGrid} />
+                    {/* Blueprint Seal Gradient Overlay */}
+                    <div className={styles.ctaBlueprint} />
                 </div>
 
                 <div className={styles.ctaInner}>
+                    {/* LEFT (60%) */}
                     <div className={styles.ctaInfo}>
-                        <span className={styles.sectionTag}>{t('cta.tag')}</span>
                         <h2 className={styles.ctaTitle}>{t('cta.title')}</h2>
                         <p className={styles.ctaDesc}>{t('cta.desc')}</p>
+                        
+                        {/* Logos row (Grayscale text badges) */}
+                        <div className={styles.ctaLogos}>
+                            <span className={styles.oemBadge}>JOHN DEERE</span>
+                            <span className={styles.oemBadge}>CASE IH</span>
+                            <span className={styles.oemBadge}>CLAAS</span>
+                            <span className={styles.oemBadge}>HORSCH</span>
+                            <span className={styles.oemBadge}>BEDNAR</span>
+                        </div>
                     </div>
 
+                    {/* RIGHT (40%) */}
                     <div className={styles.ctaFormCard}>
                         {ctaStatus === 'success' ? (
                             <div className={styles.ctaSuccess}>
@@ -406,82 +456,79 @@ export function HomePage({ locale }: { locale: string }) {
                             </div>
                         ) : (
                             <form className={styles.formGrid} onSubmit={handleCtaSubmit}>
-                                {/* Name / Position */}
-                                <div className={styles.fieldGroup}>
+                                {/* Contact Field */}
+                                <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
                                     <input 
                                         type="text" 
                                         className={styles.fieldInput} 
                                         placeholder=" " 
                                         required 
-                                        value={formData.name}
-                                        onChange={e => updateField('name', e.target.value)}
+                                        value={contact}
+                                        onChange={e => setContact(e.target.value)}
                                     />
-                                    <label className={styles.fieldLabel}>{t('cta.form.name')}</label>
-                                </div>
-                                {/* Company */}
-                                <div className={styles.fieldGroup}>
-                                    <input 
-                                        type="text" 
-                                        className={styles.fieldInput} 
-                                        placeholder=" " 
-                                        required 
-                                        value={formData.company}
-                                        onChange={e => updateField('company', e.target.value)}
-                                    />
-                                    <label className={styles.fieldLabel}>{t('cta.form.company')}</label>
-                                </div>
-                                {/* Email */}
-                                <div className={styles.fieldGroup}>
-                                    <input 
-                                        type="email" 
-                                        className={styles.fieldInput} 
-                                        placeholder=" " 
-                                        required 
-                                        value={formData.email}
-                                        onChange={e => updateField('email', e.target.value)}
-                                    />
-                                    <label className={styles.fieldLabel}>{t('cta.form.email')}</label>
-                                </div>
-                                {/* Phone */}
-                                <div className={styles.fieldGroup}>
-                                    <input 
-                                        type="tel" 
-                                        className={styles.fieldInput} 
-                                        placeholder=" " 
-                                        required 
-                                        value={formData.phone}
-                                        onChange={e => updateField('phone', e.target.value)}
-                                    />
-                                    <label className={styles.fieldLabel}>{t('cta.form.phone')}</label>
+                                    <label className={styles.fieldLabel}>{t('cta.form.contact')}</label>
                                 </div>
                                 
-                                {/* Request Essence */}
+                                {/* Request Type */}
                                 <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
                                     <select 
                                         className={styles.fieldSelect} 
                                         required
-                                        value={formData.type}
-                                        onChange={e => updateField('type', e.target.value)}
+                                        value={reqType}
+                                        onChange={e => setReqType(e.target.value)}
                                     >
                                         <option value="" disabled>{t('cta.form.type_options.placeholder')}</option>
-                                        <option value="analogue">{t('cta.form.type_options.analogue')}</option>
-                                        <option value="resource">{t('cta.form.type_options.resource')}</option>
-                                        <option value="test">{t('cta.form.type_options.test')}</option>
-                                        <option value="custom">{t('cta.form.type_options.custom')}</option>
+                                        <option value="analogue">🔍 {t('cta.form.type_options.analogue')}</option>
+                                        <option value="resource">📐 {t('cta.form.type_options.resource')}</option>
+                                        <option value="batch">📦 {t('cta.form.type_options.batch')}</option>
+                                        <option value="custom">⚙️ {t('cta.form.type_options.custom')}</option>
                                     </select>
                                     <label className={styles.fieldLabel}>{t('cta.form.type')}</label>
                                 </div>
 
-                                {/* Comment */}
-                                <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
-                                    <textarea 
-                                        className={styles.fieldTextarea} 
-                                        placeholder=" "
-                                        value={formData.comment}
-                                        onChange={e => updateField('comment', e.target.value)}
+                                {/* AI Drop Zone */}
+                                <div className={`${styles.fieldGroup} ${styles.fullWidth} ${styles.dropZone}`}>
+                                    <input 
+                                        type="file" 
+                                        accept=".jpg,.jpeg,.png,.heic,.webp"
+                                        className={styles.fileInput}
+                                        ref={fileInputRef}
+                                        onChange={handleFileChange}
                                     />
-                                    <label className={styles.fieldLabel}>{t('cta.form.comment')}</label>
+                                    <div 
+                                        className={styles.dropZoneInner}
+                                        onClick={() => fileInputRef.current?.click()}
+                                    >
+                                        {previewUrl ? (
+                                            <div className={styles.previewContainer}>
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img src={previewUrl} alt="Preview" className={styles.filePreview} />
+                                                <span className={styles.fileName}>{file?.name}</span>
+                                            </div>
+                                        ) : file ? (
+                                            <div className={styles.previewContainer}>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.dropIcon}>
+                                                    <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9zM13 2v7h7" />
+                                                </svg>
+                                                <span className={styles.fileName}>{file.name}</span>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className={styles.dropIcon}>
+                                                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                                                </svg>
+                                                <span className={styles.dropText}>{t('cta.form.upload')}</span>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
+
+                                {/* Error */}
+                                {ctaStatus === 'error' && (
+                                    <div className={`${styles.fullWidth} ${styles.formError}`}>
+                                        {errMsg}
+                                    </div>
+                                )}
 
                                 {/* Submit Button */}
                                 <div className={styles.fullWidth}>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\NewsController;
+use App\Http\Controllers\Api\LeadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,4 +53,7 @@ Route::prefix('v1')->group(function () {
 
     // Імпорт з 1С (захищений API-токеном)
     Route::middleware('auth:sanctum')->post('/import/products', [ProductController::class, 'import']);
+
+    // Ліди — форма «Запит до інженера»
+    Route::post('/leads/engineer', [LeadController::class, 'engineerRequest']);
 });

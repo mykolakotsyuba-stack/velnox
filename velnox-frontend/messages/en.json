@@ -108,23 +108,20 @@
     },
     "cta": {
       "tag": "START NOW",
-      "title": "Find Your Solution Now.",
-      "desc": "Contact our engineers for analogous selection, resource calculation, or test batch ordering.",
+      "title": "Upgrade to the 2000+ moto-hours standard without downtime",
+      "desc": "Our engineering department will select the exact analogue for your machinery (John Deere, Case, Claas) within 15 minutes",
       "form": {
-        "name": "Name / Position",
-        "company": "Company (OEM)",
-        "email": "Work E-mail",
-        "phone": "Phone Number",
-        "type": "Request Essence",
+        "contact": "Name and phone",
+        "type": "Request Type",
         "type_options": {
           "placeholder": "Choose request type...",
           "analogue": "Analogue Selection",
           "resource": "Resource Calculation",
-          "test": "Test Batch",
+          "batch": "Order Test Batch",
           "custom": "Custom Solution"
         },
-        "comment": "Comment (article or details)",
-        "submit": "CONTACT AN ENGINEER",
+        "upload": "Upload part photo",
+        "submit": "GET TECHNICAL CALCULATION",
         "sending": "Sending...",
         "success_title": "Request sent!",
         "success_desc": "Our engineer will contact you shortly for a technical consultation."
