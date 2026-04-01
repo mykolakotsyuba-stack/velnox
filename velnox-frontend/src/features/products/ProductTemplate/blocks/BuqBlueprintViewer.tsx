@@ -17,7 +17,7 @@ interface BuqBlueprintViewerProps {
 // ─── CorelDRAW SVG coordinate system ─────────────────────────────────────────
 // viewBox: 7552 -117381 12467 7053  (width × height in SVG user units)
 // Positions below are actual SVG coordinates of each dimension label
-const SVG_VB = '7552 -117381 12467 7053';
+const SVG_VB = '7000 -117700 13600 7400';  // bearing diagram area with margins
 
 type DimLabel = {
     key: string;
