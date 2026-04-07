@@ -369,7 +369,7 @@
       "search_placeholder": "Search by designation or size...",
       "table1": {
         "title": "Table 1: Dimensional Specifications and Mountings",
-        "desc": "This table is critical for engineers integrating the unit into a 3D equipment model.",
+        "desc": "",
         "col_designation": "Designation",
         "col_d": "Inner Diameter (d, mm)",
         "col_j": "Mounting Distances (J, mm)",
@@ -379,7 +379,7 @@
       },
       "table2": {
         "title": "Table 2: Performance & Load Ratings",
-        "desc": "This table is required for calculating service life and safety margin.",
+        "desc": "",
         "col_cdyn": "Dynamic (Cdyn, kN)",
         "col_co": "Static (Co, kN)",
         "col_pu": "Fatigue Limit (Pu, kN)",
@@ -395,7 +395,7 @@
       },
       "table3": {
         "title": "Table 3: Cross-References & Installations",
-        "desc": "Critical for distributors looking for a replacement to existing units.",
+        "desc": "",
         "col_brand": "Brand Analogs",
         "col_oem": "OEM Equipment Numbers",
         "col_app": "Application"

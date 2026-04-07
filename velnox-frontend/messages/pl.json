@@ -316,7 +316,7 @@
       "search_placeholder": "Szukaj po oznaczeniu lub wymiarze...",
       "table1": {
         "title": "Tabela 1: Wymiary gabarytowe i montażowe (Dimensional Specifications)",
-        "desc": "Ta tabela jest kluczowa dla inżynierów integrujących zespół w modelu 3D sprzętu.",
+        "desc": "",
         "col_designation": "Oznaczenie (Designation)",
         "col_d": "Średnica wewnętrzna (d, mm)",
         "col_j": "Rozstaw otworów (J, mm)",
@@ -326,7 +326,7 @@
       },
       "table2": {
         "title": "Tabela 2: Charakterystyka eksploatacyjna (Performance & Load Ratings)",
-        "desc": "Ta tabela jest wymagana do obliczeń nośności i zapasu wytrzymałości.",
+        "desc": "",
         "col_cdyn": "Dynamiczna (Cdyn, kN)",
         "col_co": "Statyczna (Co, kN)",
         "col_pu": "Granica zmęczenia (Pu, kN)",
@@ -342,7 +342,7 @@
       },
       "table3": {
         "title": "Tabela 3: Odnośniki i zastosowania (Cross-References & Installations)",
-        "desc": "Kluczowe dla dystrybutorów, którzy szukają zamiennika dla istniejących zespołów.",
+        "desc": "",
         "col_brand": "Analogi marek",
         "col_oem": "Numery fabryczne maszyn OEM",
         "col_app": "Zastosowanie"
