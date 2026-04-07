@@ -1,0 +1,8 @@
+node_modules/
+vendor/
+.next/
+.env
+.env.local
+*.tar.gz
+pdf-gen-temp/
+.DS_Store
