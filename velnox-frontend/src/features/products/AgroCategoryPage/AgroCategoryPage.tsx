@@ -174,7 +174,6 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     const approachRef = useInView(0.1);
     const app1Ref = useInView(0.2);
     const app2Ref = useInView(0.2);
-    const app3Ref = useInView(0.2);
     const specialRef = useInView(0.15);
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
@@ -185,7 +184,6 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
-    const [table4Data, setTable4Data] = useState<any[]>([]);
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
     const specialBlockRef = useRef<HTMLDivElement>(null);
@@ -221,17 +219,15 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         const fetchTables = async () => {
             try {
                 const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-                const [res1, res2, res3, res4] = await Promise.all([
+                const [res1, res2, res3] = await Promise.all([
                     fetch(`${base}/v1/products/tables/agro-table1`),
                     fetch(`${base}/v1/products/tables/agro-table2`),
                     fetch(`${base}/v1/products/tables/agro-table3`),
-                    fetch(`${base}/v1/products/tables/agro-table4`),
                 ]);
-                const [d1, d2, d3, d4] = await Promise.all([res1.json(), res2.json(), res3.json(), res4.json()]);
+                const [d1, d2, d3] = await Promise.all([res1.json(), res2.json(), res3.json()]);
                 setTable1Data(Array.isArray(d1) ? d1 : []);
                 setTable2Data(Array.isArray(d2) ? d2 : []);
                 setTable3Data(Array.isArray(d3) ? d3 : []);
-                setTable4Data(Array.isArray(d4) ? d4 : []);
             } catch (err) {
                 console.error('Error fetching agro tables:', err);
             }
@@ -291,25 +287,12 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         return rows;
     }, [searchQuery, filters, table3Data]);
 
-    const filteredT4 = useMemo(() => {
-        let rows = table4Data;
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-        }
-        Object.entries(filters).forEach(([col, activeVals]) => {
-            if (activeVals.length > 0) {
-                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
-            }
-        });
-        return rows;
-    }, [searchQuery, filters, table4Data]);
 
     
     // Unique bore diameter values across all tables
     const allOptions = useMemo(() => {
         const all: Record<string, Set<string>> = {};
-        [...table1Data, ...table2Data, ...table3Data, ...table4Data].forEach(r => {
+        [...table1Data, ...table2Data, ...table3Data].forEach(r => {
             Object.keys(r).forEach(k => {
                 const v = r[k];
                 if (v != null && String(v).trim() !== '' && String(v).trim() !== '-') {
@@ -328,16 +311,14 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             });
         });
         return result;
-    }, [table1Data, table2Data, table3Data, table4Data]);
+    }, [table1Data, table2Data, table3Data]);
 
     const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
     const { sorted: sortedT2, sortCol: sc2, sortDir: sd2, toggle: tog2 } = useSortableTable(filteredT2);
     const { sorted: sortedT3, sortCol: sc3, sortDir: sd3, toggle: tog3 } = useSortableTable(filteredT3);
-    const { sorted: sortedT4, sortCol: sc4, sortDir: sd4, toggle: tog4 } = useSortableTable(filteredT4);
 
     const app1Class = app1Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
     const app2Class = app2Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
-    const app3Class = app3Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
 
     function Th({ 
         col, label, toggle, sortCol, sortDir, 
@@ -426,9 +407,6 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     /* ── TABLE 3: DHU S-type (square bore) ── */
     const table3Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (inch)', 'd (mm)', 'B (mm)', 'C (mm)', 'a (mm)', 'Da (mm)', 'L (mm)', 'A (mm)', 'A1 (mm)', 'J (mm)', 'N (mm)', 'M (mm)', 'Fr (kN)', 'Fa (kN)', 'Mass (kg)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)'];
     const table3Labels: Record<string, string> = { ...table2Labels, 'a (mm)': 'a', 'M (mm)': 'M', 'Pu (kN)': 'Pu' };
-    /* ── TABLE 4: AA-series assembly ── */
-    const table4Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (inch)', 'd (mm)', 'B (mm)', 'A (mm)', 'A1 (mm)', 'C (mm)', 'Da (mm)', 'D (mm)', 'J (mm)', 'N (mm)', 'Mass (kg)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)'];
-    const table4Labels: Record<string, string> = { 'Part Number': 'Part No', 'Bearing designation': 'Bearing', 'Brand name': 'Brand', 'Cross-Reference': 'Cross-Ref', 'd (inch)': 'd"', 'd (mm)': 'd', 'B (mm)': 'B', 'A (mm)': 'A', 'A1 (mm)': 'A1', 'C (mm)': 'C', 'Da (mm)': 'Da', 'D (mm)': 'D', 'J (mm)': 'J', 'N (mm)': 'N', 'Mass (kg)': 'Mass', 'Cdyn (kN)': 'Cdyn', 'Co (kN)': 'Co', 'Pu (kN)': 'Pu' };
 
     return (
         <main className={styles.page}>
@@ -764,40 +742,6 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── APP BLOCK 3: Blueprint Style ── */}
-            <section ref={app3Ref.ref} className={`${styles.blueprintBlock} ${app3Ref.inView ? styles.blueprintVisible : ''}`}>
-                 <Image
-                    src="/velnox/images/agro/blueprint-bg-2.png"
-                    alt="Agro AA-Series Nodes"
-                    fill
-                    priority
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                />
-                <div className={styles.blueprintDarkOverlay} />
-                
-                <div className={styles.blueprintLayout}>
-                    {/* LEFT: Text */}
-                    <div className={styles.blueprintText}>
-                        <span className={styles.blueprintTag}>
-                            <span className={styles.blueprintTagLine} />
-                            TILLAGE NODES
-                        </span>
-                        <h2 className={styles.blueprintTitle}>{t('agroPage.app3.title')}</h2>
-                        <p className={styles.blueprintLead}>{t('agroPage.app3.desc')}</p>
-                        
-                        <div className={styles.blueprintMeta}>
-                            <div className={styles.blueprintMetaItem}>
-                                <span className={styles.blueprintMetaLabel}>Сфера застосування</span>
-                                <span className={styles.blueprintMetaValue}>{t('agroPage.app3.applications')}</span>
-                            </div>
-                            <div className={styles.blueprintMetaItem}>
-                                <span className={styles.blueprintMetaLabel}>OEM-фокус</span>
-                                <span className={styles.blueprintMetaValue}>{t('agroPage.app3.oem_focus')}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
@@ -856,60 +800,6 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── TABLE 4 ── */}
-            <section className={styles.tablesSection}>
-                <div className={styles.tableSectionContainer}>
-                    <div className={styles.tableBlock}>
-                        <h3>{t('agroPage.block2.table4.title')}</h3>
-                        <p className={styles.tableDesc}>{t('agroPage.block2.table4.desc')}</p>
-                        <div className={styles.diagramPlaceholder}>[ СХЕМА ]</div>
-                        <div className={styles.tableScroll}>
-                            <table className={`${styles.techTable} ${styles.techTableWide}`}>
-                                <thead>
-                                    <tr>
-                                        {table4Cols.map(col => (
-                                            <Th
-                                                key={col} col={col} label={table4Labels[col] ?? col} toggle={tog4} sortCol={sc4} sortDir={sd4}
-                                                hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
-                                                filterOptions={allOptions[col]}
-                                                selectedFilters={filters[col]}
-                                                onFilterChange={handleFilterChange}
-                                            />
-                                        ))}
-                                        <th className={styles.actionCol} />
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedT4.map((row, i) => (
-                                        <tr key={i}>
-                                            {table4Cols.map(col => (
-                                                <td
-                                                    key={col}
-                                                    className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
-                                                    data-label={table4Labels[col] ?? col}
-                                                >
-                                                    {col === 'Cross-Reference' ? renderTightCell(row[col])
-                                                     : col === 'Bearing designation' ? renderDesignationCell(row[col])
-                                                     : col === 'Brand name' ? renderBrandCell(row[col])
-                                                     : (row[col] ?? '-')}
-                                                </td>
-                                            ))}
-                                            <td className={styles.actionCol} data-label="">
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
-                                                    {t('agroPage.block2.btn_request')}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    {sortedT4.length === 0 && (
-                                        <tr><td colSpan={table4Cols.length + 1} className={styles.emptyState}>Нічого не знайдено</td></tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
         </main>
     );
 }

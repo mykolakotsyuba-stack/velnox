@@ -444,7 +444,7 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
                         <div className={styles.heroEyebrow}><span className={styles.eyebrowLine} />VELNOX KIT BEARINGS</div>
                         <h1 className={styles.heroTitle}>{t('kitPage.hero.title')}</h1>
                         <p className={styles.heroSubtitle}>{t('kitPage.hero.subtitle')}</p>
-                        <p className={styles.heroDescription}>{t('kitPage.hero.desc')}</p>
+
                     </div>
                 </div>
             </section>
@@ -493,26 +493,6 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
                 </div>
             </div>
 
-            {/* ── APP BLOCK 1 ── */}
-            <section ref={app1Ref.ref} className={app1Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection}>
-                <div className={styles.appWatermark}>KIT 1</div>
-                <div className={styles.appInner}>
-                    <div className={styles.appHeader}>
-                        <h2 className={styles.appTitle}>{t('kitPage.app1.title')}</h2>
-                    </div>
-                    <div className={styles.appBody}>
-                        <p className={`${styles.appPara} ${styles.appParaLead} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
-                            {t('kitPage.app1.desc')}
-                        </p>
-                        <p className={`${styles.appPara} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
-                            <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('kitPage.app1.applications')}
-                        </p>
-                        <p className={`${styles.appPara} ${app1Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
-                            <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('kitPage.app1.oem_focus')}
-                        </p>
-                    </div>
-                </div>
-            </section>
 
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>

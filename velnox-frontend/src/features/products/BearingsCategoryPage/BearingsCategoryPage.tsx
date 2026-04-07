@@ -197,13 +197,17 @@ function PerformanceIntro() {
                     <div className={styles.introText}>
                         <div className={styles.introTag}>PERFORMANCE DATA</div>
                         <h2 className={styles.introTitle}>
-                            Розрахунковий ресурс та<br />експлуатаційні навантаження
+                            Ресурс та навантаження вузлів
                         </h2>
                         <p className={styles.introCopy}>
-                            Для OEM-виробників критично важливо точно прогнозувати життєвий цикл кожного вузла.
-                            База даних VELNOX містить вичерпні параметри <strong>динамічної (C<sub>dyn</sub>) та статичної (C<sub>0</sub>)</strong> вантажопідйомності,
-                            а також межі втомного навантаження (P<sub>u</sub>). Ці дані дозволяють конструкторським відділам закладати
-                            правильний запас міцності ще на етапі 3D-моделювання техніки.
+                            Для OEM-виробників критично точно оцінювати ресурс і навантаження вузлів.<br />
+                            VELNOX надає параметри:<br />
+                            динамічної (C) та статичної (C₀) вантажопідйомності,<br />
+                            а також допустимі експлуатаційні навантаження.<br />
+                            Це дозволяє:<br />
+                            коректно розрахувати ресурс<br />
+                            закласти запас міцності<br />
+                            інтегрувати вузол без ризиків
                         </p>
                     </div>
                     <div className={styles.introGraphic}>
@@ -782,7 +786,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 <div className={styles.tableSectionContainer}>
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table2.title')}</h3>
-                        <p className={styles.tableDesc}>{t('block2.table2.desc')}</p>
+                        <p className={styles.tableDesc}></p>
 
                         {/* Diagram for Table 2 */}
                         <div className={styles.tableDiagramContainer}>
@@ -850,8 +854,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 </div>
             </section>
 
-            {/* ─── Intro Block: Cross-References ─── */}
-            <CrossRefIntro />
 
             {/* ─── Section: Packer Rollers (Прикочувальні котки) with Sealing Info ─── */}
             <section className={`${styles.sealingSection} ${styles.appSectionVisible}`}>
@@ -944,8 +946,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 </div>
             </section>
 
-            {/* ─── Intro Block: Sealing Systems ─── */}
-            <SealingIntro />
 
             {/* ─── Sealing Info Block (Requested) ─── */}
             <section className={styles.tablesSection}>
