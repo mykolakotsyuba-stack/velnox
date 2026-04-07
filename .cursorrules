@@ -10,3 +10,10 @@
    - Frontend path on server: `/srv/projects/velnox/frontend`
    - Backend path on server: `/srv/projects/velnox/api`
 6. **SYNC / DEPLOYMENT**: Use the bash scripts available in the root directory (`sync_images.sh`, `run_deploy.sh`, `fix_and_build.sh`) to synchronize changes with the remote server.
+
+**MANDATORY WORKFLOW RULES**:
+1. **DATABASE BACKUP**: BEFORE every commit, you MUST create a backup of the SQLite database.
+   - Command: `mkdir -p velnox-api/database/backups && cp velnox-api/database/database.sqlite velnox-api/database/backups/$(date +%Y%m%d_%H%M%S)_database.sqlite`
+2. **DUAL COMMIT & PUSH**: Every change MUST be committed locally AND pushed to GitHub (`origin main`).
+   - Never leave changes only on the local machine.
+3. **DEPLOYMENT**: Follow existing deployment rules (sync to `mx.irbis.ua`) after successful GitHub push.
