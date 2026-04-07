@@ -209,7 +209,7 @@
       "s2_suffix": "+",
       "s2_label": "clients among OEM manufacturers and engineering departments",
       "s3_suffix": "%",
-      "s3_label": "tolerance parameter repeatability in serial batches",
+      "s3_label": "control of key parameters in each production batch",
       "s4_suffix": "+",
       "s4_label": "unique HUB, KIT solutions and special bearing SKUs"
     },
@@ -537,10 +537,6 @@
       "table3": {
         "title": "Table 3: DHU 1¼S209 VX — Square bore",
         "desc": "Square bore units for disc harrow assemblies. Replacement for KUHN, KRAUSE, CASE, Sunflower."
-      },
-      "table4": {
-        "title": "Table 4: AA30941 VX — JD disc harrow assembly",
-        "desc": "Complete disc harrow unit for John Deere. Includes housing and GW209PPB13 bearing."
       }
     },
     "app1": {
@@ -554,12 +550,6 @@
       "desc": "Highly reliable sealed units for intensive harvesting operations under high load.",
       "applications": "Grain and forage harvesters",
       "oem_focus": "CLAAS Lexion, New Holland, Case IH"
-    },
-    "app3": {
-      "title": "AA-series units for tillage equipment",
-      "desc": "Complete disc harrow units AA-series for JD equipment. Include housing, bearing and seals.",
-      "applications": "John Deere disc harrows",
-      "oem_focus": "Direct replacement AA30941 John Deere"
     }
   },
   "kitPage": {
@@ -572,7 +562,7 @@
       "title": "VELNOX Seeder Bearings — Key Advantages",
       "card1_title": "D-shape Bore",
       "card1_desc": "D-shape bore bearings for secure shaft mounting without additional fasteners. Specifically for seeding discs.",
-      "card2_title": "Angular Contact Design",
+      "card2_title": "Radial-Thrust Ball Bearing",
       "card2_desc": "Angular contact bearings with α angle provide axial load capacity for seeding section operation.",
       "card3_title": "OEM Cross-Reference",
       "card3_desc": "Direct replacement for John Deere, KUHN, Monosem, Gaspardo, Kinze, Great Plains bearings without design changes."
@@ -588,14 +578,14 @@
       },
       "table2": {
         "title": "Table 2: Seeder Bearings Series 2",
-        "desc": "Seeder bearings without Pu ratings."
+        "desc": "Seeder bearings"
       },
       "table3": {
-        "title": "Table 3: Angular Contact Bearings with d1",
+        "title": "Table 3: Radial-Thrust Ball Bearings with d1",
         "desc": "Bearings with outer d1 ring and contact angle α."
       },
       "table5": {
-        "title": "Table 5: Angular Contact (Series 5)",
+        "title": "Table 5: Radial-Thrust Ball Bearings",
         "desc": "Angular contact α bearings for seeders."
       },
       "table6": {
@@ -603,15 +593,15 @@
         "desc": "Bearings with shaft groove (L, e dimensions)."
       },
       "table7": {
-        "title": "Table 7: Angular Contact with d1 (Series 7)",
+        "title": "Table 7: Radial-Thrust with d1 (Series 7)",
         "desc": "Seeder bearings with contact angle α and outer d1."
       },
       "table8": {
-        "title": "Table 8: Angular Contact (Series 8)",
+        "title": "Table 8: Radial-Thrust (Series 8)",
         "desc": "Angular contact α bearings."
       },
       "table9": {
-        "title": "Table 9: Angular Contact (Series 9)",
+        "title": "Table 9: Radial-Thrust (Series 9)",
         "desc": "Series 9 seeder bearings."
       },
       "table10": {

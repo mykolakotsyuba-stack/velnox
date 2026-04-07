@@ -192,7 +192,7 @@
       "s2_suffix": "+",
       "s2_label": "klientow wsrod producentow OEM i dzialow konstruktorskich",
       "s3_suffix": "%",
-      "s3_label": "powtarzalnosc parametrow tolerancji w partiach seryjnych",
+      "s3_label": "kontrola kluczowych parametrów w każdej partii produktów",
       "s4_suffix": "+",
       "s4_label": "pozycji unikalnych rozwiazan HUB, KIT i specjalnych lozysk"
     },
@@ -484,10 +484,6 @@
       "table3": {
         "title": "Tabela 3: DHU 1¼S209 VX — Kwadratowy otwór",
         "desc": "Jednostki z kwadratowym otworem do agregatów tarczowych. Zamiennik KUHN, KRAUSE, CASE, Sunflower."
-      },
-      "table4": {
-        "title": "Tabela 4: AA30941 VX — Jednostka brony tarczowej JD",
-        "desc": "Kompletna jednostka brony tarczowej John Deere. Zawiera obudowę i łożysko GW209PPB13."
       }
     },
     "app1": {
@@ -501,77 +497,71 @@
       "desc": "Jednostki DHU z łożyskiem serii 209 do ciężkich bron tarczowych.",
       "applications": "Ciężkie brony tarczowe, maszyny uprawowe",
       "oem_focus": "John Deere, KUHN, KRAUSE, Great Plains, CASE, Sunflower"
-    },
-    "app3": {
-      "title": "Jednostki AA do maszyn uprawowych",
-      "desc": "Kompletne jednostki bron tarczowych AA do maszyn JD. Zawierają obudowę, łożysko i uszczelnienia.",
-      "applications": "Brony tarczowe John Deere",
-      "oem_focus": "Bezpośredni zamiennik AA30941 John Deere"
     }
   },
   "kitPage": {
     "hero": {
-      "title": "Підшипники для сівалок та висівних апаратів VELNOX",
-      "subtitle": "Комплексний асортимент підшипників для посівної техніки. Пряма заміна OEM-вузлів John Deere, KUHN, Monosem, Gaspardo, Kinze.",
-      "desc": "Підшипники серії KIT розроблені для висівних дисків, механізмів точного висіву та інших вузлів сівалок, де критичними є точність обертання та захист від ґрунту."
+      "title": "Łożyska do siewników i aparatów wysiewających VELNOX",
+      "subtitle": "Kompleksowa oferta łożysk do techniki siewnej. Bezpośredni zamiennik węzłów OEM John Deere, KUHN, Monosem, Gaspardo, Kinze.",
+      "desc": ""
     },
     "block1": {
-      "title": "Підшипники VELNOX для сівалок — ключові переваги",
-      "card1_title": "D-подібний отвір",
-      "card1_desc": "Підшипники з D-подібним отвором для надійної фіксації на валу без додаткового кріплення. Спеціально для висівних дисків.",
-      "card2_title": "Кутово-контактна конструкція",
-      "card2_desc": "Підшипники з кутом контакту α забезпечують сприйняття осьових навантажень при роботі висівних секцій.",
+      "title": "Łożyska VELNOX do siewników — kluczowe zalety",
+      "card1_title": "Otwór w kształcie litery D",
+      "card1_desc": "Łożyska z otworem D dla bezpiecznego montażu na wale bez dodatkowych elementów mocujących. Specjalnie do tarcz wysiewających.",
+      "card2_title": "Łożysko kulkowe skośne",
+      "card2_desc": "Łożyska skośne o kącie styku α zapewniają przenoszenie obciążeń osiowych podczas pracy sekcji wysiewających.",
       "card3_title": "OEM Cross-Reference",
-      "card3_desc": "Пряма заміна підшипників John Deere, KUHN, Monosem, Gaspardo, Kinze, Great Plains без конструктивних змін."
+      "card3_desc": "Bezpośredni zamiennik łożysk John Deere, KUHN, Monosem, Gaspardo, Kinze, Great Plains bez zmian konstrukcyjnych."
     },
     "block2": {
-      "title": "Технічні специфікації підшипників для сівалок",
-      "intro": "Повний каталог підшипників VELNOX для сівалок. 12 таблиць з технічними параметрами та OEM cross-references.",
-      "search_placeholder": "Пошук за артикулом, розміром або OEM-номером...",
-      "btn_request": "Запит",
+      "title": "Specyfikacje techniczne łożysk do siewników",
+      "intro": "Pełny katalog łożysk VELNOX do siewników. 12 tabel z parametrami technicznymi i zamiennikami OEM.",
+      "search_placeholder": "Szukaj numeru części, rozmiaru lub numeru OEM...",
+      "btn_request": "Zapytanie",
       "table1": {
-        "title": "Таблиця 1: Підшипники з D-подібним отвором для сівалок",
-        "desc": "Підшипники з D-подібним отвором для висівних дисків сівалок."
+        "title": "Tabela 1: Łożyska z otworem D do siewników",
+        "desc": "Łożyska z otworem D do tarcz wysiewających siewników."
       },
       "table2": {
-        "title": "Таблиця 2: Підшипники сівалок серія 2",
-        "desc": "Підшипники для сівалок без Pu."
+        "title": "Tabela 2: Łożyska do siewników",
+        "desc": "Łożyska do siewników"
       },
       "table3": {
-        "title": "Таблиця 3: Кутово-контактні підшипники з d1",
-        "desc": "Підшипники із зовнішнім кільцем d1 та кутом контакту α."
+        "title": "Tabela 3: Łożyska kulkowe skośne z d1",
+        "desc": "Łożyska z pierścieniem zewnętrznym d1 i kątem styku α."
       },
       "table5": {
-        "title": "Таблиця 5: Кутово-контактні (серія 5)",
-        "desc": "Підшипники з кутом контакту α для сівалок."
+        "title": "Tabela 5: Łożyska kulkowe skośne",
+        "desc": "Łożyska o kącie styku α do siewników."
       },
       "table6": {
-        "title": "Таблиця 6: Підшипники з кільцевою канавкою на валу",
-        "desc": "Підшипники з кільцевою канавкою (L, e розміри)."
+        "title": "Tabela 6: Łożyska z rowkiem na wale",
+        "desc": "Łożyska z rowkiem pierścieniowym (wymiary L, e)."
       },
       "table7": {
-        "title": "Таблиця 7: Кутово-контактні з d1 (серія 7)",
-        "desc": "Підшипники для сівалок із кутом контакту α та зовнішнім d1."
+        "title": "Tabela 7: Łożyska kulkowe skośne z d1 (seria 7)",
+        "desc": "Łożyska do siewników z kątem styku α i zewnętrznym d1."
       },
       "table8": {
-        "title": "Таблиця 8: Кутово-контактні (серія 8)",
-        "desc": "Підшипники з кутом контакту α."
+        "title": "Tabela 8: Łożyska kulkowe skośne (seria 8)",
+        "desc": "Łożyska o kącie styku α."
       },
       "table9": {
-        "title": "Таблиця 9: Кутово-контактні (серія 9)",
-        "desc": "Підшипники серії 9 для сівалок."
+        "title": "Tabela 9: Łożyska kulkowe skośne (seria 9)",
+        "desc": "Łożyska serii 9 do siewników."
       },
       "table10": {
-        "title": "Таблиця 10: Флангові підшипники (серія 10)",
-        "desc": "Спеціальні підшипники для сівалок. Cross-references."
+        "title": "Tabela 10: Łożyska kołnierzowe (seria 10)",
+        "desc": "Specjalne łożyska kołnierzowe do siewników. Zamienniki."
       },
       "table11": {
-        "title": "Таблиця 11: Флангові підшипники (серія 11)",
-        "desc": "Спеціальні підшипники для сівалок."
+        "title": "Tabela 11: Łożyska kołnierzowe (seria 11)",
+        "desc": "Specjalne łożyska kołnierzowe do siewników."
       },
       "table12": {
-        "title": "Таблиця 12: Спеціальні підшипники (серія 12)",
-        "desc": "Підшипники 207KRRB серії для сівалок."
+        "title": "Tabela 12: Łożyska specjalne (seria 12)",
+        "desc": "Łożyska serii 207KRRB do siewników."
       }
     }
   },
