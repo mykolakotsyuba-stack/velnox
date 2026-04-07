@@ -189,7 +189,7 @@ export function AboutPage({ locale }: { locale: string }) {
                         <StatCard
                             active={statsSection.inView}
                             delay="0.25s"
-                            value={98}
+                            value={100}
                             suffix={t('stats.s3_suffix')}
                             label={t('stats.s3_label')}
                             icon={
