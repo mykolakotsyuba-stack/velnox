@@ -627,45 +627,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 </div>
             </section>
 
-            {/* 2. ENGINEERING APPROACH */}
-            <section className={styles.approach} ref={approachRef.ref}>
-                <div className={`${styles.container} ${approachRef.inView ? styles.animIn : ''}`}>
-                    <h2 className={styles.sectionTitle}>{t('block1.title')}</h2>
-                    <div className={styles.featureGrid}>
-                        <div className={styles.featureCard}>
-                            <div className={styles.featureIcon}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <path d="M12 2l8 4v5c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V6l8-4z" />
-                                    <path d="M12 8v8m-2.5-2l2.5 2.5 2.5-2.5" />
-                                </svg>
-                            </div>
-                            <h3>{t('block1.card1_title')}</h3>
-                            <p>{t('block1.card1_desc')}</p>
-                        </div>
-                        <div className={styles.featureCard}>
-                            <div className={styles.featureIcon}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <circle cx="12" cy="12" r="6" />
-                                    <circle cx="12" cy="12" r="2" />
-                                </svg>
-                            </div>
-                            <h3>{t('block1.card2_title')}</h3>
-                            <p>{t('block1.card2_desc')}</p>
-                        </div>
-                        <div className={styles.featureCard}>
-                            <div className={styles.featureIcon}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                    <circle cx="12" cy="12" r="3" />
-                                    <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m2.54 2.54l4.24 4.24M1 12h6m6 0h6m-17.78 7.78l4.24-4.24m2.54-2.54l4.24-4.24" />
-                                </svg>
-                            </div>
-                            <h3>{t('block1.card3_title')}</h3>
-                            <p>{t('block1.card3_desc')}</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
 
             {/* ─── Application: Packer Roller ─── */}
             <PackerRollerIntro />
@@ -857,22 +819,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             </section>
 
 
-            {/* ─── Section: Packer Rollers (Прикочувальні котки) with Sealing Info ─── */}
-            <section className={`${styles.sealingSection} ${styles.appSectionVisible}`}>
-                <div className={styles.appWatermark} aria-hidden="true">Ущільнення</div>
-                <div className={styles.appInner}>
-                    <div className={styles.appHeader}>
-                        <span className={styles.appTag}>Ущільнення</span>
-                        <h2 className={styles.appTitle}>{t('packer_roller.sealing_title')}</h2>
-                    </div>
-                    <div className={styles.appBody}>
-                        <p className={`${styles.appPara} ${styles.appParaLead} ${styles.appParaVisible}`}>
-                            <strong className={styles.appKeyword}>ТРИКРОМКОВЕ + ДВОКРОМКОВЕ</strong>
-                            {' '}— {t('sealing_info.p1')}
-                        </p>
-                    </div>
-                </div>
-            </section>
+
 
 
             {/* ─── Section: Table 3: Cross-References & Applications ─── */}
@@ -949,40 +896,9 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             </section>
 
 
-            {/* ─── Sealing Info Block (Requested) ─── */}
+            {/* ─── Grouped Technical Tables Section ─── */}
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
-                    <div className={`${styles.buqDrawingBlock} ${styles.sealingInfoBlock}`}>
-                        <div className={styles.sealingInfoTag}>{t('sealing_info.tag')}</div>
-                        <div className={styles.sealingInfoTitle}>
-                            {t('sealing_info.title')}
-                        </div>
-                        <div className={styles.sealingInfoContent}>
-                            <p>{t('sealing_info.p1')}</p>
-                            <p>{t('sealing_info.p2')}</p>
-                            <p>{t('sealing_info.p3')}</p>
-                        </div>
-                    </div>
-
-                    {/* Placeholder for Sealing Scheme (Figure) */}
-                    <div className={styles.buqDrawingBlock}>
-                        <div className={styles.buqDrawingTitle}>FIGURE: SEALING SYSTEM SCHEME</div>
-                        <div className={styles.buqDrawingCompositeSingle}>
-                            <div style={{ 
-                                width: '100%', 
-                                height: '300px', 
-                                background: 'rgba(255,255,255,0.05)', 
-                                border: '1px dashed rgba(255,255,255,0.2)',
-                                borderRadius: '8px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                color: 'rgba(255,255,255,0.3)'
-                            }}>
-                                [ SEALING SYSTEM SCHEME IMAGE ]
-                            </div>
-                        </div>
-                    </div>
 
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table4.title')}</h3>
