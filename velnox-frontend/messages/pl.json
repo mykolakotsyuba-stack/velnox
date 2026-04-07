@@ -208,7 +208,6 @@
       "tag": "Kastomizacja i jakosc",
       "title": "Inzynierska kastomizacja wezlow",
       "text": "Dostosowujemy produkt do zadania klienta, a w szczególności: systemy uszczelnień (pył/wilgoć/ścierniwo, różne rodzaje ochrony), rodzaj i objętość smaru do trybu pracy, materiały i powłoki do warunków korozyjnych, elementy konstrukcyjne i pasowania do węzła i montażu.",
-      "goal": "Cel - przewidywany resurs i minimalizacja przestojow maszyn.",
       "case1_title": "Optymalizacja dla agresywnych środowisk",
       "case1_text": "Opracowanie systemów z 5-stopniowym uszczelnieniem kasetowym do pracy w nawozach płynnych (RSM).",
       "case2_title": "Wzmocnione węzły OEM",
@@ -246,22 +245,6 @@
       "card1_text": "Pracujemy od zadania technicznego wezla.",
       "card2_title": "Fokus OEM",
       "card2_text": "Dla OEM kluczowe sa powtarzalnosc parametrow i stabilnosc partia po partii."
-    },
-    "expertise": {
-      "tag": "Ekspertyza",
-      "title": "Kastomizacja i jakosc",
-      "custom_title": "Kastomizacja i rozwiazania inzynieryjne",
-      "custom_intro": "Adaptujemy wyrob do zadania klienta, m.in.:",
-      "custom_item1": "systemy uszczelnienia (pyl/wilgoc/scierniko)",
-      "custom_item2": "typ i objetosc smaru pod tryb pracy",
-      "custom_item3": "materialy i powloki dla srodowisk korozyjnych",
-      "custom_item4": "elementy konstrukcyjne i pasowania pod wezel",
-      "quality_title": "Podejscie do jakosci",
-      "quality_intro": "Jakosc VELNOX to zarzadzany wynik:",
-      "quality_item1": "kontrola kluczowych parametrow geometrycznych",
-      "quality_item2": "stabilnosc materialow i komponentow",
-      "quality_item3": "weryfikacja charakterystyk funkcjonalnych wyrobu gotowego",
-      "quality_callout": "Cel - przewidywana zywotnosc i minimalizacja przestojow maszyn."
     }
   },
   "nav": {

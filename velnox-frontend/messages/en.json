@@ -224,8 +224,7 @@
     "custom": {
       "tag": "Customization & Quality",
       "title": "Engineering Customization of Assemblies",
-      "text": "We adapt the product to the client's task, including: sealing systems (dust/moisture/abrasive, different types of protection), type and volume of lubricant for the operating mode, materials and coatings for corrosive conditions, structural elements and fits for assembly and mounting.",
-      "goal": "Goal — predictable service life and minimized machinery downtime."
+      "text": "We adapt the product to the client's task, including: sealing systems (dust/moisture/abrasive, different types of protection), type and volume of lubricant for the operating mode, materials and coatings for corrosive conditions, structural elements and fits for assembly and mounting."
     },
     "quality": {
       "title": "Quality Approach",
@@ -257,22 +256,6 @@
       "card1_text": "We work from the assembly technical specification.",
       "card2_title": "Focus on Details",
       "card2_text": "For OEM, parameter repeatability and batch-to-batch stability are critical."
-    },
-    "expertise": {
-      "tag": "Expertise",
-      "title": "Customization & Quality",
-      "custom_title": "Customization & Engineering Solutions",
-      "custom_intro": "We adapt the product to the client’s task, including:",
-      "custom_item1": "sealing systems (dust/moisture/abrasive)",
-      "custom_item2": "lubricant type and volume for operating mode",
-      "custom_item3": "materials and coatings for corrosive environments",
-      "custom_item4": "structural elements and fits for assembly",
-      "quality_title": "Quality Approach",
-      "quality_intro": "VELNOX quality is a controlled outcome:",
-      "quality_item1": "control of key geometric parameters",
-      "quality_item2": "stability of materials and components",
-      "quality_item3": "verification of functional characteristics",
-      "quality_callout": "Goal — predictable service life and minimized machinery downtime."
     }
   },
   "nav": {

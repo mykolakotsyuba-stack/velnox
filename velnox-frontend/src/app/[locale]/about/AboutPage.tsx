@@ -309,11 +309,6 @@ export function AboutPage({ locale }: { locale: string }) {
                                     </div>
                                 ))}
                             </div>
-
-                            <div className={styles.customGoal}>
-                                <span className={styles.goalLine} />
-                                <p>{t('custom.goal')}</p>
-                            </div>
                         </div>
 
                         {/* Right: Technical Schema */}
