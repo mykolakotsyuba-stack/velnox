@@ -13,7 +13,7 @@ import { CrossReferences } from './blocks/CrossReferences';
 import { Installations } from './blocks/Installations';
 import { CtaBlock } from './blocks/CtaBlock';
 import { PhotoGallery } from './blocks/PhotoGallery';
-import { DistributorsBlock } from './blocks/DistributorsBlock';
+import { DistributorsBlock } from '@/widgets/DistributorsBlock';
 import { PdfButton } from './blocks/PdfButton';
 import styles from './ProductTemplate.module.css';
 
