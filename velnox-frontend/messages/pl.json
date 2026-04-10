@@ -1,646 +1,692 @@
 {
-  "home": {
-    "hero": {
-      "eyebrow": "Inżynieria premium",
-      "title": "Bezkompromisowe rozwiązania inżynieryjne dla producentów OEM.",
-      "subtitle": "Projektowanie, kastomizacja i produkcja węzłów łożyskowych do ekstremalnych obciążeń.",
-      "search_placeholder": "Wprowadź artykuł (np. LEFG 209 TDT), wymiar lub numer OEM...",
-      "scan_title": "Skanuj QR / kod kreskowy",
-      "advanced_label": "Wyszukiwanie parametryczne",
-      "advanced_title": "Zaawansowane wyszukiwanie według parametrów",
-      "popular_label": "Popularne zapytania"
-    },
-    "slider": {
-      "slide0": {
-        "tag": "MANIFEST EFEKTYWNOŚCI",
-        "title": "Inwestujemy w metal. Nie w marketing.",
-        "body": "100% naszych aktywów finansowych przeznaczamy na R&D, kontrolę instrumentalną i jakość produktów VELNOX. Architektura tej strony została w całości wygenerowana przez sztuczną inteligencję według naszej ścisłej specyfikacji. Nic zbędnego. Tylko czysta efektywność.",
-        "spec": "PL-127 — Load: 450kN · Tol: ±0.01mm · ISO 9001"
-      },
-      "slide1": {
-        "tag": "SEGMENT AGRO",
-        "title": "Uszczelnienia kasetowe dla maszyn rolniczych.",
-        "body": "Maksymalna ochrona przed ściernym pyłem i wilgocią. Wielowarstwowe uszczelnienie labiryntowe w korpusie piasty zachowuje resurs węzła nawet w ekstremalnych warunkach polowych.",
-        "spec": "Seria LEFG — bezobsługowe węzły do pracy w terenie"
-      },
-      "slide2": {
-        "tag": "SPRZĘT CIĘŻKI",
-        "title": "Zoptymalizowana geometria do ekstremalnych obciążeń.",
-        "body": "Stal wytrzymała, precyzyjna geometria i obliczona śleżnia — do wytrzymywania obciążeń promieniowych i osiowych w sprzęcie budowlanym i górniczym.",
-        "spec": "Klasa obciążeń: Cₙₙₙ do 148 kN"
-      },
-      "slide3": {
-        "tag": "INDYWIDUALNY R&D",
-        "title": "Modyfikacja kołnierzy ściśle według Twoich wymagań.",
-        "body": "Od konfiguracji kołnierza do wielostopniowego uszczelnienia kasetowego — pełny cykl R&D: audyt, model CAD, produkcja, testy stanowiskowe.",
-        "spec": "Czas realizacji: od 21 dni od prototypu"
-      },
-      "cta_details": "Dowiedz się więcej",
-      "cta_engineer": "Porozmawiaj z inżynierem"
-    },
-    "industries": {
-      "tag": "EKSPERTYZA BRANŻOWA",
-      "title": "Rozwiązania dla maszyn rolniczych",
-      "desc": "Rozwiązania inżynieryjne dostosowane до dużych obciążeń i ekstremalnych środowisk.",
-      "harrow": {
-        "title": "BRONY TALERZOWE",
-        "text": "Wzmocnione piasty do intensywnej uprawy gleby.",
-        "oem": "HORSCH, LEMKEN, BEDNAR.",
-        "more": "Więcej"
-      },
-      "cultivator": {
-        "title": "KULTYWATORY",
-        "text": "Bezobsługowe piasty z niezależnym zawieszeniem.",
-        "oem": "BEDNAR, KÖCKERLING, KUHN.",
-        "more": "Więcej"
-      },
-      "seeder": {
-        "title": "SIEWNIKI",
-        "text": "Wysokoprecyzyjne zespoły dla stabilnej głębokości siewu.",
-        "oem": "VADERSTAD, GASPARDO, QUIVOGNE.",
-        "more": "Więcej"
-      }
-    },
-    "process": {
-      "tag": "Integracja inżynieryjna",
-      "title": "Więcej niż katalog. R&D pod Twoją specyfikację.",
-      "desc": "VELNOX nie tylko dostarcza standardowe łożyska. Nasz dział inżynieryjny opracowuje zmodyfikowane węzły, które rozwiązują chroniczne problemy Twojego sprzętu.",
-      "steps": {
-        "analyze": {
-          "title": "Analiza specyfikacji i audyt węzła",
-          "text": "Głęboka analiza warunków eksploatacji, obciążeń, agresywności środowiska i przyczyn awarii produktu standardowego."
+    "home": {
+        "hero": {
+            "eyebrow": "Inżynieria premium",
+            "title": "Bezkompromisowe rozwiązania inżynieryjne dla producentów OEM.",
+            "subtitle": "Projektowanie, kastomizacja i produkcja węzłów łożyskowych do ekstremalnych obciążeń.",
+            "search_placeholder": "Wprowadź artykuł (np. LEFG 209 TDT), wymiar lub numer OEM...",
+            "scan_title": "Skanuj QR / kod kreskowy",
+            "advanced_label": "Wyszukiwanie parametryczne",
+            "advanced_title": "Zaawansowane wyszukiwanie według parametrów",
+            "popular_label": "Popularne zapytania"
         },
-        "design": {
-          "title": "Projektowanie i modelowanie 3D",
-          "text": "Opracowanie zmodyfikowanej konstrukcji: kołnierz, uszczelnienie, materiały. Pełny model CAD i obliczenie resursu."
+        "slider": {
+            "slide0": {
+                "tag": "MANIFEST EFEKTYWNOŚCI",
+                "title": "Inwestujemy w metal. Nie w marketing.",
+                "body": "100% naszych aktywów finansowych przeznaczamy na R&D, kontrolę instrumentalną i jakość produktów VELNOX. Architektura tej strony została w całości wygenerowana przez sztuczną inteligencję według naszej ścisłej specyfikacji. Nic zbędnego. Tylko czysta efektywność.",
+                "spec": "PL-127 — Load: 450kN · Tol: ±0.01mm · ISO 9001"
+            },
+            "slide1": {
+                "tag": "SEGMENT AGRO",
+                "title": "Uszczelnienia kasetowe dla maszyn rolniczych.",
+                "body": "Maksymalna ochrona przed ściernym pyłem i wilgocią. Wielowarstwowe uszczelnienie labiryntowe w korpusie piasty zachowuje resurs węzła nawet w ekstremalnych warunkach polowych.",
+                "spec": "Seria LEFG — bezobsługowe węzły do pracy w terenie",
+                "cta1": "Węzły do siewników",
+                "cta2": "Zapytanie o obliczenia"
+            },
+            "slide2": {
+                "tag": "SPRZĘT CIĘŻKI",
+                "title": "Zoptymalizowana geometria do ekstremalnych obciążeń.",
+                "body": "Stal wytrzymała, precyzyjna geometria i obliczona śleżnia — do wytrzymywania obciążeń promieniowych i osiowych w sprzęcie budowlanym i górniczym.",
+                "spec": "Klasa obciążeń: Cₙₙₙ do 148 kN",
+                "cta1": "Węzły łożyskowe",
+                "cta2": "Specyfikacje techniczne"
+            },
+            "slide3": {
+                "tag": "INDYWIDUALNY R&D",
+                "title": "Modyfikacja kołnierzy ściśle według Twoich wymagań.",
+                "body": "Od konfiguracji kołnierza do wielostopniowego uszczelnienia kasetowego — pełny cykl R&D: audyt, model CAD, produkcja, testy stanowiskowe.",
+                "spec": "Czas realizacji: od 21 dni od prototypu",
+                "cta1": "Dystrybutorzy",
+                "cta2": "Skontaktuj się z ekspertem"
+            },
+            "cta_details": "Dowiedz się więcej",
+            "cta_engineer": "Porozmawiaj z inżynierem"
         },
-        "produce": {
-          "title": "Produkcja i testy stanowiskowe",
-          "text": "Produkcja seryjna z kontrolą wejściową stali, testami stanowiskowymi i instrumentalnym pomiarem geometrii."
+        "industries": {
+            "tag": "EKSPERTYZA BRANŻOWA",
+            "title": "Rozwiązania dla maszyn rolniczych",
+            "desc": "Rozwiązania inżynieryjne dostosowane до dużych obciążeń i ekstremalnych środowisk.",
+            "harrow": {
+                "title": "BRONY TALERZOWE",
+                "text": "Wzmocnione piasty do intensywnej uprawy gleby.",
+                "oem": "HORSCH, LEMKEN, BEDNAR.",
+                "more": "Więcej"
+            },
+            "cultivator": {
+                "title": "KULTYWATORY",
+                "text": "Bezobsługowe piasty z niezależnym zawieszeniem.",
+                "oem": "BEDNAR, KÖCKERLING, KUHN.",
+                "more": "Więcej"
+            },
+            "seeder": {
+                "title": "SIEWNIKI",
+                "text": "Wysokoprecyzyjne zespoły dla stabilnej głębokości siewu.",
+                "oem": "VADERSTAD, GASPARDO, QUIVOGNE.",
+                "more": "Więcej"
+            }
+        },
+        "process": {
+            "tag": "Integracja inżynieryjna",
+            "title": "Więcej niż katalog. R&D pod Twoją specyfikację.",
+            "desc": "VELNOX nie tylko dostarcza standardowe łożyska. Nasz dział inżynieryjny opracowuje zmodyfikowane węzły, które rozwiązują chroniczne problemy Twojego sprzętu.",
+            "steps": {
+                "analyze": {
+                    "title": "Analiza specyfikacji i audyt węzła",
+                    "text": "Głęboka analiza warunków eksploatacji, obciążeń, agresywności środowiska i przyczyn awarii produktu standardowego."
+                },
+                "design": {
+                    "title": "Projektowanie i modelowanie 3D",
+                    "text": "Opracowanie zmodyfikowanej konstrukcji: kołnierz, uszczelnienie, materiały. Pełny model CAD i obliczenie resursu."
+                },
+                "produce": {
+                    "title": "Produkcja i testy stanowiskowe",
+                    "text": "Produkcja seryjna z kontrolą wejściową stali, testami stanowiskowymi i instrumentalnym pomiarem geometrii."
+                }
+            }
+        },
+        "stats": {
+            "tag": "METRYKI TECHNICZNE",
+            "title": "Sprawdzone w polu. Stworzone dla ciężkich gleb.",
+            "desc": "Każda partia piast VELNOX przechodzi testy stanowiskowe symulujące najtrudniejsze warunki pracy maszyn rolniczych. Gwarantujemy idealną dokładność wymiarową i absolutną ochronę łożysk przed ścierniwem.",
+            "button": "Pobierz prezentację",
+            "metrics": {
+                "compatibility": {
+                    "value": "100",
+                    "unit": "%",
+                    "title": "Kompatybilność geometryczna",
+                    "desc": "Dokładne dopasowanie do punktów montażowych producentów OEM (instalacja Plug & Play)."
+                },
+                "resource": {
+                    "value": "2000",
+                    "suffix": "+",
+                    "title": "Motogodziny resursu",
+                    "desc": "Nieprzerwana praca w polu bez konieczności ponownego smarowania lub demontażu jednostki.",
+                    "unit": ""
+                },
+                "sealings": {
+                    "value": "100",
+                    "title": "Wycieki i pył",
+                    "desc": "Wielowarstwowy kasetowy system uszczelnień gwarantuje 100% szczelność w błocie i wodzie.",
+                    "unit": "%"
+                }
+            }
+        },
+        "cta": {
+            "tag": "Zacznij teraz",
+            "title": "Znajdź swoje rozwiązanie teraz.",
+            "desc": "Skontaktuj się z naszymi konstruktorami w sprawie doboru zamienników, obliczenia resursu lub zamówienia partii testowej.",
+            "btn_catalog": "Przejdź do katalogu",
+            "btn_engineer": "Skontaktuj się z inżynierem",
+            "form": {
+                "contact": "Imię i telefon",
+                "type": "Typ zapytania",
+                "type_options": {
+                    "placeholder": "Wybierz typ zapytania...",
+                    "analogue": "Dobór zamiennika",
+                    "resource": "Obliczenie resursu",
+                    "batch": "Zamówienie partii testowej",
+                    "custom": "Rozwiązanie indywidualne"
+                },
+                "upload": "Prześlij zdjęcie części",
+                "submit": "UZYSKAJ OBLICZENIE TECHNICZNE",
+                "sending": "Wysyłanie...",
+                "success_title": "Zapytanie wysłane!",
+                "success_desc": "Nasz inżynier skontaktuje się z Tobą wkrótce w celu konsultacji technicznej."
+            }
+        },
+        "oem_optimization": {
+            "tag": "OPTYMALIZACJA OEM",
+            "title": "Optymalizacja OEM: od części zamiennej do gotowego węzła",
+            "desc": "Nie tylko dostarczamy łożyska — oferujemy gotowe podzespoły inżynieryjne, które w pełni integrują się z Twoim sprzętem.",
+            "step1": {
+                "title": "1. Audyt techniczny",
+                "text": "Analiza słabych punktów i przyczyn awarii oryginalnych podzespołów."
+            },
+            "step2": {
+                "title": "2. Dokładny dobór",
+                "text": "Szybki dobór w 100% kompatybilnych podzespołów wg numerów OEM."
+            },
+            "step3": {
+                "title": "3. Gotowe zestawy KIT",
+                "text": "Gotowe do montażu zestawy (piasta + system mocowania + kołnierze)."
+            }
         }
-      }
     },
-    "stats": {
-      "tag": "METRYKI TECHNICZNE",
-      "title": "Sprawdzone w polu. Stworzone dla ciężkich gleb.",
-      "desc": "Każda partia piast VELNOX przechodzi testy stanowiskowe symulujące najtrudniejsze warunki pracy maszyn rolniczych. Gwarantujemy idealną dokładność wymiarową i absolutną ochronę łożysk przed ścierniwem.",
-      "button": "Pobierz prezentację",
-      "metrics": {
-        "compatibility": {
-          "value": "100",
-          "unit": "%",
-          "title": "Kompatybilność geometryczna",
-          "desc": "Dokładne dopasowanie do punktów montażowych producentów OEM (instalacja Plug & Play)."
+    "distributors": {
+        "hero": {
+            "eyebrow": "Oficjalna sieć",
+            "title": "Oficjalna sieć dystrybucji.",
+            "desc": "Tylko autoryzowani dostawcy z potwierdzonymi zapasami magazynowymi i wiedzą inżynierską. Gwarancja autentyczności i stabilności dostaw produktów VELNOX.",
+            "stat_partners": "Partnerów",
+            "stat_countries": "Kraje",
+            "stat_certified": "Certyfikowano"
         },
-        "resource": {
-          "value": "2000",
-          "suffix": "+",
-          "title": "Motogodziny resursu",
-          "desc": "Nieprzerwana praca w polu bez konieczności ponownego smarowania lub demontażu jednostki."
+        "grid": {
+            "tag": "Sieć partnerów",
+            "title": "Autoryzowani dystrybutorzy",
+            "badge": "Autoryzowany"
         },
-        "sealings": {
-          "value": "ZERO",
-          "title": "Wycieki i pył",
-          "desc": "Wielowarstwowy kasetowy system uszczelnień gwarantuje 100% szczelność w błocie i wodzie."
+        "cta": {
+            "tag": "Program dealerski",
+            "title": "Gotowi dołączyć do sieci dealerów VELNOX?",
+            "desc": "Współpraca wymaga spełnienia rygorystycznych kryteriów autoryzacji: posiadania powierzchni magazynowej, kwalifikowanego wsparcia inżynierskiego i realizacji gwarantowanych wolumenów.",
+            "req1": "Własna powierzchnia magazynowa od 500 m²",
+            "req2": "Kwalifikowane wsparcie inżynierskie klientów",
+            "req3": "Realizacja gwarantowanych minimalnych wolumenów zamówień",
+            "btn": "Złóż wniosek o autoryzację",
+            "criteria1": "Infrastruktura magazynowa",
+            "criteria2": "Wiedza inżynierska",
+            "criteria3": "Stabilne dostawy",
+            "criteria4": "Dokumentacja ISO",
+            "criteria5": "Optymalizacja logistyki",
+            "criteria6": "Wyłączność regionalna"
+        },
+        "form": {
+            "tag": "Wniosek B2B",
+            "title": "Wniosek o autoryzację",
+            "desc": "Wypełnij formularz. Nasz inżynier skontaktuje się z Tobą w ciągu 24 godzin.",
+            "company": "Nazwa firmy",
+            "company_ph": "Nazwa Twojej firmy",
+            "country": "Kraj",
+            "country_ph": "Wybierz kraj",
+            "name": "Osoba kontaktowa",
+            "name_ph": "Imię i nazwisko",
+            "phone": "Telefon",
+            "email": "Email",
+            "message": "Wiadomość",
+            "message_ph": "Krótko opisz swoją firmę, region działalności i dlaczego interesuje Cię współpraca...",
+            "submit": "Wyślij wniosek",
+            "success_title": "Wniosek otrzymany!",
+            "success_body": "Nasz inżynier skontaktuje się z Tobą w ciągu 24 godzin w celu wyjaśnienia szczegółów.",
+            "close": "Zamknij"
         }
-      }
     },
-    "cta": {
-      "tag": "Zacznij teraz",
-      "title": "Znajdź swoje rozwiązanie teraz.",
-      "desc": "Skontaktuj się z naszymi konstruktorami w sprawie doboru zamienników, obliczenia resursu lub zamówienia partii testowej.",
-      "btn_catalog": "Przejdź do katalogu",
-      "btn_engineer": "Skontaktuj się z inżynierem"
+    "about": {
+        "hero": {
+            "eyebrow": "Marka Inzynierska",
+            "title": "VELNOX Engineering: Projektujemy resurs, nie tylko czesci.",
+            "lead": "VELNOX to inżynieryjna marka łożysk i zespołów łożyskowych do odpowiedzialnych zastosowań w maszynach rolniczych i przemysłowych. Marka należy do firmy Tech Solution sp. z o.o. i jest skierowana do producentów OEM, działów inżynieryjnych/projektowych oraz profesjonalnych dystrybutorów.",
+            "cta": "Uzyskaj konsultacje inzynierska"
+        },
+        "stats": {
+            "tag": "Panel techniczny",
+            "title": "Zalety w liczbach",
+            "s1_suffix": "+",
+            "s1_label": "lat praktycznego doswiadczenia w sektorze rolniczym i przemyslowym",
+            "s2_suffix": "+",
+            "s2_label": "klientow wsrod producentow OEM i dzialow konstruktorskich",
+            "s3_suffix": "%",
+            "s3_label": "kontrola kluczowych parametrów w każdej partii produktów",
+            "s4_suffix": "+",
+            "s4_label": "pozycji unikalnych rozwiazan HUB, KIT i specjalnych lozysk"
+        },
+        "philosophy": {
+            "tag": "Kluczowe zasady",
+            "title": "Filozofia inzynierska i fokus OEM",
+            "p1_title": "Filozofia inzynierska",
+            "p1_text": "Opieramy się na zadaniu technicznym węzła: obciążenie, prędkość, resurs, środowisko (pył/wilgoć/ścierniwo), pasowania i wymagania serwisowe. Rozwiązanie VELNOX to nie „uniwersalne łożysko”, ale konstrukcja do konkretnego trybu pracy.",
+            "p2_title": "Fokus OEM",
+            "p2_text": "Dla OEM kluczowa jest powtarzalność parametrów i stabilność z partii na partię. VELNOX buduje produkt do zastosowań seryjnych: kontrola materiałów, geometrii i parametrów funkcjonalnych, aby ta sama logika jakości działała w produkcji."
+        },
+        "custom": {
+            "tag": "Kastomizacja i jakosc",
+            "title": "Inzynierska kastomizacja wezlow",
+            "text": "Dostosowujemy produkt do zadania klienta, a w szczególności: systemy uszczelnień (pył/wilgoć/ścierniwo, różne rodzaje ochrony), rodzaj i objętość smaru do trybu pracy, materiały i powłoki do warunków korozyjnych, elementy konstrukcyjne i pasowania do węzła i montażu.",
+            "case1_title": "Optymalizacja dla agresywnych środowisk",
+            "case1_text": "Opracowanie systemów z 5-stopniowym uszczelnieniem kasetowym do pracy w nawozach płynnych (RSM).",
+            "case2_title": "Wzmocnione węzły OEM",
+            "case2_text": "Integracja dwurzędowych łożysk stożkowych do przenoszenia udarowych obciążeń osiowych do 450 kN.",
+            "case3_title": "Adaptacja konstrukcyjna",
+            "case3_text": "Projektowanie kutych korpusów pod niestandardowe miejsca montażowe importowanych bron bez modyfikacji ramy maszyny."
+        },
+        "quality": {
+            "title": "Podejście do jakości",
+            "text": "Jakość VELNOX to kontrolowany wynik, oparty na:",
+            "list_item_1": "kontroli kluczowych parametrów geometrycznych,",
+            "list_item_2": "stabilności materiałów i komponentów,",
+            "list_item_3": "weryfikacji cech funkcjonalnych gotowego produktu."
+        },
+        "audience": {
+            "tag": "Dla kogo pracujemy",
+            "title": "Nasza grupa docelowa",
+            "desc": "VELNOX jest zorientowany wylacznie na technicznie wymagajacych klientow, dla ktorych niezawodnosc wezla jest bezposrednia koniecznoscia produkcyjna.",
+            "s1_title": "Producenci maszyn OEM",
+            "s1_desc": "Zapewniamy stabilnosc parametrow dla linii montazowych. Powtarzalnosc partia po partii to nasz kluczowy standard.",
+            "s2_title": "Zespoly inzynieryjne i konstruktorskie",
+            "s2_desc": "Dostarczamy dokladne obliczenia i modele 3D do projektowania. Pracujemy od Panstwa Zadania Technicznego.",
+            "s3_title": "Dystrybutorzy produktow technicznych",
+            "s3_desc": "Oferujemy niezawodna alternatywe inzynierska dla europejskich marek z potwierdzonymi charakterystykami.",
+            "s4_title": "Producenci OEM",
+            "s4_desc": "Producenci maszyn rolniczych ciągnionych oraz przedsiębiorstwa rolnicze.",
+            "cta": "Uzyskaj konsultacje inzynierska",
+            "cta2": "Wyslij zadanie techniczne"
+        },
+        "principles": {
+            "tag": "Kluczowe zasady",
+            "title": "Podejscie do OEM",
+            "card1_title": "Filozofia inzynierska",
+            "card1_quote": "Rozwiazania VELNOX to projekt pod konkretny tryb pracy.",
+            "card1_text": "Pracujemy od zadania technicznego wezla.",
+            "card2_title": "Fokus OEM",
+            "card2_text": "Dla OEM kluczowe sa powtarzalnosc parametrow i stabilnosc partia po partii."
+        }
     },
-    "oem_optimization": {
-      "tag": "OPTYMALIZACJA OEM",
-      "title": "Optymalizacja OEM: od części zamiennej do gotowego węzła",
-      "desc": "Nie tylko dostarczamy łożyska — oferujemy gotowe podzespoły inżynieryjne, które w pełni integrują się z Twoim sprzętem.",
-      "step1": {
-        "title": "1. Audyt techniczny",
-        "text": "Analiza słabych punktów i przyczyn awarii oryginalnych podzespołów."
-      },
-      "step2": {
-        "title": "2. Dokładny dobór",
-        "text": "Szybki dobór w 100% kompatybilnych podzespołów wg numerów OEM."
-      },
-      "step3": {
-        "title": "3. Gotowe zestawy KIT",
-        "text": "Gotowe do montażu zestawy (piasta + system mocowania + kołnierze)."
-      }
-    }
-  },
-  "distributors": {
-    "hero": {
-      "eyebrow": "Oficjalna sieć",
-      "title": "Oficjalna sieć dystrybucji.",
-      "desc": "Tylko autoryzowani dostawcy z potwierdzonymi zapasami magazynowymi i wiedzą inżynierską. Gwarancja autentyczności i stabilności dostaw produktów VELNOX.",
-      "stat_partners": "Partnerów",
-      "stat_countries": "Kraje",
-      "stat_certified": "Certyfikowano"
+    "nav": {
+        "about": "O nas",
+        "products": "Produkty",
+        "distributors": "Dystrybutorzy",
+        "news": "Aktualności",
+        "contacts": "Kontakt"
     },
-    "grid": {
-      "tag": "Sieć partnerów",
-      "title": "Autoryzowani dystrybutorzy",
-      "badge": "Autoryzowany"
-    },
-    "cta": {
-      "tag": "Program dealerski",
-      "title": "Gotowi dołączyć do sieci dealerów VELNOX?",
-      "desc": "Współpraca wymaga spełnienia rygorystycznych kryteriów autoryzacji: posiadania powierzchni magazynowej, kwalifikowanego wsparcia inżynierskiego i realizacji gwarantowanych wolumenów.",
-      "req1": "Własna powierzchnia magazynowa od 500 m²",
-      "req2": "Kwalifikowane wsparcie inżynierskie klientów",
-      "req3": "Realizacja gwarantowanych minimalnych wolumenów zamówień",
-      "btn": "Złóż wniosek o autoryzację",
-      "criteria1": "Infrastruktura magazynowa",
-      "criteria2": "Wiedza inżynierska",
-      "criteria3": "Stabilne dostawy",
-      "criteria4": "Dokumentacja ISO"
-    },
-    "form": {
-      "tag": "Wniosek B2B",
-      "title": "Wniosek o autoryzację",
-      "desc": "Wypełnij formularz. Nasz inżynier skontaktuje się z Tobą w ciągu 24 godzin.",
-      "company": "Nazwa firmy",
-      "company_ph": "Nazwa Twojej firmy",
-      "country": "Kraj",
-      "country_ph": "Wybierz kraj",
-      "name": "Osoba kontaktowa",
-      "name_ph": "Imię i nazwisko",
-      "phone": "Telefon",
-      "email": "Email",
-      "message": "Wiadomość",
-      "message_ph": "Krótko opisz swoją firmę, region działalności i dlaczego interesuje Cię współpraca...",
-      "submit": "Wyślij wniosek",
-      "success_title": "Wniosek otrzymany!",
-      "success_body": "Nasz inżynier skontaktuje się z Tobą w ciągu 24 godzin w celu wyjaśnienia szczegółów.",
-      "close": "Zamknij"
-    }
-  },
-  "about": {
-    "hero": {
-      "eyebrow": "Marka Inzynierska",
-      "title": "VELNOX Engineering: Projektujemy resurs, nie tylko czesci.",
-      "lead": "VELNOX to inżynieryjna marka łożysk i zespołów łożyskowych do odpowiedzialnych zastosowań w maszynach rolniczych i przemysłowych. Marka należy do firmy Tech Solution sp. z o.o. i jest skierowana do producentów OEM, działów inżynieryjnych/projektowych oraz profesjonalnych dystrybutorów.",
-      "cta": "Uzyskaj konsultacje inzynierska"
-    },
-    "stats": {
-      "tag": "Panel techniczny",
-      "title": "Zalety w liczbach",
-      "s1_suffix": "+",
-      "s1_label": "lat praktycznego doswiadczenia w sektorze rolniczym i przemyslowym",
-      "s2_suffix": "+",
-      "s2_label": "klientow wsrod producentow OEM i dzialow konstruktorskich",
-      "s3_suffix": "%",
-      "s3_label": "kontrola kluczowych parametrów w każdej partii produktów",
-      "s4_suffix": "+",
-      "s4_label": "pozycji unikalnych rozwiazan HUB, KIT i specjalnych lozysk"
-    },
-    "philosophy": {
-      "tag": "Kluczowe zasady",
-      "title": "Filozofia inzynierska i fokus OEM",
-      "p1_title": "Filozofia inzynierska",
-      "p1_text": "Opieramy się na zadaniu technicznym węzła: obciążenie, prędkość, resurs, środowisko (pył/wilgoć/ścierniwo), pasowania i wymagania serwisowe. Rozwiązanie VELNOX to nie „uniwersalne łożysko”, ale konstrukcja do konkretnego trybu pracy.",
-      "p2_title": "Fokus OEM",
-      "p2_text": "Dla OEM kluczowa jest powtarzalność parametrów i stabilność z partii na partię. VELNOX buduje produkt do zastosowań seryjnych: kontrola materiałów, geometrii i parametrów funkcjonalnych, aby ta sama logika jakości działała w produkcji."
-    },
-    "custom": {
-      "tag": "Kastomizacja i jakosc",
-      "title": "Inzynierska kastomizacja wezlow",
-      "text": "Dostosowujemy produkt do zadania klienta, a w szczególności: systemy uszczelnień (pył/wilgoć/ścierniwo, różne rodzaje ochrony), rodzaj i objętość smaru do trybu pracy, materiały i powłoki do warunków korozyjnych, elementy konstrukcyjne i pasowania do węzła i montażu.",
-      "case1_title": "Optymalizacja dla agresywnych środowisk",
-      "case1_text": "Opracowanie systemów z 5-stopniowym uszczelnieniem kasetowym do pracy w nawozach płynnych (RSM).",
-      "case2_title": "Wzmocnione węzły OEM",
-      "case2_text": "Integracja dwurzędowych łożysk stożkowych do przenoszenia udarowych obciążeń osiowych do 450 kN.",
-      "case3_title": "Adaptacja konstrukcyjna",
-      "case3_text": "Projektowanie kutych korpusów pod niestandardowe miejsca montażowe importowanych bron bez modyfikacji ramy maszyny."
-    },
-    "quality": {
-      "title": "Podejście do jakości",
-      "text": "Jakość VELNOX to kontrolowany wynik, oparty na:",
-      "list_item_1": "kontroli kluczowych parametrów geometrycznych,",
-      "list_item_2": "stabilności materiałów i komponentów,",
-      "list_item_3": "weryfikacji cech funkcjonalnych gotowego produktu."
-    },
-    "audience": {
-      "tag": "Dla kogo pracujemy",
-      "title": "Nasza grupa docelowa",
-      "desc": "VELNOX jest zorientowany wylacznie na technicznie wymagajacych klientow, dla ktorych niezawodnosc wezla jest bezposrednia koniecznoscia produkcyjna.",
-      "s1_title": "Producenci maszyn OEM",
-      "s1_desc": "Zapewniamy stabilnosc parametrow dla linii montazowych. Powtarzalnosc partia po partii to nasz kluczowy standard.",
-      "s2_title": "Zespoly inzynieryjne i konstruktorskie",
-      "s2_desc": "Dostarczamy dokladne obliczenia i modele 3D do projektowania. Pracujemy od Panstwa Zadania Technicznego.",
-      "s3_title": "Dystrybutorzy produktow technicznych",
-      "s3_desc": "Oferujemy niezawodna alternatywe inzynierska dla europejskich marek z potwierdzonymi charakterystykami.",
-      "s4_title": "Producenci OEM",
-      "s4_desc": "Producenci maszyn rolniczych ciągnionych oraz przedsiębiorstwa rolnicze.",
-      "cta": "Uzyskaj konsultacje inzynierska",
-      "cta2": "Wyslij zadanie techniczne"
-    },
-    "principles": {
-      "tag": "Kluczowe zasady",
-      "title": "Podejscie do OEM",
-      "card1_title": "Filozofia inzynierska",
-      "card1_quote": "Rozwiazania VELNOX to projekt pod konkretny tryb pracy.",
-      "card1_text": "Pracujemy od zadania technicznego wezla.",
-      "card2_title": "Fokus OEM",
-      "card2_text": "Dla OEM kluczowe sa powtarzalnosc parametrow i stabilnosc partia po partii."
-    }
-  },
-  "nav": {
-    "about": "O nas",
-    "products": "Produkty",
-    "distributors": "Dystrybutorzy",
-    "news": "Aktualności",
-    "contacts": "Kontakt"
-  },
-  "categories": {
-    "bearings": "Węzły łożyskowe",
-    "hubs": "Piasty łożyskowe",
-    "agro": "Specjalne łożyska agro i rozwiązania inżynieryjne",
-    "kit": "Kompleksowe zestawy montażowe KIT",
-    "custom": "Rozwiązania OEM na zamówienie"
-  },
-  "product": {
-    "specs_table": "Dane techniczne",
-    "cross_refs": "Zamienniki (Cross References)",
-    "sealing": "System uszczelnienia",
-    "installations": "Zastosowanie",
-    "article": "Artykuł",
-    "fkl_designation": "Oznaczenie FKL",
-    "d": "d (mm) — Średnica wewnętrzna",
-    "D": "D (mm) — Średnica zewnętrzna",
-    "B": "B (mm) — Szerokość",
-    "alpha": "α — Kąt styku",
-    "mass": "Masa (kg)",
-    "Cdyn": "Cdyn (kN) — Nośność dynamiczna",
-    "Co": "Co (kN) — Nośność statyczna",
-    "Pu": "Pu (kN)",
-    "show_all": "Pokaż wszystkie",
-    "cta_title": "Gotowy do integracji w Twoim projekcie?",
-    "cta_desc": "Zdobądź dokładne modele CAD węzłów w wymaganym formacie lub skontaktuj się z naszymi inżynierami w celu dostosowania do Twojego środowiska operacyjnego.",
-    "btn_contact": "Skontaktuj się z inżynierem",
-    "btn_pdf": "Pobierz prezentację PDF"
-  },
-  "news": {
     "categories": {
-      "cost_efficiency": "Efektywność kosztów",
-      "quality_control": "Kontrola jakości",
-      "oem_solutions": "Rozwiązania OEM"
+        "bearings": "Węzły łożyskowe",
+        "hubs": "Piasty łożyskowe",
+        "agro": "Specjalne łożyska agro i rozwiązania inżynieryjne",
+        "kit": "Kompleksowe zestawy montażowe KIT",
+        "custom": "Rozwiązania OEM na zamówienie"
     },
-    "read_more": "Czytaj więcej",
-    "back_to_news": "Powrót do aktualności"
-  },
-  "common": {
-    "loading": "Ładowanie...",
-    "no_data": "Brak danych",
-    "back": "Wstecz"
-  },
-  "bearingsPage": {
-    "hero": {
-      "title": "Zespoły łożyskowe VELNOX. Bezkompromisowa niezawodność dla produkcji seryjnej.",
-      "subtitle": "Kompleksowe rozwiązania inżynieryjne zaprojektowane dla ekstremalnych obciążeń promieniowych i osiowych. Od standardowych opraw po niestandardowe projekty OEM."
+    "product": {
+        "specs_table": "Dane techniczne",
+        "cross_refs": "Zamienniki (Cross References)",
+        "sealing": "System uszczelnienia",
+        "installations": "Zastosowanie",
+        "article": "Artykuł",
+        "fkl_designation": "Oznaczenie FKL",
+        "d": "d (mm) — Średnica wewnętrzna",
+        "D": "D (mm) — Średnica zewnętrzna",
+        "B": "B (mm) — Szerokość",
+        "alpha": "α — Kąt styku",
+        "mass": "Masa (kg)",
+        "Cdyn": "Cdyn (kN) — Nośność dynamiczna",
+        "Co": "Co (kN) — Nośność statyczna",
+        "Pu": "Pu (kN)",
+        "show_all": "Pokaż wszystkie",
+        "cta_title": "Gotowy do integracji w Twoim projekcie?",
+        "cta_desc": "Zdobądź dokładne modele CAD węzłów w wymaganym formacie lub skontaktuj się z naszymi inżynierami w celu dostosowania do Twojego środowiska operacyjnego.",
+        "btn_contact": "Skontaktuj się z inżynierem",
+        "btn_pdf": "Pobierz prezentację PDF",
+        "expand": "Rozwiń",
+        "technical_drawing": "Rysunek interaktywny"
     },
-    "block1": {
-      "title": "Dlaczego producenci OEM wybierają zespoły VELNOX?",
-      "card1_title": "Ochrona przed środowiskiem.",
-      "card1_desc": "Zespoły podkładów VELNOX są zaprojektowane do pracy w ekstremalnych warunkach polowych: pył, wilgoć, ścierniwo i udary. Konstrukcja systemu uszczelniającego i elementów ochronnych minimalizuje przenikanie zanieczyszczeń do strefy toczenia i zapewnia stabilną pracę przez cały okres użytkowania.",
-      "card2_title": "Powtarzalność z partii na partię.",
-      "card2_desc": "Dla produkcji OEM powtarzalność tolerancji jest krytyczna. VELNOX zapewnia stabilną geometrię, wymiary montażowe i parametry funkcjonalne z partii na partię, gwarantując przewidywalną pracę urządzeń w produkcji seryjnej.",
-      "card3_title": "Dostosowanie do producenta.",
-      "card3_desc": "VELNOX oferuje dostosowanie zespołów podkładów do wymagań producenta. Geometrię obudowy, parametry łożyska, system uszczelniający i inne elementy można modyfikować zgodnie z warunkami eksploatacji."
+    "news": {
+        "categories": {
+            "cost_efficiency": "Efektywność kosztów",
+            "quality_control": "Kontrola jakości",
+            "oem_solutions": "Rozwiązania OEM"
+        },
+        "read_more": "Czytaj więcej",
+        "back_to_news": "Powrót do aktualności"
     },
-    "block2": {
-      "title": "Specyfikacje techniczne i parametry zespołów",
-      "intro": "Przewodnik techniczny VELNOX został stworzony do szybkiej pracy konstruktorów i zaopatrzeniowców. Poniżej znajdują się tabele podsumowujące parametry dla dokładnego doboru zespołów do Twoich zadań.",
-      "search_placeholder": "Szukaj po oznaczeniu lub wymiarze...",
-      "table1": {
-        "title": "Tabela 1: Wymiary gabarytowe i montażowe (Dimensional Specifications)",
-        "desc": "",
-        "col_designation": "Oznaczenie (Designation)",
-        "col_d": "Średnica wewnętrzna (d, mm)",
-        "col_j": "Rozstaw otworów (J, mm)",
-        "col_width": "Całkowita szerokość oprawy (A, A1, A2, mm)",
-        "col_holes": "Otwory/Gwinty (N, H/T)",
-        "col_l": "Całkowita długość (L, mm)"
-      },
-      "table2": {
-        "title": "Tabela 2: Charakterystyka eksploatacyjna (Performance & Load Ratings)",
-        "desc": "",
-        "col_cdyn": "Dynamiczna (Cdyn, kN)",
-        "col_co": "Statyczna (Co, kN)",
-        "col_pu": "Granica zmęczenia (Pu, kN)",
-        "col_mass": "Masa (kg)"
-      },
-      "sealing_visual": {
-        "title": "Tabela: Systemy uszczelnień VELNOX (Sealing Systems)",
-        "desc": "Tutaj wizualizujemy i wyjaśniamy typy ochrony, ponieważ jest to główna zaleta dla sektora rolniczego.",
-        "2rs": "Podstawowe uszczelnienie stykowe dla warunków neutralnych.",
-        "2s": "Uszczelnienie jednowargowe z labiryntem. Wysoka ochrona przed grubymi cząstkami.",
-        "tseal": "Trójwargowe uszczelnienie dla maksymalnej ochrony przed pyłem i wilgocią.",
-        "dirtblock": "Ekstremalna ochrona dla ciężkich bron talerzowych. Półmetal-półguma z kutą osłoną ochronną."
-      },
-      "table3": {
-        "title": "Tabela 3: Odnośniki i zastosowania (Cross-References & Installations)",
-        "desc": "",
-        "col_brand": "Analogi marek",
-        "col_oem": "Numery fabryczne maszyn OEM",
-        "col_app": "Zastosowanie"
-      },
-      "table4": {
-        "title": "Tabela 4: Specyfikacje łożysk",
-        "desc": "Szczegółowe specyfikacje techniczne"
-      },
-      "table5": {
-        "title": "Tabela 5: Rozszerzone dane łożysk",
-        "desc": "Dodatkowe specyfikacje łożysk i nośności"
-      },
-      "btn_request": "Złóż wniosek"
+    "common": {
+        "loading": "Ładowanie...",
+        "no_data": "Brak danych",
+        "back": "Wstecz"
     },
-    "sealing_info": {
-      "tag": "Uszczelnienie",
-      "title": "Kombinowany system uszczelnień",
-      "p1": "Jednostki łożyskowe VELNOX wyposażone są w kombinowany system uszczelnień: uszczelnienie trójwargowe uzupełnione dwuwargowym, co tworzy wielopoziomową ochronę przed wpływami zewnętrznymi. Uszczelnienie trójwargowe zapewnia podstawową ochronę przed pyłem, brudem i wilgocią, natomiast dwuwargowe pełni funkcję dodatkowej bariery ograniczającej przenikanie zanieczyszczeń w warunkach intensywnej eksploatacji. Zastosowanie wzmocnionego systemu uszczelnień rozszerza zakres zastosowań jednostek łożyskowych VELNOX i zapewnia stabilną pracę w środowisku rolniczym.",
-      "p2": "",
-      "p3": ""
+    "bearingsPage": {
+        "hero": {
+            "title": "Zespoły łożyskowe VELNOX. Bezkompromisowa niezawodność dla produkcji seryjnej.",
+            "subtitle": "Kompleksowe rozwiązania inżynieryjne zaprojektowane dla ekstremalnych obciążeń promieniowych i osiowych. Od standardowych opraw po niestandardowe projekty OEM."
+        },
+        "block1": {
+            "title": "Dlaczego producenci OEM wybierają zespoły VELNOX?",
+            "card1_title": "Ochrona przed środowiskiem.",
+            "card1_desc": "Zespoły podkładów VELNOX są zaprojektowane do pracy w ekstremalnych warunkach polowych: pył, wilgoć, ścierniwo i udary. Konstrukcja systemu uszczelniającego i elementów ochronnych minimalizuje przenikanie zanieczyszczeń do strefy toczenia i zapewnia stabilną pracę przez cały okres użytkowania.",
+            "card2_title": "Powtarzalność z partii na partię.",
+            "card2_desc": "Dla produkcji OEM powtarzalność tolerancji jest krytyczna. VELNOX zapewnia stabilną geometrię, wymiary montażowe i parametry funkcjonalne z partii na partię, gwarantując przewidywalną pracę urządzeń w produkcji seryjnej.",
+            "card3_title": "Dostosowanie do producenta.",
+            "card3_desc": "VELNOX oferuje dostosowanie zespołów podkładów do wymagań producenta. Geometrię obudowy, parametry łożyska, system uszczelniający i inne elementy można modyfikować zgodnie z warunkami eksploatacji."
+        },
+        "block2": {
+            "title": "Specyfikacje techniczne i parametry zespołów",
+            "intro": "Przewodnik techniczny VELNOX został stworzony do szybkiej pracy konstruktorów i zaopatrzeniowców. Poniżej znajdują się tabele podsumowujące parametry dla dokładnego doboru zespołów do Twoich zadań.",
+            "search_placeholder": "Szukaj po oznaczeniu lub wymiarze...",
+            "table1": {
+                "title": "Tabela 1: Wymiary gabarytowe i montażowe (Dimensional Specifications)",
+                "desc": "",
+                "col_designation": "Oznaczenie (Designation)",
+                "col_d": "Średnica wewnętrzna (d, mm)",
+                "col_j": "Rozstaw otworów (J, mm)",
+                "col_width": "Całkowita szerokość oprawy (A, A1, A2, mm)",
+                "col_holes": "Otwory/Gwinty (N, H/T)",
+                "col_l": "Całkowita długość (L, mm)"
+            },
+            "table2": {
+                "title": "Tabela 2: Charakterystyka eksploatacyjna (Performance & Load Ratings)",
+                "desc": "",
+                "col_cdyn": "Dynamiczna (Cdyn, kN)",
+                "col_co": "Statyczna (Co, kN)",
+                "col_pu": "Granica zmęczenia (Pu, kN)",
+                "col_mass": "Masa (kg)"
+            },
+            "sealing_visual": {
+                "title": "Tabela: Systemy uszczelnień VELNOX (Sealing Systems)",
+                "desc": "Tutaj wizualizujemy i wyjaśniamy typy ochrony, ponieważ jest to główna zaleta dla sektora rolniczego.",
+                "2rs": "Podstawowe uszczelnienie stykowe dla warunków neutralnych.",
+                "2s": "Uszczelnienie jednowargowe z labiryntem. Wysoka ochrona przed grubymi cząstkami.",
+                "tseal": "Trójwargowe uszczelnienie dla maksymalnej ochrony przed pyłem i wilgocią.",
+                "dirtblock": "Ekstremalna ochrona dla ciężkich bron talerzowych. Półmetal-półguma z kutą osłoną ochronną."
+            },
+            "table3": {
+                "title": "Tabela 3: Odnośniki i zastosowania (Cross-References & Installations)",
+                "desc": "",
+                "col_brand": "Analogi marek",
+                "col_oem": "Numery fabryczne maszyn OEM",
+                "col_app": "Zastosowanie"
+            },
+            "table4": {
+                "title": "Tabela 4: Specyfikacje łożysk",
+                "desc": "Szczegółowe specyfikacje techniczne"
+            },
+            "table5": {
+                "title": "Tabela 5: Rozszerzone dane łożysk",
+                "desc": "Dodatkowe specyfikacje łożysk i nośności"
+            },
+            "btn_request": "Złóż wniosek"
+        },
+        "sealing_info": {
+            "tag": "Uszczelnienie",
+            "title": "Kombinowany system uszczelnień",
+            "p1": "Jednostki łożyskowe VELNOX wyposażone są w kombinowany system uszczelnień: uszczelnienie trójwargowe uzupełnione dwuwargowym, co tworzy wielopoziomową ochronę przed wpływami zewnętrznymi. Uszczelnienie trójwargowe zapewnia podstawową ochronę przed pyłem, brudem i wilgocią, natomiast dwuwargowe pełni funkcję dodatkowej bariery ograniczającej przenikanie zanieczyszczeń w warunkach intensywnej eksploatacji. Zastosowanie wzmocnionego systemu uszczelnień rozszerza zakres zastosowań jednostek łożyskowych VELNOX i zapewnia stabilną pracę w środowisku rolniczym.",
+            "p2": "",
+            "p3": ""
+        },
+        "block3": {
+            "title": "Gotowi do integracji w Twój projekt",
+            "text": "Pobierz dokładne modele CAD w wymaganym formacie lub skontaktuj się z naszymi inżynierami, aby dobrać niestandardowy system uszczelnień do Twojego środowiska pracy.",
+            "btn_pdf": "Pobierz katalog PDF",
+            "btn_cad": "Biblioteka modeli 3D / CAD",
+            "btn_contact": "Skontaktuj się z inżynierem"
+        },
+        "packer_roller": {
+            "title": "Wały dogniatające (prasy)",
+            "sealing_title": "Kombinowany system uszczelnień",
+            "content": "Wały dogniatające pracują w ciągłym kontakcie z glebą, wilgocią i cząstkami ściernymi, generując wysokie obciążenia promieniowe i warunki intensywnego zanieczyszczenia. Jednostki łożyskowe do takich zastosowań muszą zapewniać stabilną pracę przy niskich prędkościach obrotowych, dużych obciążeniach statycznych i uderzeniach.\n\nRozwiązania VELNOX dla wałów dogniatających opracowane z uwzględnieniem rzeczywistych warunków eksploatacji: wzmocnione oprawy, skuteczne systemy uszczelnień i zoptymalizowane luzy wewnętrzne zapewniają niezawodną pracę jednostek w trudnych warunkach polowych. Konstrukcja ukierunkowana na zmniejszenie wpływu zanieczyszczeń i wydłużenie resursu przy minimalnej obsłudze.\n\nZespoły łożyskowe VELNOX stosowane są w wałach dogniatających maszyn rolniczych, zapewniając stabilną pracę agregatów i redukcję przestojów przez cały sezon."
+        }
     },
-    "block3": {
-      "title": "Gotowi do integracji w Twój projekt",
-      "text": "Pobierz dokładne modele CAD w wymaganym formacie lub skontaktuj się z naszymi inżynierami, aby dobrać niestandardowy system uszczelnień do Twojego środowiska pracy.",
-      "btn_pdf": "Pobierz katalog PDF",
-      "btn_cad": "Biblioteka modeli 3D / CAD",
-      "btn_contact": "Skontaktuj się z inżynierem"
+    "hubsPage": {
+        "hero": {
+            "title": "Piasty łożyskowe VELNOX",
+            "subtitle": "Jednostki inżynierskie do intensywnej eksploatacji w agresywnym otoczeniu",
+            "desc": "Piasty VELNOX zostały zaprojektowane jako bezpośrednia zamiana oryginalnych pias łożyskowych wiodących europejskich i amerykańskich producentów maszyn rolniczych. Główny nacisk położono na wielopoziomowe systemy uszczelniające i stabilną pracę pod wysokimi obciążeniami osiowymi."
+        },
+        "block1": {
+            "title": "Dlaczego producenci OEM wybierają piasty VELNOX?",
+            "card1_title": "Ochrona przed zabrudzeniami",
+            "card1_desc": "Piasty zaprojektowane do pracy w warunkach ekstremalnego zapylenia i wilgoci. Wielopoziomowe uszczelnienie kasetowe zapobiega dostaniu się wilgoci glebowej i ścierniw do jednostki.",
+            "card2_title": "Kompatybilność geometryczna",
+            "card2_desc": "100% analogi geometryczne oryginalnych pias HORSCH, Köckerling, Bednar, Vaderstad. Montaż bezpośredni bez zmian konstrukcyjnych maszyny.",
+            "card3_title": "Gwarantowany żywotność",
+            "card3_desc": "Jednostki konserwacyjne z minimalnym luzu. Gwarantowana żywotność 2000+ godzin w polu bez smarowania i rozmontowania."
+        },
+        "block2": {
+            "title": "Specyfikacje techniczne i parametry pias",
+            "intro": "Przewodnik techniczny VELNOX do szybkiego odwołania się inżynierów OEM. Tabele zawierają pełne parametry do wyboru pias do konkretnych zastosowań.",
+            "search_placeholder": "Szukaj po numerze części lub rozmiarze...",
+            "table1": {
+                "title": "Tabela 1: Piasty brony tarczowej 28071300 VX",
+                "desc": "Jednostki do ciężkich bron tarczowych HORSCH serii Joker, Focus, Terrano. Praca w polu z maksymalnym obciążeniem osiowym."
+            },
+            "table2": {
+                "title": "Tabela 2: Piasty węzłów tnących BAA-0004 VX",
+                "desc": "Jednostki bezobsługowe do kompaktowych bron tarczowych i kultywatorów Bednar, Köckerling, Gaspardo."
+            },
+            "table3": {
+                "title": "Tabela 3: Piasty siewników PL-140 VX",
+                "desc": "Jednostki wysokiej precyzji do siewników Vaderstad i innych szybkoobrotowych agregatów."
+            },
+            "btn_request": "Zapytanie"
+        },
+        "app1": {
+            "title": "Piasty do bron tarczowych i ciężkich kultywatorów",
+            "desc": "Jednostka zaprojektowana do pracy w warunkach ekstremalnego zapylenia i wilgoci. Stosowana w agregatach do przygotowania gleby, gdzie każdy tarcz wymaga niezależnego obrotu pod obciążeniem.",
+            "applications": "Rozluźniacze głębokie, ciężkie brony tarczowe, agregaty kombinowane",
+            "oem_focus": "Pełna kompatybilność z maszynami HORSCH (serie Joker, Focus, Terrano)"
+        },
+        "app2": {
+            "title": "Piasty węzłów tnących z niezależnym zawieszeniem",
+            "desc": "Bezobsługowe jednostki łożyskowe zapewniające dokładny kąt ataku tarczy. Konstrukcja obejmuje wbudowane uszczelnienie kasetowe eliminujące potrzebę smarowania przez cały okres użytkowania.",
+            "applications": "Kompaktowe brony tarczowe, kultywatory przedsiewne",
+            "oem_focus": "Piasty zamienny dla Bednar, Köckerling, Gaspardo, Kuhn, Lemken"
+        },
+        "app3": {
+            "title": "Piasty do szybkoobrotowych siewników i kół dociskowych",
+            "desc": "Jednostki wysokiej precyzji obrotu. Minimalny luz zapewnia stabilną głębokość siewu nawet przy wysokich prędkościach pracy.",
+            "applications": "Kompleksy siewne, sekcje siewników zbożowych i warzywnych",
+            "oem_focus": "Zoptymalizowano dla maszyn Vaderstad (seria Rapid), Agrisem"
+        },
+        "block3": {
+            "title": "Gotowe do integracji",
+            "text": "Piasty VELNOX to kompletne rozwiązanie OEM nie wymagające zmian w dokumentacji konstrukcyjnej. Wszystkie parametry zostały obliczone i przetestowane pod warunkami rzeczywistych pól.",
+            "btn_pdf": "Pobierz PDF",
+            "btn_cad": "Modele CAD",
+            "btn_contact": "Porozmawiaj z inżynierem"
+        }
     },
-    "packer_roller": {
-      "title": "Wały dogniatające (prasy)",
-      "sealing_title": "Kombinowany system uszczelnień",
-      "content": "Wały dogniatające pracują w ciągłym kontakcie z glebą, wilgocią i cząstkami ściernymi, generując wysokie obciążenia promieniowe i warunki intensywnego zanieczyszczenia. Jednostki łożyskowe do takich zastosowań muszą zapewniać stabilną pracę przy niskich prędkościach obrotowych, dużych obciążeniach statycznych i uderzeniach.\n\nRozwiązania VELNOX dla wałów dogniatających opracowane z uwzględnieniem rzeczywistych warunków eksploatacji: wzmocnione oprawy, skuteczne systemy uszczelnień i zoptymalizowane luzy wewnętrzne zapewniają niezawodną pracę jednostek w trudnych warunkach polowych. Konstrukcja ukierunkowana na zmniejszenie wpływu zanieczyszczeń i wydłużenie resursu przy minimalnej obsłudze.\n\nZespoły łożyskowe VELNOX stosowane są w wałach dogniatających maszyn rolniczych, zapewniając stabilną pracę agregatów i redukcję przestojów przez cały sezon."
+    "agroPage": {
+        "hero": {
+            "title": "Łożyska agro VELNOX. Seria 1726.",
+            "subtitle": "Łożyska specjalnej serii do maszyn rolniczych. Bezpośredni zamiennik OEM dla CLAAS, John Deere, KUHN, Gaspardo, Capello.",
+            "desc": "Seria 1726 — łożyska rolnicze z rozszerzonym tolerancją pierścienia wewnętrznego, przeznaczone do siewników, kombajnów i agregatów tarczowych."
+        },
+        "block1": {
+            "title": "Dlaczego producenci OEM wybierają łożyska agro VELNOX?",
+            "card1_title": "Uszczelnienia agro 2RS1",
+            "card1_desc": "Podwójne uszczelnienia kontaktowe z obu stron. Ochrona przed pyłem, brudem i wilgocią.",
+            "card2_title": "OEM Cross-Reference",
+            "card2_desc": "Bezpośredni zamiennik łożysk CLAAS, JD, KUHN, Capello, Gaspardo, MF, NH bez zmian konstrukcyjnych.",
+            "card3_title": "Rozszerzony otwór d1",
+            "card3_desc": "Specjalne wykonanie z rozszerzonym otworem pierścienia wewnętrznego — cecha serii 1726 dla zastosowań rolniczych."
+        },
+        "block2": {
+            "title": "Specyfikacje techniczne i parametry łożysk",
+            "intro": "Katalog techniczny VELNOX do doboru łożysk agro serii 1726. Pełne parametry i referencje OEM.",
+            "search_placeholder": "Szukaj po numerze katalogowym, wymiarze lub referencji OEM...",
+            "btn_request": "Zapytanie",
+            "table1": {
+                "title": "Tabela 1: Łożyska rolnicze seria 1726 (2RS1)",
+                "desc": "Łożyska dwustronnie uszczelnione do siewników, kombajnów i agregatów tarczowych CLAAS, John Deere, KUHN."
+            },
+            "table2": {
+                "title": "Tabela 2: DHU 1½R209 VX — Okrągły otwór, brony tarczowe",
+                "desc": "Jednostki kołnierzowe do bron tarczowych z okrągłym otworem. Zamiennik JD, KUHN, KRAUSE, Great Plains."
+            },
+            "table3": {
+                "title": "Tabela 3: DHU 1¼S209 VX — Kwadratowy otwór",
+                "desc": "Jednostki z kwadratowym otworem do agregatów tarczowych. Zamiennik KUHN, KRAUSE, CASE, Sunflower."
+            }
+        },
+        "app1": {
+            "title": "Standardowe łożyska agro serii 1726",
+            "desc": "Łożyska 2RS1 do siewników, kombajnów i kultywatorów.",
+            "applications": "Siewniki, kombajny, kultywatory",
+            "oem_focus": "CLAAS, JD, KUHN, Capello, Gaspardo, MF, NH"
+        },
+        "app2": {
+            "title": "Jednostki kołnierzowe DHU do bron tarczowych",
+            "desc": "Jednostki DHU z łożyskiem serii 209 do ciężkich bron tarczowych.",
+            "applications": "Ciężkie brony tarczowe, maszyny uprawowe",
+            "oem_focus": "John Deere, KUHN, KRAUSE, Great Plains, CASE, Sunflower"
+        }
+    },
+    "kitPage": {
+        "hero": {
+            "title": "Łożyska do siewników i aparatów wysiewających VELNOX",
+            "subtitle": "Kompleksowa oferta łożysk do techniki siewnej. Bezpośredni zamiennik węzłów OEM John Deere, KUHN, Monosem, Gaspardo, Kinze.",
+            "desc": ""
+        },
+        "block1": {
+            "title": "Łożyska VELNOX do siewników — kluczowe zalety",
+            "card1_title": "Otwór w kształcie litery D",
+            "card1_desc": "Łożyska z otworem D dla bezpiecznego montażu na wale bez dodatkowych elementów mocujących. Specjalnie do tarcz wysiewających.",
+            "card2_title": "Łożysko kulkowe skośne",
+            "card2_desc": "Łożyska skośne o kącie styku α zapewniają przenoszenie obciążeń osiowych podczas pracy sekcji wysiewających.",
+            "card3_title": "OEM Cross-Reference",
+            "card3_desc": "Bezpośredni zamiennik łożysk John Deere, KUHN, Monosem, Gaspardo, Kinze, Great Plains bez zmian konstrukcyjnych."
+        },
+        "block2": {
+            "title": "Specyfikacje techniczne łożysk do siewników",
+            "intro": "Pełny katalog łożysk VELNOX do siewników. 12 tabel z parametrami technicznymi i zamiennikami OEM.",
+            "search_placeholder": "Szukaj numeru części, rozmiaru lub numeru OEM...",
+            "btn_request": "Zapytanie",
+            "table1": {
+                "title": "Tabela 1: Łożyska z otworem D do siewników",
+                "desc": "Łożyska z otworem D do tarcz wysiewających siewników."
+            },
+            "table2": {
+                "title": "Tabela 2: Łożyska do siewników",
+                "desc": "Łożyska do siewników"
+            },
+            "table3": {
+                "title": "Tabela 3: Łożyska kulkowe skośne z d1",
+                "desc": "Łożyska z pierścieniem zewnętrznym d1 i kątem styku α."
+            },
+            "table5": {
+                "title": "Tabela 5: Łożyska kulkowe skośne",
+                "desc": "Łożyska o kącie styku α do siewników."
+            },
+            "table6": {
+                "title": "Tabela 6: Łożyska z rowkiem na wale",
+                "desc": "Łożyska z rowkiem pierścieniowym (wymiary L, e)."
+            },
+            "table7": {
+                "title": "Tabela 7: Łożyska kulkowe skośne z d1 (seria 7)",
+                "desc": "Łożyska do siewników z kątem styku α i zewnętrznym d1."
+            },
+            "table8": {
+                "title": "Tabela 8: Łożyska kulkowe skośne (seria 8)",
+                "desc": "Łożyska o kącie styku α."
+            },
+            "table9": {
+                "title": "Tabela 9: Łożyska kulkowe skośne (seria 9)",
+                "desc": "Łożyska serii 9 do siewników."
+            },
+            "table10": {
+                "title": "Tabela 10: Łożyska kołnierzowe (seria 10)",
+                "desc": "Specjalne łożyska kołnierzowe do siewników. Zamienniki."
+            },
+            "table11": {
+                "title": "Tabela 11: Łożyska kołnierzowe (seria 11)",
+                "desc": "Specjalne łożyska kołnierzowe do siewników."
+            },
+            "table12": {
+                "title": "Tabela 12: Łożyska specjalne (seria 12)",
+                "desc": "Łożyska serii 207KRRB do siewników."
+            }
+        },
+        "app1": {
+            "title": "Łożyska specjalne z otworem D",
+            "desc": "Łożyska do bezpiecznego mocowania na wale aparatów wysiewających bez dodatkowych elementów.",
+            "applications": "Aparaty wysiewające, dozowniki nasion",
+            "oem_focus": "John Deere, Monosem, Gaspardo"
+        },
+        "app2": {
+            "title": "Łożyska kulkowe skośne",
+            "desc": "Przenoszą zarówno obciążenia promieniowe, jak i osiowe. Zapewniają zwiększoną dokładność obrotu tarcz.",
+            "applications": "Tarcze wysiewające, redlice",
+            "oem_focus": "KUHN, Kinze, Great Plains"
+        },
+        "app3": {
+            "title": "Kołnierzowe i specjalne węzły łożyskowe",
+            "desc": "Gotowe do montażu rozwiązania z zintegrowanymi kołnierzami lub korpusami. Idealne do pracy polowej.",
+            "applications": "Koła dociskowe, koła podporowe",
+            "oem_focus": "Zastosowanie uniwersalne"
+        }
+    },
+    "oemPage": {
+        "hero": {
+            "eyebrow": "OEM Solutions",
+            "title": "Development of a hub according to your specifications",
+            "desc": "We don't just offer a catalog. VELNOX starts with analyzing the loads, operating environment, and functional requirements of your specific assembly."
+        },
+        "capabilities": {
+            "title": "Customization Capabilities",
+            "structural": {
+                "title": "Structural Elements",
+                "desc": "Adaptation of bearing unit geometry to limited space or specific mounting requirements."
+            },
+            "sealing": {
+                "title": "Sealing Systems",
+                "desc": "Selection of the optimal system (e.g., Dirtblock Seal or a combination of Plastic Cover with RS Seal) depending on the contamination level."
+            },
+            "resource": {
+                "title": "Resource and Stability",
+                "desc": "Optimization of materials to ensure repeatability of parameters in serial production, which is critical for the OEM market."
+            }
+        },
+        "form": {
+            "title": "Engineering Inquiry Form",
+            "desc": "Provide technical parameters according to the VELNOX PL-127-G scheme.",
+            "section_contacts": "Contacts",
+            "section_tech": "Technical Parameters (PL-127-G)",
+            "section_ops": "Operating Conditions",
+            "name": "Full Name",
+            "company": "Company / OEM Manufacturer",
+            "position": "Position (Design Engineer, Procurement Manager, etc.)",
+            "email": "Contact E-mail",
+            "phone": "Phone Number",
+            "d": "Bore diameter (d) or shaft diameter (mm)",
+            "D": "Outer diameter (D, mm)",
+            "BC": "Inner (B) and outer (C) ring width (mm)",
+            "J": "Bolt circle diameter (J, mm)",
+            "GHT": "Thread size and type (G / H/T)",
+            "L": "Total length (L, mm)",
+            "loads": "Dynamic (C dyn) and Static (Co) Loads (kN)",
+            "rpm": "Rotational Speed (RPM)",
+            "environment": "Operating Environment (dry dust, liquid fertilizers, impacts, etc.)",
+            "resource": "Expected Resource (hours)",
+            "submit": "Submit Inquiry",
+            "success": "Your inquiry has been submitted. Our engineering department will analyze it and provide a preliminary response soon.",
+            "success_email": "Automatic confirmation sent to email."
+        }
+    },
+    "contacts": {
+        "hero": {
+            "title": "Informacje kontaktowe",
+            "text": "Nasi inżynierowie pomogą w doborze węzłów łożyskowych na podstawie specyfikacji lub numerów OEM."
+        },
+        "routing": {
+            "block1": {
+                "title": "Dział techniczny i projekty OEM",
+                "desc": "Obliczenia węzłów, praca ze specyfikacjami i rysunkami.",
+                "phone": "+38 (0XX) XXX-XX-XX",
+                "email": "engineering@velnox.com"
+            },
+            "block2": {
+                "title": "Dystrybucja i sprzedaż hurtowa",
+                "desc": "Warunki współpracy, cenniki, dostępność.",
+                "phone": "+38 (0XX) XXX-XX-XX",
+                "email": "sales@velnox.com"
+            },
+            "block3": {
+                "title": "Zapytania ogólne",
+                "email": "info@velnox.com"
+            }
+        },
+        "socials": {
+            "instagram": "",
+            "facebook": "",
+            "telegram": "",
+            "linkedin": ""
+        },
+        "form": {
+            "title": "Formularz zapytania OEM",
+            "subtitle": "",
+            "name": "IMIĘ I STANOWISKO",
+            "name_ph": "Jan, Główny Inżynier",
+            "email": "E-MAIL",
+            "email_ph": "name@company.com",
+            "phone": "TELEFON",
+            "phone_ph": "+380...",
+            "company": "FIRMA / TYP MASZYNY",
+            "company_ph": "Producent siewników / Dystrybutor części",
+            "message": "TWOJE ZAPYTANIE",
+            "message_ph": "Podaj numery OEM lub parametry techniczne d, D, J",
+            "file_label": "ZAŁĄCZ PLIK",
+            "file_desc": "Pobierz rysunek, specyfikację lub zdjęcie (PDF, Excel, JPG, DWG)",
+            "submit": "WYŚLIJ DO OBLICZEŃ",
+            "success": "Zapytanie wysłane. Skontaktujemy się wkrótce."
+        }
     }
-  },
-  "hubsPage": {
-    "hero": {
-      "title": "Piasty łożyskowe VELNOX",
-      "subtitle": "Jednostki inżynierskie do intensywnej eksploatacji w agresywnym otoczeniu",
-      "desc": "Piasty VELNOX zostały zaprojektowane jako bezpośrednia zamiana oryginalnych pias łożyskowych wiodących europejskich i amerykańskich producentów maszyn rolniczych. Główny nacisk położono na wielopoziomowe systemy uszczelniające i stabilną pracę pod wysokimi obciążeniami osiowymi."
-    },
-    "block1": {
-      "title": "Dlaczego producenci OEM wybierają piasty VELNOX?",
-      "card1_title": "Ochrona przed zabrudzeniami",
-      "card1_desc": "Piasty zaprojektowane do pracy w warunkach ekstremalnego zapylenia i wilgoci. Wielopoziomowe uszczelnienie kasetowe zapobiega dostaniu się wilgoci glebowej i ścierniw do jednostki.",
-      "card2_title": "Kompatybilność geometryczna",
-      "card2_desc": "100% analogi geometryczne oryginalnych pias HORSCH, Köckerling, Bednar, Vaderstad. Montaż bezpośredni bez zmian konstrukcyjnych maszyny.",
-      "card3_title": "Gwarantowany żywotność",
-      "card3_desc": "Jednostki konserwacyjne z minimalnym luzu. Gwarantowana żywotność 2000+ godzin w polu bez smarowania i rozmontowania."
-    },
-    "block2": {
-      "title": "Specyfikacje techniczne i parametry pias",
-      "intro": "Przewodnik techniczny VELNOX do szybkiego odwołania się inżynierów OEM. Tabele zawierają pełne parametry do wyboru pias do konkretnych zastosowań.",
-      "search_placeholder": "Szukaj po numerze części lub rozmiarze...",
-      "table1": {
-        "title": "Tabela 1: Piasty brony tarczowej 28071300 VX",
-        "desc": "Jednostki do ciężkich bron tarczowych HORSCH serii Joker, Focus, Terrano. Praca w polu z maksymalnym obciążeniem osiowym."
-      },
-      "table2": {
-        "title": "Tabela 2: Piasty węzłów tnących BAA-0004 VX",
-        "desc": "Jednostki bezobsługowe do kompaktowych bron tarczowych i kultywatorów Bednar, Köckerling, Gaspardo."
-      },
-      "table3": {
-        "title": "Tabela 3: Piasty siewników PL-140 VX",
-        "desc": "Jednostki wysokiej precyzji do siewników Vaderstad i innych szybkoobrotowych agregatów."
-      },
-      "btn_request": "Zapytanie"
-    },
-    "app1": {
-      "title": "Piasty do bron tarczowych i ciężkich kultywatorów",
-      "desc": "Jednostka zaprojektowana do pracy w warunkach ekstremalnego zapylenia i wilgoci. Stosowana w agregatach do przygotowania gleby, gdzie każdy tarcz wymaga niezależnego obrotu pod obciążeniem.",
-      "applications": "Rozluźniacze głębokie, ciężkie brony tarczowe, agregaty kombinowane",
-      "oem_focus": "Pełna kompatybilność z maszynami HORSCH (serie Joker, Focus, Terrano)"
-    },
-    "app2": {
-      "title": "Piasty węzłów tnących z niezależnym zawieszeniem",
-      "desc": "Bezobsługowe jednostki łożyskowe zapewniające dokładny kąt ataku tarczy. Konstrukcja obejmuje wbudowane uszczelnienie kasetowe eliminujące potrzebę smarowania przez cały okres użytkowania.",
-      "applications": "Kompaktowe brony tarczowe, kultywatory przedsiewne",
-      "oem_focus": "Piasty zamienny dla Bednar, Köckerling, Gaspardo, Kuhn, Lemken"
-    },
-    "app3": {
-      "title": "Piasty do szybkoobrotowych siewników i kół dociskowych",
-      "desc": "Jednostki wysokiej precyzji obrotu. Minimalny luz zapewnia stabilną głębokość siewu nawet przy wysokich prędkościach pracy.",
-      "applications": "Kompleksy siewne, sekcje siewników zbożowych i warzywnych",
-      "oem_focus": "Zoptymalizowano dla maszyn Vaderstad (seria Rapid), Agrisem"
-    },
-    "block3": {
-      "title": "Gotowe do integracji",
-      "text": "Piasty VELNOX to kompletne rozwiązanie OEM nie wymagające zmian w dokumentacji konstrukcyjnej. Wszystkie parametry zostały obliczone i przetestowane pod warunkami rzeczywistych pól.",
-      "btn_pdf": "Pobierz PDF",
-      "btn_cad": "Modele CAD",
-      "btn_contact": "Porozmawiaj z inżynierem"
-    }
-  },
-  "agroPage": {
-    "hero": {
-      "title": "Łożyska agro VELNOX. Seria 1726.",
-      "subtitle": "Łożyska specjalnej serii do maszyn rolniczych. Bezpośredni zamiennik OEM dla CLAAS, John Deere, KUHN, Gaspardo, Capello.",
-      "desc": "Seria 1726 — łożyska rolnicze z rozszerzonym tolerancją pierścienia wewnętrznego, przeznaczone do siewników, kombajnów i agregatów tarczowych."
-    },
-    "block1": {
-      "title": "Dlaczego producenci OEM wybierają łożyska agro VELNOX?",
-      "card1_title": "Uszczelnienia agro 2RS1",
-      "card1_desc": "Podwójne uszczelnienia kontaktowe z obu stron. Ochrona przed pyłem, brudem i wilgocią.",
-      "card2_title": "OEM Cross-Reference",
-      "card2_desc": "Bezpośredni zamiennik łożysk CLAAS, JD, KUHN, Capello, Gaspardo, MF, NH bez zmian konstrukcyjnych.",
-      "card3_title": "Rozszerzony otwór d1",
-      "card3_desc": "Specjalne wykonanie z rozszerzonym otworem pierścienia wewnętrznego — cecha serii 1726 dla zastosowań rolniczych."
-    },
-    "block2": {
-      "title": "Specyfikacje techniczne i parametry łożysk",
-      "intro": "Katalog techniczny VELNOX do doboru łożysk agro serii 1726. Pełne parametry i referencje OEM.",
-      "search_placeholder": "Szukaj po numerze katalogowym, wymiarze lub referencji OEM...",
-      "btn_request": "Zapytanie",
-      "table1": {
-        "title": "Tabela 1: Łożyska rolnicze seria 1726 (2RS1)",
-        "desc": "Łożyska dwustronnie uszczelnione do siewników, kombajnów i agregatów tarczowych CLAAS, John Deere, KUHN."
-      },
-      "table2": {
-        "title": "Tabela 2: DHU 1½R209 VX — Okrągły otwór, brony tarczowe",
-        "desc": "Jednostki kołnierzowe do bron tarczowych z okrągłym otworem. Zamiennik JD, KUHN, KRAUSE, Great Plains."
-      },
-      "table3": {
-        "title": "Tabela 3: DHU 1¼S209 VX — Kwadratowy otwór",
-        "desc": "Jednostki z kwadratowym otworem do agregatów tarczowych. Zamiennik KUHN, KRAUSE, CASE, Sunflower."
-      }
-    },
-    "app1": {
-      "title": "Standardowe łożyska agro serii 1726",
-      "desc": "Łożyska 2RS1 do siewników, kombajnów i kultywatorów.",
-      "applications": "Siewniki, kombajny, kultywatory",
-      "oem_focus": "CLAAS, JD, KUHN, Capello, Gaspardo, MF, NH"
-    },
-    "app2": {
-      "title": "Jednostki kołnierzowe DHU do bron tarczowych",
-      "desc": "Jednostki DHU z łożyskiem serii 209 do ciężkich bron tarczowych.",
-      "applications": "Ciężkie brony tarczowe, maszyny uprawowe",
-      "oem_focus": "John Deere, KUHN, KRAUSE, Great Plains, CASE, Sunflower"
-    }
-  },
-  "kitPage": {
-    "hero": {
-      "title": "Łożyska do siewników i aparatów wysiewających VELNOX",
-      "subtitle": "Kompleksowa oferta łożysk do techniki siewnej. Bezpośredni zamiennik węzłów OEM John Deere, KUHN, Monosem, Gaspardo, Kinze.",
-      "desc": ""
-    },
-    "block1": {
-      "title": "Łożyska VELNOX do siewników — kluczowe zalety",
-      "card1_title": "Otwór w kształcie litery D",
-      "card1_desc": "Łożyska z otworem D dla bezpiecznego montażu na wale bez dodatkowych elementów mocujących. Specjalnie do tarcz wysiewających.",
-      "card2_title": "Łożysko kulkowe skośne",
-      "card2_desc": "Łożyska skośne o kącie styku α zapewniają przenoszenie obciążeń osiowych podczas pracy sekcji wysiewających.",
-      "card3_title": "OEM Cross-Reference",
-      "card3_desc": "Bezpośredni zamiennik łożysk John Deere, KUHN, Monosem, Gaspardo, Kinze, Great Plains bez zmian konstrukcyjnych."
-    },
-    "block2": {
-      "title": "Specyfikacje techniczne łożysk do siewników",
-      "intro": "Pełny katalog łożysk VELNOX do siewników. 12 tabel z parametrami technicznymi i zamiennikami OEM.",
-      "search_placeholder": "Szukaj numeru części, rozmiaru lub numeru OEM...",
-      "btn_request": "Zapytanie",
-      "table1": {
-        "title": "Tabela 1: Łożyska z otworem D do siewników",
-        "desc": "Łożyska z otworem D do tarcz wysiewających siewników."
-      },
-      "table2": {
-        "title": "Tabela 2: Łożyska do siewników",
-        "desc": "Łożyska do siewników"
-      },
-      "table3": {
-        "title": "Tabela 3: Łożyska kulkowe skośne z d1",
-        "desc": "Łożyska z pierścieniem zewnętrznym d1 i kątem styku α."
-      },
-      "table5": {
-        "title": "Tabela 5: Łożyska kulkowe skośne",
-        "desc": "Łożyska o kącie styku α do siewników."
-      },
-      "table6": {
-        "title": "Tabela 6: Łożyska z rowkiem na wale",
-        "desc": "Łożyska z rowkiem pierścieniowym (wymiary L, e)."
-      },
-      "table7": {
-        "title": "Tabela 7: Łożyska kulkowe skośne z d1 (seria 7)",
-        "desc": "Łożyska do siewników z kątem styku α i zewnętrznym d1."
-      },
-      "table8": {
-        "title": "Tabela 8: Łożyska kulkowe skośne (seria 8)",
-        "desc": "Łożyska o kącie styku α."
-      },
-      "table9": {
-        "title": "Tabela 9: Łożyska kulkowe skośne (seria 9)",
-        "desc": "Łożyska serii 9 do siewników."
-      },
-      "table10": {
-        "title": "Tabela 10: Łożyska kołnierzowe (seria 10)",
-        "desc": "Specjalne łożyska kołnierzowe do siewników. Zamienniki."
-      },
-      "table11": {
-        "title": "Tabela 11: Łożyska kołnierzowe (seria 11)",
-        "desc": "Specjalne łożyska kołnierzowe do siewników."
-      },
-      "table12": {
-        "title": "Tabela 12: Łożyska specjalne (seria 12)",
-        "desc": "Łożyska serii 207KRRB do siewników."
-      }
-    }
-  },
-  "oemPage": {
-    "hero": {
-      "eyebrow": "OEM Solutions",
-      "title": "Development of a hub according to your specifications",
-      "desc": "We don't just offer a catalog. VELNOX starts with analyzing the loads, operating environment, and functional requirements of your specific assembly."
-    },
-    "capabilities": {
-      "title": "Customization Capabilities",
-      "structural": {
-        "title": "Structural Elements",
-        "desc": "Adaptation of bearing unit geometry to limited space or specific mounting requirements."
-      },
-      "sealing": {
-        "title": "Sealing Systems",
-        "desc": "Selection of the optimal system (e.g., Dirtblock Seal or a combination of Plastic Cover with RS Seal) depending on the contamination level."
-      },
-      "resource": {
-        "title": "Resource and Stability",
-        "desc": "Optimization of materials to ensure repeatability of parameters in serial production, which is critical for the OEM market."
-      }
-    },
-    "form": {
-      "title": "Engineering Inquiry Form",
-      "desc": "Provide technical parameters according to the VELNOX PL-127-G scheme.",
-      "section_contacts": "Contacts",
-      "section_tech": "Technical Parameters (PL-127-G)",
-      "section_ops": "Operating Conditions",
-      "name": "Full Name",
-      "company": "Company / OEM Manufacturer",
-      "position": "Position (Design Engineer, Procurement Manager, etc.)",
-      "email": "Contact E-mail",
-      "phone": "Phone Number",
-      "d": "Bore diameter (d) or shaft diameter (mm)",
-      "D": "Outer diameter (D, mm)",
-      "BC": "Inner (B) and outer (C) ring width (mm)",
-      "J": "Bolt circle diameter (J, mm)",
-      "GHT": "Thread size and type (G / H/T)",
-      "L": "Total length (L, mm)",
-      "loads": "Dynamic (C dyn) and Static (Co) Loads (kN)",
-      "rpm": "Rotational Speed (RPM)",
-      "environment": "Operating Environment (dry dust, liquid fertilizers, impacts, etc.)",
-      "resource": "Expected Resource (hours)",
-      "submit": "Submit Inquiry",
-      "success": "Your inquiry has been submitted. Our engineering department will analyze it and provide a preliminary response soon.",
-      "success_email": "Automatic confirmation sent to email."
-    }
-  },
-  "contacts": {
-    "hero": {
-      "title": "Informacje kontaktowe",
-      "text": "Nasi inżynierowie pomogą w doborze węzłów łożyskowych na podstawie specyfikacji lub numerów OEM."
-    },
-    "routing": {
-      "block1": {
-        "title": "Dział techniczny i projekty OEM",
-        "desc": "Obliczenia węzłów, praca ze specyfikacjami i rysunkami.",
-        "phone": "+38 (0XX) XXX-XX-XX",
-        "email": "engineering@velnox.com"
-      },
-      "block2": {
-        "title": "Dystrybucja i sprzedaż hurtowa",
-        "desc": "Warunki współpracy, cenniki, dostępność.",
-        "phone": "+38 (0XX) XXX-XX-XX",
-        "email": "sales@velnox.com"
-      },
-      "block3": {
-        "title": "Zapytania ogólne",
-        "email": "info@velnox.com"
-      }
-    },
-    "socials": {
-      "instagram": "",
-      "facebook": "",
-      "telegram": "",
-      "linkedin": ""
-    },
-    "form": {
-      "title": "Formularz zapytania OEM",
-      "subtitle": "",
-      "name": "IMIĘ I STANOWISKO",
-      "name_ph": "Jan, Główny Inżynier",
-      "email": "E-MAIL",
-      "email_ph": "name@company.com",
-      "phone": "TELEFON",
-      "phone_ph": "+380...",
-      "company": "FIRMA / TYP MASZYNY",
-      "company_ph": "Producent siewników / Dystrybutor części",
-      "message": "TWOJE ZAPYTANIE",
-      "message_ph": "Podaj numery OEM lub parametry techniczne d, D, J",
-      "file_label": "ZAŁĄCZ PLIK",
-      "file_desc": "Pobierz rysunek, specyfikację lub zdjęcie (PDF, Excel, JPG, DWG)",
-      "submit": "WYŚLIJ DO OBLICZEŃ",
-      "success": "Zapytanie wysłane. Skontaktujemy się wkrótce."
-    }
-  }
 }
