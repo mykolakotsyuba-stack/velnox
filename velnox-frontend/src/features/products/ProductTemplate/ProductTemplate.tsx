@@ -14,7 +14,7 @@ import { Installations } from './blocks/Installations';
 import { CtaBlock } from '@/widgets/CtaBlock';
 import { PhotoGallery } from './blocks/PhotoGallery';
 import { DistributorsBlock } from '@/widgets/DistributorsBlock';
-import { PdfButton } from './blocks/PdfButton';
+import { ProductHeader } from './blocks/ProductHeader';
 import styles from './ProductTemplate.module.css';
 
 interface ProductTemplateProps {
@@ -82,22 +82,11 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                     locale={locale}
                 />
 
-                <header className={styles.header}>
-                    <div className={styles.headerTop}>
-                        <div>
-                            <h1 className={styles.title}>{product.article}</h1>
-                            <div className={styles.subtitle}>{productName}</div>
-                        </div>
-                        <PdfButton product={product} locale={locale} />
-                    </div>
-
-                    <div className={styles.meta}>
-                        {product.fkl_designation && (
-                            <span className={styles.badge}>FKL: {product.fkl_designation}</span>
-                        )}
-                        <span className={styles.badge}>ISO/DIN Standard</span>
-                    </div>
-                </header>
+                <ProductHeader
+                    product={product}
+                    locale={locale}
+                    productName={productName}
+                />
 
                 <div className={styles.body}>
 
