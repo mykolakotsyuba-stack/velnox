@@ -55,7 +55,7 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                     <div className={styles.photoCol}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                            src="/velnox/images/products/buq-photo-main.png"
+                            src="/velnox/images/products/buq-bearing-photo.png"
                             alt={product.article}
                             className={styles.photo}
                             crossOrigin="anonymous"
