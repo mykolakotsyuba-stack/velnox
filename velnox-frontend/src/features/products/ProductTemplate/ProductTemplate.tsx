@@ -11,7 +11,7 @@ import { SealingBlock } from './blocks/SealingBlock';
 import { SpecsTable } from './blocks/SpecsTable';
 import { CrossReferences } from './blocks/CrossReferences';
 import { Installations } from './blocks/Installations';
-import { CtaBlock } from './blocks/CtaBlock';
+import { CtaBlock } from '@/widgets/CtaBlock';
 import { PhotoGallery } from './blocks/PhotoGallery';
 import { DistributorsBlock } from '@/widgets/DistributorsBlock';
 import { PdfButton } from './blocks/PdfButton';
@@ -172,7 +172,7 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
 
                             {/* B2B Call to Action перенесено під креслення */}
                             <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
-                                <CtaBlock article={product.article} />
+                                <CtaBlock product={product} locale={locale} />
                             </div>
                         </div>
                     </div>
