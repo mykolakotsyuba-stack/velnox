@@ -62,7 +62,7 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
     const isBuq = product.article.toUpperCase().startsWith('BUQ');
     const demoImages = isBuq
         ? [
-            '/velnox/images/products/buq-photo-main.png',
+            '/velnox/images/products/buq-bearing-photo.png',
             '/velnox/images/products/buq-drawing-1.png',
             '/velnox/images/products/buq-drawing-2.png',
             '/velnox/images/products/buq-drawing-3.png',
