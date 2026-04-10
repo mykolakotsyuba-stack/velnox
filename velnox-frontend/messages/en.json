@@ -312,6 +312,12 @@
       "file_desc": "Download drawing, specification or photo (PDF, Excel, JPG, DWG)",
       "submit": "SEND FOR CALCULATION",
       "success": "Request sent successfully. We will contact you shortly."
+    },
+    "socials": {
+      "instagram": "",
+      "facebook": "",
+      "telegram": "",
+      "linkedin": ""
     }
   },
   "product": {

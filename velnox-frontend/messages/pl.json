@@ -594,5 +594,53 @@
       "success": "Your inquiry has been submitted. Our engineering department will analyze it and provide a preliminary response soon.",
       "success_email": "Automatic confirmation sent to email."
     }
+  },
+  "contacts": {
+    "hero": {
+      "title": "Informacje kontaktowe",
+      "text": "Nasi inżynierowie pomogą w doborze węzłów łożyskowych na podstawie specyfikacji lub numerów OEM."
+    },
+    "routing": {
+      "block1": {
+        "title": "Dział techniczny i projekty OEM",
+        "desc": "Obliczenia węzłów, praca ze specyfikacjami i rysunkami.",
+        "phone": "+38 (0XX) XXX-XX-XX",
+        "email": "engineering@velnox.com"
+      },
+      "block2": {
+        "title": "Dystrybucja i sprzedaż hurtowa",
+        "desc": "Warunki współpracy, cenniki, dostępność.",
+        "phone": "+38 (0XX) XXX-XX-XX",
+        "email": "sales@velnox.com"
+      },
+      "block3": {
+        "title": "Zapytania ogólne",
+        "email": "info@velnox.com"
+      }
+    },
+    "socials": {
+      "instagram": "",
+      "facebook": "",
+      "telegram": "",
+      "linkedin": ""
+    },
+    "form": {
+      "title": "Formularz zapytania OEM",
+      "subtitle": "",
+      "name": "IMIĘ I STANOWISKO",
+      "name_ph": "Jan, Główny Inżynier",
+      "email": "E-MAIL",
+      "email_ph": "name@company.com",
+      "phone": "TELEFON",
+      "phone_ph": "+380...",
+      "company": "FIRMA / TYP MASZYNY",
+      "company_ph": "Producent siewników / Dystrybutor części",
+      "message": "TWOJE ZAPYTANIE",
+      "message_ph": "Podaj numery OEM lub parametry techniczne d, D, J",
+      "file_label": "ZAŁĄCZ PLIK",
+      "file_desc": "Pobierz rysunek, specyfikację lub zdjęcie (PDF, Excel, JPG, DWG)",
+      "submit": "WYŚLIJ DO OBLICZEŃ",
+      "success": "Zapytanie wysłane. Skontaktujemy się wkrótce."
+    }
   }
 }

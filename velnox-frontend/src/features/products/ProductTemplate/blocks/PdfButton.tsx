@@ -77,7 +77,9 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
                 heightLeft -= pageHeight;
             }
 
-            const blob = pdf.output('blob');
+            // Explicit MIME type ensures Chrome adds .pdf extension on save
+            const pdfArrayBuffer = pdf.output('arraybuffer');
+            const blob = new Blob([pdfArrayBuffer], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
 
             // Instead of auto-clicking (which triggers Safari's filename bug), 
@@ -95,33 +97,39 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
     return (
         <>
             {pdfUrl ? (
-                // Native synchronous download link (Preserves filename across all browsers)
-                <a
-                    href={pdfUrl}
-                    download={filename}
-                    className={`${styles.pdfButton} ${styles.ready}`}
-                    title="Зберегти файл"
-                    onClick={() => {
-                        // Reset button state after a short delay so they can re-generate if needed
-                        setTimeout(() => setPdfUrl(null), 3000);
-                    }}
-                >
-                    <svg
-                        viewBox="0 0 24 24"
-                        width="20"
-                        height="20"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                // Two options: download (may be blocked on HTTP) + open in new tab (always works)
+                <div style={{ display: 'inline-flex', gap: '8px', alignItems: 'center' }}>
+                    <a
+                        href={pdfUrl}
+                        download={filename}
+                        className={`${styles.pdfButton} ${styles.ready}`}
+                        title="Зберегти файл"
+                        onClick={() => {
+                            setTimeout(() => setPdfUrl(null), 3000);
+                        }}
                     >
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                        <polyline points="7 10 12 15 17 10" />
-                        <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    <span className={styles.buttonText}>Зберегти Файл PDF</span>
-                </a>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        <span className={styles.buttonText}>Зберегти PDF</span>
+                    </a>
+                    <a
+                        href={pdfUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`${styles.pdfButton} ${styles.ready}`}
+                        title="Відкрити PDF у новій вкладці"
+                        style={{ padding: '9px 14px' }}
+                    >
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                            <polyline points="15 3 21 3 21 9" />
+                            <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
+                    </a>
+                </div>
             ) : (
                 <button
                     className={`${styles.pdfButton} ${isGenerating ? styles.loading : ''}`}
@@ -166,7 +174,12 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
                     pointerEvents: 'none'
                 }}
             >
-                <PdfLayout ref={hiddenPdfRef} product={product} locale={locale} />
+                <PdfLayout
+                    ref={hiddenPdfRef}
+                    product={product}
+                    locale={locale}
+                    pageUrl={typeof window !== 'undefined' ? window.location.href : ''}
+                />
             </div>
         </>
     );
