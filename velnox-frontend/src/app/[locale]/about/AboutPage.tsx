@@ -323,7 +323,7 @@ export function AboutPage({ locale }: { locale: string }) {
                 </div>
 
                 {/* ══ BLOCK E-2: QUALITY ══ */}
-                <div className={`${styles.sectionInner} ${styles.noBottomPadding}`} ref={qualitySection.ref as React.RefObject<HTMLDivElement>} style={{ marginTop: '80px' }}>
+                <div className={`${styles.sectionInner} ${styles.noBottomPadding} ${styles.noTopPadding}`} ref={qualitySection.ref as React.RefObject<HTMLDivElement>}>
                     <div className={`${styles.qualityLayout} ${qualitySection.inView ? styles.qualityVisible : ''}`}>
                         <div className={styles.qualityHeaderRow}>
                             <h2 className={styles.qualityTitle}>{t('quality.title')}</h2>
