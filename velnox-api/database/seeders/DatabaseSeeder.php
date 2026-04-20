@@ -745,6 +745,92 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        // ===== AGRO: GW212 KPP52 R-GX VX (Square flange disc harrow hub) =====
+        if ($agroCategory) {
+            Product::updateOrCreate(
+                ['slug' => 'gw212-kpp52-r-gx-vx'],
+                [
+                    'article'     => 'GW212 KPP52 R-GX VX',
+                    'category_id' => $agroCategory->id,
+                    'specs'       => [
+                        'table_group'          => 'agro-hub',
+                        'bearing_designation'  => "DC 212 TTRA\nGW 212 KPP52 R-GX\nGW 212 KPP52 R-GX\nSBX 1226 LLSQ1\nDC 212 TTRA",
+                        'brand_name'           => "National\nPEER\nCT-AGRI\nNTN\nNTN",
+                        'cross_reference'      => "193906A1 CASE\n194704A1 Bearing assembly\n3215BX1226 CASE\nDC 212 TTRA NTN\n193906A1 CASE\n194704A1 Bearing assembly\n3215BX1226 CASE",
+                        'bore_diameter_mm'     => 45.212,
+                        'overall_diameter_mm'  => 110,
+                        'body_diameter_mm'     => 76,
+                        'inner_ring_width_mm'  => 38.25,
+                        'outer_ring_width_mm'  => 42.90,
+                        'overall_width_mm'     => 76,
+                        'groove_offset_mm'     => 8.4,
+                        'mounting_slot_size'   => '2x180°',
+                        'mass_kg'              => 1.81,
+                    ],
+                    'is_active' => true,
+                ]
+            );
+        }
+
+        // ===== KIT: W247647B VX (Hex bore seeder hub) =====
+        if ($kitCategory ?? false) {
+            $kitCat = Category::where('slug', 'kit')->first();
+            Product::updateOrCreate(
+                ['slug' => 'w247647b-vx'],
+                [
+                    'article'     => 'W247647B VX',
+                    'category_id' => $kitCat->id,
+                    'specs'       => [
+                        'table_group'              => 'kit-hex-hub',
+                        'bearing_designation'      => 'W247647B',
+                        'brand_name'               => 'CT-AGRI',
+                        'cross_reference'          => "H204LF\nHEX204PFL\nW247647B MF",
+                        'd_hex_mm'                 => 19.075,
+                        'L_mm'                     => 82.50,
+                        'd1_mm'                    => 58.70,
+                        'C_mm'                     => 20.40,
+                        'overall_width_mm'         => 44.50,
+                        'B_mm'                     => 26.20,
+                        'housing_holes_center_mm'  => 63.50,
+                        'opening_diameter_mm'      => 38.70,
+                        'groove_width_mm'          => 7.2,
+                        'groove_depth_mm'          => 7.2,
+                        'mass_kg'                  => 0.19,
+                    ],
+                    'is_active' => true,
+                ]
+            );
+        }
+
+        // ===== KIT: 207KRRB12 VX (Angular contact seeder bearing) =====
+        {
+            $kitCat = Category::where('slug', 'kit')->first();
+            if ($kitCat) {
+                Product::updateOrCreate(
+                    ['slug' => '207krrb12-vx'],
+                    [
+                        'article'     => '207KRRB12 VX',
+                        'category_id' => $kitCat->id,
+                        'specs'       => [
+                            'table_group'         => 'kit-table12',
+                            'bearing_designation' => "207 KRRB12\n207 KRRB12\n207 KRRB12\n207 KRRB12 (PER.207HRRB12)\n207 KRRB12-H-A146\nSBX 07A25 LLMQ3I",
+                            'brand_name'          => "CT-AGRI\nRBF\nTIMKEN\nPEER\nPEER\nNTN",
+                            'cross_reference'     => "156816C91 CASE\n84330069 CASE\n87376564 CASE\nAN102010 JD\nHPS102GPAN BCA\nJD9488 JD",
+                            'D_mm'                => 72,
+                            'a_mm'                => 28.6,
+                            'd1_mm'               => 46.1,
+                            'C_mm'                => 17,
+                            'B_mm'                => 25,
+                            'mass_kg'             => 0.4,
+                            'co_kn'               => 15.3,
+                            'cdyn_kn'             => 25.5,
+                        ],
+                        'is_active' => true,
+                    ]
+                );
+            }
+        }
+
         // ===== ДЕМО-СТАТТЯ =====
         NewsArticle::updateOrCreate(
             ['slug' => 'oem-bearing-selection-guide'],
