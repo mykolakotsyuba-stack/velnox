@@ -357,31 +357,27 @@
                 "desc": "",
                 "col_cdyn": "Dynamiczna (Cdyn, kN)",
                 "col_co": "Statyczna (Co, kN)",
-                "col_pu": "Granica zmęczenia (Pu, kN)",
-                "col_mass": "Masa (kg)"
+            "intro": "Przewodnik techniczny VELNOX został stworzony do szybkiej pracy projektantów i działów zakupów. Poniżej znajdują się tabele parametrów umożliwiające dokładny dobór zespołu do konkretnych zadań.",
+            "search_placeholder": "Szukaj według oznaczenia lub rozmiaru...",
+            "table1": {
+                "title": "Tabela 1: Wymiary gabarytowe i przyłączeniowe zespołów łożyskowych",
+                "desc": ""
             },
-            "sealing_visual": {
-                "title": "Tabela: Systemy uszczelnień VELNOX (Sealing Systems)",
-                "desc": "Tutaj wizualizujemy i wyjaśniamy typy ochrony, ponieważ jest to główna zaleta dla sektora rolniczego.",
-                "2rs": "Podstawowe uszczelnienie stykowe dla warunków neutralnych.",
-                "2s": "Uszczelnienie jednowargowe z labiryntem. Wysoka ochrona przed grubymi cząstkami.",
-                "tseal": "Trójwargowe uszczelnienie dla maksymalnej ochrony przed pyłem i wilgocią.",
-                "dirtblock": "Ekstremalna ochrona dla ciężkich bron talerzowych. Półmetal-półguma z kutą osłoną ochronną."
+            "table2": {
+                "title": "Tabela 2: Wymiary gabarytowe i przyłączeniowe zespołu łożyskowego do walca doprawiającego",
+                "desc": ""
             },
             "table3": {
-                "title": "Tabela 3: Odnośniki i zastosowania (Cross-References & Installations)",
-                "desc": "",
-                "col_brand": "Analogi marek",
-                "col_oem": "Numery fabryczne maszyn OEM",
-                "col_app": "Zastosowanie"
+                "title": "Tabela 3: Wymiary gabarytowe i zastosowanie zespołu łożyskowego do walca doprawiającego",
+                "desc": ""
             },
             "table4": {
-                "title": "Tabela 4: Specyfikacje łożysk",
-                "desc": "Szczegółowe specyfikacje techniczne"
+                "title": "Tabela 4: Wymiary gabarytowe zespołu łożyskowego do maszyn Gaspardo",
+                "desc": ""
             },
             "table5": {
-                "title": "Tabela 5: Rozszerzone dane łożysk",
-                "desc": "Dodatkowe specyfikacje łożysk i nośności"
+                "title": "Tabela 5: Wymiary gabarytowe zespołu łożyskowego do maszyn Lemken",
+                "desc": ""
             },
             "btn_request": "Złóż wniosek"
         },
@@ -400,9 +396,9 @@
             "btn_contact": "Skontaktuj się z inżynierem"
         },
         "packer_roller": {
-            "title": "Wały dogniatające (prasy)",
-            "sealing_title": "Kombinowany system uszczelnień",
-            "content": "Wały dogniatające pracują w ciągłym kontakcie z glebą, wilgocią i cząstkami ściernymi, generując wysokie obciążenia promieniowe i warunki intensywnego zanieczyszczenia. Jednostki łożyskowe do takich zastosowań muszą zapewniać stabilną pracę przy niskich prędkościach obrotowych, dużych obciążeniach statycznych i uderzeniach.\n\nRozwiązania VELNOX dla wałów dogniatających opracowane z uwzględnieniem rzeczywistych warunków eksploatacji: wzmocnione oprawy, skuteczne systemy uszczelnień i zoptymalizowane luzy wewnętrzne zapewniają niezawodną pracę jednostek w trudnych warunkach polowych. Konstrukcja ukierunkowana na zmniejszenie wpływu zanieczyszczeń i wydłużenie resursu przy minimalnej obsłudze.\n\nZespoły łożyskowe VELNOX stosowane są w wałach dogniatających maszyn rolniczych, zapewniając stabilną pracę agregatów i redukcję przestojów przez cały sezon."
+            "title": "Łożyska do walców doprawiających",
+            "sealing_title": "Połączony system uszczelnień",
+            "content": "Łożyska do walców doprawiających pracują w stałym kontakcie z glebą, wilgocią i cząstkami ściernymi, co generuje wysokie obciążenia promieniowe i warunki intensywnego zanieczyszczenia. Zespoły łożyskowe do takich zastosowań muszą zapewniać stabilną pracę przy niskich prędkościach obrotowych, wysokich obciążeniach statycznych i uderzeniach.\n\nRozwiązania VELNOX dla walców doprawiających zostały opracowane z uwzględnieniem rzeczywistych warunków eksploatacji: wzmocnione obudowy, skuteczne systemy uszczelnień i zoptymalizowane luzy wewnętrzne zapewniają niezawodną pracę jednostek w trudnych warunkach polowych. Konstrukcja jest zorientowana na zmniejszenie wpływu zanieczyszczeń i wydłużenie żywotności przy minimalnej konserwacji.\n\nZespoły łożyskowe VELNOX są stosowane w walcach doprawiających maszyn rolniczych, zapewniając stabilną pracę agregatów i redukcję przestojów w całym sezonie."
         }
     },
     "hubsPage": {

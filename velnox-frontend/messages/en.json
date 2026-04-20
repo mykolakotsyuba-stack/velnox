@@ -391,45 +391,24 @@
             "intro": "The VELNOX technical guide is created for fast work by designers and purchasers. Below are summary parameter tables for exact unit selection for your tasks.",
             "search_placeholder": "Search by designation or size...",
             "table1": {
-                "title": "Table 1: Dimensional Specifications and Mountings",
-                "desc": "",
-                "col_designation": "Designation",
-                "col_d": "Inner Diameter (d, mm)",
-                "col_j": "Mounting Distances (J, mm)",
-                "col_width": "Total Housing Width (A, A1, A2, mm)",
-                "col_holes": "Holes/Threads (N, H/T)",
-                "col_l": "Total Length (L, mm)"
+                "title": "Table 1: Dimensional Specifications and Mountings of Bearing Units",
+                "desc": ""
             },
             "table2": {
-                "title": "Table 2: Performance & Load Ratings",
-                "desc": "",
-                "col_cdyn": "Dynamic (Cdyn, kN)",
-                "col_co": "Static (Co, kN)",
-                "col_pu": "Fatigue Limit (Pu, kN)",
-                "col_mass": "Mass (kg)"
-            },
-            "sealing_visual": {
-                "title": "Table: VELNOX Sealing Systems",
-                "desc": "Here we visualize and explain the types of protection, as this is the main advantage for the agricultural sector.",
-                "2rs": "Basic contact seal for neutral conditions.",
-                "2s": "Single-lip seal with labyrinth. High protection from coarse particles.",
-                "tseal": "Triple-lip seal for maximum protection against dust and moisture.",
-                "dirtblock": "Extreme protection for heavy disc harrows. Semi-metal-semi-rubber with a forged cover plate."
+                "title": "Table 2: Dimensional and Mounting Dimensions of the Bearing Unit for Packer Roller",
+                "desc": ""
             },
             "table3": {
-                "title": "Table 3: Cross-References & Installations",
-                "desc": "",
-                "col_brand": "Brand Analogs",
-                "col_oem": "OEM Equipment Numbers",
-                "col_app": "Application"
+                "title": "Table 3: Dimensional Sizes and Applications of the Bearing Unit for Packer Roller",
+                "desc": ""
             },
             "table4": {
-                "title": "Table 4: Bearing Specifications",
-                "desc": "Detailed technical specifications"
+                "title": "Table 4: Dimensional Sizes of the Bearing Unit for Gaspardo Equipment",
+                "desc": ""
             },
             "table5": {
-                "title": "Table 5: Extended Bearing Data",
-                "desc": "Additional bearing specifications and load ratings"
+                "title": "Table 5: Dimensional Sizes of the Bearing Unit for Lemken Equipment",
+                "desc": ""
             },
             "btn_request": "Request"
         },
@@ -448,9 +427,9 @@
             "btn_contact": "Contact Engineer"
         },
         "packer_roller": {
-            "title": "Press Wheels",
+            "title": "Packer Roller Bearings",
             "sealing_title": "Combined Sealing System",
-            "content": "Press wheels operate in constant contact with soil, moisture and abrasive particles, generating high radial loads and conditions of intensive contamination. Bearing units for such applications must provide stable operation at low rotational speeds, high static loads and shock impacts.\n\nVELNOX solutions for press wheels are developed taking into account real operating conditions: reinforced housings, effective sealing systems and optimized internal clearances ensure reliable operation of units in difficult field conditions. The design is focused on reducing the impact of contamination and extending service life with minimum maintenance.\n\nVELNOX bearing units are used in press wheels of agricultural machinery, ensuring stable operation of equipment and reducing downtime throughout the entire season."
+            "content": "Packer roller bearings operate in constant contact with soil, moisture, and abrasive particles, which creates high radial loads and intensive contamination conditions. Bearing units for such applications must ensure stable operation at low rotational speeds, high static loads, and shock impacts.\n\nVELNOX solutions for packer rollers are developed taking into account real operating conditions: reinforced housings, effective sealing systems, and optimized internal clearances ensure reliable operation of the units in difficult field conditions. The design is focused on reducing the impact of contamination and increasing service life with minimal maintenance.\n\nVELNOX bearing units are used in packer rollers of agricultural machinery, ensuring stable operation of the equipment and reducing downtime throughout the entire season."
         }
     },
     "hubsPage": {

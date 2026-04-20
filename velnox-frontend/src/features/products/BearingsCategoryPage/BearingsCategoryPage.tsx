@@ -742,8 +742,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 </div>
             </section>
 
-            {/* ─── Intro Block: Performance ─── */}
-            <PerformanceIntro />
 
             {/* ─── Section: Table 2: Performance Data ─── */}
             <section className={styles.tablesSection}>
@@ -823,7 +821,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
 
             {/* ─── Section: Table 3: Cross-References & Applications ─── */}
-            <section className={styles.tablesSection}>
+            <section className={`${styles.tablesSection} ${styles.noTopPadding}`}>
                 <div className={styles.tableSectionContainer}>
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table3.title')}</h3>
@@ -902,7 +900,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table4.title')}</h3>
-                        <p className={styles.tableDesc}>{t('block2.table4.desc')}</p>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
@@ -962,7 +959,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             </section>
 
             {/* ─── Section: Table 5: Additional Bearing Specifications ─── */}
-            <section className={styles.tablesSection}>
+            <section className={`${styles.tablesSection} ${styles.noTopPadding}`}>
                 <div className={styles.tableSectionContainer}>
                     {/* Placeholder for Sealing Scheme (Figure) */}
                     <div className={styles.buqDrawingBlock}>
@@ -986,7 +983,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table5.title')}</h3>
-                        <p className={styles.tableDesc}>{t('block2.table5.desc')}</p>
                         <div className={styles.tableScroll}>
                             <table className={styles.techTable}>
                                 <thead>
