@@ -449,27 +449,6 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
                 </div>
             </section>
 
-            {/* 3 CARDS */}
-            <section className={styles.approach} ref={approachRef.ref}>
-                <div className={approachRef.inView ? `${styles.container} ${styles.animIn}` : styles.container}>
-                    <h2 className={styles.sectionTitle}>{t('kitPage.block1.title')}</h2>
-                    <div className={styles.featureGrid}>
-                        {[1, 2, 3].map((i) => (
-                            <div key={i} className={styles.featureCard}>
-                                <div className={styles.featureIcon}>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                        {i === 1 && <path d="M12 2l8 4v5c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V6l8-4z" />}
-                                        {i === 2 && <><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></>}
-                                        {i === 3 && <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m2.54 2.54l4.24 4.24M1 12h6m6 0h6m-17.78 7.78l4.24-4.24m2.54-2.54l4.24-4.24" />}
-                                    </svg>
-                                </div>
-                                <h3>{t(`kitPage.block1.card${i}_title`)}</h3>
-                                <p>{t(`kitPage.block1.card${i}_desc`)}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
             {/* STICKY SEARCH */}
             <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
@@ -502,26 +481,6 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── APP BLOCK 2 ── */}
-            <section ref={app2Ref.ref} className={app2Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection}>
-                <div className={styles.appWatermark}>KIT 2</div>
-                <div className={styles.appInner}>
-                    <div className={styles.appHeader}>
-                        <h2 className={styles.appTitle}>{t('kitPage.app2.title')}</h2>
-                    </div>
-                    <div className={styles.appBody}>
-                        <p className={`${styles.appPara} ${styles.appParaLead} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
-                            {t('kitPage.app2.desc')}
-                        </p>
-                        <p className={`${styles.appPara} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
-                            <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('kitPage.app2.applications')}
-                        </p>
-                        <p className={`${styles.appPara} ${app2Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
-                            <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('kitPage.app2.oem_focus')}
-                        </p>
-                    </div>
-                </div>
-            </section>
 
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
@@ -531,26 +490,6 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── APP BLOCK 3 ── */}
-            <section ref={app3Ref.ref} className={app3Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection}>
-                <div className={styles.appWatermark}>KIT 3</div>
-                <div className={styles.appInner}>
-                    <div className={styles.appHeader}>
-                        <h2 className={styles.appTitle}>{t('kitPage.app3.title')}</h2>
-                    </div>
-                    <div className={styles.appBody}>
-                        <p className={`${styles.appPara} ${styles.appParaLead} ${app3Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.1s' }}>
-                            {t('kitPage.app3.desc')}
-                        </p>
-                        <p className={`${styles.appPara} ${app3Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.25s' }}>
-                            <strong className={styles.appKeyword}>Сфера застосування:</strong> {t('kitPage.app3.applications')}
-                        </p>
-                        <p className={`${styles.appPara} ${app3Ref.inView ? styles.appParaVisible : ''}`} style={{ transitionDelay: '0.4s' }}>
-                            <strong className={styles.appKeyword}>OEM-фокус:</strong> {t('kitPage.app3.oem_focus')}
-                        </p>
-                    </div>
-                </div>
-            </section>
 
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
