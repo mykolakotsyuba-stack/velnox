@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './custom.module.css';
 import Image from 'next/image';
 import { Search, Upload, X as CloseIcon, FileText, ExternalLink } from 'lucide-react';
+import { apiFetch } from '@/shared/lib/api';
 
 interface Product {
     article: string;
@@ -40,11 +41,16 @@ export function CustomForm({ locale }: { locale: string }) {
 
             setIsSearching(true);
             try {
-                const res = await fetch(`/api/v1/products?q=${encodeURIComponent(searchQuery)}&per_page=10`);
-                const data = await res.json();
+                const data = await apiFetch<{ data: Product[] }>('/products', {
+                    params: {
+                        q: searchQuery,
+                        per_page: '10'
+                    }
+                });
                 setSearchResults(data.data || []);
             } catch (err) {
                 console.error('Search error:', err);
+                setSearchResults([]);
             } finally {
                 setIsSearching(false);
             }
