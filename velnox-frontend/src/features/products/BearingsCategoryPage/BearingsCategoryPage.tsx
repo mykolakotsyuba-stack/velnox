@@ -739,13 +739,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             </table>
                         </div>
                     </div>
-                </div>
-            </section>
-
-
-            {/* ─── Section: Table 2: Performance Data ─── */}
-            <section className={styles.tablesSection}>
-                <div className={styles.tableSectionContainer}>
+                    {/* ─── Section: Table 2: Performance Data ─── */}
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table2.title')}</h3>
                         <p className={styles.tableDesc}></p>
@@ -813,16 +807,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             </table>
                         </div>
                     </div>
-                </div>
-            </section>
-
-
-
-
-
-            {/* ─── Section: Table 3: Cross-References & Applications ─── */}
-            <section className={`${styles.tablesSection} ${styles.noTopPadding}`}>
-                <div className={styles.tableSectionContainer}>
+                    {/* ─── Section: Table 3: Cross-References & Applications ─── */}
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table3.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table3.desc')}</p>
@@ -890,14 +875,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             </table>
                         </div>
                     </div>
-                </div>
-            </section>
-
-
-            {/* ─── Grouped Technical Tables Section ─── */}
-            <section className={styles.tablesSection}>
-                <div className={styles.tableSectionContainer}>
-
+                    {/* ─── Grouped Technical Tables Section (Tables 4 & 5) ─── */}
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table4.title')}</h3>
                         <div className={styles.tableScroll}>
@@ -955,12 +933,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             </table>
                         </div>
                     </div>
-                </div>
-            </section>
 
-            {/* ─── Section: Table 5: Additional Bearing Specifications ─── */}
-            <section className={`${styles.tablesSection} ${styles.noTopPadding}`}>
-                <div className={styles.tableSectionContainer}>
+                    {/* ─── Section: Table 5: Additional Bearing Specifications ─── */}
                     {/* Placeholder for Sealing Scheme (Figure) */}
                     <div className={styles.buqDrawingBlock}>
                         <div className={styles.buqDrawingTitle}>FIGURE: SEALING SYSTEM SCHEME</div>
