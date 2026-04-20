@@ -227,8 +227,4 @@ export function DistributorsPage() {
     );
 }
 
-        </div>
-    );
-}
-
 
