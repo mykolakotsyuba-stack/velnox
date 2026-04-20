@@ -210,14 +210,29 @@ const TABLE_COLS: Record<number, { col: string; label: string }[]> = {
     10: [
         { col: 'Part Number', label: 'Part No' }, { col: 'Bearing designation', label: 'Bearing' },
         { col: 'Brand name', label: 'Brand' }, { col: 'Cross-Reference', label: 'Cross-Ref' },
+        { col: 'bore_diameter_mm', label: 'Bore d (mm)' }, { col: 'overall_diameter_mm', label: 'OD (mm)' },
+        { col: 'body_diameter_mm', label: 'Body Ø (mm)' }, { col: 'inner_ring_width_mm', label: 'IR W (mm)' },
+        { col: 'outer_ring_width_mm', label: 'OR W (mm)' }, { col: 'overall_width_mm', label: 'Width (mm)' },
+        { col: 'groove_offset_mm', label: 'Groove off.' }, { col: 'mounting_slot_size', label: 'Slot' },
+        { col: 'mass_kg', label: 'Mass (kg)' },
     ],
     11: [
         { col: 'Part Number', label: 'Part No' }, { col: 'Bearing designation', label: 'Bearing' },
         { col: 'Brand name', label: 'Brand' }, { col: 'Cross-Reference', label: 'Cross-Ref' },
+        { col: 'd_hex_mm', label: 'd hex (mm)' }, { col: 'L_mm', label: 'L (mm)' },
+        { col: 'd1_mm', label: 'd1 (mm)' }, { col: 'C_mm', label: 'C (mm)' },
+        { col: 'overall_width_mm', label: 'Width (mm)' }, { col: 'B_mm', label: 'B (mm)' },
+        { col: 'housing_holes_center_mm', label: 'Centering' }, { col: 'opening_diameter_mm', label: 'Open. Ø' },
+        { col: 'groove_width_mm', label: 'Gr. W (mm)' }, { col: 'groove_depth_mm', label: 'Gr. D (mm)' },
+        { col: 'mass_kg', label: 'Mass (kg)' },
     ],
     12: [
         { col: 'Part Number', label: 'Part No' }, { col: 'Bearing designation', label: 'Bearing' },
         { col: 'Brand name', label: 'Brand' }, { col: 'Cross-Reference', label: 'Cross-Ref' },
+        { col: 'D_mm', label: 'D (mm)' }, { col: 'a_mm', label: 'a (mm)' },
+        { col: 'd1_mm', label: 'd1 (mm)' }, { col: 'C_mm', label: 'C (mm)' },
+        { col: 'B_mm', label: 'B (mm)' }, { col: 'mass_kg', label: 'Mass (kg)' },
+        { col: 'co_kn', label: 'Co (kN)' }, { col: 'cdyn_kn', label: 'Cdyn (kN)' },
     ],
 };
 
