@@ -455,9 +455,9 @@
     },
     "hubsPage": {
         "hero": {
-            "title": "VELNOX Bearing Hubs",
-            "subtitle": "Engineered units for intensive operation in aggressive environments",
-            "desc": "VELNOX hubs are engineered for direct replacement of original hub nodes from leading European and American agricultural machinery manufacturers. The primary focus is on multi-level sealing systems and stable operation under high axial loads."
+            "title": "VELNOX Hubs",
+            "subtitle": "VELNOX hubs are designed to replace original units from leading European and American agricultural machinery manufacturers. The focus is on a multi-level sealing system and stable operation under high loads.",
+            "desc": ""
         },
         "block1": {
             "title": "Why OEM Manufacturers Choose VELNOX Hubs?",
@@ -473,16 +473,16 @@
             "intro": "VELNOX technical guide for quick OEM engineer reference. Tables contain complete parameters for hub selection for specific applications.",
             "search_placeholder": "Search by part number or size...",
             "table1": {
-                "title": "Table 1: Disc Harrow Hubs 28071300 VX",
-                "desc": "Units for heavy disc harrows HORSCH Joker, Focus, Terrano series. Field operation with maximum axial load."
+                "title": "Disc Harrow Hubs",
+                "desc": "Units for heavy disc harrows HORSCH Joker, Focus, Terrano series. Field work with maximum axial load."
             },
             "table2": {
-                "title": "Table 2: Cutting Node Hubs BAA-0004 VX",
-                "desc": "Maintenance-free units for compact disc harrows and cultivators Bednar, Köckerling, Gaspardo."
+                "title": "Dimensional sizes of the maintenance-free bearing hub BAA-0004 VX",
+                "desc": "Maintenance-free units for compact disc harrows and cultivators by Bednar, Köckerling, Gaspardo."
             },
             "table3": {
-                "title": "Table 3: Seeder Hubs PL-140 VX",
-                "desc": "High-precision units for Vaderstad seeders and other high-speed aggregates."
+                "title": "Dimensional sizes of the hub for Vaderstad agricultural machinery",
+                "desc": "High-precision units for Vaderstad agricultural machinery"
             },
             "btn_request": "Request"
         },

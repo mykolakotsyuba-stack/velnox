@@ -407,9 +407,9 @@
     },
     "hubsPage": {
         "hero": {
-            "title": "Piasty łożyskowe VELNOX",
-            "subtitle": "Jednostki inżynierskie do intensywnej eksploatacji w agresywnym otoczeniu",
-            "desc": "Piasty VELNOX zostały zaprojektowane jako bezpośrednia zamiana oryginalnych pias łożyskowych wiodących europejskich i amerykańskich producentów maszyn rolniczych. Główny nacisk położono na wielopoziomowe systemy uszczelniające i stabilną pracę pod wysokimi obciążeniami osiowymi."
+            "title": "Piasty VELNOX",
+            "subtitle": "Piasty VELNOX zostały zaprojektowane jako zamienniki oryginalnych jednostek wiodących europejskich i amerykańskich producentów maszyn rolniczych. Główny nacisk położono na wielopoziomowy system uszczelnień i stabilną pracę pod wysokim obciążeniem.",
+            "desc": ""
         },
         "block1": {
             "title": "Dlaczego producenci OEM wybierają piasty VELNOX?",
@@ -425,16 +425,16 @@
             "intro": "Przewodnik techniczny VELNOX do szybkiego odwołania się inżynierów OEM. Tabele zawierają pełne parametry do wyboru pias do konkretnych zastosowań.",
             "search_placeholder": "Szukaj po numerze części lub rozmiarze...",
             "table1": {
-                "title": "Tabela 1: Piasty brony tarczowej 28071300 VX",
-                "desc": "Jednostki do ciężkich bron tarczowych HORSCH serii Joker, Focus, Terrano. Praca w polu z maksymalnym obciążeniem osiowym."
+                "title": "Piasty do bron talerzowych",
+                "desc": "Jednostki do ciężkich bron talerzowych HORSCH serii Joker, Focus, Terrano. Praca w polu przy maksymalnym obciążeniu osiowym."
             },
             "table2": {
-                "title": "Tabela 2: Piasty węzłów tnących BAA-0004 VX",
-                "desc": "Jednostki bezobsługowe do kompaktowych bron tarczowych i kultywatorów Bednar, Köckerling, Gaspardo."
+                "title": "Wymiary gabarytowe bezobsługowej piasty łożyskowej BAA-0004 VX",
+                "desc": "Bezobsługowe jednostki do kompaktowych bron talerzowych i kultywatorów Bednar, Köckerling, Gaspardo."
             },
             "table3": {
-                "title": "Tabela 3: Piasty siewników PL-140 VX",
-                "desc": "Jednostki wysokiej precyzji do siewników Vaderstad i innych szybkoobrotowych agregatów."
+                "title": "Wymiary gabarytowe piasty do maszyn rolniczych Vaderstad",
+                "desc": "Wysokoprecyzyjne jednostki do maszyn rolniczych Vaderstad"
             },
             "btn_request": "Zapytanie"
         },
