@@ -392,15 +392,36 @@
             "search_placeholder": "Search by designation or size...",
             "table1": {
                 "title": "Table 1: Dimensional Specifications and Mountings of Bearing Units",
-                "desc": ""
+                "desc": "",
+                "col_designation": "Designation",
+                "col_d": "Inner Diameter (d, mm)",
+                "col_j": "Mounting Distances (J, mm)",
+                "col_width": "Total Housing Width (A, A1, A2, mm)",
+                "col_holes": "Holes/Threads (N, H/T)",
+                "col_l": "Total Length (L, mm)"
             },
             "table2": {
                 "title": "Table 2: Dimensional and Mounting Dimensions of the Bearing Unit for Packer Roller",
-                "desc": ""
+                "desc": "",
+                "col_cdyn": "Dynamic (Cdyn, kN)",
+                "col_co": "Static (Co, kN)",
+                "col_pu": "Fatigue Limit (Pu, kN)",
+                "col_mass": "Mass (kg)"
+            },
+            "sealing_visual": {
+                "title": "Table: VELNOX Sealing Systems",
+                "desc": "Here we visualize and explain the types of protection, as this is the main advantage for the agricultural sector.",
+                "2rs": "Basic contact seal for neutral conditions.",
+                "2s": "Single-lip seal with labyrinth. High protection from coarse particles.",
+                "tseal": "Triple-lip seal for maximum protection against dust and moisture.",
+                "dirtblock": "Extreme protection for heavy disc harrows. Semi-metal-semi-rubber with a forged cover plate."
             },
             "table3": {
                 "title": "Table 3: Dimensional Sizes and Applications of the Bearing Unit for Packer Roller",
-                "desc": ""
+                "desc": "",
+                "col_brand": "Brand Analogs",
+                "col_oem": "OEM Equipment Numbers",
+                "col_app": "Application"
             },
             "table4": {
                 "title": "Table 4: Dimensional Sizes of the Bearing Unit for Gaspardo Equipment",

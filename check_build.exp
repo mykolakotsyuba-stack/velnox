@@ -1,0 +1,11 @@
+#!/usr/bin/expect -f
+
+set timeout 300
+spawn ssh user@mail.irbis.ua "cd /srv/projects/velnox/frontend && npm run build"
+expect {
+    "password:" {
+        send "12345678\r"
+        exp_continue
+    }
+    eof
+}
