@@ -296,13 +296,13 @@
             "block1": {
                 "title": "Engineering Department & OEM Projects",
                 "desc": "Unit calculation, working with specifications and drawings.",
-                "phone": "+38 (0XX) XXX-XX-XX",
+                "phone": "+48426403050",
                 "email": "engineering@velnox.com"
             },
             "block2": {
                 "title": "Distribution & Wholesale Sales",
                 "desc": "Partnership conditions, price lists, availability.",
-                "phone": "+38 (0XX) XXX-XX-XX",
+                "phone": "+48426403050",
                 "email": "sales@velnox.com"
             },
             "block3": {
@@ -318,7 +318,7 @@
             "email": "E-MAIL",
             "email_ph": "name@company.com",
             "phone": "PHONE",
-            "phone_ph": "+380...",
+            "phone_ph": "+48...",
             "company": "COMPANY / EQUIPMENT TYPE",
             "company_ph": "Seeder manufacturer / Parts distributor",
             "message": "YOUR REQUEST",

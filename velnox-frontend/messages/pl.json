@@ -671,13 +671,13 @@
             "block1": {
                 "title": "Dział techniczny i projekty OEM",
                 "desc": "Obliczenia węzłów, praca ze specyfikacjami i rysunkami.",
-                "phone": "+38 (0XX) XXX-XX-XX",
+                "phone": "+48426403050",
                 "email": "engineering@velnox.com"
             },
             "block2": {
                 "title": "Dystrybucja i sprzedaż hurtowa",
                 "desc": "Warunki współpracy, cenniki, dostępność.",
-                "phone": "+38 (0XX) XXX-XX-XX",
+                "phone": "+48426403050",
                 "email": "sales@velnox.com"
             },
             "block3": {
@@ -699,7 +699,7 @@
             "email": "E-MAIL",
             "email_ph": "name@company.com",
             "phone": "TELEFON",
-            "phone_ph": "+380...",
+            "phone_ph": "+48...",
             "company": "FIRMA / TYP MASZYNY",
             "company_ph": "Producent siewników / Dystrybutor części",
             "message": "TWOJE ZAPYTANIE",

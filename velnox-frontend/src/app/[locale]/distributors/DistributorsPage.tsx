@@ -115,7 +115,6 @@ export function DistributorsPage() {
     const [showModal, setShowModal] = useState(false);
     const heroRef = useInView(0.05);
     const gridRef = useInView(0.08);
-    const ctaRef = useInView(0.15);
 
     const count5 = useCountUp(5, 1400, heroRef.inView);
     const count2 = useCountUp(2, 1000, heroRef.inView);
@@ -223,129 +222,10 @@ export function DistributorsPage() {
                 </div>
             </section>
 
-            {/* ══ CTA / VENDOR REQUIREMENTS ══ */}
-            <section className={styles.cta} ref={ctaRef.ref as React.RefObject<HTMLElement>}>
-                <div className={styles.ctaBg} aria-hidden />
-                {/* decorative diagonal lines */}
-                <div className={styles.ctaDiag} aria-hidden />
-                <div className={`${styles.ctaInner} ${ctaRef.inView ? styles.ctaVisible : ''}`}>
-                    <div className={styles.ctaLeft}>
-                        <span className={styles.sectionTag}>{t('cta.tag')}</span>
-                        <h2 className={styles.ctaTitle}>{t('cta.title')}</h2>
-                        <p className={styles.ctaDesc}>{t('cta.desc')}</p>
 
-                        <ul className={styles.reqList}>
-                            {[t('cta.req1'), t('cta.req2'), t('cta.req3')].map((req, i) => (
-                                <li key={i} className={styles.reqItem}
-                                    style={{ transitionDelay: ctaRef.inView ? `${0.1 + i * 0.12}s` : '0s' }}>
-                                    <span className={styles.reqCheck}>
-                                        <svg viewBox="0 0 16 16" width="12" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M3 8l4 4 6-7" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                    </span>
-                                    {req}
-                                </li>
-                            ))}
-                        </ul>
-
-                        <button className={styles.applyBtn} onClick={() => setShowModal(true)}>
-                            <span>{t('cta.btn')}</span>
-                            <svg viewBox="0 0 20 20" fill="none" width="16">
-                                <path d="M4 10h12M11 5l5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    {/* Criteria cards — industrial SVG icons */}
-                    <div className={styles.criteriaGrid}>
-                        {([
-                            {
-                                key: 'criteria1',
-                                num: 'TOP',
-                                unit: 'brand',
-                                icon: (
-                                    <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M20 4l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" />
-                                        <circle cx="20" cy="20" r="16" strokeDasharray="4 3" opacity="0.3" />
-                                    </svg>
-                                )
-                            },
-                            {
-                                key: 'criteria2',
-                                num: 'ADS',
-                                unit: 'support',
-                                icon: (
-                                    <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M4 12v24h32V12l-16-8-16 8z" />
-                                        <path d="M10 20h20M10 26h20M10 32h10" opacity="0.4" />
-                                    </svg>
-                                )
-                            },
-                            {
-                                key: 'criteria3',
-                                num: 'TECH',
-                                unit: 'expert',
-                                icon: (
-                                    <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <circle cx="20" cy="20" r="8" />
-                                        <path d="M20 8v4M20 28v4M8 20h4M28 20h4M11.5 11.5l2.8 2.8M25.7 25.7l2.8 2.8M11.5 28.5l2.8-2.8M25.7 14.3l2.8-2.8" />
-                                    </svg>
-                                )
-                            },
-                            {
-                                key: 'criteria4',
-                                num: 'EDU',
-                                unit: 'cert',
-                                icon: (
-                                    <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M4 12l16-8 16 8-16 8-16-8z" />
-                                        <path d="M4 12v12c0 8.8 16 12 16 12s16-3.2 16-12V12" />
-                                        <path d="M20 20v16" opacity="0.3" />
-                                    </svg>
-                                )
-                            },
-                            {
-                                key: 'criteria5',
-                                num: 'LOG',
-                                unit: 'fast',
-                                icon: (
-                                    <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <rect x="4" y="20" width="22" height="14" rx="2" />
-                                        <path d="M26 26h6l4-6H26" />
-                                        <circle cx="10" cy="36" r="3" />
-                                        <circle cx="28" cy="36" r="3" />
-                                        <path d="M4 24V16a2 2 0 012-2h12l4 8" />
-                                    </svg>
-                                )
-                            },
-                            {
-                                key: 'criteria6',
-                                num: 'REG',
-                                unit: 'excl',
-                                icon: (
-                                    <svg viewBox="0 0 40 40" fill="none" width="32" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <circle cx="20" cy="20" r="16" />
-                                        <path d="M12 20h16M20 12v16" opacity="0.4" />
-                                        <path d="M20 4a16 16 0 010 32M4 20a16 16 0 0132 0" opacity="0.2" />
-                                    </svg>
-                                )
-                            },
-                        ] as const).map((c, i) => (
-                            <div key={c.key} className={styles.criteriaCard}
-                                style={{ transitionDelay: ctaRef.inView ? `${i * 0.1}s` : '0s' }}>
-                                <div className={styles.criteriaIconWrap}>
-                                    {c.icon}
-                                </div>
-                                <div className={styles.criteriaStat}>
-                                    <span className={styles.criteriaNum}>{c.num}</span>
-                                    {c.unit && <span className={styles.criteriaUnit}>{c.unit}</span>}
-                                </div>
-                                <span className={styles.criteriaLabel}>{t(`cta.${c.key}`)}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+        </div>
+    );
+}
 
         </div>
     );

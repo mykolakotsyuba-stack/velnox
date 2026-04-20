@@ -473,13 +473,13 @@
             "block1": {
                 "title": "Інженерний відділ та OEM-проекти",
                 "desc": "Розрахунок вузлів, робота з ТЗ та кресленнями.",
-                "phone": "+38 (0XX) XXX-XX-XX",
+                "phone": "+48426403050",
                 "email": "engineering@velnox.com"
             },
             "block2": {
                 "title": "Дистриб'юція та гуртові продажі",
                 "desc": "Умови співпраці, прайс-листи, наявність.",
-                "phone": "+38 (0XX) XXX-XX-XX",
+                "phone": "+48426403050",
                 "email": "sales@velnox.com"
             },
             "block3": {
@@ -495,7 +495,7 @@
             "email": "E-MAIL",
             "email_ph": "name@company.com",
             "phone": "ТЕЛЕФОН",
-            "phone_ph": "+380...",
+            "phone_ph": "+48...",
             "company": "КОМПАНІЯ / ТИП ТЕХНІКИ",
             "company_ph": "Виробник сівалок / Дистриб'ютор запчастин",
             "message": "ВАШ ЗАПИТ",

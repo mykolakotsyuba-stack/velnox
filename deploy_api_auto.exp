@@ -3,7 +3,7 @@ set timeout -1
 set password "12345678"
 
 # 1. Rsync the api files
-spawn rsync -avz --exclude vendor --exclude storage/*.sqlite --exclude .git -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" velnox-api/ user@mail.irbis.ua:/srv/projects/velnox/api/
+spawn rsync -avz --exclude vendor --exclude storage/*.sqlite --exclude "database/*.sqlite" --exclude .git -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" velnox-api/ user@mail.irbis.ua:/srv/projects/velnox/api/
 expect {
     "password:" {
         send "$password\r"

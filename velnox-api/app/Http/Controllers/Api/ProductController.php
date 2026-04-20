@@ -29,10 +29,15 @@ class ProductController extends Controller
 
         // Пошук за артикулом або позначенням
         if ($search = $request->get('q')) {
-            $query->where(function ($q) use ($search) {
-                $q->where('article', 'like', "%{$search}%")
-                  ->orWhere('fkl_designation', 'like', "%{$search}%")
-                  ->orWhere('oem_cross', 'like', "%{$search}%");
+            $lower = mb_strtolower($search);
+            $query->where(function ($q) use ($search, $lower) {
+                $q->whereRaw("LOWER(article) LIKE ?", ["%{$lower}%"])
+                  ->orWhereRaw("LOWER(fkl_designation) LIKE ?", ["%{$lower}%"])
+                  ->orWhereRaw("LOWER(oem_cross) LIKE ?", ["%{$lower}%"])
+                  ->orWhereRaw("LOWER(json_extract(specs, '$.\"Cross-Reference\"')) LIKE ?", ["%{$lower}%"])
+                  ->orWhereRaw("LOWER(json_extract(specs, '$.cross_reference')) LIKE ?", ["%{$lower}%"])
+                  ->orWhereRaw("LOWER(json_extract(specs, '$.\"Bearing designation\"')) LIKE ?", ["%{$lower}%"])
+                  ->orWhereRaw("LOWER(json_extract(specs, '$.bearing_designation')) LIKE ?", ["%{$lower}%"]);
             });
         }
 
