@@ -16,6 +16,7 @@
 .tableSectionContainer {
     max-width: 98%; /* Use almost full width for tables */
     margin: 0 auto;
+}
 .noTopPadding {
     padding-top: 0 !important;
 }
