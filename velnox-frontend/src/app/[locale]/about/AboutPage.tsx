@@ -174,7 +174,7 @@ export function AboutPage({ locale }: { locale: string }) {
                         <StatCard
                             active={statsSection.inView}
                             delay="0.15s"
-                            value={400}
+                            value={13}
                             suffix={t('stats.s2_suffix')}
                             label={t('stats.s2_label')}
                             icon={
@@ -323,7 +323,7 @@ export function AboutPage({ locale }: { locale: string }) {
                 </div>
 
                 {/* ══ BLOCK E-2: QUALITY ══ */}
-                <div className={styles.sectionInner} ref={qualitySection.ref as React.RefObject<HTMLDivElement>} style={{ marginTop: '80px' }}>
+                <div className={`${styles.sectionInner} ${styles.noBottomPadding}`} ref={qualitySection.ref as React.RefObject<HTMLDivElement>} style={{ marginTop: '80px' }}>
                     <div className={`${styles.qualityLayout} ${qualitySection.inView ? styles.qualityVisible : ''}`}>
                         <div className={styles.qualityHeaderRow}>
                             <h2 className={styles.qualityTitle}>{t('quality.title')}</h2>
