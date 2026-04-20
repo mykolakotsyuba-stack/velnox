@@ -116,7 +116,7 @@ export function DistributorsPage() {
     const heroRef = useInView(0.05);
     const gridRef = useInView(0.08);
 
-    const count5 = useCountUp(5, 1400, heroRef.inView);
+    const count4 = useCountUp(4, 1400, heroRef.inView);
     const count2 = useCountUp(2, 1000, heroRef.inView);
     const count100 = useCountUp(100, 2000, heroRef.inView);
 
@@ -128,7 +128,6 @@ export function DistributorsPage() {
     const DISTRIBUTORS = [
         { name: 'TECH SOLUTIONS Sp. z o.o.', country: 'Польща', logo: 'https://nte-bearings.com/wp-content/uploads/2025/02/techsolutions-europe-logo-1462363501.png', flag: '🇵🇱', isAuthorized: true },
         { name: 'ТОВ «ТТК»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/ttk-logo-smaller.png', flag: '🇺🇦', isAuthorized: false },
-        { name: 'ПП «Промподшипник»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/prompsh-logo-bigger.png', flag: '🇺🇦', isAuthorized: false },
         { name: 'ТОВ «Промкомпонент»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/04/promcomponent-logo-small.png', flag: '🇺🇦', isAuthorized: false },
         { name: 'ТОВ «ТД ІРБІС»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/logo-irbis-new-3.png', flag: '🇺🇦', isAuthorized: false },
     ];
@@ -165,7 +164,7 @@ export function DistributorsPage() {
                         <div className={`${styles.heroStats} ${heroRef.inView ? styles.animIn : ''}`}
                             style={{ animationDelay: '0.48s' }}>
                             <div className={styles.stat}>
-                                <span className={styles.statNum}>{count5}</span>
+                                <span className={styles.statNum}>{count4}</span>
                                 <span className={styles.statLabel}>{t('hero.stat_partners')}</span>
                             </div>
                             <div className={styles.statDivider} />

@@ -24,7 +24,6 @@ function useInView(threshold = 0.12) {
 const DISTRIBUTORS = [
     { name: 'TECH SOLUTIONS Sp. z o.o.', country: 'Польща', logo: 'https://nte-bearings.com/wp-content/uploads/2025/02/techsolutions-europe-logo-1462363501.png', flag: '🇵🇱' },
     { name: 'ТОВ «ТТК»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/ttk-logo-smaller.png', flag: '🇺🇦' },
-    { name: 'ПП «Промподшипник»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/prompsh-logo-bigger.png', flag: '🇺🇦' },
     { name: 'ТОВ «Промкомпонент»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/04/promcomponent-logo-small.png', flag: '🇺🇦' },
     { name: 'ТОВ «ТД ІРБІС»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/logo-irbis-new-3.png', flag: '🇺🇦' },
 ];
