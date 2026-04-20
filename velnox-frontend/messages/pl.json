@@ -470,29 +470,48 @@
             "subtitle": "Łożyska serii specjalnej do maszyn rolniczych. Bezpośredni zamiennik jednostek OEM CLAAS, John Deere, KUHN, Gaspardo, Capello.",
             "desc": "Seria 17262 i inne — łożyska rolnicze o zwiększonych tolerancjach pierścienia wewnętrznego, zaprojektowane do pracy w siewnikach, hederach i agregatach talerzowych w warunkach pyłu ściernego i wilgoci."
         },
-        "block1": {
-            "title": "Dlaczego producenci OEM wybierają łożyska agro VELNOX?",
-            "card1_title": "Uszczelnienia agro 2RS1",
-            "card1_desc": "Podwójne uszczelnienia kontaktowe z obu stron. Ochrona przed pyłem, brudem i wilgocią.",
-            "card2_title": "OEM Cross-Reference",
-            "card2_desc": "Bezpośredni zamiennik łożysk CLAAS, JD, KUHN, Capello, Gaspardo, MF, NH bez zmian konstrukcyjnych.",
-            "card3_title": "Rozszerzony otwór d1",
-            "card3_desc": "Specjalne wykonanie z rozszerzonym otworem pierścienia wewnętrznego — cecha serii 1726 dla zastosowań rolniczych."
-        },
         "block2": {
             "title": "Specyfikacje techniczne i parametry łożysk",
             "intro": "Katalog techniczny VELNOX do doboru łożysk agro serii 1726. Pełne parametry i referencje OEM.",
             "search_placeholder": "Szukaj po numerze katalogowym, wymiarze lub referencji OEM...",
             "btn_request": "Zapytanie",
             "table1": {
+                "title": "Tabela 1: Wymiary gabarytowe łożysk do maszyn żniwnych",
+                "desc": ""
+            },
             "table2": {
-                "title": "Tabela 2: DHU 1½R209 VX — Okrągły otwór, brony tarczowe",
-                "desc": "Jednostki kołnierzowe do bron tarczowych z okrągłym otworem. Zamiennik JD, KUHN, KRAUSE, Great Plains."
+                "title": "Tabela 2: Wymiary gabarytowe łożysk do bron talerzowych",
+                "desc": ""
             },
             "table3": {
-                "title": "Tabela 3: DHU 1¼S209 VX — Kwadratowy otwór",
-                "desc": "Jednostki z kwadratowym otworem do agregatów tarczowych. Zamiennik KUHN, KRAUSE, CASE, Sunflower."
+                "title": "Tabela 3: Wymiary gabarytowe zespołu łożyskowego z otworem kwadratowym do bron talerzowych KRAUSE",
+                "desc": ""
             }
+        },
+        "special": {
+            "tagline": "SPECJALNE ŁOŻYSKA ROLNICZE",
+            "title": "Zaprojektowane do pracy w błocie, pod obciążeniami ударними i przy niewspółosiowościach.",
+            "lead": "",
+            "desc": "VELNOX Special Agro Bearings zostały zaprojektowane do najbardziej wymagających zastosowań rolniczych — systemów uprawy roli, bron talerzowych i ciężkich maszyn. Przeznaczone do środowisk, w których kurz, błoto i obciążenia ударні są stałe, а nie przypadkowe.",
+            "feature1_title": "Wydłużona Żywotność",
+            "feature1_list": [
+                "Wzmocniony wielowargowy system uszczelnień",
+                "Zoptymalizowana geometria dla obciążeń dynamicznych",
+                "Wysokoprecyzyjne bieżnie"
+            ],
+            "feature2_title": "Wzmocniona Konstrukcja Obudowy",
+            "feature2_list": [
+                "Obudowa ze stali o wysokiej wytrzymałości",
+                "Stabilność wymiarowa pod obciążeniami ударними",
+                "Wzmocnione strefy montażowe dla trudnych warunków"
+            ],
+            "feature3_title": "Potwierdzona Skuteczność",
+            "feature3_list": [
+                "Zaprojektowane do pracy przy niewspółosiowościach",
+                "Odporne на gnojowicę, glebę i silne zanieczyszczenia",
+                "Stabilna praca przy obciążeniach promieniowych i osiowych"
+            ],
+            "btn_select": "Dobierz według Wymiarów"
         },
         "app1": {
             "title": "Standardowe łożyska agro serii 1726",
