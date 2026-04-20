@@ -21,7 +21,7 @@
                 "tag": "SEGMENT AGRO",
                 "title": "Uszczelnienia kasetowe dla maszyn rolniczych.",
                 "body": "Maksymalna ochrona przed ściernym pyłem i wilgocią. Wielowarstwowe uszczelnienie labiryntowe w korpusie piasty zachowuje resurs węzła nawet w ekstremalnych warunkach polowych.",
-                "spec": "Seria LEFG — bezobsługowe węzły do pracy w terenie",
+                "spec": "",
                 "cta1": "Węzły do siewników",
                 "cta2": "Zapytanie o obliczenia"
             },
@@ -96,7 +96,7 @@
                     "value": "100",
                     "unit": "%",
                     "title": "Kompatybilność geometryczna",
-                    "desc": "Dokładne dopasowanie do punktów montażowych producentów OEM (instalacja Plug & Play)."
+                    "desc": "Dokładne dopasowanie do punktów montażowych producentów OEM."
                 },
                 "resource": {
                     "value": "2000",

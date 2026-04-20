@@ -21,7 +21,7 @@
                 "tag": "AGRO SEGMENT",
                 "title": "Cassette seals for agricultural machinery.",
                 "body": "Maximum protection from abrasive dust and moisture. Multi-layer labyrinth sealing in the hub body preserves assembly life even under extreme field conditions.",
-                "spec": "LEFG series — maintenance-free units for field conditions",
+                "spec": "",
                 "cta1": "Seeder Units",
                 "cta2": "Request Calculation"
             },
@@ -96,7 +96,7 @@
                     "value": "100",
                     "unit": "%",
                     "title": "Interchangeability",
-                    "desc": "Exact match with OEM manufacturer mounting points (Plug & Play installation)."
+                    "desc": "Exact match with OEM manufacturer mounting points."
                 },
                 "resource": {
                     "value": "2000",

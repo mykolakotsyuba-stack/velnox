@@ -128,12 +128,14 @@ export function ProductSlider({ locale }: { locale: string }) {
                     <h2 className={styles.slideTitle}>{slide.title}</h2>
                     <p className={styles.slideBody}>{slide.body}</p>
 
-                    <div className={styles.slideSpec}>
-                        <svg viewBox="0 0 16 16" width="14" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <circle cx="8" cy="8" r="6" /><path d="M8 5v4l2.5 2.5" strokeLinecap="round" />
-                        </svg>
-                        {slide.spec}
-                    </div>
+                    {slide.spec && (
+                        <div className={styles.slideSpec}>
+                            <svg viewBox="0 0 16 16" width="14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <circle cx="8" cy="8" r="6" /><path d="M8 5v4l2.5 2.5" strokeLinecap="round" />
+                            </svg>
+                            {slide.spec}
+                        </div>
+                    )}
 
                     <div className={styles.slideActions}>
                         <Link href={slide.link1} className={styles.slideBtn}>
