@@ -13,7 +13,8 @@ export async function apiFetch<T>(
     path: string,
     { params, ...options }: FetchOptions = {}
 ): Promise<T> {
-    const url = new URL(`${API_BASE}${path}`);
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+    const url = new URL(`${API_BASE}${path}`, baseUrl || undefined);
 
     if (params) {
         Object.entries(params).forEach(([key, value]) => {

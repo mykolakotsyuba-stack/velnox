@@ -34,7 +34,7 @@ export function CustomForm({ locale }: { locale: string }) {
     // Handle search fetch
     useEffect(() => {
         const fetchProducts = async () => {
-            if (searchQuery.length < 2) {
+            if (searchQuery.length < 1) {
                 setSearchResults([]);
                 return;
             }
@@ -90,7 +90,7 @@ export function CustomForm({ locale }: { locale: string }) {
     };
 
     const findMatchedOem = (product: Product, query: string) => {
-        if (!query || query.length < 2) return null;
+        if (!query || query.length < 1) return null;
         const q = query.toLowerCase();
         return product.oem_cross.find(oem => oem.toLowerCase().includes(q));
     };
@@ -143,7 +143,11 @@ export function CustomForm({ locale }: { locale: string }) {
                                                 setSearchQuery(e.target.value);
                                                 setShowResults(true);
                                             }}
-                                            onFocus={() => setShowResults(true)}
+                                            onFocus={() => {
+                                                if (searchQuery.length >= 1) {
+                                                    setShowResults(true);
+                                                }
+                                            }}
                                             style={{ paddingLeft: '40px' }}
                                         />
                                         <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }} />
@@ -156,9 +160,14 @@ export function CustomForm({ locale }: { locale: string }) {
                                                 <CloseIcon size={16} />
                                             </button>
                                         )}
+                                        {isSearching && (
+                                            <div className={styles.spinner} style={{ position: 'absolute', right: selectedProduct ? '40px' : '14px', top: '50%', transform: 'translateY(-50%)' }}>
+                                                ...
+                                            </div>
+                                        )}
                                     </div>
 
-                                    {showResults && (searchQuery.length >= 2 || isSearching) && (
+                                    {showResults && (searchQuery.length >= 1 || isSearching) && (
                                         <div className={styles.comboboxResults}>
                                             {isSearching ? (
                                                 <div className={styles.comboboxLoading}>...</div>
