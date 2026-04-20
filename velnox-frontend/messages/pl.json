@@ -466,9 +466,9 @@
     },
     "agroPage": {
         "hero": {
-            "title": "Łożyska agro VELNOX. Seria 1726.",
-            "subtitle": "Łożyska specjalnej serii do maszyn rolniczych. Bezpośredni zamiennik OEM dla CLAAS, John Deere, KUHN, Gaspardo, Capello.",
-            "desc": "Seria 1726 — łożyska rolnicze z rozszerzonym tolerancją pierścienia wewnętrznego, przeznaczone do siewników, kombajnów i agregatów tarczowych."
+            "title": "Łożyska Agro VELNOX. Seria 17262",
+            "subtitle": "Łożyska serii specjalnej do maszyn rolniczych. Bezpośredni zamiennik jednostek OEM CLAAS, John Deere, KUHN, Gaspardo, Capello.",
+            "desc": "Seria 17262 i inne — łożyska rolnicze o zwiększonych tolerancjach pierścienia wewnętrznego, zaprojektowane do pracy w siewnikach, hederach i agregatach talerzowych w warunkach pyłu ściernego i wilgoci."
         },
         "block1": {
             "title": "Dlaczego producenci OEM wybierają łożyska agro VELNOX?",
@@ -485,9 +485,6 @@
             "search_placeholder": "Szukaj po numerze katalogowym, wymiarze lub referencji OEM...",
             "btn_request": "Zapytanie",
             "table1": {
-                "title": "Tabela 1: Łożyska rolnicze seria 1726 (2RS1)",
-                "desc": "Łożyska dwustronnie uszczelnione do siewników, kombajnów i agregatów tarczowych CLAAS, John Deere, KUHN."
-            },
             "table2": {
                 "title": "Tabela 2: DHU 1½R209 VX — Okrągły otwór, brony tarczowe",
                 "desc": "Jednostki kołnierzowe do bron tarczowych z okrągłym otworem. Zamiennik JD, KUHN, KRAUSE, Great Plains."

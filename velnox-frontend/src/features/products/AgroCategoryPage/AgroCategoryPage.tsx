@@ -431,62 +431,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── 3 CARDS ── */}
-            <section className={styles.approach} ref={approachRef.ref}>
-                <div className={approachRef.inView ? `${styles.container} ${styles.animIn}` : styles.container}>
-                    <h2 className={styles.sectionTitle}>{t('agroPage.block1.title')}</h2>
-                    <div className={styles.featureGrid}>
-                        {[1, 2, 3].map((i) => (
-                            <div key={i} className={styles.featureCard}>
-                                <div className={styles.featureIcon}>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                        {i === 1 && <path d="M12 2l8 4v5c0 5.55-3.84 10.74-9 12-5.16-1.26-9-6.45-9-12V6l8-4z" />}
-                                        {i === 2 && <><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></>}
-                                        {i === 3 && <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m2.54 2.54l4.24 4.24M1 12h6m6 0h6m-17.78 7.78l4.24-4.24m2.54-2.54l4.24-4.24" />}
-                                    </svg>
-                                </div>
-                                <h3>{t(`agroPage.block1.card${i}_title`)}</h3>
-                                <p>{t(`agroPage.block1.card${i}_desc`)}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
-            {/* ── APP BLOCK 1: Blueprint Style ── */}
-            <section ref={app1Ref.ref} className={`${styles.blueprintBlock} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
-                 <Image
-                    src="/velnox/images/agro/blueprint-bg-1.png"
-                    alt="Agro Bearings"
-                    fill
-                    priority
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                />
-                <div className={styles.blueprintDarkOverlay} />
-                
-                <div className={styles.blueprintLayout}>
-                    {/* LEFT: Text */}
-                    <div className={styles.blueprintText}>
-                        <span className={styles.blueprintTag}>
-                            <span className={styles.blueprintTagLine} />
-                            AGRO BEARINGS
-                        </span>
-                        <h2 className={styles.blueprintTitle}>{t('agroPage.app1.title')}</h2>
-                        <p className={styles.blueprintLead}>{t('agroPage.app1.desc')}</p>
-                        
-                        <div className={styles.blueprintMeta}>
-                            <div className={styles.blueprintMetaItem}>
-                                <span className={styles.blueprintMetaLabel}>Сфера застосування</span>
-                                <span className={styles.blueprintMetaValue}>{t('agroPage.app1.applications')}</span>
-                            </div>
-                            <div className={styles.blueprintMetaItem}>
-                                <span className={styles.blueprintMetaLabel}>OEM-фокус</span>
-                                <span className={styles.blueprintMetaValue}>{t('agroPage.app1.oem_focus')}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* ── STICKY SEARCH ── */}
             <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
@@ -612,11 +557,11 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
 
                 {/* Top hero text */}
                 <div className={styles.specialHero}>
-                    <span className={styles.specialTagline}>СПЕЦІАЛЬНІ АГРОПІДШИПНИКИ</span>
-                    <h2 className={styles.specialTitle}>Створені для екстремальної роботи<br />в аграрних умовах</h2>
-                    <p className={styles.specialLead}>Розроблені для роботи в умовах бруду, ударних навантажень та перекосів.</p>
+                    <span className={styles.specialTagline}>{t('agroPage.special.tagline')}</span>
+                    <h2 className={styles.specialTitle}>{t('agroPage.special.title')}</h2>
+                    <p className={styles.specialLead}>{t('agroPage.special.lead')}</p>
                     <p className={styles.specialDesc}>
-                        VELNOX Special Agro Bearings розроблені для найвимогливіших аграрних застосувань — прикочувальні котки, системи обробітку ґрунту, дискові борони та важка техніка. Призначені для середовищ, де пил, бруд і ударні навантаження є постійними, а не випадковими.
+                        {t('agroPage.special.desc')}
                     </p>
                 </div>
 
@@ -631,11 +576,11 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <circle cx="12" cy="11" r="3" />
                             </svg>
                         </div>
-                        <h3 className={styles.featureTitle}>Подовжений термін служби</h3>
+                        <h3 className={styles.featureTitle}>{t('agroPage.special.feature1_title')}</h3>
                         <ul className={styles.featureList}>
-                            <li>Посилена багатокромкова система ущільнення</li>
-                            <li>Оптимізована геометрія для динамічних навантажень</li>
-                            <li>Високоточні доріжки кочення</li>
+                            {(t.raw('agroPage.special.feature1_list') as string[]).map((li, idx) => (
+                                <li key={idx}>{li}</li>
+                            ))}
                         </ul>
                     </div>
 
@@ -647,11 +592,11 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <path d="M3 9h18M9 21V9" />
                             </svg>
                         </div>
-                        <h3 className={styles.featureTitle}>Посилена конструкція корпусу</h3>
+                        <h3 className={styles.featureTitle}>{t('agroPage.special.feature2_title')}</h3>
                         <ul className={styles.featureList}>
-                            <li>Корпус із високоміцної сталі</li>
-                            <li>Розмірна стабільність під ударними навантаженнями</li>
-                            <li>Посилені монтажні зони для важких умов</li>
+                            {(t.raw('agroPage.special.feature2_list') as string[]).map((li, idx) => (
+                                <li key={idx}>{li}</li>
+                            ))}
                         </ul>
                     </div>
 
@@ -663,11 +608,11 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                                 <polyline points="22 4 12 14.01 9 11.01" />
                             </svg>
                         </div>
-                        <h3 className={styles.featureTitle}>Підтверджена ефективність</h3>
+                        <h3 className={styles.featureTitle}>{t('agroPage.special.feature3_title')}</h3>
                         <ul className={styles.featureList}>
-                            <li>Розроблені для роботи при перекосах</li>
-                            <li>Стійкі до гноївки, ґрунту та грубих забруднень</li>
-                            <li>Стабільна робота при радіальних та осьових навантаженнях</li>
+                            {(t.raw('agroPage.special.feature3_list') as string[]).map((li, idx) => (
+                                <li key={idx}>{li}</li>
+                            ))}
                         </ul>
                     </div>
 
@@ -679,7 +624,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12 19.79 19.79 0 0 1 1.06 3.38 2 2 0 0 1 3.04 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
                         </svg>
-                        Підібрати за розмірами
+                        {t('agroPage.special.btn_select')}
                     </button>
                 </div>
             </section>

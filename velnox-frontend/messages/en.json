@@ -514,9 +514,9 @@
     },
     "agroPage": {
         "hero": {
-            "title": "VELNOX Agro Bearings. Series 1726.",
-            "subtitle": "Special series bearings for agricultural machinery. Direct OEM replacement for CLAAS, John Deere, KUHN, Gaspardo, Capello.",
-            "desc": "Series 1726 — agricultural bearings with extended inner ring tolerances, designed for seeders, headers and disc units in abrasive dust and moisture conditions."
+            "title": "VELNOX Agro Bearings. 17262 Series",
+            "subtitle": "Special series bearings for agricultural machinery. Direct replacement for CLAAS, John Deere, KUHN, Gaspardo, Capello OEM units.",
+            "desc": "17262 Series and others — agro bearings with increased inner ring tolerances, designed for seeders, headers, and disc implements in abrasive dust and moist conditions."
         },
         "block1": {
             "title": "Why OEM manufacturers choose VELNOX agro bearings?",
@@ -531,19 +531,43 @@
             "title": "Technical specifications and bearing parameters",
             "intro": "VELNOX technical reference for selecting Series 1726 agro bearings. Full parameters and OEM cross-references.",
             "search_placeholder": "Search by part number, size or OEM reference...",
-            "btn_request": "Request",
             "table1": {
-                "title": "Table 1: Agricultural bearings series 1726 (2RS1)",
-                "desc": "Double-sealed bearings for seeders, headers and disc units from CLAAS, John Deere, KUHN and other OEM manufacturers."
+                "title": "Table 1: Dimensional sizes of bearings for grain harvesting machinery",
+                "desc": ""
             },
             "table2": {
-                "title": "Table 2: DHU 1½R209 VX — Round bore, disc harrows",
-                "desc": "Flanged units for disc harrows with round bore. Direct replacement for JD, KUHN, KRAUSE, Great Plains."
+                "title": "Table 2: Dimensional sizes of bearings for disc harrows",
+                "desc": ""
             },
             "table3": {
-                "title": "Table 3: DHU 1¼S209 VX — Square bore",
-                "desc": "Square bore units for disc harrow assemblies. Replacement for KUHN, KRAUSE, CASE, Sunflower."
+                "title": "Table 3: Dimensional sizes of the bearing unit with a square bore for KRAUSE disc harrows",
+                "desc": ""
             }
+        },
+        "special": {
+            "tagline": "SPECIAL AGRO BEARINGS",
+            "title": "Engineered for operation in mud, shock loads, and misalignments.",
+            "lead": "",
+            "desc": "VELNOX Special Agro Bearings are designed for the most demanding agricultural applications — tillage systems, disc harrows, and heavy machinery. Intended for environments where dust, mud, and shock loads are constant, not incidental.",
+            "feature1_title": "Extended Service Life",
+            "feature1_list": [
+                "Reinforced multi-lip sealing system",
+                "Optimized geometry for dynamic loads",
+                "High-precision raceways"
+            ],
+            "feature2_title": "Reinforced Housing Design",
+            "feature2_list": [
+                "High-strength steel housing",
+                "Dimensional stability under shock loads",
+                "Reinforced mounting zones for heavy conditions"
+            ],
+            "feature3_title": "Proven Effectiveness",
+            "feature3_list": [
+                "Designed for operation under misalignments",
+                "Resistant to manure, soil, and gross contamination",
+                "Stable operation under radial and axial loads"
+            ],
+            "btn_select": "Select by Dimensions"
         },
         "app1": {
             "title": "Standard agro bearings series 1726",
