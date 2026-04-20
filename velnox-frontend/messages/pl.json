@@ -340,23 +340,6 @@
         },
         "block2": {
             "title": "Specyfikacje techniczne i parametry zespołów",
-            "intro": "Przewodnik techniczny VELNOX został stworzony do szybkiej pracy konstruktorów i zaopatrzeniowców. Poniżej znajdują się tabele podsumowujące parametry dla dokładnego doboru zespołów do Twoich zadań.",
-            "search_placeholder": "Szukaj po oznaczeniu lub wymiarze...",
-            "table1": {
-                "title": "Tabela 1: Wymiary gabarytowe i montażowe (Dimensional Specifications)",
-                "desc": "",
-                "col_designation": "Oznaczenie (Designation)",
-                "col_d": "Średnica wewnętrzna (d, mm)",
-                "col_j": "Rozstaw otworów (J, mm)",
-                "col_width": "Całkowita szerokość oprawy (A, A1, A2, mm)",
-                "col_holes": "Otwory/Gwinty (N, H/T)",
-                "col_l": "Całkowita długość (L, mm)"
-            },
-            "table2": {
-                "title": "Tabela 2: Charakterystyka eksploatacyjna (Performance & Load Ratings)",
-                "desc": "",
-                "col_cdyn": "Dynamiczna (Cdyn, kN)",
-                "col_co": "Statyczna (Co, kN)",
             "intro": "Przewodnik techniczny VELNOX został stworzony do szybkiej pracy projektantów i działów zakupów. Poniżej znajdują się tabele parametrów umożliwiające dokładny dobór zespołu do konkretnych zadań.",
             "search_placeholder": "Szukaj według oznaczenia lub rozmiaru...",
             "table1": {
