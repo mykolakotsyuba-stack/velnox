@@ -1,0 +1,7 @@
+#!/usr/bin/expect -f
+set password "12345678"
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@mail.irbis.ua
+expect "password:" { send "$password\r" }
+expect "$ " { send "grep 'production.ERROR' /srv/projects/velnox/api/storage/logs/laravel.log | tail -n 5\r" }
+expect "$ " { send "exit\r" }
+expect eof

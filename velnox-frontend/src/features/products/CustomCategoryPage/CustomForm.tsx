@@ -4,15 +4,17 @@ import { useTranslations } from 'next-intl';
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './custom.module.css';
 import Image from 'next/image';
-import { Search, Upload, X as CloseIcon, FileText } from 'lucide-react';
+import { Search, Upload, X as CloseIcon, FileText, ExternalLink } from 'lucide-react';
 
 interface Product {
     article: string;
     name: string;
     slug: string;
+    category_id: string;
+    oem_cross: string[];
 }
 
-export function CustomForm() {
+export function CustomForm({ locale }: { locale: string }) {
     const t = useTranslations('oemPage.form');
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
     
@@ -79,6 +81,12 @@ export function CustomForm() {
         setStatus('submitting');
         // Mock process
         setTimeout(() => setStatus('success'), 1200);
+    };
+
+    const findMatchedOem = (product: Product, query: string) => {
+        if (!query || query.length < 2) return null;
+        const q = query.toLowerCase();
+        return product.oem_cross.find(oem => oem.toLowerCase().includes(q));
     };
 
     if (status === 'success') {
@@ -149,19 +157,41 @@ export function CustomForm() {
                                             {isSearching ? (
                                                 <div className={styles.comboboxLoading}>...</div>
                                             ) : searchResults.length > 0 ? (
-                                                searchResults.map((p) => (
-                                                    <div 
-                                                        key={p.slug} 
-                                                        className={styles.comboboxItem}
-                                                        onClick={() => {
-                                                            setSelectedProduct(p);
-                                                            setShowResults(false);
-                                                        }}
-                                                    >
-                                                        <span className={styles.comboboxItemTitle}>{p.article}</span>
-                                                        <span className={styles.comboboxItemSub}>{p.name}</span>
-                                                    </div>
-                                                ))
+                                                searchResults.map((p) => {
+                                                    const matchedOem = findMatchedOem(p, searchQuery);
+                                                    return (
+                                                        <div 
+                                                            key={p.slug} 
+                                                            className={styles.comboboxItem}
+                                                            onClick={(e) => {
+                                                                // Only select if the click wasn't on the external link icon
+                                                                if (!(e.target as HTMLElement).closest(`.${styles.viewProductBtn}`)) {
+                                                                    setSelectedProduct(p);
+                                                                    setShowResults(false);
+                                                                }
+                                                            }}
+                                                        >
+                                                            <div className={styles.comboboxItemContent}>
+                                                                <span className={styles.comboboxItemTitle}>{p.article}</span>
+                                                                <span className={styles.comboboxItemSub}>{p.name}</span>
+                                                                {matchedOem && (
+                                                                    <span className={styles.comboboxItemOem}>OEM: {matchedOem}</span>
+                                                                )}
+                                                            </div>
+                                                            <button 
+                                                                type="button"
+                                                                className={styles.viewProductBtn}
+                                                                title="View Product"
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    window.open(`/${locale}/products/${p.category_id}/${p.slug}`, '_blank');
+                                                                }}
+                                                            >
+                                                                <ExternalLink size={16} />
+                                                            </button>
+                                                        </div>
+                                                    );
+                                                })
                                             ) : (
                                                 <div className={styles.comboboxEmpty}>Нічого не знайдено</div>
                                             )}

@@ -2,8 +2,8 @@
 set timeout -1
 set password "12345678"
 
-# 1. Rsync the API files
-spawn rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --exclude vendor --exclude .env --exclude .git velnox-api/ user@mail.irbis.ua:/srv/projects/velnox/api/
+# 1. Rsync the api files
+spawn rsync -avz --exclude vendor --exclude storage/*.sqlite --exclude .git -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" velnox-api/ user@mail.irbis.ua:/srv/projects/velnox/api/
 expect {
     "password:" {
         send "$password\r"
@@ -12,7 +12,7 @@ expect {
     eof
 }
 
-# 2. SSH and run migrations + restart
+# 2. SSH and restart
 spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@mail.irbis.ua
 expect {
     "password:" {
@@ -21,9 +21,7 @@ expect {
 }
 
 expect "$ "
-send "cd /srv/projects/velnox/api && php artisan migrate && php artisan cache:clear\r"
-expect "$ "
-send "echo \"12345678\" | sudo -S systemctl restart velnox-api\r"
+send "cd /srv/projects/velnox/api && echo \"12345678\" | sudo -S systemctl restart velnox-api\r"
 expect "$ "
 send "systemctl status velnox-api --no-pager\r"
 expect "$ "

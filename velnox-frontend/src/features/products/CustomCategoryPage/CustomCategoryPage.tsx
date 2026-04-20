@@ -16,7 +16,7 @@ export function CustomCategoryPage({ locale }: CustomCategoryPageProps) {
         <main className={styles.page}>
             <CustomHero />
             <CustomCapabilities />
-            <CustomForm />
+            <CustomForm locale={locale} />
         </main>
     );
 }
