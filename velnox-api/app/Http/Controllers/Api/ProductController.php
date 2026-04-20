@@ -55,11 +55,12 @@ class ProductController extends Controller
         return response()->json([
             'data' => $products->getCollection()->map(
                 fn($p) => [
-                    'slug'    => $p->slug,
-                    'article' => $p->article,
-                    'category'=> $p->category?->slug,
-                    'specs'   => $p->specs,
-                    'name'    => $p->getTranslation($locale)['product_name'] ?? $p->article,
+                    'slug'      => $p->slug,
+                    'article'   => $p->article,
+                    'category'  => $p->category?->slug,
+                    'oem_cross' => $p->oem_cross ?? [],
+                    'specs'     => $p->specs,
+                    'name'      => $p->getTranslation($locale)['product_name'] ?? $p->article,
                 ]
             ),
             'meta' => [

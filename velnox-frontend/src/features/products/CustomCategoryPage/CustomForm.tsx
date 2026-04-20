@@ -11,8 +11,9 @@ interface Product {
     article: string;
     name: string;
     slug: string;
-    category_id: string;
+    category: string;
     oem_cross: string[];
+    specs?: Record<string, string>;
 }
 
 export function CustomForm({ locale }: { locale: string }) {
@@ -44,7 +45,8 @@ export function CustomForm({ locale }: { locale: string }) {
                 const data = await apiFetch<{ data: Product[] }>('/products', {
                     params: {
                         q: searchQuery,
-                        per_page: '10'
+                        per_page: '12',
+                        locale,
                     }
                 });
                 setSearchResults(data.data || []);
@@ -89,10 +91,21 @@ export function CustomForm({ locale }: { locale: string }) {
         setTimeout(() => setStatus('success'), 1200);
     };
 
-    const findMatchedOem = (product: Product, query: string) => {
+    const findMatchedOem = (product: Product, query: string): string | null => {
         if (!query || query.length < 1) return null;
         const q = query.toLowerCase();
-        return product.oem_cross.find(oem => oem.toLowerCase().includes(q));
+        // Search oem_cross array
+        const fromOem = product.oem_cross?.find(oem => oem.toLowerCase().includes(q));
+        if (fromOem) return fromOem;
+        // Search specs Cross-Reference (KIT products)
+        const crossRef = product.specs?.['Cross-Reference'] ?? '';
+        const matchedLine = crossRef.split('\n').find(line => line.toLowerCase().includes(q));
+        if (matchedLine) return matchedLine.trim();
+        // Search specs Bearing designation
+        const bearing = product.specs?.['Bearing designation'] ?? '';
+        const matchedBearing = bearing.split('\n').find(line => line.toLowerCase().includes(q));
+        if (matchedBearing) return matchedBearing.trim();
+        return null;
     };
 
     if (status === 'success') {
@@ -199,7 +212,7 @@ export function CustomForm({ locale }: { locale: string }) {
                                                                 title="View Product"
                                                                 onClick={(e) => {
                                                                     e.stopPropagation();
-                                                                    window.open(`/${locale}/products/${p.category_id}/${p.slug}`, '_blank');
+                                                                    window.open(`/velnox/${locale}/products/${p.category}/${p.slug}`, '_blank');
                                                                 }}
                                                             >
                                                                 <ExternalLink size={16} />
