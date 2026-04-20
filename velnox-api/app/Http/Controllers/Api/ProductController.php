@@ -27,6 +27,14 @@ class ProductController extends Controller
             $query->whereHas('category', fn($q) => $q->where('slug', $category));
         }
 
+        // Пошук за артикулом або позначенням
+        if ($search = $request->get('q')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('article', 'ilike', "%{$search}%")
+                  ->orWhere('fkl_designation', 'ilike', "%{$search}%");
+            });
+        }
+
         // Фільтр по Cdyn
         if ($min = $request->get('cdyn_min')) {
             $query->whereRaw("(specs->>'Cdyn')::numeric >= ?", [$min]);

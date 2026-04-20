@@ -669,48 +669,53 @@
     "oemPage": {
         "hero": {
             "eyebrow": "OEM Solutions",
-            "title": "Development of a hub according to your specifications",
-            "desc": "We don't just offer a catalog. VELNOX starts with analyzing the loads, operating environment, and functional requirements of your specific assembly."
+            "title": "Custom Unit Development",
+            "desc": "We don’t just offer a catalog. VELNOX begins with an analysis of loads, operating environment, and functional requirements for your specific assembly. Based on this, we provide the best solution for your equipment."
         },
         "capabilities": {
             "title": "Customization Capabilities",
             "structural": {
-                "title": "Structural Elements",
-                "desc": "Adaptation of bearing unit geometry to limited space or specific mounting requirements."
+                "title": "Design Elements",
+                "desc": "Adapting the bearing assembly geometry to fit limited space or existing mounting/seat configurations."
             },
             "sealing": {
                 "title": "Sealing Systems",
-                "desc": "Selection of the optimal system (e.g., Dirtblock Seal or a combination of Plastic Cover with RS Seal) depending on the contamination level."
+                "desc": "We develop bearing seals specifically for your unique operating conditions."
             },
             "resource": {
-                "title": "Resource and Stability",
-                "desc": "Optimization of materials to ensure repeatability of parameters in serial production, which is critical for the OEM market."
+                "title": "Resource & Stability",
+                "desc": "Optimizing design solutions to ensure high price/quality standards while maintaining the required service life."
             }
         },
         "form": {
-            "title": "Engineering Inquiry Form",
-            "desc": "Provide technical parameters according to the VELNOX PL-127-G scheme.",
-            "section_contacts": "Contacts",
+            "title": "Engineering Request Form",
+            "desc": "Specify technical parameters according to the VELNOX PL-127-G identification scheme.",
+            "section_contacts": "Contact Information",
             "section_tech": "Technical Parameters (PL-127-G)",
             "section_ops": "Operating Conditions",
             "name": "Full Name",
-            "company": "Company / OEM Manufacturer",
-            "position": "Position (Design Engineer, Procurement Manager, etc.)",
+            "company": "Company Name / OEM Manufacturer",
+            "position": "Position (Design Engineer, Head of Department, etc.)",
             "email": "Contact E-mail",
             "phone": "Phone Number",
-            "d": "Bore diameter (d) or shaft diameter (mm)",
+            "base_product": "Base Product (to customize from)",
+            "base_product_ph": "Start typing article or name...",
+            "files_label": "Technical Files / Drawings",
+            "files_desc": "Select several files",
+            "remove": "Remove",
+            "d": "Inner diameter (d) or shaft diameter (mm)",
             "D": "Outer diameter (D, mm)",
-            "BC": "Inner (B) and outer (C) ring width (mm)",
-            "J": "Bolt circle diameter (J, mm)",
-            "GHT": "Thread size and type (G / H/T)",
-            "L": "Total length (L, mm)",
-            "loads": "Dynamic (C dyn) and Static (Co) Loads (kN)",
-            "rpm": "Rotational Speed (RPM)",
-            "environment": "Operating Environment (dry dust, liquid fertilizers, impacts, etc.)",
-            "resource": "Expected Resource (hours)",
-            "submit": "Submit Inquiry",
-            "success": "Your inquiry has been submitted. Our engineering department will analyze it and provide a preliminary response soon.",
-            "success_email": "Automatic confirmation sent to email."
+            "BC": "Inner (B) and Outer (C) ring width (mm)",
+            "J": "Mounting holes pitch circle (J, mm)",
+            "GHT": "Thread size and type (G / H / T)",
+            "L": "Total assembly length (L, mm)",
+            "loads": "Dynamic (C dyn) and Static (Co) loads (kN)",
+            "rpm": "Rotational speed (RPM)",
+            "environment": "Environment (dust, fertilizer, shock loads)",
+            "resource": "Expected life (hours)",
+            "submit": "Submit Request",
+            "success": "Your request has been sent. Our engineering department will process it shortly.",
+            "success_email": "An automatic confirmation has been sent to your email."
         }
     }
 }

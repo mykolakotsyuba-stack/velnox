@@ -612,49 +612,54 @@
     },
     "oemPage": {
         "hero": {
-            "eyebrow": "OEM Solutions",
-            "title": "Development of a hub according to your specifications",
-            "desc": "We don't just offer a catalog. VELNOX starts with analyzing the loads, operating environment, and functional requirements of your specific assembly."
+            "eyebrow": "Rozwiązania OEM",
+            "title": "Rozwój węzła łożyskowego na podstawie specyfikacji",
+            "desc": "Nie oferujemy tylko katalogu. VELNOX zaczyna od analizy obciążeń, środowiska pracy oraz wymagań funkcjonalnych konkretnego węzła. Na podstawie tych danych zaproponujemy najlepsze rozwiązanie dla Twojej maszyny."
         },
         "capabilities": {
-            "title": "Customization Capabilities",
+            "title": "Możliwości personalizacji",
             "structural": {
-                "title": "Structural Elements",
-                "desc": "Adaptation of bearing unit geometry to limited space or specific mounting requirements."
+                "title": "Elementy konstrukcyjne",
+                "desc": "Adaptacja geometrii zespołu łożyskowego do ograniczonej przestrzeni lub istniejącego mocowania/osadzenia."
             },
             "sealing": {
-                "title": "Sealing Systems",
-                "desc": "Selection of the optimal system (e.g., Dirtblock Seal or a combination of Plastic Cover with RS Seal) depending on the contamination level."
+                "title": "Systemy uszczelnień",
+                "desc": "Opracowujemy uszczelnienia łożysk specjalnie dla Twoich unikalnych warunków pracy."
             },
             "resource": {
-                "title": "Resource and Stability",
-                "desc": "Optimization of materials to ensure repeatability of parameters in serial production, which is critical for the OEM market."
+                "title": "Zasoby i stabilność",
+                "desc": "Optymalizacja rozwiązań konstrukcyjnych w celu zapewnienia wysokich standardów cena/jakość przy zachowaniu wymaganego okresu eksploatacji."
             }
         },
         "form": {
-            "title": "Engineering Inquiry Form",
-            "desc": "Provide technical parameters according to the VELNOX PL-127-G scheme.",
-            "section_contacts": "Contacts",
-            "section_tech": "Technical Parameters (PL-127-G)",
-            "section_ops": "Operating Conditions",
-            "name": "Full Name",
-            "company": "Company / OEM Manufacturer",
-            "position": "Position (Design Engineer, Procurement Manager, etc.)",
-            "email": "Contact E-mail",
-            "phone": "Phone Number",
-            "d": "Bore diameter (d) or shaft diameter (mm)",
-            "D": "Outer diameter (D, mm)",
-            "BC": "Inner (B) and outer (C) ring width (mm)",
-            "J": "Bolt circle diameter (J, mm)",
-            "GHT": "Thread size and type (G / H/T)",
-            "L": "Total length (L, mm)",
-            "loads": "Dynamic (C dyn) and Static (Co) Loads (kN)",
-            "rpm": "Rotational Speed (RPM)",
-            "environment": "Operating Environment (dry dust, liquid fertilizers, impacts, etc.)",
-            "resource": "Expected Resource (hours)",
-            "submit": "Submit Inquiry",
-            "success": "Your inquiry has been submitted. Our engineering department will analyze it and provide a preliminary response soon.",
-            "success_email": "Automatic confirmation sent to email."
+            "title": "Inżynieryjny formularz zapytania",
+            "desc": "Podaj parametry techniczne zgodnie ze schematem identyfikacji VELNOX PL-127-G.",
+            "section_contacts": "Informacje kontaktowe",
+            "section_tech": "Parametry techniczne (PL-127-G)",
+            "section_ops": "Warunki pracy",
+            "name": "Imię i Nazwisko",
+            "company": "Nazwa firmy / Producent OEM",
+            "position": "Stanowisko (Inżynier konstruktor, Kierownik działu itp.)",
+            "email": "E-mail kontaktowy",
+            "phone": "Numer telefonu",
+            "base_product": "Produkt bazowy (do modyfikacji)",
+            "base_product_ph": "Zacznij wpisywać artykuł lub nazwę...",
+            "files_label": "Pliki techniczne / Rysunki",
+            "files_desc": "Wybierz kilka plików",
+            "remove": "Usuń",
+            "d": "Średnica wewnętrzna (d) lub średnica wału (mm)",
+            "D": "Średnica zewnętrzna (D, mm)",
+            "BC": "Szerokość pierścienia wewnętrznego (B) i zewnętrznego (C, mm)",
+            "J": "Rozstaw otworów montażowych (J, mm)",
+            "GHT": "Rozmiar i typ gwintu (G / H / T)",
+            "L": "Całkowita długość zespołu (L, mm)",
+            "loads": "Obciążenia dynamiczne (C dyn) i statyczne (Co) (kN)",
+            "rpm": "Prędkość obrotowa (RPM)",
+            "environment": "Środowisko (pył, nawóz, obciążenia udarowe)",
+            "resource": "Oczekiwany okres eksploatacji (godziny)",
+            "submit": "Wyślij zapytanie",
+            "success": "Twoje zapytanie zostało wysłane. Nasz dział techniczny wkrótce je przeanalizuje.",
+            "success_email": "Automatyczne potwierdzenie zostało wysłane na Twój e-mail."
         }
     },
     "contacts": {
