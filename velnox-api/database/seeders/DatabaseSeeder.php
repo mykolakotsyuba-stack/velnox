@@ -462,7 +462,19 @@ class DatabaseSeeder extends Seeder
                         'sealing_desc' => 'Посилений квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори для прикочувальних котків (аналог UCF 308 / UC 308 X1) з внутрішнім діаметром d = 40 мм. Кріпильна база J = 101.5 мм, довжина корпусу L = 130 мм, різьблення H/T = M12, Cdyn = 62.3 кН, Co = 45.2 кН, Pu = 1.898 кН, маса 2.5 кг. Посилена комбінована система ущільнень (індекс -DS) забезпечує герметичний захист зони кочення від ґрунтового пилу, вологи та абразиву в умовах постійного контакту з ґрунтом. Пряма заміна SNR CE066, FKL LSQFR308 TBT.H.T., PEER W308-40MM-FDT-MF-AP-SP1 та SNR UCF308 A01X1; застосовується у прикочувальних котках AMAZONE (арт. 957305, CE066, CE078) та інших європейських ґрунтообробних агрегатів.',
                         'meta_title'   => 'VELNOX BUQ-308-2T3H-DS — вузол котка d40, AMAZONE CE066',
                         'meta_desc'    => 'Підшипниковий вузол VELNOX BUQ-308-2T3H-DS (d=40 мм, Cdyn 62.3 кН) для котків. Пряма заміна AMAZONE CE066, 957305, SNR UC 308 X1.',
-                    ]
+                    ],
+                    'en' => [
+                        'product_name'   => 'Reinforced Flanged Bearing Unit VELNOX BUQ-308-2T3H-DS',
+                        'sealing_desc' => 'Reinforced square flanged bearing unit with 4 mounting holes for packer rollers (analogous to UCF 308 / UC 308 X1). Inner diameter d = 40 mm. Mounting base J = 101.5 mm, housing length L = 130 mm, thread H/T = M12, Cdyn = 62.3 kN, Co = 45.2 kN, Pu = 1.898 kN, mass 2.5 kg. The reinforced combined sealing system (-DS index) provides hermetic protection of the rolling zone from soil dust, moisture, and abrasives under conditions of constant soil contact. Direct replacement for SNR CE066, FKL LSQFR308 TBT.H.T., PEER W308-40MM-FDT-MF-AP-SP1, and SNR UCF308 A01X1; used in AMAZONE packer rollers (art. 957305, CE066, CE078) and other European tillage equipment.',
+                        'meta_title'     => 'VELNOX BUQ-308-2T3H-DS — Roller unit d40, AMAZONE CE066',
+                        'meta_desc'      => 'Bearing unit VELNOX BUQ-308-2T3H-DS (d=40 mm, Cdyn 62.3 kN) for rollers. Direct replacement for AMAZONE CE066, 957305, SNR UC 308 X1.',
+                    ],
+                    'pl' => [
+                        'product_name'   => 'Wzmocniony węzeł łożyskowy kołnierzowy VELNOX BUQ-308-2T3H-DS',
+                        'sealing_desc' => 'Wzmocniony kwadratowy kołnierzowy zespół łożyskowy z 4 otworami montażowymi do wałów uprawowych (odpowiednik UCF 308 / UC 308 X1). Średnica wewnętrzna d = 40 mm. Baza montażowa J = 101.5 mm, długość korpusu L = 130 mm, gwint H/T = M12, Cdyn = 62.3 kN, Co = 45.2 kN, Pu = 1.898 kN, masa 2.5 kg. Wzmocniony kombinowany system uszczelnień (indeks -DS) zapewnia hermetyczną ochronę strefy toczenia przed pyłem glebowym, wilgocią i ścierniwem w warunkach stałego kontaktu z glebą. Bezpośredni zamiennik SNR CE066, FKL LSQFR308 TBT.H.T., PEER W308-40MM-FDT-MF-AP-SP1 i SNR UCF308 A01X1; stosowany w wałach AMAZONE (art. 957305, CE066, CE078) oraz innych europejskich agregatach uprawowych.',
+                        'meta_title'     => 'VELNOX BUQ-308-2T3H-DS — Węzeł wału d40, AMAZONE CE066',
+                        'meta_desc'      => 'Węzeł łożyskowy VELNOX BUQ-308-2T3H-DS (d=40 mm, Cdyn 62.3 kN) do wałów. Zamiennik AMAZONE CE066, 957305, SNR UC 308 X1.',
+                    ],
                 ],
             ]
         );
@@ -512,7 +524,19 @@ class DatabaseSeeder extends Seeder
                         'sealing_desc' => 'Квадратний фланцевий підшипниковий вузол серії 309 для прикочувальних котків з внутрішнім діаметром d = 45 мм. Кріпильна база J = 105 мм, довжина корпусу L = 137 мм, ширина внутрішнього кільця B = 51.1 мм, Cdyn = 80.8 кН, Co = 59.6 кН, Pu = 2.503 кН. Посилена герметизація — трикромкове ущільнення в парі з двокромковим з кожної сторони — забезпечує ресурс у вузлах з ударними навантаженнями та абразивним середовищем. Пряма заміна FKL LSQFR 309 2TB.H.T та вузла CJI 309 GGG+19000509; використовується у прикочувальних котках Farmet (арт. 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607, R17015300).',
                         'meta_title'   => 'VELNOX BUQ 309-2T3H — вузол котка d45, Farmet M14581 LEFG 209 TDT',
                         'meta_desc'    => 'Фланцевий вузол VELNOX BUQ 309-2T3H, d=45 мм, Cdyn 80.8 кН. Пряма заміна Farmet M14581, 4000412, FKL LEFG 209 TDT. Для котків.',
-                    ]
+                    ],
+                    'en' => [
+                        'product_name'   => 'Square Flanged Bearing Unit VELNOX BUQ 309-2T3H',
+                        'sealing_desc' => 'Square flanged 309 series bearing unit for packer rollers with inner diameter d = 45 mm. Mounting base J = 105 mm, housing length L = 137 mm, inner ring width B = 51.1 mm, Cdyn = 80.8 kN, Co = 59.6 kN, Pu = 2.503 kN. Reinforced sealing — triple-lip seal combined with a double-lip seal on each side — ensures long life in units with impact loads and abrasive environments. Direct replacement for FKL LSQFR 309 2TB.H.T and CJI 309 GGG+19000509 unit; used in Farmet packer rollers (art. 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607, R17015300).',
+                        'meta_title'     => 'VELNOX BUQ 309-2T3H — Roller unit d45, Farmet M14581',
+                        'meta_desc'      => 'Flanged unit VELNOX BUQ 309-2T3H, d=45 mm, Cdyn 80.8 kN. Direct replacement for Farmet M14581, 4000412, FKL LEFG 209 TDT.',
+                    ],
+                    'pl' => [
+                        'product_name'   => 'Kwadratowy węzeł łożyskowy kołnierzowy VELNOX BUQ 309-2T3H',
+                        'sealing_desc' => 'Kwadratowy kołnierzowy zespół łożyskowy serii 309 do wałów uprawowych o średnicy wewnętrznej d = 45 mm. Baza montażowa J = 105 mm, długość korpusu L = 137 mm, szerokość pierścienia wewnętrznego B = 51.1 mm, Cdyn = 80.8 kN, Co = 59.6 kN, Pu = 2.503 kN. Wzmocnione uszczelnienie — uszczelka trójwargowa w połączeniu z dwuwargową z każdej strony — zapewnia trwałość w zespołach narażonych na obciążenia udarowe i środowisko ścierne. Bezpośredni zamiennik FKL LSQFR 309 2TB.H.T i zespołu CJI 309 GGG+19000509; stosowany w wałach Farmet (art. 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607, R17015300).',
+                        'meta_title'     => 'VELNOX BUQ 309-2T3H — Węzeł wału d45, Farmet M14581',
+                        'meta_desc'      => 'Węzeł łożyskowy VELNOX BUQ 309-2T3H, d=45 mm, Cdyn 80.8 kN. Zamiennik Farmet M14581, 4000412, FKL LEFG 209 TDT.',
+                    ],
                 ],
             ]
         );
@@ -561,7 +585,19 @@ class DatabaseSeeder extends Seeder
                         'sealing_desc' => 'Тандемний (здвоєний) підшипниковий вузол типу Gaspardo з двома симетричними корпусними секціями (L1 = 152 мм, L2 = 150 мм) та посадковим діаметром d = 45 мм, діаметром корпусу d1 = 74 мм, масою 5.6 кг. Монтажні бази J1 = J2 = 120 мм, кріплення 4×M12×1.25 з кожного боку, висота A = 66.9 мм; конструкція розрахована на асиметричне навантаження секційних вузлів посівних і ґрунтообробних комплексів. Посилена багатокромкова система ущільнень захищає підшипник від ґрунтової вологи, насіннєвого пилу та абразиву під час постійної польової роботи. Пряма заміна OEM-вузлів Gaspardo (арт. 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300), FKL ZGKU 309 2S та RBF PN00102; застосовується у висівних секціях та прикочувальних котках техніки Gaspardo/Maschio.',
                         'meta_title'   => 'VELNOX BUCR-SG-309-S2 — тандемний вузол Gaspardo M43400468',
                         'meta_desc'    => 'Тандемний вузол VELNOX BUCR-SG-309-S2 для Gaspardo, d=45 мм, 4×M12, маса 5.6 кг. Заміна Gaspardo M43400468, 17014180, FKL ZGKU 309 2S.',
-                    ]
+                    ],
+                    'en' => [
+                        'product_name'   => 'Tandem Flanged Bearing Unit VELNOX BUCR-SG-309-S2',
+                        'sealing_desc' => 'Tandem (double) Gaspardo-type bearing unit with two symmetrical housing sections (L1 = 152 mm, L2 = 150 mm) and bore diameter d = 45 mm, housing diameter d1 = 74 mm, weight 5.6 kg. Mounting bases J1 = J2 = 120 mm, 4×M12×1.25 mounting on each side, height A = 66.9 mm; design intended for asymmetrical loads in sectional units of seeding and tillage systems. Reinforced multi-lip sealing system protects the bearing from soil moisture, seed dust, and abrasives during constant field work. Direct replacement for Gaspardo OEM units (art. 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300), FKL ZGKU 309 2S, and RBF PN00102; used in seeding sections and packer rollers of Gaspardo/Maschio machinery.',
+                        'meta_title'     => 'VELNOX BUCR-SG-309-S2 — Tandem unit Gaspardo M43400468',
+                        'meta_desc'      => 'Tandem unit VELNOX BUCR-SG-309-S2 for Gaspardo, d=45 mm, weight 5.6 kg. Replacement for Gaspardo M43400468, 17014180, FKL ZGKU 309 2S.',
+                    ],
+                    'pl' => [
+                        'product_name'   => 'Węzeł łożyskowy tandemowy VELNOX BUCR-SG-309-S2',
+                        'sealing_desc' => 'Tandemowy (podwójny) zespół łożyskowy typu Gaspardo z dwiema symetrycznymi sekcjami korpusu (L1 = 152 mm, L2 = 150 mm) i średnicą otworu d = 45 mm, średnicą obudowy d1 = 74 mm, waga 5.6 kg. Bazy montażowe J1 = J2 = 120 mm, mocowanie 4×M12×1.25 z każdej strony, wysokość A = 66.9 mm; konstrukcja przeznaczona do asymetrycznych obciążeń w jednostkach sekcyjnych systemów siewnych i uprawowych. Wzmocniony wielowargowy system uszczelnień chroni łożysko przed wilgocią glebową, pyłem nasion i ścierniwem podczas ciągłej pracy w polu. Bezpośredni zamiennik jednostek OEM Gaspardo (art. 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300), FKL ZGKU 309 2S i RBF PN00102; stosowany w sekcjach siewnych i wałach maszyn Gaspardo/Maschio.',
+                        'meta_title'     => 'VELNOX BUCR-SG-309-S2 — Węzeł tandemowy Gaspardo M43400468',
+                        'meta_desc'      => 'Węzeł tandemowy VELNOX BUCR-SG-309-S2 do Gaspardo, d=45 mm, waga 5.6 kg. Zamiennik Gaspardo M43400468, 17014180, FKL ZGKU 309 2S.',
+                    ],
                 ],
             ]
         );
@@ -606,7 +642,19 @@ class DatabaseSeeder extends Seeder
                         'sealing_desc' => 'Підшипниковий вузол у круглому фланцевому корпусі типу RCJ 35 / UC 207 X1 для ґрунтообробної техніки Lemken з внутрішнім діаметром d = 35 мм та зовнішнім діаметром корпусу D = 125 мм. Монтажна база J = 100 мм под різьблення M12, загальна ширина A = 40 мм, ширина внутрішнього кільця B = 28.3 мм, Cdyn = 25.5 кН, Co = 15.3 кН, маса 1.7 кг. Система захисту — багатокромкове ущільнення серії X3L (трикромкове контактне з базової сторони + посилене фронтальне), розраховане на ударні навантаження ґрунтообробного диска. Повний геометричний аналог Lemken 31910034 / 3199372, Opall Agri 3421370, INA/FAG F232812-0200, PEER 207XTR-R-DFC-A534 та SNR UC 207 X1; застосовується у дискових боронах Lemken серій Rubin, Heliodor, Kristall.',
                         'meta_title'   => 'VELNOX BUP 207-X3L — вузол Lemken d35, 31910034, UC 207 X1',
                         'meta_desc'    => 'Підшипниковий вузол VELNOX BUP 207-X3L для Lemken, d=35 мм, D=125 мм, Cdyn 25.5 кН. Заміна Lemken 31910034, 3199372, SNR UC 207 X1.',
-                    ]
+                    ],
+                    'en' => [
+                        'product_name'   => 'Round Flanged Bearing Unit VELNOX BUP 207-X3L',
+                        'sealing_desc' => 'Bearing unit in a round flanged housing type RCJ 35 / UC 207 X1 for Lemken tillage equipment with inner diameter d = 35 mm and outer diameter D = 125 mm. Mounting base J = 100 mm for M12 threads, overall width A = 40 mm, inner ring width B = 28.3 mm, Cdyn = 25.5 kN, Co = 15.3 kN, mass 1.7 kg. Sealing system — multi-lip X3L series (triple-lip contact on the base side + reinforced frontal), designed for impact loads of the tillage disc. Full geometric analog of Lemken 31910034 / 3199372, Opall Agri 3421370, INA/FAG F232812-0200, PEER 207XTR-R-DFC-A534, and SNR UC 207 X1; used in Lemken disc harrows Rubin, Heliodor, Kristall series.',
+                        'meta_title'     => 'VELNOX BUP 207-X3L — Lemken unit d35, 31910034, UC 207 X1',
+                        'meta_desc'      => 'Bearing unit VELNOX BUP 207-X3L for Lemken, d=35 mm, D=125 mm, Cdyn 25.5 kN. Replacement for Lemken 31910034, 3199372, SNR UC 207 X1.',
+                    ],
+                    'pl' => [
+                        'product_name'   => 'Kołnierzowy zespół łożyskowy okrągły VELNOX BUP 207-X3L',
+                        'sealing_desc' => 'Zespół łożyskowy w okrągłej obudowie kołnierzowej typu RCJ 35 / UC 207 X1 do maszyn uprawowych Lemken o średnicy wewnętrznej d = 35 mm i średnicy zewnętrznej obudowy D = 125 mm. Baza montażowa J = 100 mm pod gwint M12, szerokość całkowita A = 40 mm, szerokość pierścienia wewnętrznego B = 28.3 mm, Cdyn = 25.5 kN, Co = 15.3 kN, masa 1.7 kg. System uszczelnień — wielowargowy serii X3L (trójwargowy kontaktowy od strony bazowej + wzmocniony frontalny), zaprojektowany do obciążeń udarowych tarczy uprawowej. Pełny odpowiednik geometryczny Lemken 31910034 / 3199372, Opall Agri 3421370, INA/FAG F232812-0200, PEER 207XTR-R-DFC-A534 i SNR UC 207 X1; stosowany w bronach talerzowych Lemken serii Rubin, Heliodor, Kristall.',
+                        'meta_title'     => 'VELNOX BUP 207-X3L — Węzeł Lemken d35, 31910034, UC 207 X1',
+                        'meta_desc'      => 'Węzeł łożyskowy VELNOX BUP 207-X3L do Lemken, d=35 mm, D=125 mm, Cdyn 25.5 kN. Zamiennik Lemken 31910034, 3199372, SNR UC 207 X1.',
+                    ],
                 ],
             ]
         );
