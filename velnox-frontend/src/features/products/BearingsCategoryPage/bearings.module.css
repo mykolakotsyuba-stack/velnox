@@ -362,20 +362,7 @@
     border-bottom: 1px solid var(--color-border);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     padding: 16px 0;
-    animation: slideDownSticky 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     width: 100%;
-}
-
-@keyframes slideDownSticky {
-    from {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
 }
 
 .headerTitles {

@@ -375,19 +375,24 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
 
+    // Sticky header: використовуємо IntersectionObserver замість scroll offsetTop
+    // щоб уникнути циклу reflow (флікеру) при фіксованому позиціонуванні
     useEffect(() => {
-        const handleScroll = () => {
-            if (!searchHeaderRef.current) return;
-            const elementOffsetTop = searchHeaderRef.current.offsetTop;
-            if (window.scrollY > elementOffsetTop - 100) {
-                searchHeaderRef.current.classList.add(styles.isSticky);
-            } else {
-                searchHeaderRef.current.classList.remove(styles.isSticky);
-            }
-        };
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll();
-        return () => window.removeEventListener('scroll', handleScroll);
+        const sentinel = document.getElementById('sticky-sentinel');
+        if (!sentinel || !searchHeaderRef.current) return;
+        const obs = new IntersectionObserver(
+            ([entry]) => {
+                if (!searchHeaderRef.current) return;
+                if (!entry.isIntersecting) {
+                    searchHeaderRef.current.classList.add(styles.isSticky);
+                } else {
+                    searchHeaderRef.current.classList.remove(styles.isSticky);
+                }
+            },
+            { threshold: 0, rootMargin: '-100px 0px 0px 0px' }
+        );
+        obs.observe(sentinel);
+        return () => obs.disconnect();
     }, []);
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
@@ -468,10 +473,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             try {
                 const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
                 const [res2, res3, res4, res5] = await Promise.all([
-                    fetch(`${apiBase}/v1/products/tables/performance`),
-                    fetch(`${apiBase}/v1/products/tables/cross-references`),
-                    fetch(`${apiBase}/v1/products/tables/extended-specs`),
-                    fetch(`${apiBase}/v1/products/tables/additional-data`),
+                    fetch(`${apiBase}/v1/products/tables/bearings-t2`),
+                    fetch(`${apiBase}/v1/products/tables/bearings-t3`),
+                    fetch(`${apiBase}/v1/products/tables/bearings-t4`),
+                    fetch(`${apiBase}/v1/products/tables/bearings-t5`),
                 ]);
 
                 if (res2.ok) setTable2Data(await res2.json());
@@ -643,6 +648,9 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             <section className={styles.tablesSection} ref={tablesRef.ref}>
                 <div className={`${styles.tableSectionContainer} ${tablesRef.inView ? styles.animIn : ''}`}>
 
+                    {/* Sentinel element — коли він зникає з viewport, header стає sticky */}
+                    <div id="sticky-sentinel" style={{ height: 1, marginTop: -1 }} />
+
                     <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
                         <div className={styles.stickyContainer}>
                             <div className={styles.container}>
@@ -675,7 +683,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <div className={styles.buqDrawingCompositeSingle}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                                src="/velnox/images/schemes/buq-207-schema.svg"
+                                src="/velnox/images/products/_shared/bearings-t1/schema.webp"
                                 alt="BUQ Series Technical Drawing"
                                 style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
                             />
@@ -752,14 +760,13 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <h3>{t('block2.table2.title')}</h3>
                         <p className={styles.tableDesc}></p>
 
-                        {/* Diagram for Table 2 */}
+                        {/* Diagram for Table 2 — same file as product card */}
                         <div className={styles.tableDiagramContainer}>
-                            <Image
-                                src="/velnox/images/schemes/buq-308-schema.png"
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="/velnox/images/products/_shared/bearings-t2/schema.webp"
                                 alt="BUQ 308-2T3H-DS Technical Drawing"
-                                width={1200}
-                                height={800}
-                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }}
+                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
                                 loading="lazy"
                             />
                         </div>
@@ -827,14 +834,13 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <h3>{t('block2.table3.title')}</h3>
                         <p className={styles.tableDesc}>{t('block2.table3.desc')}</p>
 
-                        {/* Diagram for Table 3 */}
+                        {/* Diagram for Table 3 — same file as product card */}
                         <div className={styles.tableDiagramContainer}>
-                            <Image
-                                src="/velnox/images/schemes/buq-309-schema.png"
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="/velnox/images/products/_shared/bearings-t3/schema.webp"
                                 alt="BUQ 309-2T3H Technical Drawing"
-                                width={1200}
-                                height={800}
-                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }}
+                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
                                 loading="lazy"
                             />
                         </div>
@@ -901,16 +907,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     {/* ─── Grouped Technical Tables Section (Tables 4 & 5) ─── */}
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table4.title')}</h3>
-                        <div className={styles.tableDiagramContainer}>
-                            <Image
-                                src="/velnox/images/schemes/bucr-sg-309-schema.png"
-                                alt="BUCR-SG-309-S2 Technical Drawing"
-                                width={1200}
-                                height={800}
-                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }}
-                                loading="lazy"
-                            />
-                        </div>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
@@ -981,7 +977,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <h3>{t('block2.table5.title')}</h3>
                         <div className={styles.tableDiagramContainer}>
                             <Image
-                                src="/velnox/images/schemes/bup-207-schema.png"
+                                src="/velnox/images/products/_shared/bearings-t5/schema.webp"
                                 alt="BUP 207-X3L Technical Drawing"
                                 width={1200}
                                 height={800}
