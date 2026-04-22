@@ -1,18 +1,18 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
 import type { ProductDTO, Locale } from '@/entities/product/model/types';
 import { Breadcrumbs } from './blocks/Breadcrumbs';
-import { VisualBlock } from './blocks/VisualBlock';
 import { BlueprintViewer } from './blocks/BlueprintViewer';
 import { BuqBlueprintViewer } from './blocks/BuqBlueprintViewer';
-import { SealingBlock } from './blocks/SealingBlock';
 import { SpecsTable } from './blocks/SpecsTable';
 import { CrossReferences } from './blocks/CrossReferences';
 import { Installations } from './blocks/Installations';
 import { CtaBlock } from '@/widgets/CtaBlock';
 import { PhotoGallery } from './blocks/PhotoGallery';
+import { ModelBlock3D } from './blocks/VisualPanel';
+import { getProductImages, PRODUCT_3D } from './productAssets';
+import { BLUEPRINT_MAP, SCHEMA_CONFIG } from './blueprintAssets';
 import { DistributorsBlock } from '@/widgets/DistributorsBlock';
 import { ProductHeader } from './blocks/ProductHeader';
 import styles from './ProductTemplate.module.css';
@@ -48,7 +48,6 @@ function useInView(threshold = 0.1) {
 }
 
 export function ProductTemplate({ product, locale }: ProductTemplateProps) {
-    const t = useTranslations('product');
     const [hoveredSpec, setHoveredSpec] = useState<string | null>(null);
     const techSection = useInView(0.1);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -58,19 +57,15 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
     const productName = translation?.product_name ?? product.article;
     const sealingDesc = translation?.sealing_desc;
 
-    // Gallery images: BUQ series gets product-specific images, others get generic
     const isBuq = product.article.toUpperCase().startsWith('BUQ');
-    const demoImages = isBuq
-        ? [
-            '/velnox/images/products/buq-bearing-photo.png',
-            '/velnox/images/products/buq-drawing-1.png',
-            '/velnox/images/products/buq-drawing-2.png',
-            '/velnox/images/products/buq-drawing-3.png',
-          ]
-        : [
-            '/velnox/images/products/bearing-photo-1.webp',
-            '/velnox/images/products/bearing-photo-2.webp',
-          ];
+
+    const apiImages = product.images?.filter(i => i.type !== 'schema').map(i => i.path);
+    const demoImages = apiImages?.length ? apiImages : getProductImages(product.slug, product.article);
+
+    const model3d = PRODUCT_3D[product.slug];
+
+    const blueprint = (product.schema_key ? SCHEMA_CONFIG[product.schema_key] : null)
+        ?? BLUEPRINT_MAP[product.slug];
 
     return (
         <article className={styles.page}>
@@ -90,81 +85,96 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
 
                 <div className={styles.body}>
 
-                    {/* Верхній блок: Галерея та Основна інфа/Аналоги */}
-                    <div className={styles.topSection}>
-                        <aside className={styles.visual}>
-                            {/* Нова галерея замість VisualBlock */}
-                            <PhotoGallery
-                                images={demoImages}
-                                altText={product.article}
+                    {model3d ? (
+                        /* ── Layout з 3D: hero 3D → опис → [спеки | галерея+схема+CTA] ── */
+                        <>
+                            <ModelBlock3D
+                                src={model3d.file}
+                                label={productName}
+                                sizeMb={model3d.sizeMb}
+                                hero
                             />
-                        </aside>
 
-                        <div className={styles.summary}>
-                            {/* Система ущільнень залишається вгорі як важливий тех. опис */}
                             {sealingDesc && (
-                                <SealingBlock
-                                    config={translation?.sealing_config}
-                                    description={sealingDesc}
-                                    label={t('sealing')}
-                                />
+                                <p className={styles.productDesc}>{sealingDesc}</p>
                             )}
-                        </div>
-                    </div>
 
-                    {/* Нижній блок: Технічні характеристики та Креслення */}
-                    <div
-                        className={`${styles.technicalSection} ${styles.animateOnScroll} ${techSection.inView ? styles.inView : ''}`}
-                        ref={techSection.ref as React.RefObject<HTMLDivElement>}
-                    >
-                        <div className={styles.specsColumn}>
-                            {/* Зведена таблиця параметрів */}
-                            <SpecsTable
-                                specs={product.specs}
-                                hoveredSpec={hoveredSpec}
-                                onHoverSpec={setHoveredSpec}
-                            />
-
-                            {/* Аналоги перенесені сюди для видовження колонки */}
-                            {product.oem_cross?.length > 0 && (
-                                <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.2s' }}>
-                                    <CrossReferences refs={product.oem_cross} />
+                            <div
+                                className={`${styles.technicalSection} ${styles.animateOnScroll} ${techSection.inView ? styles.inView : ''}`}
+                                ref={techSection.ref as React.RefObject<HTMLDivElement>}
+                            >
+                                <div className={styles.specsColumn}>
+                                    <SpecsTable specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
+                                    {product.oem_cross?.length > 0 && (
+                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.2s' }}>
+                                            <CrossReferences refs={product.oem_cross} />
+                                        </div>
+                                    )}
+                                    {product.installations?.length > 0 && (
+                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.4s' }}>
+                                            <Installations items={product.installations} />
+                                        </div>
+                                    )}
                                 </div>
-                            )}
-
-                            {/* Застосування перенесено сюди */}
-                            {product.installations?.length > 0 && (
-                                <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.4s' }}>
-                                    <Installations items={product.installations} />
+                                <div className={styles.drawingColumn}>
+                                    <PhotoGallery images={demoImages} altText={product.article} />
+                                    {product.category_id === 'bearings' && isBuq && (
+                                        <BuqBlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={blueprint?.dimLabels} svgSrc={blueprint?.svgSrc} viewBox={blueprint?.viewBox} />
+                                    )}
+                                    {product.category_id === 'bearings' && !isBuq && (
+                                        <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
+                                    )}
+                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
+                                        <CtaBlock product={product} locale={locale} />
+                                    </div>
                                 </div>
-                            )}
-                        </div>
-
-                        <div className={styles.drawingColumn}>
-                            {/* Інтерактивне креслення */}
-                            {product.category_id === 'bearings' && isBuq && (
-                                <BuqBlueprintViewer
-                                    article={product.article}
-                                    specs={product.specs}
-                                    hoveredSpec={hoveredSpec}
-                                    onHoverSpec={setHoveredSpec}
-                                />
-                            )}
-                            {product.category_id === 'bearings' && !isBuq && (
-                                <BlueprintViewer
-                                    article={product.article}
-                                    specs={product.specs}
-                                    hoveredSpec={hoveredSpec}
-                                    onHoverSpec={setHoveredSpec}
-                                />
-                            )}
-
-                            {/* B2B Call to Action перенесено під креслення */}
-                            <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
-                                <CtaBlock product={product} locale={locale} />
                             </div>
-                        </div>
-                    </div>
+                        </>
+                    ) : (
+                        /* ── Layout без 3D: [галерея | опис] → [спеки | схема+CTA] ── */
+                        <>
+                            <div className={styles.topSection}>
+                                <aside className={styles.visual}>
+                                    <PhotoGallery images={demoImages} altText={product.article} />
+                                </aside>
+                                <div className={styles.summary}>
+                                    {sealingDesc && (
+                                        <p className={styles.productDesc}>{sealingDesc}</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div
+                                className={`${styles.technicalSection} ${styles.animateOnScroll} ${techSection.inView ? styles.inView : ''}`}
+                                ref={techSection.ref as React.RefObject<HTMLDivElement>}
+                            >
+                                <div className={styles.specsColumn}>
+                                    <SpecsTable specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
+                                    {product.oem_cross?.length > 0 && (
+                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.2s' }}>
+                                            <CrossReferences refs={product.oem_cross} />
+                                        </div>
+                                    )}
+                                    {product.installations?.length > 0 && (
+                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.4s' }}>
+                                            <Installations items={product.installations} />
+                                        </div>
+                                    )}
+                                </div>
+                                <div className={styles.drawingColumn}>
+                                    {product.category_id === 'bearings' && isBuq && (
+                                        <BuqBlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={blueprint?.dimLabels} svgSrc={blueprint?.svgSrc} viewBox={blueprint?.viewBox} />
+                                    )}
+                                    {product.category_id === 'bearings' && !isBuq && (
+                                        <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
+                                    )}
+                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
+                                        <CtaBlock product={product} locale={locale} />
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
 
                     {/*
             === ЩОБ ДОДАТИ НОВИЙ БЛОК НА ВСІ ТОВАРИ ===

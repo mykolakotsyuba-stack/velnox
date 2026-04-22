@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\NewsArticle;
 use Illuminate\Database\Seeder;
 
@@ -111,6 +112,7 @@ class DatabaseSeeder extends Seeder
         [
             'article'         => 'BUQ 206-104-2X3H',
             'fkl_designation' => 'LEFG 206-104 TDT',
+            'schema_key'      => 'buq-2xx-square',
             'category_id'     => $bearingsCategory->id,
             'specs' => [
                 'd_mm'   => 31.75,
@@ -374,6 +376,7 @@ class DatabaseSeeder extends Seeder
                 [
                     'article'         => $buq['article'],
                     'fkl_designation' => $buq['fkl'],
+                    'schema_key'      => 'buq-2xx-square',
                     'category_id'     => $bearingsCategory->id,
                     'specs'           => $buq['specs'],
                     'oem_cross'       => $buq['cross'],
@@ -405,6 +408,7 @@ class DatabaseSeeder extends Seeder
             ['slug' => 'buq-308-2t3h-ds'],
             [
                 'article'         => 'BUQ-308-2T3H-DS',
+                'schema_key'      => 'buq-308',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
                     'table_group' => 'performance',
@@ -433,6 +437,7 @@ class DatabaseSeeder extends Seeder
             ['slug' => 'buq-309-2t3h'],
             [
                 'article'         => 'BUQ 309-2T3H',
+                'schema_key'      => 'buq-309-round',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
                     'table_group' => 'cross-references',
@@ -462,6 +467,7 @@ class DatabaseSeeder extends Seeder
             ['slug' => 'bucr-sg-309-s2'],
             [
                 'article'         => 'BUCR-SG-309-S2',
+                'schema_key'      => 'bucr-sg-309',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
                     'table_group' => 'extended-specs',
@@ -494,6 +500,7 @@ class DatabaseSeeder extends Seeder
             ['slug' => 'bup-207-x3l'],
             [
                 'article'         => 'BUP 207-X3L',
+                'schema_key'      => 'bup-207',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
                     'table_group' => 'additional-data',
@@ -767,6 +774,95 @@ class DatabaseSeeder extends Seeder
             ]
         );
         
+        // ===== PRODUCT IMAGES =====
+        $productImages = [
+            'buq-207-104-2x3h' => [
+                ['path' => '/velnox/images/products/buq-207-104-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-207-104-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-207-104-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-207-104-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+            ],
+            'buq-207-106-2x3h' => [
+                ['path' => '/velnox/images/products/buq-207-106-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-207-106-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-207-106-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-207-106-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+            ],
+            'buq-207-2x3h' => [
+                ['path' => '/velnox/images/products/buq-207-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-207-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-207-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-207-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/buq-207-2x3h/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            'buq-208-108-2x3h' => [
+                ['path' => '/velnox/images/products/buq-208-108-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-208-108-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-208-108-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-208-108-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/buq-208-108-2x3h/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            'buq-208-2x3h' => [
+                ['path' => '/velnox/images/products/buq-208-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-208-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-208-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-208-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/buq-208-2x3h/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            'buq-209-2t3h' => [
+                ['path' => '/velnox/images/products/buq-209-2t3h/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-209-2t3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-209-2t3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-209-2t3h/schema.png',    'type' => 'schema', 'sort_order' => 3],
+            ],
+            'buq-210-2x3h' => [
+                ['path' => '/velnox/images/products/buq-210-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-210-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-210-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-210-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/buq-210-2x3h/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            'buq-214-2t3h' => [
+                ['path' => '/velnox/images/products/buq-214-2t3h/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-214-2t3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-214-2t3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-214-2t3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+            ],
+            'buq-308-2t3h-ds' => [
+                ['path' => '/velnox/images/products/buq-308-2t3h-ds/main.png',   'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-308-2t3h-ds/schema.png', 'type' => 'schema', 'sort_order' => 1],
+            ],
+            'buq-309-2t3h' => [
+                ['path' => '/velnox/images/products/buq-309-2t3h/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-309-2t3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-309-2t3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-309-2t3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/buq-309-2t3h/drawing-4.png', 'type' => 'render', 'sort_order' => 4],
+                ['path' => '/velnox/images/products/buq-309-2t3h/schema.png',    'type' => 'schema', 'sort_order' => 5],
+            ],
+            'bucr-sg-309-s2' => [
+                ['path' => '/velnox/images/products/bucr-sg-309-s2/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/bucr-sg-309-s2/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/bucr-sg-309-s2/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/bucr-sg-309-s2/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/bucr-sg-309-s2/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            'bup-207-x3l' => [
+                ['path' => '/velnox/images/products/bup-207-x3l/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/bup-207-x3l/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/bup-207-x3l/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/bup-207-x3l/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/bup-207-x3l/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+        ];
+
+        foreach ($productImages as $slug => $images) {
+            ProductImage::where('product_slug', $slug)->delete();
+            foreach ($images as $img) {
+                ProductImage::create(array_merge(['product_slug' => $slug], $img));
+            }
+        }
+
         $this->call(KitTableSeeder::class);
 
         // ===== KIT spec overrides — додаткові розміри після CSV-імпорту =====

@@ -29,6 +29,12 @@ export interface ProductTranslations {
     [locale: string]: ProductTranslation | undefined;
 }
 
+export interface ProductImage {
+    path: string;
+    type: 'render' | 'photo' | 'schema';
+    sort_order: number;
+}
+
 /** Повна картка товару (відповідь /api/v1/products/{slug}) */
 export interface ProductDTO {
     article: string;
@@ -40,6 +46,8 @@ export interface ProductDTO {
     installations: string[];
     model_3d_url?: string | null;
     drawing_url?: string | null;
+    schema_key?: string | null;
+    images?: ProductImage[];
     translations: ProductTranslations;
 }
 

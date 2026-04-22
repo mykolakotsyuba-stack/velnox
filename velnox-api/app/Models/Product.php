@@ -33,6 +33,7 @@ class Product extends Model
         'translations',
         'model_3d_url',
         'drawing_url',
+        'schema_key',
         'is_active',
     ];
 
@@ -49,6 +50,12 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductImage::class, 'product_slug', 'slug')
+            ->orderBy('sort_order');
     }
 
     // ===== HELPERS =====
@@ -78,6 +85,12 @@ class Product extends Model
             'installations'    => $this->installations ?? [],
             'model_3d_url'     => $this->model_3d_url,
             'drawing_url'      => $this->drawing_url,
+            'schema_key'       => $this->schema_key,
+            'images'           => $this->images->map(fn ($img) => [
+                'path'       => $img->path,
+                'type'       => $img->type,
+                'sort_order' => $img->sort_order,
+            ])->values()->all(),
             'translations'     => $this->translations,
         ];
     }
