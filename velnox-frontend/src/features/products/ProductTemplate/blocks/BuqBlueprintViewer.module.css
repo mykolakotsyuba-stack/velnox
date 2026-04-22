@@ -23,7 +23,7 @@
 .blueprintWrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 13600 / 7400;     /* matches SVG viewBox (landscape 1.838:1) */
+    aspect-ratio: 1480 / 720;     /* matches SVG viewBox (landscape 2.056:1) */
     background-color: #ffffff;
     border-radius: 8px;
     overflow: hidden;

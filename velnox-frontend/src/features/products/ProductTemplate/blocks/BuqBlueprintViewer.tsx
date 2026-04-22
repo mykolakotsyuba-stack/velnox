@@ -7,60 +7,46 @@ import { useTranslations } from 'next-intl';
 import { SpecsTable } from './SpecsTable';
 import styles from './BuqBlueprintViewer.module.css';
 
+import type { DimLabel } from '../blueprintAssets';
+
 interface BuqBlueprintViewerProps {
     article: string;
     specs: ProductSpecs;
     hoveredSpec: string | null;
     onHoverSpec?: (key: string | null) => void;
+    dimLabels?: DimLabel[];
+    svgSrc?: string;
+    viewBox?: string;
 }
 
-// ─── CorelDRAW SVG coordinate system ─────────────────────────────────────────
-// viewBox: 7552 -117381 12467 7053  (width × height in SVG user units)
-// Positions below are actual SVG coordinates of each dimension label
-const SVG_VB = '7000 -117700 13600 7400';  // bearing diagram area with margins
+const SVG_VB_DEFAULT = '892 -13810 1480 720';
 
-type DimLabel = {
-    key: string;
-    label: string;
-    point: { x: number; y: number };
-};
+function parseVbH(vb: string): number {
+    const parts = vb.trim().split(/\s+/);
+    return parseFloat(parts[3]) || 720;
+}
 
-// fnt0=282px, fnt1=353px. Helvetica uppercase ≈ 0.55×size wide, cap-height ≈ 0.72×size.
-// x offset: +half_text_width to center horizontally on the label
-// y offset: -cap_height/2 to center vertically (text y = baseline)
-const HALF1 = 78;   // half-width of 1 char fnt0
-const HALF2 = 155;  // half-width of 2 chars fnt0
-const CAP0  = 102;  // half cap-height fnt0
-const HALF1_F1 = 97;  // half-width of 1 char fnt1
-const CAP1  = 127;    // half cap-height fnt1
+function DimensionOverlay({ specs, hoveredSpec, dimLabels, viewBox }: {
+    specs: ProductSpecs;
+    hoveredSpec: string | null;
+    dimLabels: DimLabel[];
+    viewBox: string;
+}) {
+    const vbH = parseVbH(viewBox);
+    const scale = vbH / 7400;
+    const R = Math.round(200 * scale);
+    const FS = Math.round(180 * scale);
+    const BOX_H = Math.round(380 * scale);
+    const BOX_OFFSET = Math.round(460 * scale);
+    const SW = Math.max(1, Math.round(28 * scale));
 
-const DIM_LABELS: DimLabel[] = [
-    { key: 'N',      label: 'N',  point: { x: 8973  + HALF1,   y: -116715 - CAP0  } },
-    { key: 'B',      label: 'B',  point: { x: 15426 + HALF1_F1, y: -116291 - CAP1 } },
-    { key: 'd_mm',   label: 'd',  point: { x: 15466 + HALF1,   y: -114079 - CAP0  } },
-    { key: 'd_inch', label: 'd',  point: { x: 15466 + HALF1,   y: -114079 - CAP0  } },
-    { key: 'J',      label: 'J',  point: { x: 10595 + HALF1,   y: -111873 - CAP0  } },
-    { key: 'A2',     label: 'A2', point: { x: 13039 + HALF2,   y: -111928 - CAP0  } },
-    { key: 'A1',     label: 'A1', point: { x: 13964 + HALF2,   y: -111623 - CAP0  } },
-    { key: 'L',      label: 'L',  point: { x: 10618 + HALF1,   y: -111442 - CAP0  } },
-    { key: 'A',      label: 'A',  point: { x: 14351 + HALF1,   y: -111284 - CAP0  } },
-];
-
-// Visual sizes in SVG user units (viewBox width 12467 ≈ 700–900px on screen)
-const R = 200;           // highlight circle radius
-const FS = 180;          // font size
-const BOX_H = 380;       // value box height
-const BOX_OFFSET = 460;  // box offset below circle center
-const SW = 28;           // stroke width
-
-function DimensionOverlay({ specs, hoveredSpec }: { specs: ProductSpecs; hoveredSpec: string | null }) {
-    const activeLabels = DIM_LABELS.filter(d => d.key === hoveredSpec);
+    const activeLabels = dimLabels.filter(d => d.key === hoveredSpec);
     if (!activeLabels.length) return null;
 
     return (
         <svg
             className={styles.svgOverlay}
-            viewBox={SVG_VB}
+            viewBox={viewBox}
             preserveAspectRatio="xMidYMid meet"
             xmlns="http://www.w3.org/2000/svg"
             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 50, pointerEvents: 'none' }}
@@ -89,7 +75,10 @@ function DimensionOverlay({ specs, hoveredSpec }: { specs: ProductSpecs; hovered
     );
 }
 
-export function BuqBlueprintViewer({ article, specs, hoveredSpec, onHoverSpec }: BuqBlueprintViewerProps) {
+export function BuqBlueprintViewer({
+    article, specs, hoveredSpec, onHoverSpec,
+    dimLabels = [], svgSrc = '/velnox/images/schemes/bearings-schema.svg', viewBox = SVG_VB_DEFAULT,
+}: BuqBlueprintViewerProps) {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const t = useTranslations('product');
 
@@ -97,12 +86,12 @@ export function BuqBlueprintViewer({ article, specs, hoveredSpec, onHoverSpec }:
         <div className={styles.blueprintInner}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-                src="/velnox/images/schemes/bearings-schema.svg"
+                src={svgSrc}
                 alt={`BUQ Series Technical Drawing ${article}`}
                 className={styles.panelImage}
                 style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
             />
-            <DimensionOverlay specs={specs} hoveredSpec={hoveredSpec} />
+            <DimensionOverlay specs={specs} hoveredSpec={hoveredSpec} dimLabels={dimLabels} viewBox={viewBox} />
         </div>
     );
 

@@ -357,6 +357,13 @@ function PackerRollerIntro() {
     );
 }
 
+/* ─── Helpers ─── */
+const HAS_3D = new Set(['buq-309-2t3h', 'bucr-sg-309-s2', 'bup-207-x3l']);
+
+function articleToSlug(article: string): string {
+    return article.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+}
+
 /* ─── Main Page Component ─── */
 
 export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale, products?: ProductListItem[] }) {
@@ -635,18 +642,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             {/* 3. TECHNICAL TABLES */}
             <section className={styles.tablesSection} ref={tablesRef.ref}>
                 <div className={`${styles.tableSectionContainer} ${tablesRef.inView ? styles.animIn : ''}`}>
-                    {/* ─── BUQ Technical Schema (above Table 1) ─── */}
-                    <div className={styles.buqDrawingBlock}>
-                        <div className={styles.buqDrawingTitle}>ТЕХНІЧНЕ КРЕСЛЕННЯ — BUQ SERIES</div>
-                        <div className={styles.buqDrawingCompositeSingle}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src="/velnox/images/schemes/bearings-schema.svg"
-                                alt="BUQ Series Technical Drawing"
-                                style={{ width: '100%', height: 'auto', display: 'block' }}
-                            />
-                        </div>
-                    </div>
 
                     <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
                         <div className={styles.stickyContainer}>
@@ -671,6 +666,19 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    {/* ─── BUQ Technical Schema (above Table 1) ─── */}
+                    <div className={styles.buqDrawingBlock}>
+                        <div className={styles.buqDrawingTitle}>ТЕХНІЧНЕ КРЕСЛЕННЯ — BUQ SERIES</div>
+                        <div className={styles.buqDrawingCompositeSingle}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="/velnox/images/schemes/buq-207-schema.svg"
+                                alt="BUQ Series Technical Drawing"
+                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
+                            />
                         </div>
                     </div>
 
@@ -747,12 +755,12 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         {/* Diagram for Table 2 */}
                         <div className={styles.tableDiagramContainer}>
                             <Image
-                                src="/velnox/images/bearings/table2-diagram.png"
-                                alt="Table 2 Bearing Diagram"
-                                width={600}
-                                height={400}
-                                priority={false}
-                                className={styles.tableDiagram}
+                                src="/velnox/images/schemes/buq-308-schema.png"
+                                alt="BUQ 308-2T3H-DS Technical Drawing"
+                                width={1200}
+                                height={800}
+                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }}
+                                loading="lazy"
                             />
                         </div>
 
@@ -781,9 +789,15 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT2.map((row, i) => (
+                                    {sortedT2.map((row, i) => {
+                                        const slug2 = articleToSlug(row['Part Number'] || '');
+                                        return (
                                         <tr key={i}>
-                                            <td data-label="Part No" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
+                                            <td data-label="Part No" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/bearings/${slug2}`} className={styles.designationLink}>
+                                                    {row['Part Number'] || '-'}
+                                                </Link>
+                                            </td>
                                             <td data-label="Designation">{renderTightCell(row['Bearing designation'])}</td>
                                             <td data-label="Brand">{renderBrandCell(row['Brand name'])}</td>
                                             <td data-label="Cross-Ref" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
@@ -799,7 +813,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Co">{row['Static load rating Co (kN)'] || '-'}</td>
                                             <td data-label="Pu">{row['Fatigue load limit Pu (kN)'] || '-'}</td>
                                         </tr>
-                                    ))}
+                                        );
+                                    })}
                                     {filteredT2.length === 0 && (
                                         <tr><td colSpan={14} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
@@ -815,12 +830,12 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         {/* Diagram for Table 3 */}
                         <div className={styles.tableDiagramContainer}>
                             <Image
-                                src="/velnox/images/bearings/table3-diagram.png"
-                                alt="Table 3 Bearing Diagram"
-                                width={600}
-                                height={400}
-                                priority={false}
-                                className={styles.tableDiagram}
+                                src="/velnox/images/schemes/buq-309-schema.png"
+                                alt="BUQ 309-2T3H Technical Drawing"
+                                width={1200}
+                                height={800}
+                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }}
+                                loading="lazy"
                             />
                         </div>
 
@@ -849,9 +864,16 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT3.map((row, i) => (
+                                    {sortedT3.map((row, i) => {
+                                        const slug3 = articleToSlug(row['Part Number'] || '');
+                                        return (
                                         <tr key={i}>
-                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
+                                            <td data-label="Part Number" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/bearings/${slug3}`} className={styles.designationLink}>
+                                                    {row['Part Number'] || '-'}
+                                                </Link>
+                                                {HAS_3D.has(slug3) && <span className={styles.badge3d}>3D</span>}
+                                            </td>
                                             <td data-label="Bearing Designation">{renderTightCell(row['Bearing designation'])}</td>
                                             <td data-label="Brand">{renderBrandCell(row['Brand \nname'])}</td>
                                             <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
@@ -867,7 +889,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Cdyn (kN)">{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
                                             <td data-label="Pu (kN)">{row['Fatigue load limit Pu (kN)'] || '-'}</td>
                                         </tr>
-                                    ))}
+                                        );
+                                    })}
                                     {filteredT3.length === 0 && (
                                         <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
@@ -878,6 +901,16 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     {/* ─── Grouped Technical Tables Section (Tables 4 & 5) ─── */}
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table4.title')}</h3>
+                        <div className={styles.tableDiagramContainer}>
+                            <Image
+                                src="/velnox/images/schemes/bucr-sg-309-schema.png"
+                                alt="BUCR-SG-309-S2 Technical Drawing"
+                                width={1200}
+                                height={800}
+                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }}
+                                loading="lazy"
+                            />
+                        </div>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
@@ -905,9 +938,16 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT4.map((row, i) => (
+                                    {sortedT4.map((row, i) => {
+                                        const slug4 = articleToSlug(row['Part Number'] || '');
+                                        return (
                                         <tr key={i}>
-                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
+                                            <td data-label="Part Number" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/bearings/${slug4}`} className={styles.designationLink}>
+                                                    {row['Part Number'] || '-'}
+                                                </Link>
+                                                {HAS_3D.has(slug4) && <span className={styles.badge3d}>3D</span>}
+                                            </td>
                                             <td data-label="Bearing Designation">{renderDesignationCell(row['Bearing designation'])}</td>
                                             <td data-label="Brand">{renderBrandCell(row['Brand \\nname'])}</td>
                                             <td data-label="Cross-Reference" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
@@ -925,7 +965,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="H (mm)">{row['Hole diameter H (mm)'] || '-'}</td>
                                             <td data-label="Mass (kg)">{row['Mass kg'] || '-'}</td>
                                         </tr>
-                                    ))}
+                                        );
+                                    })}
                                     {filteredT4.length === 0 && (
                                         <tr><td colSpan={14} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
@@ -935,28 +976,19 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     </div>
 
                     {/* ─── Section: Table 5: Additional Bearing Specifications ─── */}
-                    {/* Placeholder for Sealing Scheme (Figure) */}
-                    <div className={styles.buqDrawingBlock}>
-                        <div className={styles.buqDrawingTitle}>FIGURE: SEALING SYSTEM SCHEME</div>
-                        <div className={styles.buqDrawingCompositeSingle}>
-                            <div style={{
-                                width: '100%',
-                                height: '300px',
-                                background: 'rgba(255,255,255,0.05)',
-                                border: '1px dashed rgba(255,255,255,0.2)',
-                                borderRadius: '8px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                color: 'rgba(255,255,255,0.3)'
-                            }}>
-                                [ SEALING SYSTEM SCHEME IMAGE ]
-                            </div>
-                        </div>
-                    </div>
 
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table5.title')}</h3>
+                        <div className={styles.tableDiagramContainer}>
+                            <Image
+                                src="/velnox/images/schemes/bup-207-schema.png"
+                                alt="BUP 207-X3L Technical Drawing"
+                                width={1200}
+                                height={800}
+                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }}
+                                loading="lazy"
+                            />
+                        </div>
                         <div className={styles.tableScroll}>
                             <table className={styles.techTable}>
                                 <thead>
@@ -979,9 +1011,16 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT5.map((row, i) => (
+                                    {sortedT5.map((row, i) => {
+                                        const slug5 = articleToSlug(row['Part Number'] || '');
+                                        return (
                                         <tr key={i}>
-                                            <td data-label="Part No" className={styles.partNumCell}>{row['Part Number'] || '-'}</td>
+                                            <td data-label="Part No" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/bearings/${slug5}`} className={styles.designationLink}>
+                                                    {row['Part Number'] || '-'}
+                                                </Link>
+                                                {HAS_3D.has(slug5) && <span className={styles.badge3d}>3D</span>}
+                                            </td>
                                             <td data-label="Designation">{renderDesignationCell(row['Bearing designation'])}</td>
                                             <td data-label="Brand">{renderBrandCell(row['Brand \\nname'])}</td>
                                             <td data-label="Cross-Ref" className={styles.analoguesCell}>{renderTightCell(row['Cross-Refference'])}</td>
@@ -997,7 +1036,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Cdyn">{row['Dynamic load rating Cdyn (kN)'] || '-'}</td>
                                             <td data-label="Pu">{row['Fatigue load limit Pu (kN)'] || '-'}</td>
                                         </tr>
-                                    ))}
+                                        );
+                                    })}
                                     {filteredT5.length === 0 && (
                                         <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}

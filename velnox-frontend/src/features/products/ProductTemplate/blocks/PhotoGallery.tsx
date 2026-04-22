@@ -5,9 +5,10 @@ import styles from './PhotoGallery.module.css';
 interface PhotoGalleryProps {
     images: string[];
     altText: string;
+    hero?: boolean;
 }
 
-export function PhotoGallery({ images, altText }: PhotoGalleryProps) {
+export function PhotoGallery({ images, altText, hero = false }: PhotoGalleryProps) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [touchStartX, setTouchStartX] = useState<number | null>(null);
     const [touchEndX, setTouchEndX] = useState<number | null>(null);
@@ -71,9 +72,9 @@ export function PhotoGallery({ images, altText }: PhotoGalleryProps) {
     };
 
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${hero ? styles.heroContainer : ''}`}>
             <div
-                className={styles.mainImageWrapper}
+                className={`${styles.mainImageWrapper} ${hero ? styles.heroWrapper : ''}`}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}

@@ -132,10 +132,17 @@
     transform: translateY(0) !important;
 }
 
+.productDesc {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--color-text);
+    margin: 0;
+}
+
 /* Нижній блок (Specs + Blueprint) */
 .technicalSection {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.4fr;
     gap: 40px;
     margin-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);

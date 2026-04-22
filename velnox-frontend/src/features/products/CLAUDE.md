@@ -20,7 +20,7 @@
 
 ```tsx
 // BuqBlueprintViewer.tsx
-const SVG_VB = '7000 -117700 13600 7400';
+const SVG_VB_DEFAULT = '892 -13810 1480 720';
 ```
 
 Цей рядок ПОВИНЕН збігатися з `viewBox` атрибутом у `bearings-schema.svg`. Якщо змінив SVG-файл — онови і константу.
@@ -39,7 +39,7 @@ const SVG_VB = '7000 -117700 13600 7400';
 
 ```css
 .blueprintWrapper {
-    aspect-ratio: 13600 / 7400;  /* = viewBox width / height */
+    aspect-ratio: 1480 / 720;  /* = viewBox width / height */
 }
 ```
 
@@ -53,9 +53,9 @@ circle_cx = text_x + half_text_width
 circle_cy = text_y - half_cap_height
 ```
 
-Метрики шрифту:
-- `fnt0 = 282px`: HALF1=78 (1 симв), HALF2=155 (2 симв), CAP0=102
-- `fnt1 = 353px`: HALF1_F1=97 (1 симв), CAP1=127
+Метрики шрифту (нова схема, bearings-schema.svg):
+- `fnt0 = 41.66px`: half-width 1 символ ≈ advance/1000 * 41.66/2, cap_half ≈ 14.87
+- Glyph advances: A=666, B=667, J=499, L=556, N=722, d=556 (units per 1000)
 
 ### 5. Шлях до SVG-файлу
 

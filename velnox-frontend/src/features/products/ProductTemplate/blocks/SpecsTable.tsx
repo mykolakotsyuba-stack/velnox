@@ -12,8 +12,9 @@ interface SpecsTableProps {
 export function SpecsTable({ specs, hoveredSpec, onHoverSpec, isModal = false }: SpecsTableProps) {
     const t = useTranslations('product');
 
-    // Dynamically filter all keys that have a value
-    const rows = Object.entries(specs).filter(([_, value]) => value != null);
+    // Exclude catalog/reference fields shown in other blocks
+    const EXCLUDE = new Set(['table_group', 'bearing_designation', 'brand_name', 'cross_reference', 'part_number']);
+    const rows = Object.entries(specs).filter(([key, value]) => value != null && !EXCLUDE.has(key));
 
     if (rows.length === 0) return null;
 

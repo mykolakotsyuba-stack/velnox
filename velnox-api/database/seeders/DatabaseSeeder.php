@@ -115,6 +115,7 @@ class DatabaseSeeder extends Seeder
             'schema_key'      => 'buq-2xx-square',
             'category_id'     => $bearingsCategory->id,
             'specs' => [
+                'table_group' => 'bearings-t1',
                 'd_mm'   => 31.75,
                 'J'      => 83.0,
                 'A'      => 40.2,
@@ -158,7 +159,6 @@ class DatabaseSeeder extends Seeder
         $extraBearings = [
             ["LEFG 206-104 TDT", "31.75 (1 1/4\")", "83", "A: 40.2 / A1: 31.0 / A2: 13.0", "N: 16 mm", "108"],
             ["LEFG 207 TDT", "35.0", "92", "A: 44.4 / A1: 34.0 / A2: 13.0", "N: 14 mm", "118"],
-            ["LEFG 207-104 TDT", "31.75 (1 1/4\")", "92", "A: 44.4 / A1: 34.0 / A2: 13.0", "N: 14 mm", "118"],
             ["LEFG 207-106 TDT", "34.925 (1 3/8\")", "92", "A: 44.4 / A1: 34.0 / A2: 13.0", "N: 14 mm", "118"],
             ["LEFG 209 TDT", "45.0", "105", "A: 52.2 / A1: 38.0 / A2: 16.0", "N: 16 mm", "137"],
             ["LEFG 210 TDT", "50.0", "111", "A: 54.6 / A1: 40.0 / A2: 16.0", "N: 16 mm", "143"],
@@ -211,8 +211,10 @@ class DatabaseSeeder extends Seeder
                 ],
                 'name_uk'      => 'Квадратний фланцевий підшипниковий вузол VELNOX BUQ 207-104-2X3H',
                 'name_en'      => 'Square Flanged Bearing Unit VELNOX BUQ 207-104-2X3H',
-                'name_pl'      => 'Kwadratowy kołnierzowy węzeł łożyskowy VELNOX BUQ 207-104-2X3H',
-                'desc_uk'      => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори (аналог індустріального стандарту UCF 207-20). Модель має асиметричний захист від забруднень: з базової сторони встановлено 3-кромкове ущільнення, а з фронтальної — посилене подвійне 3-кромкове. Розмір внутрішнього отвору складає 31.75 мм (1 1/4 дюйма). Деталь витримує динамічне навантаження до 25.5 кН та статичне до 15.3 кН. Виступає прямою заміною для SKF FYJ1.1/4TF. Є універсальним рішенням для комплектації різноманітної ґрунтообробної техніки.',
+                'name_pl'      => 'Kwadratowy kołnierzowy węzeл łożyskowy VELNOX BUQ 207-104-2X3H',
+                'desc_uk'      => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори (аналог індустріального стандарту UCF 207-20 / SKF FYJ 1.1/4 TF) з дюймовою посадкою валу. Внутрішній діаметр d = 31.75 мм (1 1/4"), монтажна база J = 83 мм, Cdyn = 19.5 кН, Co = 11.3 кН, маса 1.1 кг. Система герметизації — комбінована: трикромкове контактне ущільнення доповнене двокромковим з обох сторін, що блокує проникнення пилу, вологи та абразиву у зону кочення. Виступає прямою геометричною заміною вузлів SKF FYJ 1.1/4 TF (YEL 207-104 2F + FY507M) і SNR EXF207-20 / UCF207-20; застосовується у ґрунтообробній та посівній техніці з дюймовими посадковими розмірами валів.',
+                'meta_title'   => 'VELNOX BUQ 207-104-2X3H — фланцевий вузол 1 1/4", SKF FYJ 1.1/4 TF',
+                'meta_desc'    => 'Фланцевий вузол VELNOX BUQ 207-104-2X3H, d=31.75 мм (1 1/4"), Cdyn 19.5 кН. Пряма заміна SKF FYJ 1.1/4 TF, SNR UCF207-20. Комбіноване ущільнення.',
             ],
             [
                 'slug'         => 'buq-207-106-2x3h',
@@ -233,8 +235,10 @@ class DatabaseSeeder extends Seeder
                 ],
                 'name_uk'      => 'Фланцевий підшипниковий вузол VELNOX BUQ 207-106-2X3H',
                 'name_en'      => 'Flanged Bearing Unit VELNOX BUQ 207-106-2X3H',
-                'name_pl'      => 'Kołnierzowy węzeł łożyskowy VELNOX BUQ 207-106-2X3H',
-                'desc_uk'      => 'Фланцевий підшипниковий вузол квадратного типу під 4 болти, що відповідає розмірності UCF 207-22. Для ізоляції від пилу та вологи застосовано комбіновану систему ущільнень: одинарне 3-кромкове з тильного боку та подвійне 3-кромкове з лицьового. Внутрішній діаметр під вал дорівнює 34.925 мм (1 3/8 дюйма). Робочі характеристики навантаження: динамічне — 25.5 кН, статичне — 15.3 кН. Повністю взаємозамінний з агрегатами SKF FYJ1.3/8TF та застосовується як інженерна база у сільськогосподарському обладнанні.',
+                'name_pl'      => 'Kołnierzowy węzeл łożyskowy VELNOX BUQ 207-106-2X3H',
+                'desc_uk'      => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори (аналог UCF 207-22 / SKF FYJ 1.3/8 TF) з дюймовою посадкою валу. Внутрішній діаметр d = 34.925 мм (1 3/8"), міжцентрова відстань кріплень J = 92 мм, довжина корпусу L = 118 мм, Cdyn = 25.5 кН, Co = 15.3 кН, маса 1.6 кг. Комбінована система захисту VELNOX: трикромкове контактне ущільнення + двокромкове з обох сторін — для роботи в умовах підвищеного запилення та вологості. Повний геометричний аналог SKF FYJ 1.3/8 TF (YEL 207-106 2F + FY507M) і SNR EXF207-22 / UCF207-22; застосовується у ґрунтообробних агрегатах та прикочувальних котках з дюймовою посадкою.',
+                'meta_title'   => 'VELNOX BUQ 207-106-2X3H — фланцевий вузол 1 3/8", SKF FYJ 1.3/8 TF',
+                'meta_desc'    => 'Фланцевий вузол VELNOX BUQ 207-106-2X3H, d=34.925 мм (1 3/8"), Cdyn 25.5 кН, Co 15.3 кН. Пряма заміна SKF FYJ 1.3/8 TF, SNR UCF207-22. Комбіноване система захисту.',
             ],
             [
                 'slug'         => 'buq-207-2x3h',
@@ -255,8 +259,10 @@ class DatabaseSeeder extends Seeder
                 ],
                 'name_uk'      => 'Класичний квадратний фланцевий підшипниковий вузол VELNOX BUQ 207-2X3H',
                 'name_en'      => 'Classic Square Flanged Bearing Unit VELNOX BUQ 207-2X3H',
-                'name_pl'      => 'Klasyczny kwadratowy węzeł łożyskowy VELNOX BUQ 207-2X3H',
-                'desc_uk'      => 'Класичний квадратний вузол на 4 отвори (аналог стандарту UCF 207). Конструкція передбачає двоетапний захист від абразиву: базове 3-кромкове ущільнення доповнене фронтальним подвійним 3-кромковим бар\'єром. Діаметр посадкового отвору становить 35 мм. Показники міцності дозволяють працювати з динамічним навантаженням 25.5 кН та статичним 15.3 кН. Ця деталь взаємозамінна з вузлами SKF FYJ35TF та NSK UCF207. Широко використовується в агрегатах брендів UNIA, ТЕХМАШ та АНИТИМ.',
+                'name_pl'      => 'Klasyczny kwadratowy węzeл łożyskowy VELNOX BUQ 207-2X3H',
+                'desc_uk'      => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори метричного виконання (аналог UCF 207 / SKF FYJ 40 TF) з внутрішнім діаметром d = 35 мм. Монтажна база J = 92 мм, загальна ширина A = 44.4 мм, довжина L = 118 мм, Cdyn = 25.5 кН, Co = 15.3 кН, маса 1.45 кг. Захист підшипника забезпечує комбінована система ущільнень VELNOX: трикромкове контактне + двокромкове з обох сторін для агресивних польових умов. Пряма заміна SKF FYJ 40 TF (YEL 207 2F + FY507M) і SNR EXF207 / UCF207 у вузлах дискових борін, культиваторів та прикочувальних котків.',
+                'meta_title'   => 'VELNOX BUQ 207-2X3H — фланцевий вузол d35, аналог SKF FYJ 40 TF',
+                'meta_desc'    => 'Квадратний фланцевий вузол VELNOX BUQ 207-2X3H, d=35 мм, Cdyn 25.5 кН. 100% аналог SKF FYJ 40 TF, SNR UCF207. Трикромкове + двокромкове ущільнення.',
             ],
             [
                 'slug'         => 'buq-208-108-2x3h',
@@ -277,8 +283,10 @@ class DatabaseSeeder extends Seeder
                 ],
                 'name_uk'      => 'Квадратний фланцевий підшипниковий вузол VELNOX BUQ 208-108-2X3H',
                 'name_en'      => 'Square Flanged Bearing Unit VELNOX BUQ 208-108-2X3H',
-                'name_pl'      => 'Kwadratowy kołnierzowy węzeł łożyskowy VELNOX BUQ 208-108-2X3H',
-                'desc_uk'      => 'Підшипниковий вузол із квадратним фланцем на 4 отвори (стандарт UCF 208-24). Від бруду підшипник ізолює асиметрична схема ущільнень: звичайне 3-кромкове з боку опори та подвійне 3-кромкове з контактного боку. Внутрішній розмір отвору — 38.1 мм (1 1/2 дюйма). Вузол розрахований на динамічне навантаження 30.7 кН і статичне 19 кН. Є повноцінним аналогом для заміни SKF FYJ 1.1/2 TF. Призначений для встановлення в універсальні вузли сільгосптехніки.',
+                'name_pl'      => 'Kwadratowy kołnierzowy węзел łożyskowy VELNOX BUQ 208-108-2X3H',
+                'desc_uk'      => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори (аналог UCF 208-24 / SKF FYJ 1.1/2 TF) з дюймовою посадкою валу. Внутрішній діаметр d = 38.1 мм (1 1/2"), монтажна база J = 102 мм, довжина корпусу L = 130 мм, Cdyn = 30.7 кН, Co = 19.0 кН, маса 1.95 кг. Комбіноване ущільнення VELNOX — трикромкове контактне + двокромкове з обох сторін підшипника — забезпечує стабільну роботу у вузлах з прямим контактом ґрунту. Пряма заміна SKF FYJ 1.1/2 TF (YEL 208-108 2F + FY508M) і SNR EXF208-24 / UCF 208-24 у сільгосптехніці з дюймовим валом.',
+                'meta_title'   => 'VELNOX BUQ 208-108-2X3H — вузол 1 1/2", SKF FYJ 1.1/2 TF',
+                'meta_desc'    => 'Фланцевий вузол VELNOX BUQ 208-108-2X3H, d=38.1 мм (1 1/2"), Cdyn 30.7 кН, Co 19 кН. Пряма заміна SKF FYJ 1.1/2 TF, SNR UCF 208-24. Комбіноване ущільнення.',
             ],
             [
                 'slug'         => 'buq-208-2x3h',
@@ -299,8 +307,10 @@ class DatabaseSeeder extends Seeder
                 ],
                 'name_uk'      => 'Квадратний фланцевий підшипниковий вузол VELNOX BUQ 208-2X3H',
                 'name_en'      => 'Square Flanged Bearing Unit VELNOX BUQ 208-2X3H',
-                'name_pl'      => 'Kwadratowy kołnierzowy węzeł łożyskowy VELNOX BUQ 208-2X3H',
-                'desc_uk'      => 'Квадратний фланцевий підшипниковий вузол на 4 отвори (аналог стандарту UCF 208). Оснащений асиметричною системою ущільнень: 3-кромкове ущільнення з базового боку та подвійне 3-кромкове з фронтального боку для блокування абразивних часток. Внутрішній діаметр отвору — 40 мм. Розрахункове динамічне навантаження становить 30.7 кН, статичне — 19 кН. Взаємозамінний з вузлами SKF FYJ40TF та NSK UCF208. Використовується у дискових боронах, культиваторах та іншій ґрунтообробній техніці (наприклад, BURY, VELES).',
+                'name_pl'      => 'Kwadratowy kołnierzowy węзел łożyskowy VELNOX BUQ 208-2X3H',
+                'desc_uk'      => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори метричного ряду (аналог UCF 208 / SKF FYJ 40 TF) з внутрішнім діаметром d = 40 мм. Монтажна база J = 102 мм, габаритна довжина L = 130 мм, Cdyn = 30.7 кН, Co = 19.0 кН, маса 1.95 кг. Комбінована система герметизації: трикромкове контактне ущільнення та додаткове двокромкове з кожної з сторін підшипника для блокування пилу, вологи та абразиву. Повний геометричний аналог SKF FYJ 40 TF (YEL 208 2F + FY508M) і SNR EXF208 / UCF208; застосовується у боронах, культиваторах та прикочувальних котках європейської сільгосптехніки.',
+                'meta_title'   => 'VELNOX BUQ 208-2X3H — фланцевий вузол d40, UCF208 SKF FYJ 40 TF',
+                'meta_desc'    => 'Квадратний фланцевий вузол VELNOX BUQ 208-2X3H, d=40 мм, Cdyn 30.7 кН, Co 19 кН. Пряма заміна SKF FYJ 40 TF, SNR UCF208. Комбіноване ущільнення.',
             ],
             [
                 'slug'         => 'buq-209-2t3h',
@@ -321,8 +331,10 @@ class DatabaseSeeder extends Seeder
                 ],
                 'name_uk'      => 'Фланцевий квадратний підшипниковий вузол VELNOX BUQ-209-2T3H',
                 'name_en'      => 'Square Flanged Bearing Unit VELNOX BUQ-209-2T3H',
-                'name_pl'      => 'Kwadratowy kołnierzowy węzeł łożyskowy VELNOX BUQ-209-2T3H',
-                'desc_uk'      => 'Фланцевий квадратний вузол під 4 кріплення, розроблений за індустріальним стандартом UCF 209. Блокування зовнішніх часток забезпечує комбінація 3-кромкового базового та подвійного 3-кромкового фронтального ущільнень. Деталь має внутрішній діаметр 45 мм. Граничне динамічне навантаження сягає 33.2 кН, а статичне — 21.9 кН. Крос-номери для заміни включають SKF FYJ45TF та NSK UCF209. Інтегрується в конструкцію культиваторів та комбінованих агрегатів (техніка АМКОДОР).',
+                'name_pl'      => 'Kwadratowy kołnierzowy węзел łożyskowy VELNOX BUQ-209-2T3H',
+                'desc_uk'      => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори (аналог UCF 209 / SKF FYJ 45 TF) з внутрішнім діаметром d = 45 мм. Монтажна база J = 105 мм, габаритна довжина L = 137 мм, Cdyn = 33.2 кН, Co = 21.9 кН, маса 2.41 кг. Захист забезпечує комбінована система ущільнень VELNOX: трикромкове контактне у поєднанні з двокромковим з кожної з сторін підшипника — рішення для вузлів, що працюють у ґрунті та при ударних навантаженнях. Пряма заміна SKF FYJ 45 TF (YEL 209 2F + FY509M) і SNR EXF 209 / UCF 209 у культиваторах, боронах і прикочувальних котках.',
+                'meta_title'   => 'VELNOX BUQ-209-2T3H — фланцевий вузол d45, аналог SKF FYJ 45 TF',
+                'meta_desc'    => 'Фланцевий вузол VELNOX BUQ-209-2T3H, d=45 мм, Cdyn 33.2 кН, Co 21.9 кН. Пряма заміна SKF FYJ 45 TF, SNR UCF 209. Комбінована система ущільнень.',
             ],
             [
                 'slug'         => 'buq-210-2x3h',
@@ -343,8 +355,10 @@ class DatabaseSeeder extends Seeder
                 ],
                 'name_uk'      => 'Фланцевий підшипниковий вузол VELNOX BUQ 210-2X3H',
                 'name_en'      => 'Flanged Bearing Unit VELNOX BUQ 210-2X3H',
-                'name_pl'      => 'Kołnierzowy węzeł łożyskowy VELNOX BUQ 210-2X3H',
-                'desc_uk'      => 'Кріпильний фланцевий вузол квадратної форми на 4 отвори (відповідає розмірності UCF 210). Система захисту реалізована через 3-кромковий манжет базового рівня та фронтальний подвійний 3-кромковий бар\'єр. Посадковий діаметр складає 50 мм. Деталь здатна витримувати 35.1 кН динамічного та 23.2 кН статичного навантаження. Може слугувати заміною для FAG UCF210 та SKF FYJ50TF. Експлуатується у складі агрегатів UNIA ARES, OPALL-AGRI та DIAS.',
+                'name_pl'      => 'Kołnierzowy węзел łożyskowy VELNOX BUQ 210-2X3H',
+                'desc_uk'      => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори (аналог UCF 210 / SKF FYJ 50 TF) з внутрішнім діаметром d = 50 мм. Монтажна база J = 111 мм, довжина корпусу L = 143 мм, Cdyn = 35.1 кН, Co = 23.2 кН, маса 2.78 кг. Комбінована система захисту (трикромкове контактне + двокромкове ущільнення) дозволяє експлуатувати вузол у польових умовах з підвищеним запиленням та присутністю вологи. Пряма заміна SKF FYJ 50 TF (YEL 210 2F + FY510M) і SNR EXF210 / UCF 210; застосовується у важких ґрунтообробних агрегатах, прикочувальних котках та конвеєрних вузлах.',
+                'meta_title'   => 'VELNOX BUQ 210-2X3H — фланцевий вузол d50, SKF FYJ 50 TF UCF210',
+                'meta_desc'    => 'Фланцевий вузол VELNOX BUQ 210-2X3H, d=50 мм, Cdyn 35.1 кН, Co 23.2 кН. Пряма заміна SKF FYJ 50 TF, SNR UCF 210. Комбіноване система захисту.',
             ],
             [
                 'slug'         => 'buq-214-2t3h',
@@ -365,8 +379,10 @@ class DatabaseSeeder extends Seeder
                 ],
                 'name_uk'      => 'Масивний квадратний підшипниковий вузол VELNOX BUQ-214-2T3H',
                 'name_en'      => 'Heavy-Duty Square Flanged Bearing Unit VELNOX BUQ-214-2T3H',
-                'name_pl'      => 'Ciężki kwadratowy węzeł łożyskowy VELNOX BUQ-214-2T3H',
-                'desc_uk'      => 'Масивний квадратний підшипниковий вузол із 4 отворами кріплення (аналог серії UCF 214). Надійність у пильному середовищі гарантує система ущільнень: 3-кромкова з базового боку та посилена подвійна 3-кромкова з лицьового. Внутрішній переріз під вал становить 70 мм. Вузол спроєктований для високих навантажень: динамічне дорівнює 62.4 кН, статичне — 44 кН. Сумісний зі стандартними рішеннями типу UCF 214. Встановлюється переважно на важку ґрунтообробну техніку (VOMER HISPANIA, ESTRUCTURAS CLEYSER).',
+                'name_pl'      => 'Ciężki kwadratowy węzeл łożyskowy VELNOX BUQ-214-2T3H',
+                'desc_uk'      => 'Посилений квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори (аналог UCF 214) з внутрішнім діаметром d = 70 мм — для важких радіальних навантажений. Монтажна база J = 152 мм, довжина корпусу L = 193 мм, Cdyn = 62.4 кН, Co = 44.0 кН, Pu = 1.848 кН, маса 2.6 кг. Комбінована система ущільнень VELNOX: трикромкове контактне + двокромкове для роботи в абразивному та вологому середовищі. Пряма заміна SNR EXF 214 / UCF 214; застосовується у важких дискових боронах, глибокорозпушувачах та промислових транспортерах з високими радіальними навантаженнями.',
+                'meta_title'   => 'VELNOX BUQ-214-2T3H — посилений фланцевий вузол d70, UCF 214',
+                'meta_desc'    => 'Посилений фланцевий вузол VELNOX BUQ-214-2T3H, d=70 мм, Cdyn 62.4 кН, Co 44 кН. Пряма заміна SNR UCF 214. Для важких борін та розпушувачів.',
             ],
         ];
 
@@ -378,7 +394,7 @@ class DatabaseSeeder extends Seeder
                     'fkl_designation' => $buq['fkl'],
                     'schema_key'      => 'buq-2xx-square',
                     'category_id'     => $bearingsCategory->id,
-                    'specs'           => $buq['specs'],
+                    'specs'           => array_merge(['table_group' => 'bearings-t1'], $buq['specs']),
                     'oem_cross'       => $buq['cross'],
                     'installations'   => $buq['installations'],
                     'translations'    => [
@@ -391,6 +407,8 @@ class DatabaseSeeder extends Seeder
                             'product_name'   => $buq['name_uk'],
                             'sealing_config' => 'DOUBLE T SEAL / T SEAL',
                             'sealing_desc'   => $buq['desc_uk'],
+                            'meta_title'     => $buq['meta_title'] ?? null,
+                            'meta_desc'      => $buq['meta_desc'] ?? null,
                         ],
                         'pl' => [
                             'product_name'   => $buq['name_pl'],
@@ -411,7 +429,7 @@ class DatabaseSeeder extends Seeder
                 'schema_key'      => 'buq-308',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
-                    'table_group' => 'performance',
+                    'table_group' => 'bearings-t2',
                     'part_number' => 'BUQ-308-2T3H-DS',
                     'bearing_designation' => "CE066\nLSQFR308 TBT.H.T.Zn\nUC 308 X1\nUCF308 A01X1\nW308-40MM-FDT-MF-AP-SP1 (PER.W308RRBP52-F-A)\nW308-40MM-FDT-MF-AP-SP1 Without thread\nW308RRBP52-F-B (BX-PER.W308RRBP52-F)\nXUCF308B01B169",
                     'brand_name' => "SNR\nFKL\nSNR\nSNR\nPEER\nPEER\nPEER\nSNR",
@@ -439,6 +457,13 @@ class DatabaseSeeder extends Seeder
                     'UCFE308 A01X1',
                 ],
                 'is_active' => true,
+                'translations' => [
+                    'uk' => [
+                        'sealing_desc' => 'Посилений квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори для прикочувальних котків (аналог UCF 308 / UC 308 X1) з внутрішнім діаметром d = 40 мм. Кріпильна база J = 101.5 мм, довжина корпусу L = 130 мм, різьблення H/T = M12, Cdyn = 62.3 кН, Co = 45.2 кН, Pu = 1.898 кН, маса 2.5 кг. Посилена комбінована система ущільнень (індекс -DS) забезпечує герметичний захист зони кочення від ґрунтового пилу, вологи та абразиву в умовах постійного контакту з ґрунтом. Пряма заміна SNR CE066, FKL LSQFR308 TBT.H.T., PEER W308-40MM-FDT-MF-AP-SP1 та SNR UCF308 A01X1; застосовується у прикочувальних котках AMAZONE (арт. 957305, CE066, CE078) та інших європейських ґрунтообробних агрегатів.',
+                        'meta_title'   => 'VELNOX BUQ-308-2T3H-DS — вузол котка d40, AMAZONE CE066',
+                        'meta_desc'    => 'Підшипниковий вузол VELNOX BUQ-308-2T3H-DS (d=40 мм, Cdyn 62.3 кН) для котків. Пряма заміна AMAZONE CE066, 957305, SNR UC 308 X1.',
+                    ]
+                ],
             ]
         );
 
@@ -450,7 +475,7 @@ class DatabaseSeeder extends Seeder
                 'schema_key'      => 'buq-309-round',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
-                    'table_group' => 'cross-references',
+                    'table_group' => 'bearings-t3',
                     'bearing_designation' => "CJI 309 GGG+19000509 (Assy)\nLSQFR 309-2TB.H.T\nLSQFR 309-2TB.H.T",
                     'brand_name' => "CT-AGRI\nFKL\nCT-AGRI",
                     'cross_reference' => "4000412 Farmet\nM14581 Farmet\n15626ND Farmet\n18888ND Farmet\nM10257 Farmet\nM13082ND Farmet\nM15626 Farmet\nM17627 Farmet\nM24607 Farmet\nCJI309GGG+19000509\nLEFG 209 TDT FKL",
@@ -482,6 +507,13 @@ class DatabaseSeeder extends Seeder
                     'LEFG 209 TDT FKL',
                 ],
                 'is_active' => true,
+                'translations' => [
+                    'uk' => [
+                        'sealing_desc' => 'Квадратний фланцевий підшипниковий вузол серії 309 для прикочувальних котків з внутрішнім діаметром d = 45 мм. Кріпильна база J = 105 мм, довжина корпусу L = 137 мм, ширина внутрішнього кільця B = 51.1 мм, Cdyn = 80.8 кН, Co = 59.6 кН, Pu = 2.503 кН. Посилена герметизація — трикромкове ущільнення в парі з двокромковим з кожної сторони — забезпечує ресурс у вузлах з ударними навантаженнями та абразивним середовищем. Пряма заміна FKL LSQFR 309 2TB.H.T та вузла CJI 309 GGG+19000509; використовується у прикочувальних котках Farmet (арт. 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607, R17015300).',
+                        'meta_title'   => 'VELNOX BUQ 309-2T3H — вузол котка d45, Farmet M14581 LEFG 209 TDT',
+                        'meta_desc'    => 'Фланцевий вузол VELNOX BUQ 309-2T3H, d=45 мм, Cdyn 80.8 кН. Пряма заміна Farmet M14581, 4000412, FKL LEFG 209 TDT. Для котків.',
+                    ]
+                ],
             ]
         );
 
@@ -493,7 +525,7 @@ class DatabaseSeeder extends Seeder
                 'schema_key'      => 'bucr-sg-309',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
-                    'table_group' => 'extended-specs',
+                    'table_group' => 'bearings-t4',
                     'bearing_designation' => "M43400468\nM43400468 H.60 S.PAR\nM43400468 H.60 S.PAR\nM43400468 Bearing unit\nPN 0102\nZGKU 309 2S\nPN00102",
                     'brand_name' => "CT-AGRI\n-\n-\nRi.Ma\nRBF\nFKL\nRBF",
                     'cross_reference' => "17014180 GASPARDO\nM23400435 Gaspardo - Bearing housing section\nM23400436 Gaspardo - Bearing housing section\nM43400413 Gaspardo\nM43400468 Gaspardo\nM43400468R Gaspardo\nR17015300 Gaspardo\n?43400468 Bearing Unit",
@@ -524,6 +556,13 @@ class DatabaseSeeder extends Seeder
                     'R17015300 Gaspardo',
                 ],
                 'is_active' => true,
+                'translations' => [
+                    'uk' => [
+                        'sealing_desc' => 'Тандемний (здвоєний) підшипниковий вузол типу Gaspardo з двома симетричними корпусними секціями (L1 = 152 мм, L2 = 150 мм) та посадковим діаметром d = 45 мм, діаметром корпусу d1 = 74 мм, масою 5.6 кг. Монтажні бази J1 = J2 = 120 мм, кріплення 4×M12×1.25 з кожного боку, висота A = 66.9 мм; конструкція розрахована на асиметричне навантаження секційних вузлів посівних і ґрунтообробних комплексів. Посилена багатокромкова система ущільнень захищає підшипник від ґрунтової вологи, насіннєвого пилу та абразиву під час постійної польової роботи. Пряма заміна OEM-вузлів Gaspardo (арт. 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300), FKL ZGKU 309 2S та RBF PN00102; застосовується у висівних секціях та прикочувальних котках техніки Gaspardo/Maschio.',
+                        'meta_title'   => 'VELNOX BUCR-SG-309-S2 — тандемний вузол Gaspardo M43400468',
+                        'meta_desc'    => 'Тандемний вузол VELNOX BUCR-SG-309-S2 для Gaspardo, d=45 мм, 4×M12, маса 5.6 кг. Заміна Gaspardo M43400468, 17014180, FKL ZGKU 309 2S.',
+                    ]
+                ],
             ]
         );
 
@@ -535,7 +574,7 @@ class DatabaseSeeder extends Seeder
                 'schema_key'      => 'bup-207',
                 'category_id'     => $bearingsCategory->id,
                 'specs'           => [
-                    'table_group' => 'additional-data',
+                    'table_group' => 'bearings-t5',
                     'bearing_designation' => "207XTR-R-DFC-A534 (PER.207RRSB-FC-A)\nGH.PN 00032\nLSGR 207-TBS\nLSGR 207-TBS\nLSGR 207-TBS\nPN 00023\nPN 00032",
                     'brand_name' => "PEER\nRBF\nFKL\nCT-AGRI\nNTE (Slovakia)\nRBF\nRBF",
                     'cross_reference' => "31910034 Lemken\n3199372 Lemken\n3421370 Opall Agri\nF232812 - 0200 INA/FAG Bearing\nGGF35A08\nGGME07 - AH07 INA/FAG Housing\nRCJ 35 35x118x39,9 4xM12\nUC 207 X1 SNR Bearing",
@@ -562,6 +601,13 @@ class DatabaseSeeder extends Seeder
                     'UC 207 X1 SNR Bearing',
                 ],
                 'is_active' => true,
+                'translations' => [
+                    'uk' => [
+                        'sealing_desc' => 'Підшипниковий вузол у круглому фланцевому корпусі типу RCJ 35 / UC 207 X1 для ґрунтообробної техніки Lemken з внутрішнім діаметром d = 35 мм та зовнішнім діаметром корпусу D = 125 мм. Монтажна база J = 100 мм под різьблення M12, загальна ширина A = 40 мм, ширина внутрішнього кільця B = 28.3 мм, Cdyn = 25.5 кН, Co = 15.3 кН, маса 1.7 кг. Система захисту — багатокромкове ущільнення серії X3L (трикромкове контактне з базової сторони + посилене фронтальне), розраховане на ударні навантаження ґрунтообробного диска. Повний геометричний аналог Lemken 31910034 / 3199372, Opall Agri 3421370, INA/FAG F232812-0200, PEER 207XTR-R-DFC-A534 та SNR UC 207 X1; застосовується у дискових боронах Lemken серій Rubin, Heliodor, Kristall.',
+                        'meta_title'   => 'VELNOX BUP 207-X3L — вузол Lemken d35, 31910034, UC 207 X1',
+                        'meta_desc'    => 'Підшипниковий вузол VELNOX BUP 207-X3L для Lemken, d=35 мм, D=125 мм, Cdyn 25.5 кН. Заміна Lemken 31910034, 3199372, SNR UC 207 X1.',
+                    ]
+                ],
             ]
         );
 
@@ -572,7 +618,7 @@ class DatabaseSeeder extends Seeder
                 'article'         => '28071300 VX',
                 'category_id'     => $hubCategory->id,
                 'specs'           => [
-                    'table_group' => 'hubs-table1',
+                    'table_group' => 'hubs-t1',
                     'part_number' => '28071300 VX',
                     'bearing_designation' => 'HUB',
                     'brand_name' => 'HORSCH',
@@ -603,7 +649,7 @@ class DatabaseSeeder extends Seeder
                 'article'         => 'BAA-0004 VX',
                 'category_id'     => $hubCategory->id,
                 'specs'           => [
-                    'table_group' => 'hubs-table2',
+                    'table_group' => 'hubs-t2',
                     'part_number' => 'BAA-0004 VX',
                     'bearing_designation' => '8395.TDA.5.05.015 / AGHU2898X4E-DSCS / AHU28117A-01 / BAA0004 / F-673270.04.TILL / HUB-30MM',
                     'brand_name' => 'SKF / NSK / FBJ / INA / PEER / FKL / RBF',
@@ -634,7 +680,7 @@ class DatabaseSeeder extends Seeder
                 'article'         => 'PL-140 VX',
                 'category_id'     => $hubCategory->id,
                 'specs'           => [
-                    'table_group' => 'hubs-table3',
+                    'table_group' => 'hubs-t3',
                     'part_number' => 'PL-140 VX',
                     'bearing_designation' => 'PL-140 / SAH017',
                     'brand_name' => 'FKL / FBJ',
@@ -702,7 +748,7 @@ class DatabaseSeeder extends Seeder
                         'article'     => $item['article'],
                         'category_id' => $agroCategory->id,
                         'specs'       => [
-                            'table_group'         => 'agro-table1',
+                            'table_group'         => 'agro-t1',
                             'bearing_designation' => $item['bearing'],
                             'brand_name'          => $item['brand'],
                             'cross_reference'     => $item['cross'],
@@ -730,7 +776,7 @@ class DatabaseSeeder extends Seeder
                     'article'     => 'DHU 1 1/2R209 VX',
                     'category_id' => $agroCategory->id,
                     'specs'       => [
-                        'table_group'         => 'agro-table2',
+                        'table_group'         => 'agro-t2',
                         'bearing_designation' => "DHU 1 1/2 R209\nDHU 1 1/2 R209 FD209RB\nFD 209-1 1/2 RD\nST 491 B\nPER.GFD209RPPB52\nGWST209PPB38",
                         'brand_name'          => "TIMKEN\nCT-AGRI\nRBF\nPEER\nPEER\nFKL",
                         'cross_reference'     => "1934-12-0 KRAUSE\n40-109 KRAUSE\n822-208C Great Plains\nAA53919 JD\nAN280333 JD\nQ4045130 KUHN",
@@ -754,7 +800,7 @@ class DatabaseSeeder extends Seeder
                     'article'     => 'DHU1 1/4 S209 VX',
                     'category_id' => $agroCategory->id,
                     'specs'       => [
-                        'table_group'         => 'agro-table3',
+                        'table_group'         => 'agro-t3',
                         'bearing_designation' => "DHU 1 1/4 S209\nDHU 1 1/4 S209 FD209RK\nFD 209-1 1/4 SQ\nGFD209SPPB51\nFD 209K51-1 1/4 SQ-A342\nGWST 209 PPB29",
                         'brand_name'          => "TIMKEN\nCT-AGRI\nRBF\nPEER\nPEER\nFKL",
                         'cross_reference'     => "40-128 KRAUSE\n822-209C GP\n84151226 CASE\nFK311007 SUNFLOWER\nQ4008320 KUHN\nQ4044290 KUHN",
@@ -778,7 +824,7 @@ class DatabaseSeeder extends Seeder
                     'article'     => 'AA30941 VX',
                     'category_id' => $agroCategory->id,
                     'specs'       => [
-                        'table_group'         => 'agro-table4',
+                        'table_group'         => 'agro-t4',
                         'bearing_designation' => "AA30941\nGWST 209 PPB13\nP30941\nST 209-1 3/4",
                         'brand_name'          => "CT-AGRI\nFKL\nKABAT\nRBF\nKABAT",
                         'cross_reference'     => "A33968 Gasket\nA34792 Housing\nA34793 Housing\nAA27172 Housing\nAA30941 JD Assembly\nJD7806 Grease Nipple\nGW209PPB13 bearing",
@@ -816,71 +862,44 @@ class DatabaseSeeder extends Seeder
         );
         
         // ===== PRODUCT IMAGES =====
+        // BUQ products use interactive SVG viewer — no schema.png needed in product_images.
+        // BUP/BUCR/hubs/agro/kit use static schema via staticSchemaSrc — schema.png required.
+
+        // ── Tabl 1: BUQ-2xx (9 products share same renders from Tabl 1 folder) ──────
+        $buq2xxSlugs = [
+            'buq-206-104-2x3h', 'buq-207-104-2x3h', 'buq-207-106-2x3h', 'buq-207-2x3h',
+            'buq-208-108-2x3h', 'buq-208-2x3h', 'buq-209-2t3h', 'buq-210-2x3h', 'buq-214-2t3h',
+        ];
+        foreach ($buq2xxSlugs as $slug) {
+            ProductImage::where('product_slug', $slug)->delete();
+            foreach ([
+                ['path' => "/velnox/images/products/$slug/main.png",      'type' => 'render', 'sort_order' => 0],
+                ['path' => "/velnox/images/products/$slug/drawing-1.png", 'type' => 'render', 'sort_order' => 1],
+                ['path' => "/velnox/images/products/$slug/drawing-2.png", 'type' => 'render', 'sort_order' => 2],
+                ['path' => "/velnox/images/products/$slug/drawing-3.png", 'type' => 'render', 'sort_order' => 3],
+            ] as $img) {
+                ProductImage::create(array_merge(['product_slug' => $slug], $img));
+            }
+        }
+
         $productImages = [
-            'buq-207-104-2x3h' => [
-                ['path' => '/velnox/images/products/buq-207-104-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
-                ['path' => '/velnox/images/products/buq-207-104-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
-                ['path' => '/velnox/images/products/buq-207-104-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
-                ['path' => '/velnox/images/products/buq-207-104-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
-            ],
-            'buq-207-106-2x3h' => [
-                ['path' => '/velnox/images/products/buq-207-106-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
-                ['path' => '/velnox/images/products/buq-207-106-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
-                ['path' => '/velnox/images/products/buq-207-106-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
-                ['path' => '/velnox/images/products/buq-207-106-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
-            ],
-            'buq-207-2x3h' => [
-                ['path' => '/velnox/images/products/buq-207-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
-                ['path' => '/velnox/images/products/buq-207-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
-                ['path' => '/velnox/images/products/buq-207-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
-                ['path' => '/velnox/images/products/buq-207-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
-                ['path' => '/velnox/images/products/buq-207-2x3h/schema.png',    'type' => 'schema', 'sort_order' => 4],
-            ],
-            'buq-208-108-2x3h' => [
-                ['path' => '/velnox/images/products/buq-208-108-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
-                ['path' => '/velnox/images/products/buq-208-108-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
-                ['path' => '/velnox/images/products/buq-208-108-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
-                ['path' => '/velnox/images/products/buq-208-108-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
-                ['path' => '/velnox/images/products/buq-208-108-2x3h/schema.png',    'type' => 'schema', 'sort_order' => 4],
-            ],
-            'buq-208-2x3h' => [
-                ['path' => '/velnox/images/products/buq-208-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
-                ['path' => '/velnox/images/products/buq-208-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
-                ['path' => '/velnox/images/products/buq-208-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
-                ['path' => '/velnox/images/products/buq-208-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
-                ['path' => '/velnox/images/products/buq-208-2x3h/schema.png',    'type' => 'schema', 'sort_order' => 4],
-            ],
-            'buq-209-2t3h' => [
-                ['path' => '/velnox/images/products/buq-209-2t3h/main.png',      'type' => 'render', 'sort_order' => 0],
-                ['path' => '/velnox/images/products/buq-209-2t3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
-                ['path' => '/velnox/images/products/buq-209-2t3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
-                ['path' => '/velnox/images/products/buq-209-2t3h/schema.png',    'type' => 'schema', 'sort_order' => 3],
-            ],
-            'buq-210-2x3h' => [
-                ['path' => '/velnox/images/products/buq-210-2x3h/main.png',      'type' => 'render', 'sort_order' => 0],
-                ['path' => '/velnox/images/products/buq-210-2x3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
-                ['path' => '/velnox/images/products/buq-210-2x3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
-                ['path' => '/velnox/images/products/buq-210-2x3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
-                ['path' => '/velnox/images/products/buq-210-2x3h/schema.png',    'type' => 'schema', 'sort_order' => 4],
-            ],
-            'buq-214-2t3h' => [
-                ['path' => '/velnox/images/products/buq-214-2t3h/main.png',      'type' => 'render', 'sort_order' => 0],
-                ['path' => '/velnox/images/products/buq-214-2t3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
-                ['path' => '/velnox/images/products/buq-214-2t3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
-                ['path' => '/velnox/images/products/buq-214-2t3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
-            ],
+            // ── Tabl 2: BUQ-308 ───────────────────────────────────────────────────────
             'buq-308-2t3h-ds' => [
-                ['path' => '/velnox/images/products/buq-308-2t3h-ds/main.png',   'type' => 'render', 'sort_order' => 0],
-                ['path' => '/velnox/images/products/buq-308-2t3h-ds/schema.png', 'type' => 'schema', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-308-2t3h-ds/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/buq-308-2t3h-ds/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/buq-308-2t3h-ds/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/buq-308-2t3h-ds/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/buq-308-2t3h-ds/schema.png',     'type' => 'schema', 'sort_order' => 4],
             ],
+            // ── Tabl 3: BUQ-309 ───────────────────────────────────────────────────────
             'buq-309-2t3h' => [
                 ['path' => '/velnox/images/products/buq-309-2t3h/main.png',      'type' => 'render', 'sort_order' => 0],
                 ['path' => '/velnox/images/products/buq-309-2t3h/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
                 ['path' => '/velnox/images/products/buq-309-2t3h/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
                 ['path' => '/velnox/images/products/buq-309-2t3h/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
-                ['path' => '/velnox/images/products/buq-309-2t3h/drawing-4.png', 'type' => 'render', 'sort_order' => 4],
-                ['path' => '/velnox/images/products/buq-309-2t3h/schema.png',    'type' => 'schema', 'sort_order' => 5],
+                ['path' => '/velnox/images/products/buq-309-2t3h/schema.png',    'type' => 'schema', 'sort_order' => 4],
             ],
+            // ── Tabl 4: BUCR-SG (no folder — keep existing files) ────────────────────
             'bucr-sg-309-s2' => [
                 ['path' => '/velnox/images/products/bucr-sg-309-s2/main.png',      'type' => 'render', 'sort_order' => 0],
                 ['path' => '/velnox/images/products/bucr-sg-309-s2/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
@@ -888,12 +907,53 @@ class DatabaseSeeder extends Seeder
                 ['path' => '/velnox/images/products/bucr-sg-309-s2/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
                 ['path' => '/velnox/images/products/bucr-sg-309-s2/schema.png',    'type' => 'schema', 'sort_order' => 4],
             ],
+            // ── Tabl 5: BUP-207 ───────────────────────────────────────────────────────
             'bup-207-x3l' => [
                 ['path' => '/velnox/images/products/bup-207-x3l/main.png',      'type' => 'render', 'sort_order' => 0],
                 ['path' => '/velnox/images/products/bup-207-x3l/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
                 ['path' => '/velnox/images/products/bup-207-x3l/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
                 ['path' => '/velnox/images/products/bup-207-x3l/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
                 ['path' => '/velnox/images/products/bup-207-x3l/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            // ── Tabl 6: Hub table1 ────────────────────────────────────────────────────
+            '28071300-vx-table1' => [
+                ['path' => '/velnox/images/products/28071300-vx-table1/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/28071300-vx-table1/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/28071300-vx-table1/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/28071300-vx-table1/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/28071300-vx-table1/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            // ── Tabl 7: Hub table2 ────────────────────────────────────────────────────
+            'baa-0004-vx-table2' => [
+                ['path' => '/velnox/images/products/baa-0004-vx-table2/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/baa-0004-vx-table2/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/baa-0004-vx-table2/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/baa-0004-vx-table2/schema.png',    'type' => 'schema', 'sort_order' => 3],
+            ],
+            // ── Tabl 8: Hub table3 ────────────────────────────────────────────────────
+            'pl-140-vx-table3' => [
+                ['path' => '/velnox/images/products/pl-140-vx-table3/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/pl-140-vx-table3/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/pl-140-vx-table3/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/pl-140-vx-table3/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/pl-140-vx-table3/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            // ── Tabl 10: Agro table2 ──────────────────────────────────────────────────
+            'dhu-1-12r209-vx' => [
+                ['path' => '/velnox/images/products/dhu-1-12r209-vx/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/dhu-1-12r209-vx/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/dhu-1-12r209-vx/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/dhu-1-12r209-vx/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/dhu-1-12r209-vx/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            // ── Tabl 11: Agro table3 ──────────────────────────────────────────────────
+            'dhu-1-14s209-vx' => [
+                ['path' => '/velnox/images/products/dhu-1-14s209-vx/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/dhu-1-14s209-vx/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/dhu-1-14s209-vx/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/dhu-1-14s209-vx/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/dhu-1-14s209-vx/drawing-4.png', 'type' => 'render', 'sort_order' => 4],
+                ['path' => '/velnox/images/products/dhu-1-14s209-vx/schema.png',    'type' => 'schema', 'sort_order' => 5],
             ],
         ];
 
@@ -904,7 +964,52 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // ── Tabl 9: Agro table1 (7 products share same renders + schema) ────────────
+        $agro1Slugs = [
+            '1726206-2rs1-vx', '1726207-2rs1-vx', '1726208-2rs1-vx', '1726209-2rs1-vx',
+            '1726210-2rs1-vx', '1726306-2rs1-vx', '1726309-2rs1-vx',
+        ];
+        foreach ($agro1Slugs as $slug) {
+            ProductImage::where('product_slug', $slug)->delete();
+            foreach ([
+                ['path' => "/velnox/images/products/$slug/main.png",      'type' => 'render', 'sort_order' => 0],
+                ['path' => "/velnox/images/products/$slug/drawing-1.png", 'type' => 'render', 'sort_order' => 1],
+                ['path' => "/velnox/images/products/$slug/drawing-2.png", 'type' => 'render', 'sort_order' => 2],
+                ['path' => "/velnox/images/products/$slug/drawing-3.png", 'type' => 'render', 'sort_order' => 3],
+                ['path' => "/velnox/images/products/$slug/schema.png",    'type' => 'schema', 'sort_order' => 4],
+            ] as $img) {
+                ProductImage::create(array_merge(['product_slug' => $slug], $img));
+            }
+        }
+
         $this->call(KitTableSeeder::class);
+
+        // ── Tabl 13 & 17: Kit products (shared images per table group) ───────────────
+        $kitSharedImages = [
+            'kit-t1' => [
+                ['path' => '/velnox/images/products/_shared/kit-t1/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/_shared/kit-t1/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/_shared/kit-t1/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/_shared/kit-t1/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/_shared/kit-t1/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+            'kit-t5' => [
+                ['path' => '/velnox/images/products/_shared/kit-t5/main.png',      'type' => 'render', 'sort_order' => 0],
+                ['path' => '/velnox/images/products/_shared/kit-t5/drawing-1.png', 'type' => 'render', 'sort_order' => 1],
+                ['path' => '/velnox/images/products/_shared/kit-t5/drawing-2.png', 'type' => 'render', 'sort_order' => 2],
+                ['path' => '/velnox/images/products/_shared/kit-t5/drawing-3.png', 'type' => 'render', 'sort_order' => 3],
+                ['path' => '/velnox/images/products/_shared/kit-t5/schema.png',    'type' => 'schema', 'sort_order' => 4],
+            ],
+        ];
+        foreach ($kitSharedImages as $tableGroup => $images) {
+            $kitProducts = Product::whereRaw("json_extract(specs, '$.table_group') = ?", [$tableGroup])->get();
+            foreach ($kitProducts as $product) {
+                ProductImage::where('product_slug', $product->slug)->delete();
+                foreach ($images as $img) {
+                    ProductImage::create(array_merge(['product_slug' => $product->slug], $img));
+                }
+            }
+        }
 
         // ===== KIT spec overrides — додаткові розміри після CSV-імпорту =====
         // KitTableSeeder заповнює лише базові 4 колонки для таблиць 10-12.

@@ -140,6 +140,16 @@
     color: #111;
 }
 
+/* ── Hero variant ── */
+.heroContainer {
+    width: 100%;
+}
+
+.heroWrapper {
+    aspect-ratio: 16 / 7 !important;
+    border-radius: 16px !important;
+}
+
 .bullets {
     position: absolute;
     bottom: 12px;
