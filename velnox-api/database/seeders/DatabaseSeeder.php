@@ -428,6 +428,16 @@ class DatabaseSeeder extends Seeder
                     'static_load_rating_co_kn' => 45.2,
                     'fatigue_load_limit_pu_kn' => 1.898,
                 ],
+                'oem_cross' => [
+                    '957305 AMAZONE',
+                    'CE066 AMAZONE',
+                    'CE078 AMAZONE',
+                    'LSQFR308 TBS.H.T.Zn FKL',
+                    'PN00042 RBF Housing',
+                    'SL308MR3L Z&S',
+                    'UCFE308 A01X1=UC308X1+FE308A01',
+                    'UCFE308 A01X1',
+                ],
                 'is_active' => true,
             ]
         );
@@ -457,7 +467,20 @@ class DatabaseSeeder extends Seeder
                     'dynamic_load_rating_cdyn_kn' => 80.8,
                     'fatigue_load_limit_pu_kn' => 2.503,
                 ],
-                'oem_cross'       => ['CJI309GGG+19000509', 'LSQFR 309-2TB.H.T', 'LEFG 209 TDT FKL'],
+                'oem_cross' => [
+                    '4000412 Farmet',
+                    'M14581 Farmet',
+                    '15626ND Farmet',
+                    '18888ND Farmet',
+                    'M10257 Farmet',
+                    'M13082ND Farmet',
+                    'M15626 Farmet',
+                    'M17627 Farmet',
+                    'M24607 Farmet',
+                    'CJI309GGG+19000509',
+                    'LSQFR 309-2TB.H.T',
+                    'LEFG 209 TDT FKL',
+                ],
                 'is_active' => true,
             ]
         );
@@ -491,6 +514,15 @@ class DatabaseSeeder extends Seeder
                     'static_load_rating_co_kn' => 31.5,
                     'fatigue_load_limit_pu_kn' => 1.32,
                 ],
+                'oem_cross' => [
+                    '17014180 GASPARDO',
+                    'M23400435 Gaspardo',
+                    'M23400436 Gaspardo',
+                    'M43400413 Gaspardo',
+                    'M43400468 Gaspardo',
+                    'M43400468R Gaspardo',
+                    'R17015300 Gaspardo',
+                ],
                 'is_active' => true,
             ]
         );
@@ -519,7 +551,16 @@ class DatabaseSeeder extends Seeder
                     'dynamic_load_rating_cdyn_kn' => 25.5,
                     'fatigue_load_limit_pu_kn' => 0.643,
                 ],
-                'oem_cross'       => ['31910034 Lemken', '3199372 Lemken', '3421370 Opall Agri'],
+                'oem_cross' => [
+                    '31910034 Lemken',
+                    '3199372 Lemken',
+                    '3421370 Opall Agri',
+                    'F232812 - 0200 INA/FAG Bearing',
+                    'GGF35A08',
+                    'GGME07 - AH07 INA/FAG Housing',
+                    'RCJ 35 35x118x39,9 4xM12',
+                    'UC 207 X1 SNR Bearing',
+                ],
                 'is_active' => true,
             ]
         );

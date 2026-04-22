@@ -13,13 +13,15 @@ interface BlueprintViewerProps {
     specs: ProductSpecs;
     hoveredSpec: string | null;
     onHoverSpec?: (key: string | null) => void;
+    schemaSrc?: string;
 }
 
 export function BlueprintViewer({
     article,
     specs,
     hoveredSpec,
-    onHoverSpec
+    onHoverSpec,
+    schemaSrc,
 }: BlueprintViewerProps) {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const t = useTranslations('product');
@@ -134,14 +136,14 @@ export function BlueprintViewer({
                     </button>
 
                     <Image
-                        src="/velnox/images/blueprint-base.png"
+                        src={schemaSrc ?? '/velnox/images/blueprint-base.png'}
                         alt={`Blueprint ${article}`}
                         fill
                         className={styles.blueprintImage}
                         priority
                     />
 
-                    {renderOverlay()}
+                    {!schemaSrc && renderOverlay()}
                 </div>
             </section>
 
@@ -159,12 +161,12 @@ export function BlueprintViewer({
                     <div className={styles.modalDrawing}>
                         <div style={{ position: 'relative', width: '100%', height: '100%', maxWidth: '800px', maxHeight: '800px', aspectRatio: '1/1' }}>
                             <Image
-                                src="/velnox/images/blueprint-base.png"
+                                src={schemaSrc ?? '/velnox/images/blueprint-base.png'}
                                 alt={`Blueprint ${article} Fullscreen`}
                                 fill
                                 className={styles.blueprintImage}
                             />
-                            {renderOverlay()}
+                            {!schemaSrc && renderOverlay()}
                         </div>
                     </div>
 
