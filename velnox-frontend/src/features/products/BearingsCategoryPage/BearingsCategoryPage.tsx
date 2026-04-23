@@ -375,17 +375,20 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
 
-    // Sticky header: використовуємо IntersectionObserver замість scroll offsetTop
-    // щоб уникнути циклу reflow (флікеру) при фіксованому позиціонуванні
+    // Sticky header: IntersectionObserver з перевіркою boundingClientRect.top
+    // Sticky вмикається ТІЛЬКИ коли sentinel прокручений ВГОРУ за межу viewport
+    // (top < 0), а НЕ коли він просто ще нижче екрана при завантаженні сторінки
     useEffect(() => {
         const sentinel = document.getElementById('sticky-sentinel');
         if (!sentinel || !searchHeaderRef.current) return;
         const obs = new IntersectionObserver(
             ([entry]) => {
                 if (!searchHeaderRef.current) return;
-                if (!entry.isIntersecting) {
+                if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+                    // Прокрутили повз sentinel — вмикаємо sticky
                     searchHeaderRef.current.classList.add(styles.isSticky);
                 } else {
+                    // Sentinel видимий АБО ще нижче viewport — вимикаємо sticky
                     searchHeaderRef.current.classList.remove(styles.isSticky);
                 }
             },
