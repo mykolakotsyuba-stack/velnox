@@ -375,9 +375,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
 
-    // Sticky header: IntersectionObserver з перевіркою boundingClientRect.top
-    // Sticky вмикається ТІЛЬКИ коли sentinel прокручений ВГОРУ за межу viewport
-    // (top < 0), а НЕ коли він просто ще нижче екрана при завантаженні сторінки
+    // Sticky header: IntersectionObserver без rootMargin
+    // Observer стріляє коли sentinel перетинає верхній край viewport.
+    // top < 0  → sentinel прокручено вгору → вмикаємо sticky
+    // top >= 0 → sentinel видимий або нижче viewport → вимикаємо sticky
     useEffect(() => {
         const sentinel = document.getElementById('sticky-sentinel');
         if (!sentinel || !searchHeaderRef.current) return;
@@ -385,14 +386,12 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             ([entry]) => {
                 if (!searchHeaderRef.current) return;
                 if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-                    // Прокрутили повз sentinel — вмикаємо sticky
                     searchHeaderRef.current.classList.add(styles.isSticky);
                 } else {
-                    // Sentinel видимий АБО ще нижче viewport — вимикаємо sticky
                     searchHeaderRef.current.classList.remove(styles.isSticky);
                 }
             },
-            { threshold: 0, rootMargin: '-100px 0px 0px 0px' }
+            { threshold: 0 }
         );
         obs.observe(sentinel);
         return () => obs.disconnect();
