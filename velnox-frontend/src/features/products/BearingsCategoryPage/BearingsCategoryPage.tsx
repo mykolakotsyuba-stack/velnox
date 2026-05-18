@@ -848,7 +848,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <Th col="part_number" label="Позначення Velnox" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="bearing_designation" label="Позначення підшипника" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="brand_name" label="Бренд" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="cross_reference" label="Перехресні аналоги" toggle={tog3} sortCol={sc3} sortDir={sd3} />
@@ -866,15 +865,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT3.map((row, i) => {
-                                        const slug3 = articleToSlug(row['part_number'] || '');
-                                        return (
+                                    {sortedT3.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
-                                                {row['part_number'] ? (
-                                                    <Link href={`/${locale}/products/bearings/${slug3}`} className={styles.designationLink}>{row['part_number']}</Link>
-                                                ) : '-'}
-                                            </td>
                                             <td data-label="Позначення підшипника">{renderTightCell(row['bearing_designation'])}</td>
                                             <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
                                             <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
@@ -890,10 +882,9 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row['dynamic_load_rating_cdyn_kn'] || '-'}</td>
                                             <td data-label="Граничне навантаження втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
                                         </tr>
-                                        );
-                                    })}
+                                    ))}
                                     {filteredT3.length === 0 && (
-                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={14} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -906,7 +897,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
                                     <tr>
-                                        <Th col="part_number" label="Позначення Velnox" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th col="bearing_designation" label="Позначення підшипника" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th col="brand_name" label="Бренд" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="cross_reference" label="Перехресні аналоги" toggle={tog4} sortCol={sc4} sortDir={sd4} />
@@ -926,15 +916,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT4.map((row, i) => {
-                                        const slug4 = articleToSlug(row['part_number'] || '');
-                                        return (
+                                    {sortedT4.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
-                                                {row['part_number'] ? (
-                                                    <Link href={`/${locale}/products/bearings/${slug4}`} className={styles.designationLink}>{row['part_number']}</Link>
-                                                ) : '-'}
-                                            </td>
                                             <td data-label="Позначення підшипника">{renderDesignationCell(row['bearing_designation'])}</td>
                                             <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
                                             <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
@@ -952,10 +935,9 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Діаметр отвору H (мм)">{row['hole_diameter_h_mm'] || '-'}</td>
                                             <td data-label="Маса (кг)">{row['mass_kg'] || '-'}</td>
                                         </tr>
-                                        );
-                                    })}
+                                    ))}
                                     {filteredT4.length === 0 && (
-                                        <tr><td colSpan={17} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -980,7 +962,6 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <Th col="part_number" label="Позначення Velnox" toggle={tog5} sortCol={sc5} sortDir={sd5} />
                                         <Th col="bearing_designation" label="Позначення підшипника" toggle={tog5} sortCol={sc5} sortDir={sd5} />
                                         <Th col="brand_name" label="Бренд" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="cross_reference" label="Перехресні аналоги" toggle={tog5} sortCol={sc5} sortDir={sd5} />
@@ -998,15 +979,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT5.map((row, i) => {
-                                        const slug5 = articleToSlug(row['part_number'] || '');
-                                        return (
+                                    {sortedT5.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
-                                                {row['part_number'] ? (
-                                                    <Link href={`/${locale}/products/bearings/${slug5}`} className={styles.designationLink}>{row['part_number']}</Link>
-                                                ) : '-'}
-                                            </td>
                                             <td data-label="Позначення підшипника">{renderDesignationCell(row['bearing_designation'])}</td>
                                             <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
                                             <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
@@ -1022,10 +996,9 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row['dynamic_load_rating_cdyn_kn'] || '-'}</td>
                                             <td data-label="Граничне навантаження втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
                                         </tr>
-                                        );
-                                    })}
+                                    ))}
                                     {filteredT5.length === 0 && (
-                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={14} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>

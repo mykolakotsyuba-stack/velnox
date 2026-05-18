@@ -141,6 +141,29 @@ export const TABLE_GROUP_IMAGES: Record<string, string[]> = {
     ],
 };
 
+// Slug → table_group mapping (used until API returns table_group directly)
+const SLUG_TO_TABLE_GROUP: Record<string, string> = {
+    // bearings-t1: BUQ standard 2xx series
+    'buq-207-104-2x3h': 'bearings-t1',
+    'buq-207-106-2x3h': 'bearings-t1',
+    'buq-207-2x3h':     'bearings-t1',
+    'buq-208-108-2x3h': 'bearings-t1',
+    'buq-208-2x3h':     'bearings-t1',
+    'buq-209-2t3h':     'bearings-t1',
+    'buq-210-2x3h':     'bearings-t1',
+    'buq-214-2t3h':     'bearings-t1',
+    // bearings-t2: BUQ-308-2T3H-DS
+    'buq-308-2t3h-ds':  'bearings-t2',
+    // bearings-t3: BUQ-309-2T3H
+    'buq-309-2t3h':     'bearings-t3',
+    // bearings-t4: BUCR-SG-309-S2
+    'bucr-sg-309-s2':   'bearings-t4',
+    // bearings-t5: BUP-207-X3L
+    'bup-207-x3l':      'bearings-t5',
+    // hubs-t1
+    '28071300-vx':      'hubs-t1',
+};
+
 // Fallback galleries
 const BUQ_FALLBACK = [
     '/velnox/images/products/buq-bearing-photo.png',
@@ -154,7 +177,8 @@ const DEFAULT_FALLBACK = [
 ];
 
 export function getProductImages(slug: string, article: string, tableGroup?: string | null): string[] {
-    if (tableGroup && TABLE_GROUP_IMAGES[tableGroup]) return TABLE_GROUP_IMAGES[tableGroup];
+    const tg = tableGroup ?? SLUG_TO_TABLE_GROUP[slug];
+    if (tg && TABLE_GROUP_IMAGES[tg]) return TABLE_GROUP_IMAGES[tg];
     if (PRODUCT_IMAGES[slug]) return PRODUCT_IMAGES[slug];
     if (article.toUpperCase().startsWith('BUQ')) return BUQ_FALLBACK;
     return DEFAULT_FALLBACK;
