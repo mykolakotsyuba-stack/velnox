@@ -68,12 +68,13 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
     const blueprint = (product.schema_key ? SCHEMA_CONFIG[product.schema_key] : null)
         ?? BLUEPRINT_MAP[product.slug];
 
-    // Статична схема для продуктів без інтерактивного SVG (BUCR, BUP, Hubs тощо)
-    // Table-group schema wins over DB schema; used only when no interactive blueprint exists
+    // Схема з каталогу (table_group) завжди має пріоритет — для всіх продуктів
     const sharedSchemaSrc = tg ? `/velnox/images/products/_shared/${tg}/schema.png` : null;
-    const staticSchemaSrc = !blueprint
-        ? (sharedSchemaSrc ?? product.images?.find(i => i.type === 'schema')?.path ?? null)
-        : null;
+    // Якщо є схема таблиці — показуємо її (замість старого SVG); інакше fallback на DB
+    const staticSchemaSrc = sharedSchemaSrc
+        ?? (!blueprint ? (product.images?.find(i => i.type === 'schema')?.path ?? null) : null);
+    // BuqBlueprintViewer показується тільки якщо немає нової схеми з каталогу
+    const activeBlueprintConfig = sharedSchemaSrc ? null : blueprint;
 
     return (
         <article className={styles.page}>
@@ -126,13 +127,13 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                                 </div>
                                 <div className={styles.drawingColumn}>
                                     <PhotoGallery images={demoImages} altText={product.article} />
-                                    {blueprint && (
-                                        <BuqBlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={blueprint.dimLabels} svgSrc={blueprint.svgSrc} viewBox={blueprint.viewBox} />
+                                    {activeBlueprintConfig && (
+                                        <BuqBlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={activeBlueprintConfig.dimLabels} svgSrc={activeBlueprintConfig.svgSrc} viewBox={activeBlueprintConfig.viewBox} />
                                     )}
-                                    {!blueprint && staticSchemaSrc && (
+                                    {!activeBlueprintConfig && staticSchemaSrc && (
                                         <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
                                     )}
-                                    {!blueprint && !staticSchemaSrc && product.category_id === 'bearings' && (
+                                    {!activeBlueprintConfig && !staticSchemaSrc && product.category_id === 'bearings' && (
                                         <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
                                     )}
                                     <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
@@ -173,13 +174,13 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                                     )}
                                 </div>
                                 <div className={styles.drawingColumn}>
-                                    {blueprint && (
-                                        <BuqBlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={blueprint.dimLabels} svgSrc={blueprint.svgSrc} viewBox={blueprint.viewBox} />
+                                    {activeBlueprintConfig && (
+                                        <BuqBlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={activeBlueprintConfig.dimLabels} svgSrc={activeBlueprintConfig.svgSrc} viewBox={activeBlueprintConfig.viewBox} />
                                     )}
-                                    {!blueprint && staticSchemaSrc && (
+                                    {!activeBlueprintConfig && staticSchemaSrc && (
                                         <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
                                     )}
-                                    {!blueprint && !staticSchemaSrc && product.category_id === 'bearings' && (
+                                    {!activeBlueprintConfig && !staticSchemaSrc && product.category_id === 'bearings' && (
                                         <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
                                     )}
                                     <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
