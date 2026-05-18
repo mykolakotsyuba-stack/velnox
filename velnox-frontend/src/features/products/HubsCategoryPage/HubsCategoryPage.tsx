@@ -198,6 +198,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
     const app1Ref = useInView(0.2);
     const app2Ref = useInView(0.2);
     const app3Ref = useInView(0.2);
+    const ctaRef = useInView();
 
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
@@ -229,9 +230,9 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             try {
                 const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
                 const [res1, res2, res3] = await Promise.all([
-                    fetch(`${base}/v1/products/tables/hubs-table1`),
-                    fetch(`${base}/v1/products/tables/hubs-table2`),
-                    fetch(`${base}/v1/products/tables/hubs-table3`),
+                    fetch(`${base}/v1/products/tables/hubs-t1`),
+                    fetch(`${base}/v1/products/tables/hubs-t2`),
+                    fetch(`${base}/v1/products/tables/hubs-t3`),
                 ]);
                 const [data1, data2, data3] = await Promise.all([res1.json(), res2.json(), res3.json()]);
                 setTable1Data(Array.isArray(data1) ? data1 : []);
@@ -516,54 +517,49 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table1.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table1.desc')}</p>
-                        <div className={styles.diagramPlaceholder}>[ СХЕМА УЩІЛЬНЮВАЛЬНОЇ СИСТЕМИ ]</div>
+                        <div className={styles.tableDiagramContainer}>
+                            <Image src="/velnox/images/products/_shared/hubs-t1/schema.webp" alt="Hub Table 1 Technical Drawing" width={1200} height={800} style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }} loading="lazy" />
+                        </div>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
                                     <tr>
-                                        <Th col="Part Number" label="Part Number" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Bearing designation" label="Bearing" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="Brand name" label="Brand" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Brand name'] || []} selectedFilters={filters['Brand name'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="J (mm)" label="J" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['J (mm)'] || []} selectedFilters={filters['J (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="D (mm)" label="D" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['D (mm)'] || []} selectedFilters={filters['D (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="D1 (mm)" label="D1" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['D1 (mm)'] || []} selectedFilters={filters['D1 (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th 
-                                            col="d (mm)" label="d" toggle={tog1} sortCol={sc1} sortDir={sd1} 
-                                            
-                                        hasFilter filterOptions={allOptions['d (mm)'] || []} selectedFilters={filters['d (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="C (mm)" label="C" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['C (mm)'] || []} selectedFilters={filters['C (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="H/T" label="H/T" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['H/T'] || []} selectedFilters={filters['H/T'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="G" label="G" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['G'] || []} selectedFilters={filters['G'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="L (mm)" label="L" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L (mm)'] || []} selectedFilters={filters['L (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="L1 (mm)" label="L1" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L1 (mm)'] || []} selectedFilters={filters['L1 (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="F (mm)" label="F" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['F (mm)'] || []} selectedFilters={filters['F (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Mass (kg)" label="Mass" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Mass (kg)'] || []} selectedFilters={filters['Mass (kg)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Cdyn (kN)" label="Cdyn" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Cdyn (kN)'] || []} selectedFilters={filters['Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Co (kN)" label="Co" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Co (kN)'] || []} selectedFilters={filters['Co (kN)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Pu (kN)" label="Pu" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Pu (kN)'] || []} selectedFilters={filters['Pu (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Part Number" label="Позначення Velnox" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="J (mm)" label="Діаметр ділильного кола J (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['J (mm)'] || []} selectedFilters={filters['J (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D (mm)" label="Зовнішній діаметр D (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['D (mm)'] || []} selectedFilters={filters['D (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D1 (mm)" label="Зовнішній діаметр D1 (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['D1 (mm)'] || []} selectedFilters={filters['D1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="d (mm)" label="Діаметр отвору d (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['d (mm)'] || []} selectedFilters={filters['d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="C (mm)" label="Відстань між отворами C (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['C (mm)'] || []} selectedFilters={filters['C (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="H/T" label="Отвір / Різьба H/T" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['H/T'] || []} selectedFilters={filters['H/T'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="G" label="Внутрішня різьба G" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['G'] || []} selectedFilters={filters['G'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L (mm)" label="Загальна довжина L (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L (mm)'] || []} selectedFilters={filters['L (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L1 (mm)" label="Глибина розточки L1 (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L1 (mm)'] || []} selectedFilters={filters['L1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="F (mm)" label="Довжина різьбової частини F (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['F (mm)'] || []} selectedFilters={filters['F (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Mass (kg)" label="Маса (кг)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Mass (kg)'] || []} selectedFilters={filters['Mass (kg)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Cdyn (kN)" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Cdyn (kN)'] || []} selectedFilters={filters['Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Co (kN)" label="Статична вантажо-підйомність Co (кН)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Co (kN)'] || []} selectedFilters={filters['Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Pu (kN)" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Pu (kN)'] || []} selectedFilters={filters['Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {sortedT1.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td data-label="Bearing">{renderDesignationCell(row['Bearing designation'])}</td>
-                                            <td data-label="Brand">{renderBrandCell(row['Brand name'])}</td>
-                                            <td data-label="J">{row['J (mm)']}</td>
-                                            <td data-label="D">{row['D (mm)']}</td>
-                                            <td data-label="D1">{row['D1 (mm)']}</td>
-                                            <td data-label="d">{row['d (mm)']}</td>
-                                            <td data-label="C">{row['C (mm)']}</td>
+                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>{row['Part Number']}</td>
+                                            <td data-label="J (мм)">{row['J (mm)']}</td>
+                                            <td data-label="D (мм)">{row['D (mm)']}</td>
+                                            <td data-label="D1 (мм)">{row['D1 (mm)']}</td>
+                                            <td data-label="d (мм)">{row['d (mm)']}</td>
+                                            <td data-label="C (мм)">{row['C (mm)']}</td>
                                             <td data-label="H/T">{row['H/T']}</td>
                                             <td data-label="G">{row['G']}</td>
-                                            <td data-label="L">{row['L (mm)']}</td>
-                                            <td data-label="L1">{row['L1 (mm)']}</td>
-                                            <td data-label="F">{row['F (mm)']}</td>
-                                            <td data-label="Mass">{row['Mass (kg)']}</td>
-                                            <td data-label="Cdyn">{row['Cdyn (kN)']}</td>
-                                            <td data-label="Co">{row['Co (kN)']}</td>
-                                            <td data-label="Pu">{row['Pu (kN)']}</td>
+                                            <td data-label="L (мм)">{row['L (mm)']}</td>
+                                            <td data-label="L1 (мм)">{row['L1 (mm)']}</td>
+                                            <td data-label="F (мм)">{row['F (mm)']}</td>
+                                            <td data-label="Маса (кг)">{row['Mass (kg)']}</td>
+                                            <td data-label="Cdyn (кН)">{row['Cdyn (kN)']}</td>
+                                            <td data-label="Co (кН)">{row['Co (kN)']}</td>
+                                            <td data-label="Pu (кН)">{row['Pu (kN)']}</td>
                                             <td className={styles.actionCol}>
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('hubsPage.block2.btn_request')}
@@ -572,7 +568,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                         </tr>
                                     ))}
                                     {sortedT1.length === 0 && (
-                                        <tr><td colSpan={18} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -622,54 +618,49 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table2.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table2.desc')}</p>
-                        <div className={styles.diagramPlaceholder}>[ СХЕМА УЩІЛЬНЮВАЛЬНОЇ СИСТЕМИ ]</div>
+                        <div className={styles.tableDiagramContainer}>
+                            <Image src="/velnox/images/products/_shared/hubs-t2/schema.webp" alt="Hub Table 2 Technical Drawing" width={1200} height={800} style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }} loading="lazy" />
+                        </div>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
                                     <tr>
-                                        <Th col="Part Number" label="Part Number" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Bearing designation" label="Bearing" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="Brand name" label="Brand" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Brand name'] || []} selectedFilters={filters['Brand name'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="J (mm)" label="J" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['J (mm)'] || []} selectedFilters={filters['J (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="D (mm)" label="D" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['D (mm)'] || []} selectedFilters={filters['D (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="H/T" label="H/T" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['H/T'] || []} selectedFilters={filters['H/T'] || []} onFilterChange={handleFilterChange} />
-                                        <Th 
-                                            col="d (mm)" label="d" toggle={tog2} sortCol={sc2} sortDir={sd2} 
-                                            
-                                        hasFilter filterOptions={allOptions['d (mm)'] || []} selectedFilters={filters['d (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="C (mm)" label="C" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['C (mm)'] || []} selectedFilters={filters['C (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="M" label="M" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['M'] || []} selectedFilters={filters['M'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="L (mm)" label="L" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['L (mm)'] || []} selectedFilters={filters['L (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="L1 (mm)" label="L1" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['L1 (mm)'] || []} selectedFilters={filters['L1 (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="E (mm)" label="E" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['E (mm)'] || []} selectedFilters={filters['E (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="F (mm)" label="F" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['F (mm)'] || []} selectedFilters={filters['F (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Mass (kg)" label="Mass" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Mass (kg)'] || []} selectedFilters={filters['Mass (kg)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Cdyn (kN)" label="Cdyn" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Cdyn (kN)'] || []} selectedFilters={filters['Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Co (kN)" label="Co" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Co (kN)'] || []} selectedFilters={filters['Co (kN)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Pu (kN)" label="Pu" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Pu (kN)'] || []} selectedFilters={filters['Pu (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Part Number" label="Позначення Velnox" toggle={tog2} sortCol={sc2} sortDir={sd2} />
+                                        <Th col="J (mm)" label="Діаметр ділильного кола J (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['J (mm)'] || []} selectedFilters={filters['J (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D (mm)" label="Зовнішній діаметр D (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['D (mm)'] || []} selectedFilters={filters['D (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="H/T" label="Отвір / Різьба H/T" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['H/T'] || []} selectedFilters={filters['H/T'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="d (mm)" label="Діаметр отвору d (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['d (mm)'] || []} selectedFilters={filters['d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="C (mm)" label="Відстань між отворами C (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['C (mm)'] || []} selectedFilters={filters['C (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="M" label="Різьба M" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['M'] || []} selectedFilters={filters['M'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L (mm)" label="Загальна довжина L (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['L (mm)'] || []} selectedFilters={filters['L (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L1 (mm)" label="Глибина розточки L1 (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['L1 (mm)'] || []} selectedFilters={filters['L1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="E (mm)" label="Відстань E (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['E (mm)'] || []} selectedFilters={filters['E (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="F (mm)" label="Довжина різьбової частини F (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['F (mm)'] || []} selectedFilters={filters['F (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Mass (kg)" label="Маса (кг)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Mass (kg)'] || []} selectedFilters={filters['Mass (kg)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Cdyn (kN)" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Cdyn (kN)'] || []} selectedFilters={filters['Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Co (kN)" label="Статична вантажо-підйомність Co (кН)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Co (kN)'] || []} selectedFilters={filters['Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Pu (kN)" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['Pu (kN)'] || []} selectedFilters={filters['Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {sortedT2.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td data-label="Bearing">{renderDesignationCell(row['Bearing designation'])}</td>
-                                            <td data-label="Brand">{renderBrandCell(row['Brand name'])}</td>
-                                            <td data-label="J">{row['J (mm)']}</td>
-                                            <td data-label="D">{row['D (mm)']}</td>
+                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>{row['Part Number']}</td>
+                                            <td data-label="J (мм)">{row['J (mm)']}</td>
+                                            <td data-label="D (мм)">{row['D (mm)']}</td>
                                             <td data-label="H/T">{row['H/T']}</td>
-                                            <td data-label="d">{row['d (mm)']}</td>
-                                            <td data-label="C">{row['C (mm)']}</td>
+                                            <td data-label="d (мм)">{row['d (mm)']}</td>
+                                            <td data-label="C (мм)">{row['C (mm)']}</td>
                                             <td data-label="M">{row['M']}</td>
-                                            <td data-label="L">{row['L (mm)']}</td>
-                                            <td data-label="L1">{row['L1 (mm)']}</td>
-                                            <td data-label="E">{row['E (mm)']}</td>
-                                            <td data-label="F">{row['F (mm)']}</td>
-                                            <td data-label="Mass">{row['Mass (kg)']}</td>
-                                            <td data-label="Cdyn">{row['Cdyn (kN)']}</td>
-                                            <td data-label="Co">{row['Co (kN)']}</td>
-                                            <td data-label="Pu">{row['Pu (kN)']}</td>
+                                            <td data-label="L (мм)">{row['L (mm)']}</td>
+                                            <td data-label="L1 (мм)">{row['L1 (mm)']}</td>
+                                            <td data-label="E (мм)">{row['E (mm)']}</td>
+                                            <td data-label="F (мм)">{row['F (mm)']}</td>
+                                            <td data-label="Маса (кг)">{row['Mass (kg)']}</td>
+                                            <td data-label="Cdyn (кН)">{row['Cdyn (kN)']}</td>
+                                            <td data-label="Co (кН)">{row['Co (kN)']}</td>
+                                            <td data-label="Pu (кН)">{row['Pu (kN)']}</td>
                                             <td className={styles.actionCol}>
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('hubsPage.block2.btn_request')}
@@ -678,7 +669,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                         </tr>
                                     ))}
                                     {sortedT2.length === 0 && (
-                                        <tr><td colSpan={18} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -726,48 +717,43 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table3.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table3.desc')}</p>
-                        <div className={styles.diagramPlaceholder}>[ СХЕМА УЩІЛЬНЮВАЛЬНОЇ СИСТЕМИ ]</div>
+                        <div className={styles.tableDiagramContainer}>
+                            <Image src="/velnox/images/products/_shared/hubs-t3/schema.webp" alt="Hub Table 3 Technical Drawing" width={1200} height={800} style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }} loading="lazy" />
+                        </div>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
                                     <tr>
-                                        <Th col="Part Number" label="Part Number" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Bearing designation" label="Bearing" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="Brand name" label="Brand" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Brand name'] || []} selectedFilters={filters['Brand name'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="J (mm)" label="J" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['J (mm)'] || []} selectedFilters={filters['J (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="D (mm)" label="D" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['D (mm)'] || []} selectedFilters={filters['D (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="D1 (mm)" label="D1" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['D1 (mm)'] || []} selectedFilters={filters['D1 (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th 
-                                            col="d (mm)" label="d" toggle={tog3} sortCol={sc3} sortDir={sd3} 
-                                            
-                                        hasFilter filterOptions={allOptions['d (mm)'] || []} selectedFilters={filters['d (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="H/T" label="H/T" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['H/T'] || []} selectedFilters={filters['H/T'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="L (mm)" label="L" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['L (mm)'] || []} selectedFilters={filters['L (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="B (mm)" label="B" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['B (mm)'] || []} selectedFilters={filters['B (mm)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Mass (kg)" label="Mass" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Mass (kg)'] || []} selectedFilters={filters['Mass (kg)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Cdyn (kN)" label="Cdyn" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Cdyn (kN)'] || []} selectedFilters={filters['Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Co (kN)" label="Co" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Co (kN)'] || []} selectedFilters={filters['Co (kN)'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Pu (kN)" label="Pu" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Pu (kN)'] || []} selectedFilters={filters['Pu (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Part Number" label="Позначення Velnox" toggle={tog3} sortCol={sc3} sortDir={sd3} />
+                                        <Th col="J (mm)" label="Діаметр ділильного кола J (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['J (mm)'] || []} selectedFilters={filters['J (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D (mm)" label="Зовнішній діаметр D (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['D (mm)'] || []} selectedFilters={filters['D (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="D1 (mm)" label="Зовнішній діаметр D1 (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['D1 (mm)'] || []} selectedFilters={filters['D1 (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="d (mm)" label="Діаметр отвору d (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['d (mm)'] || []} selectedFilters={filters['d (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="H/T" label="Отвір / Різьба H/T" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['H/T'] || []} selectedFilters={filters['H/T'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L (mm)" label="Загальна довжина L (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['L (mm)'] || []} selectedFilters={filters['L (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="B (mm)" label="Ширина B (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['B (mm)'] || []} selectedFilters={filters['B (mm)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Mass (kg)" label="Маса (кг)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Mass (kg)'] || []} selectedFilters={filters['Mass (kg)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Cdyn (kN)" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Cdyn (kN)'] || []} selectedFilters={filters['Cdyn (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Co (kN)" label="Статична вантажо-підйомність Co (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Co (kN)'] || []} selectedFilters={filters['Co (kN)'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Pu (kN)" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['Pu (kN)'] || []} selectedFilters={filters['Pu (kN)'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {sortedT3.map((row, i) => (
                                         <tr key={i}>
-                                            <td data-label="Part Number" className={styles.partNumCell}>{row['Part Number']}</td>
-                                            <td data-label="Bearing">{renderDesignationCell(row['Bearing designation'])}</td>
-                                            <td data-label="Brand">{renderBrandCell(row['Brand name'])}</td>
-                                            <td data-label="J">{row['J (mm)']}</td>
-                                            <td data-label="D">{row['D (mm)']}</td>
-                                            <td data-label="D1">{row['D1 (mm)']}</td>
-                                            <td data-label="d">{row['d (mm)']}</td>
+                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>{row['Part Number']}</td>
+                                            <td data-label="J (мм)">{row['J (mm)']}</td>
+                                            <td data-label="D (мм)">{row['D (mm)']}</td>
+                                            <td data-label="D1 (мм)">{row['D1 (mm)']}</td>
+                                            <td data-label="d (мм)">{row['d (mm)']}</td>
                                             <td data-label="H/T">{row['H/T']}</td>
-                                            <td data-label="L">{row['L (mm)']}</td>
-                                            <td data-label="B">{row['B (mm)']}</td>
-                                            <td data-label="Mass">{row['Mass (kg)']}</td>
-                                            <td data-label="Cdyn">{row['Cdyn (kN)']}</td>
-                                            <td data-label="Co">{row['Co (kN)']}</td>
-                                            <td data-label="Pu">{row['Pu (kN)']}</td>
+                                            <td data-label="L (мм)">{row['L (mm)']}</td>
+                                            <td data-label="B (мм)">{row['B (mm)']}</td>
+                                            <td data-label="Маса (кг)">{row['Mass (kg)']}</td>
+                                            <td data-label="Cdyn (кН)">{row['Cdyn (kN)']}</td>
+                                            <td data-label="Co (кН)">{row['Co (kN)']}</td>
+                                            <td data-label="Pu (кН)">{row['Pu (kN)']}</td>
                                             <td className={styles.actionCol}>
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
                                                     {t('hubsPage.block2.btn_request')}
@@ -776,13 +762,43 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                         </tr>
                                     ))}
                                     {sortedT3.length === 0 && (
-                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={13} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
+                </div>
+            </section>
+
+            {/* CTA SECTION */}
+            <section className={styles.cta} ref={ctaRef.ref}>
+                <div className={`${styles.container} ${ctaRef.inView ? styles.animIn : ''}`}>
+                    <h2 className={styles.ctaTitle}>{t('hubsPage.block3.title')}</h2>
+                    <p className={styles.ctaText}>{t('hubsPage.block3.text')}</p>
+                    <div className={styles.ctaButtons}>
+                        <button className={styles.btnPrimary} onClick={() => setModalProduct('General Engineering Support')}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            {t('hubsPage.block3.btn_contact')}
+                        </button>
+                        <button className={styles.btnSecondary}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                            </svg>
+                            {t('hubsPage.block3.btn_pdf')}
+                        </button>
+                        <button className={styles.btnSecondary}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                <line x1="12" y1="22.08" x2="12" y2="12" />
+                            </svg>
+                            {t('hubsPage.block3.btn_cad')}
+                        </button>
+                    </div>
                 </div>
             </section>
         </main>
