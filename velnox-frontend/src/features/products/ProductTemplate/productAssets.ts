@@ -96,6 +96,51 @@ export const PRODUCT_3D: Record<string, { file: string; sizeMb: string }> = {
     'bup-207-x3l':    { file: '/velnox/models/BUP-207-X3L.glb',     sizeMb: '11' },
 };
 
+// Shared images per table_group (all products in same table share assets)
+export const TABLE_GROUP_IMAGES: Record<string, string[]> = {
+    'bearings-t1': [
+        '/velnox/images/products/_shared/bearings-t1/main.jpeg',
+        '/velnox/images/products/_shared/bearings-t1/drawing-1.png',
+        '/velnox/images/products/_shared/bearings-t1/drawing-2.png',
+        '/velnox/images/products/_shared/bearings-t1/drawing-3.png',
+        '/velnox/images/products/_shared/bearings-t1/schema.png',
+    ],
+    'bearings-t2': [
+        '/velnox/images/products/_shared/bearings-t2/main.jpeg',
+        '/velnox/images/products/_shared/bearings-t2/drawing-1.png',
+        '/velnox/images/products/_shared/bearings-t2/drawing-2.png',
+        '/velnox/images/products/_shared/bearings-t2/drawing-3.png',
+        '/velnox/images/products/_shared/bearings-t2/schema.png',
+    ],
+    'bearings-t3': [
+        '/velnox/images/products/_shared/bearings-t3/main.jpeg',
+        '/velnox/images/products/_shared/bearings-t3/drawing-1.png',
+        '/velnox/images/products/_shared/bearings-t3/drawing-2.png',
+        '/velnox/images/products/_shared/bearings-t3/drawing-3.png',
+        '/velnox/images/products/_shared/bearings-t3/schema.png',
+    ],
+    'bearings-t4': [
+        '/velnox/images/products/_shared/bearings-t4/main.jpeg',
+        '/velnox/images/products/_shared/bearings-t4/drawing-1.png',
+        '/velnox/images/products/_shared/bearings-t4/drawing-2.png',
+        '/velnox/images/products/_shared/bearings-t4/schema.png',
+    ],
+    'bearings-t5': [
+        '/velnox/images/products/_shared/bearings-t5/main.jpeg',
+        '/velnox/images/products/_shared/bearings-t5/drawing-1.png',
+        '/velnox/images/products/_shared/bearings-t5/drawing-2.png',
+        '/velnox/images/products/_shared/bearings-t5/drawing-3.png',
+        '/velnox/images/products/_shared/bearings-t5/schema.png',
+    ],
+    'hubs-t1': [
+        '/velnox/images/products/_shared/hubs-t1/main.jpeg',
+        '/velnox/images/products/_shared/hubs-t1/drawing-1.png',
+        '/velnox/images/products/_shared/hubs-t1/drawing-2.png',
+        '/velnox/images/products/_shared/hubs-t1/drawing-3.png',
+        '/velnox/images/products/_shared/hubs-t1/schema.png',
+    ],
+};
+
 // Fallback galleries
 const BUQ_FALLBACK = [
     '/velnox/images/products/buq-bearing-photo.png',
@@ -108,7 +153,8 @@ const DEFAULT_FALLBACK = [
     '/velnox/images/products/bearing-photo-2.webp',
 ];
 
-export function getProductImages(slug: string, article: string): string[] {
+export function getProductImages(slug: string, article: string, tableGroup?: string | null): string[] {
+    if (tableGroup && TABLE_GROUP_IMAGES[tableGroup]) return TABLE_GROUP_IMAGES[tableGroup];
     if (PRODUCT_IMAGES[slug]) return PRODUCT_IMAGES[slug];
     if (article.toUpperCase().startsWith('BUQ')) return BUQ_FALLBACK;
     return DEFAULT_FALLBACK;

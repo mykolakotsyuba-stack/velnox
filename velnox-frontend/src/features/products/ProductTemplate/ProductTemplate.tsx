@@ -58,7 +58,7 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
     const sealingDesc = translation?.sealing_desc;
 
     const apiImages = product.images?.filter(i => i.type !== 'schema').map(i => i.path);
-    const demoImages = apiImages?.length ? apiImages : getProductImages(product.slug, product.article);
+    const demoImages = apiImages?.length ? apiImages : getProductImages(product.slug, product.article, product.table_group);
 
     const model3d = PRODUCT_3D[product.slug];
 

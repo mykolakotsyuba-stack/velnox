@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './hubs.module.css';
 import type { Locale, ProductListItem } from '@/entities/product/model/types';
 
@@ -189,6 +190,10 @@ function useSortableTable(data: any[]) {
     }, [data, sortCol, sortDir]);
 
     return { sorted, sortCol, sortDir, toggle };
+}
+
+function articleToSlug(article: string): string {
+    return article.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
 export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
@@ -543,9 +548,13 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT1.map((row, i) => (
+                                    {sortedT1.map((row, i) => {
+                                        const slugT1 = articleToSlug(row['part_number'] || '');
+                                        return (
                                         <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>{row['part_number']}</td>
+                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/hubs/${slugT1}`} className={styles.designationLink}>{row['part_number']}</Link>
+                                            </td>
                                             <td data-label="J (мм)">{row['j_mm']}</td>
                                             <td data-label="D (мм)">{row['D_mm']}</td>
                                             <td data-label="D1 (мм)">{row['D1_mm']}</td>
@@ -566,7 +575,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))}
+                                        );
+                                    })}
                                     {sortedT1.length === 0 && (
                                         <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
@@ -644,9 +654,13 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT2.map((row, i) => (
+                                    {sortedT2.map((row, i) => {
+                                        const slugT2 = articleToSlug(row['part_number'] || '');
+                                        return (
                                         <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>{row['part_number']}</td>
+                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/hubs/${slugT2}`} className={styles.designationLink}>{row['part_number']}</Link>
+                                            </td>
                                             <td data-label="J (мм)">{row['j_mm']}</td>
                                             <td data-label="D (мм)">{row['D_mm']}</td>
                                             <td data-label="H/T">{row['hole_thread']}</td>
@@ -667,7 +681,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))}
+                                        );
+                                    })}
                                     {sortedT2.length === 0 && (
                                         <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
@@ -740,9 +755,13 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT3.map((row, i) => (
+                                    {sortedT3.map((row, i) => {
+                                        const slugT3 = articleToSlug(row['part_number'] || '');
+                                        return (
                                         <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>{row['part_number']}</td>
+                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/hubs/${slugT3}`} className={styles.designationLink}>{row['part_number']}</Link>
+                                            </td>
                                             <td data-label="J (мм)">{row['j_mm']}</td>
                                             <td data-label="D (мм)">{row['D_mm']}</td>
                                             <td data-label="D1 (мм)">{row['D1_mm']}</td>
@@ -760,7 +779,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))}
+                                        );
+                                    })}
                                     {sortedT3.length === 0 && (
                                         <tr><td colSpan={13} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}

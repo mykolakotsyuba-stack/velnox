@@ -47,6 +47,7 @@ export interface ProductDTO {
     model_3d_url?: string | null;
     drawing_url?: string | null;
     schema_key?: string | null;
+    table_group?: string | null;
     images?: ProductImage[];
     translations: ProductTranslations;
 }
