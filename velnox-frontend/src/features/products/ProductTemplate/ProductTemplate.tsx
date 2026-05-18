@@ -11,7 +11,7 @@ import { Installations } from './blocks/Installations';
 import { CtaBlock } from '@/widgets/CtaBlock';
 import { PhotoGallery } from './blocks/PhotoGallery';
 import { ModelBlock3D } from './blocks/VisualPanel';
-import { getProductImages, PRODUCT_3D } from './productAssets';
+import { getProductImages, PRODUCT_3D, TABLE_GROUP_IMAGES, SLUG_TO_TABLE_GROUP } from './productAssets';
 import { BLUEPRINT_MAP, SCHEMA_CONFIG } from './blueprintAssets';
 import { DistributorsBlock } from '@/widgets/DistributorsBlock';
 import { ProductHeader } from './blocks/ProductHeader';
@@ -57,8 +57,11 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
     const productName = translation?.product_name ?? product.article;
     const sealingDesc = translation?.sealing_desc;
 
+    // Table-group images always win over per-product DB images
+    const tg = product.table_group ?? SLUG_TO_TABLE_GROUP[product.slug];
+    const tableGroupImgs = tg ? TABLE_GROUP_IMAGES[tg] : null;
     const apiImages = product.images?.filter(i => i.type !== 'schema').map(i => i.path);
-    const demoImages = apiImages?.length ? apiImages : getProductImages(product.slug, product.article, product.table_group);
+    const demoImages = tableGroupImgs ?? (apiImages?.length ? apiImages : getProductImages(product.slug, product.article));
 
     const model3d = PRODUCT_3D[product.slug];
 
@@ -66,8 +69,10 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
         ?? BLUEPRINT_MAP[product.slug];
 
     // Статична схема для продуктів без інтерактивного SVG (BUCR, BUP тощо)
+    // Table-group schema wins over DB schema
+    const sharedSchemaSrc = tg ? `/velnox/images/products/_shared/${tg}/schema.png` : null;
     const staticSchemaSrc = !blueprint
-        ? (product.images?.find(i => i.type === 'schema')?.path ?? null)
+        ? (sharedSchemaSrc ?? product.images?.find(i => i.type === 'schema')?.path ?? null)
         : null;
 
     return (

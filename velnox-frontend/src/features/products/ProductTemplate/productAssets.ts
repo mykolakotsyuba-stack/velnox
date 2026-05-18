@@ -142,7 +142,7 @@ export const TABLE_GROUP_IMAGES: Record<string, string[]> = {
 };
 
 // Slug → table_group mapping (used until API returns table_group directly)
-const SLUG_TO_TABLE_GROUP: Record<string, string> = {
+export const SLUG_TO_TABLE_GROUP: Record<string, string> = {
     // bearings-t1: BUQ standard 2xx series
     'buq-207-104-2x3h': 'bearings-t1',
     'buq-207-106-2x3h': 'bearings-t1',
