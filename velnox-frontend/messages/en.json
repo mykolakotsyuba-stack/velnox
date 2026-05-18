@@ -401,7 +401,10 @@
     "F_mm": "Threaded Part Length F (mm)",
     "cdyn_kn": "Dynamic Load Rating Cdyn (kN)",
     "co_kn": "Static Load Rating Co (kN)",
-    "pu_kn": "Fatigue Load Limit Pu (kN)"
+    "pu_kn": "Fatigue Load Limit Pu (kN)",
+    "E_mm": "E (mm) — Distance E",
+    "M_thread": "M — Thread M",
+    "B_mm": "B (mm) — Width B"
   },
   "news": {
     "categories": {
