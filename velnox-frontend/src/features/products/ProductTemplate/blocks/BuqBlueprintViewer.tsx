@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Maximize2, X, PanelRight } from 'lucide-react';
 import type { SpecItem } from '@/entities/product/model/types';
 
@@ -89,8 +89,18 @@ export function BuqBlueprintViewer({
     dimLabels = [], svgSrc = '/velnox/images/schemes/bearings-schema.svg', viewBox = SVG_VB_DEFAULT,
 }: BuqBlueprintViewerProps) {
     const [isFullscreen, setIsFullscreen] = useState(false);
-    const [showModalSpecs, setShowModalSpecs] = useState(false);
+    const [showModalSpecs, setShowModalSpecs] = useState(true);
     const t = useTranslations('product');
+
+    // Block page scroll when modal is open
+    useEffect(() => {
+        if (isFullscreen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [isFullscreen]);
 
     const effectiveViewBox = viewBox || SVG_VB_DEFAULT;
 
@@ -157,6 +167,7 @@ export function BuqBlueprintViewer({
                                 specs={modalSpecs}
                                 hoveredSpec={hoveredSpec}
                                 onHoverSpec={onHoverSpec}
+                                isModal
                             />
                         </div>
                     )}
