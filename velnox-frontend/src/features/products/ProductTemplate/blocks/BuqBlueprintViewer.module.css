@@ -170,14 +170,20 @@
 }
 
 /* ─── Fullscreen modal ──────────────────────────────────────────────────── */
+/*
+ * CHAIN: overlay(fixed,inset:0,stretch) → content(flex:1) → drawing(column,flex:1)
+ *        → wrapper(flex:1) → img(100%×100%)
+ * Rule: NEVER use align-items:center on overlay — height:100% on flex child
+ *       does NOT resolve correctly when parent uses align-items:center.
+ *       Always use align-items:stretch so children fill the container.
+ */
 .modalOverlay {
     position: fixed;
     inset: 0;
     background: rgba(8, 10, 14, 0.95);
     z-index: 9999;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
     padding: 16px;
     opacity: 0;
     pointer-events: none;
@@ -190,11 +196,11 @@
 }
 
 .modalContent {
+    flex: 1;
+    min-height: 0;
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -202,28 +208,22 @@
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8);
 }
 
-/* specs panel hidden by default — drawing fills 100% width */
+/* drawing column — flex column so wrapper can use flex:1 for height */
 .modalDrawing {
     flex: 1;
-    background: #ffffff;
-    position: relative;
-    padding: 24px;
+    min-width: 0;
     min-height: 0;
     display: flex;
-    align-items: stretch;
-    justify-content: center;
+    flex-direction: column;
+    padding: 24px;
     overflow: hidden;
 }
 
-/* when specs panel is open, drawing shrinks to give specs 320px */
-.modalWithSpecs .modalDrawing {
-    flex: 1;
-}
-
 .modalImageWrapper {
+    flex: 1;
+    min-height: 0;
     position: relative;
-    width: 100%;
-    height: 100%;
+    overflow: hidden;
 }
 
 .modalSpecs {
