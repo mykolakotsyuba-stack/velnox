@@ -162,8 +162,8 @@ class DatabaseSeeder extends Seeder
                 'slug'            => 'bearings-t1',
                 'category_id'     => $bearingsCatId,
                 'spec_columns'    => json_encode(['d_mm', 'd_inch', 'A1_mm', 'A2_mm', 'J_mm', 'L_mm', 'N_mm', 'A_mm', 'mass_kg', 'cdyn_kn', 'co_kn', 'pu_kn']),
-                'highlight_config' => '{"d_mm":[{"x":1838.0,"y":-13487.1,"label":"d"}],"d_inch":[{"x":1838.0,"y":-13487.1,"label":"d"}],"J_mm":[{"x":1261.7,"y":-13226.6,"label":"J"}],"A2_mm":[{"x":1565.3,"y":-13233.1,"label":"A2"}],"A1_mm":[{"x":1674.6,"y":-13197.0,"label":"A1"}],"L_mm":[{"x":1265.6,"y":-13175.7,"label":"L"}],"N_mm":[{"x":1074.8,"y":-13798.5,"label":"N"}],"A_mm":[{"x":1254.4,"y":-13759.2,"label":"A"},{"x":1266.0,"y":-13135.3,"label":"A"},{"x":1708.6,"y":-13157.1,"label":"A"}]}',
-                'schema_viewbox'  => '892 -13810 1480 720',
+                'highlight_config' => '{"d_mm":[{"label":"d","x":1319,"y":1416}],"d_inch":[{"label":"d","x":1319,"y":1416}],"J_mm":[{"label":"J","x":555,"y":1788}],"A2_mm":[{"label":"A2","x":1063,"y":1786}],"A1_mm":[{"label":"A1","x":1124,"y":1830}],"L_mm":[{"label":"L","x":556,"y":1837}],"N_mm":[{"label":"N","x":270,"y":988}],"A_mm":[{"label":"A","x":492,"y":974},{"label":"A","x":491,"y":1890},{"label":"A","x":1153,"y":1868}]}',
+                'schema_viewbox'  => '100 820 1680 1180',
                 'sort_order'      => 1,
             ]
         );
