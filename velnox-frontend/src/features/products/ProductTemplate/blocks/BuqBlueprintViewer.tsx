@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { Maximize2, X } from 'lucide-react';
-import type { ProductSpecs } from '@/entities/product/model/types';
+import type { SpecItem } from '@/entities/product/model/types';
+
+type ProductSpecs = Record<string, string | number | null>;
 import { useTranslations } from 'next-intl';
 import { SpecsTable } from './SpecsTable';
 import styles from './BuqBlueprintViewer.module.css';
@@ -24,6 +26,13 @@ const SVG_VB_DEFAULT = '892 -13810 1480 720';
 function parseVbH(vb: string): number {
     const parts = vb.trim().split(/\s+/);
     return parseFloat(parts[3]) || 720;
+}
+
+function viewBoxAspect(vb: string): string {
+    const parts = vb.trim().split(/\s+/);
+    const w = parseFloat(parts[2]);
+    const h = parseFloat(parts[3]);
+    return w > 0 && h > 0 ? `${w} / ${h}` : '1480 / 720';
 }
 
 function DimensionOverlay({ specs, hoveredSpec, dimLabels, viewBox }: {
@@ -103,6 +112,7 @@ export function BuqBlueprintViewer({
                 </h2>
                 <div
                     className={styles.blueprintWrapper}
+                    style={{ aspectRatio: viewBoxAspect(viewBox) }}
                     onClick={() => setIsFullscreen(true)}
                     title={t('expand', { defaultMessage: 'Розгорнути' })}
                 >
@@ -122,7 +132,7 @@ export function BuqBlueprintViewer({
                         {innerContent}
                     </div>
                     <div className={styles.modalSpecs}>
-                        <SpecsTable specs={specs} hoveredSpec={hoveredSpec} onHoverSpec={onHoverSpec} />
+                        <SpecsTable specs={Object.entries(specs).filter(([,v]) => v != null).map(([key, value]) => ({ key, label: key, value: String(value), unit: '' } as SpecItem))} hoveredSpec={hoveredSpec} onHoverSpec={onHoverSpec} />
                     </div>
                 </div>
             </div>
