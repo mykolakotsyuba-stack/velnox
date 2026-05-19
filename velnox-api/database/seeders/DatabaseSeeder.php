@@ -197,8 +197,8 @@ class DatabaseSeeder extends Seeder
         }
 
         // =========================================================
-        // 5b. PRODUCT TABLES: bearings-t2 through bearings-t5
-        //     (table records, translations, and assets only — no products)
+        // 5b. PRODUCT TABLE: bearings-t2
+        //     (table record, translations, and assets only — no products)
         // =========================================================
         $extraTables = [
             [
@@ -214,52 +214,10 @@ class DatabaseSeeder extends Seeder
                     ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t2/schema.svg',    'sort_order' => 1],
                 ],
             ],
-            [
-                'slug'       => 'bearings-t3',
-                'sort_order' => 3,
-                'names'      => ['uk' => 'BUQ-309-2T3H — Таблиця 3', 'en' => 'BUQ-309-2T3H — Table 3', 'pl' => 'BUQ-309-2T3H — Tabela 3'],
-                'assets'     => [
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t3/main.jpeg',     'sort_order' => 1],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t3/drawing-1.png', 'sort_order' => 2],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t3/drawing-2.png', 'sort_order' => 3],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t3/drawing-3.png', 'sort_order' => 4],
-                    ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t3/schema.png',    'sort_order' => 1],
-                    ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t3/schema.svg',    'sort_order' => 1],
-                ],
-            ],
-            [
-                'slug'       => 'bearings-t4',
-                'sort_order' => 4,
-                'names'      => ['uk' => 'BUCR-SG-309-S2 — Таблиця 4', 'en' => 'BUCR-SG-309-S2 — Table 4', 'pl' => 'BUCR-SG-309-S2 — Tabela 4'],
-                'assets'     => [
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t4/main.jpeg',     'sort_order' => 1],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t4/drawing-1.png', 'sort_order' => 2],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t4/drawing-2.png', 'sort_order' => 3],
-                    // no drawing-3 for bearings-t4
-                    ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t4/schema.png',    'sort_order' => 1],
-                    ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t4/schema.svg',    'sort_order' => 1],
-                ],
-            ],
-            [
-                'slug'       => 'bearings-t5',
-                'sort_order' => 5,
-                'names'      => ['uk' => 'BUP-207-X3L — Таблиця 5', 'en' => 'BUP-207-X3L — Table 5', 'pl' => 'BUP-207-X3L — Tabela 5'],
-                'assets'     => [
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t5/main.jpeg',     'sort_order' => 1],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t5/drawing-1.png', 'sort_order' => 2],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t5/drawing-2.png', 'sort_order' => 3],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t5/drawing-3.png', 'sort_order' => 4],
-                    ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t5/schema.png',    'sort_order' => 1],
-                    ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t5/schema.svg',    'sort_order' => 1],
-                ],
-            ],
         ];
 
         $t2SpecCols = ['d_mm','A1_mm','A2_mm','J_mm','L_mm','H_T','A_mm','mass_kg','cdyn_kn','co_kn','pu_kn'];
-        $t3SpecCols = ['d_mm','J_mm','L_mm','B_mm','mass_kg','cdyn_kn','co_kn','pu_kn'];
-        $t4SpecCols = ['d_mm','D_mm','L1_mm','L2_mm','J_mm','A_mm','mass_kg'];
-        $t5SpecCols = ['d_mm','D_mm','J_mm','A_mm','B_mm','mass_kg','cdyn_kn','co_kn'];
-        $extraSpecCols = ['bearings-t2' => $t2SpecCols, 'bearings-t3' => $t3SpecCols, 'bearings-t4' => $t4SpecCols, 'bearings-t5' => $t5SpecCols];
+        $extraSpecCols = ['bearings-t2' => $t2SpecCols];
 
         foreach ($extraTables as $tbl) {
             DB::table('product_tables')->updateOrInsert(
@@ -290,78 +248,6 @@ class DatabaseSeeder extends Seeder
                 );
             }
         }
-
-        // ── HUBS product tables ──
-        $hubTables = [
-            [
-                'slug'   => 'hubs-t1',
-                'names'  => ['uk' => 'HORSCH Disc Harrow Hubs 28071300 VX', 'en' => 'HORSCH Disc Harrow Hubs 28071300 VX', 'pl' => 'HORSCH Disc Harrow Hubs 28071300 VX'],
-                'sort_order' => 1,
-                'assets' => [
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/hubs-t1/main.jpeg',    'sort_order' => 1],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/hubs-t1/drawing-1.png','sort_order' => 2],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/hubs-t1/drawing-2.png','sort_order' => 3],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/hubs-t1/drawing-3.png','sort_order' => 4],
-                    ['type' => 'schema_png', 'path' => '/velnox/images/products/hubs-t1/schema.png',  'sort_order' => 1],
-                    ['type' => 'schema_svg', 'path' => '/velnox/images/products/hubs-t1/schema.svg',  'sort_order' => 1],
-                ],
-                'highlight_config' => json_encode(new \stdClass()),
-                'schema_viewbox'   => null,
-                'category_slug'    => 'hubs',
-            ],
-            [
-                'slug'   => 'hubs-t2',
-                'names'  => ['uk' => 'Cutting Nodes BAA-0004 VX', 'en' => 'Cutting Nodes BAA-0004 VX', 'pl' => 'Cutting Nodes BAA-0004 VX'],
-                'sort_order' => 2,
-                'assets' => [
-                    ['type' => 'model_3d', 'path' => '/velnox/models/BAA-0004.glb', 'sort_order' => 1],
-                ],
-                'highlight_config' => json_encode(new \stdClass()),
-                'schema_viewbox'   => null,
-                'category_slug'    => 'hubs',
-            ],
-            [
-                'slug'   => 'hubs-t3',
-                'names'  => ['uk' => 'Seeder Hubs PL-140 VX', 'en' => 'Seeder Hubs PL-140 VX', 'pl' => 'Seeder Hubs PL-140 VX'],
-                'sort_order' => 3,
-                'assets' => [
-                    ['type' => 'model_3d', 'path' => '/velnox/models/PL-140.glb', 'sort_order' => 1],
-                ],
-                'highlight_config' => json_encode(new \stdClass()),
-                'schema_viewbox'   => null,
-                'category_slug'    => 'hubs',
-            ],
-        ];
-
-        $hubsCategory = DB::table('categories')->where('slug', 'hubs')->value('id');
-        foreach ($hubTables as $tbl) {
-            DB::table('product_tables')->updateOrInsert(
-                ['slug' => $tbl['slug']],
-                [
-                    'slug'             => $tbl['slug'],
-                    'category_id'      => $hubsCategory,
-                    'highlight_config' => $tbl['highlight_config'],
-                    'schema_viewbox'   => $tbl['schema_viewbox'],
-                    'sort_order'       => $tbl['sort_order'],
-                ]
-            );
-            $tId = DB::table('product_tables')->where('slug', $tbl['slug'])->value('id');
-            foreach (['uk', 'en', 'pl'] as $locale) {
-                DB::table('translations')->updateOrInsert(
-                    ['entity_type' => 'product_table', 'entity_id' => $tId, 'locale' => $locale, 'field' => 'name'],
-                    ['value' => $tbl['names'][$locale]]
-                );
-            }
-            foreach ($tbl['assets'] as $asset) {
-                DB::table('product_assets')->updateOrInsert(
-                    ['entity_type' => 'product_table', 'entity_id' => $tId, 'type' => $asset['type'], 'path' => $asset['path']],
-                    ['sort_order' => $asset['sort_order']]
-                );
-            }
-        }
-        $hubT1 = DB::table('product_tables')->where('slug', 'hubs-t1')->value('id');
-        $hubT2 = DB::table('product_tables')->where('slug', 'hubs-t2')->value('id');
-        $hubT3 = DB::table('product_tables')->where('slug', 'hubs-t3')->value('id');
 
         // =========================================================
         // 6. PRODUCTS — bearings-t1 (8 products, authoritative data)
@@ -648,12 +534,9 @@ class DatabaseSeeder extends Seeder
         }
 
         // =========================================================
-        // 7. PRODUCTS — bearings-t2 through bearings-t5
+        // 7. PRODUCTS — bearings-t2
         // =========================================================
         $t2 = $tableId('bearings-t2');
-        $t3 = $tableId('bearings-t3');
-        $t4 = $tableId('bearings-t4');
-        $t5 = $tableId('bearings-t5');
 
         $extraProducts = [
             // ── bearings-t2: BUQ-308-2T3H-DS ──
@@ -697,92 +580,6 @@ class DatabaseSeeder extends Seeder
                 'meta_title_uk' => 'VELNOX BUQ-308-2T3H-DS — вузол котка d40, AMAZONE CE066',
                 'meta_desc_uk'  => 'Підшипниковий вузол VELNOX BUQ-308-2T3H-DS (d=40 мм, Cdyn 62.3 кН) для котків. Пряма заміна AMAZONE CE066, 957305, SNR UC 308 X1.',
             ],
-            // ── bearings-t3: BUQ-309-2T3H ──
-            [
-                'slug'     => 'buq-309-2t3h',
-                'article'  => 'BUQ 309-2T3H',
-                'table_id' => $t3,
-                'specs'    => [
-                    'd_mm'    => '45',
-                    'J_mm'    => '105',
-                    'L_mm'    => '137',
-                    'B_mm'    => '51.1',
-                    'mass_kg' => '2.5',
-                    'cdyn_kn' => '80.8',
-                    'co_kn'   => '59.6',
-                    'pu_kn'   => '2.503',
-                ],
-                'cross_refs' => [
-                    ['brand' => 'FKL',    'value' => 'LSQFR 309 2TB.H.T.'],
-                    ['brand' => 'CJI',    'value' => '309 GGG+19000509'],
-                    ['brand' => 'Farmet', 'value' => '4000412 / M14581 / 15626ND / 18888ND'],
-                    ['brand' => 'Farmet', 'value' => 'M10257 / M13082ND / M15626 / M17627'],
-                    ['brand' => 'Farmet', 'value' => 'M24607 / R17015300'],
-                ],
-                'name_uk' => 'BUQ 309-2T3H',
-                'name_en' => 'BUQ 309-2T3H',
-                'name_pl' => 'BUQ 309-2T3H',
-                'desc_uk' => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори серії 309 для прикочувальних котків з внутрішнім діаметром d = 45 мм. Кріпильна база J = 105 мм, довжина корпусу L = 137 мм, ширина внутрішнього кільця B = 51.1 мм, Cdyn = 80.8 кН, Co = 59.6 кН, Pu = 2.503 кН. Посилена герметизація — трикромкове ущільнення в парі з двокромковим з кожної сторони — забезпечує ресурс у вузлах з ударними навантаженнями та абразивним середовищем. Пряма заміна FKL LSQFR 309 2TB.H.T та вузла CJI 309 GGG+19000509; використовується у прикочувальних котках Farmet (арт. 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607, R17015300).',
-                'meta_title_uk' => 'VELNOX BUQ 309-2T3H — вузол котка d45, Farmet M14581 LEFG 209 TDT',
-                'meta_desc_uk'  => 'Фланцевий вузол VELNOX BUQ 309-2T3H, d=45 мм, Cdyn 80.8 кН. Пряма заміна Farmet M14581, 4000412, FKL LEFG 209 TDT. Для котків.',
-            ],
-            // ── bearings-t4: BUCR-SG-309-S2 ──
-            [
-                'slug'     => 'bucr-sg-309-s2',
-                'article'  => 'BUCR-SG-309-S2',
-                'table_id' => $t4,
-                'specs'    => [
-                    'd_mm'    => '45',
-                    'D_mm'    => '74',
-                    'L1_mm'   => '152',
-                    'L2_mm'   => '150',
-                    'J_mm'    => '120',
-                    'A_mm'    => '66.9',
-                    'mass_kg' => '5.6',
-                ],
-                'cross_refs' => [
-                    ['brand' => 'Gaspardo', 'value' => '17014180 / M23400435 / M23400436'],
-                    ['brand' => 'Gaspardo', 'value' => 'M43400413 / M43400468 / M43400468R'],
-                    ['brand' => 'Gaspardo', 'value' => 'R17015300'],
-                    ['brand' => 'FKL',      'value' => 'ZGKU 309 2S'],
-                    ['brand' => 'RBF',      'value' => 'PN00102'],
-                ],
-                'name_uk' => 'BUCR-SG-309-S2',
-                'name_en' => 'BUCR-SG-309-S2',
-                'name_pl' => 'BUCR-SG-309-S2',
-                'desc_uk' => 'Тандемний (здвоєний) підшипниковий вузол типу Gaspardo з двома симетричними корпусними секціями (L1 = 152 мм, L2 = 150 мм) та посадковим діаметром d = 45 мм, діаметром корпусу D = 74 мм, масою 5.6 кг. Монтажні бази J1 = J2 = 120 мм, кріплення 4×M12×1.25 з кожного боку, висота A = 66.9 мм; конструкція розрахована на асиметричне навантаження секційних вузлів посівних і ґрунтообробних комплексів. Посилена багатокромкова система ущільнень захищає підшипник від ґрунтової вологи, насіннєвого пилу та абразиву під час постійної польової роботи. Пряма заміна OEM-вузлів Gaspardo (арт. 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300), FKL ZGKU 309 2S та RBF PN00102; застосовується у висівних секціях та прикочувальних котках техніки Gaspardo/Maschio.',
-                'meta_title_uk' => 'VELNOX BUCR-SG-309-S2 — тандемний вузол Gaspardo M43400468',
-                'meta_desc_uk'  => 'Тандемний вузол VELNOX BUCR-SG-309-S2 для Gaspardo, d=45 мм, 4×M12, маса 5.6 кг. Заміна Gaspardo M43400468, 17014180, FKL ZGKU 309 2S.',
-            ],
-            // ── bearings-t5: BUP-207-X3L ──
-            [
-                'slug'     => 'bup-207-x3l',
-                'article'  => 'BUP 207-X3L',
-                'table_id' => $t5,
-                'specs'    => [
-                    'd_mm'    => '35',
-                    'D_mm'    => '125',
-                    'J_mm'    => '100',
-                    'A_mm'    => '40',
-                    'B_mm'    => '28.3',
-                    'mass_kg' => '1.7',
-                    'cdyn_kn' => '25.5',
-                    'co_kn'   => '15.3',
-                ],
-                'cross_refs' => [
-                    ['brand' => 'Lemken',   'value' => '31910034 / 3199372'],
-                    ['brand' => 'Opall Agri', 'value' => '3421370'],
-                    ['brand' => 'INA/FAG',  'value' => 'F232812-0200'],
-                    ['brand' => 'PEER',     'value' => '207XTR-R-DFC-A534'],
-                    ['brand' => 'SNR',      'value' => 'UC 207 X1'],
-                ],
-                'name_uk' => 'BUP 207-X3L',
-                'name_en' => 'BUP 207-X3L',
-                'name_pl' => 'BUP 207-X3L',
-                'desc_uk' => 'Підшипниковий вузол у круглому фланцевому корпусі типу RCJ 35 / UC 207 X1 для ґрунтообробної техніки Lemken з внутрішнім діаметром d = 35 мм та зовнішнім діаметром корпусу D = 125 мм. Монтажна база J = 100 мм під різьблення M12, загальна ширина A = 40 мм, ширина внутрішнього кільця B = 28.3 мм, Cdyn = 25.5 кН, Co = 15.3 кН, маса 1.7 кг. Система захисту — багатокромкове ущільнення серії X3L (трикромкове контактне з базової сторони + посилене фронтальне), розраховане на ударні навантаження ґрунтообробного диска. Повний геометричний аналог Lemken 31910034 / 3199372, Opall Agri 3421370, INA/FAG F232812-0200, PEER 207XTR-R-DFC-A534 та SNR UC 207 X1; застосовується у дискових боронах Lemken серій Rubin, Heliodor, Kristall.',
-                'meta_title_uk' => 'VELNOX BUP 207-X3L — вузол Lemken d35, 31910034, UC 207 X1',
-                'meta_desc_uk'  => 'Підшипниковий вузол VELNOX BUP 207-X3L для Lemken, d=35 мм, D=125 мм, Cdyn 25.5 кН. Заміна Lemken 31910034, 3199372, SNR UC 207 X1.',
-            ],
         ];
 
         foreach ($extraProducts as $p) {
@@ -822,144 +619,5 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // ── HUBS PRODUCTS ──
-        $hubProducts = [
-            [
-                'slug'    => '28071300-vx',
-                'article' => '28071300 VX',
-                'table_id' => $hubT1,
-                'specs'   => [
-                    'hub_J_mm'        => '106',
-                    'hub_D_mm'        => '127.3',
-                    'hub_D1_mm'       => '64.2',
-                    'hub_d_mm'        => '55.7',
-                    'hub_C_mm'        => '38',
-                    'hub_hole_thread' => 'M12',
-                    'hub_G'           => '2xM20',
-                    'hub_L_mm'        => '106.5',
-                    'hub_L1_mm'       => '2',
-                    'hub_F_mm'        => '25',
-                    'mass_kg'         => '3.81',
-                    'cdyn_kn'         => '48.8',
-                    'co_kn'           => '35.3',
-                    'pu_kn'           => '1.483',
-                ],
-                'cross_refs' => [
-                    ['brand' => 'HORSCH', 'value' => '28071300'],
-                    ['brand' => 'HORSCH', 'value' => '28077800'],
-                    ['brand' => 'HORSCH', 'value' => '28077900'],
-                    ['brand' => 'HORSCH', 'value' => '28085600'],
-                    ['brand' => 'HORSCH', 'value' => 'PN60041'],
-                ],
-                'name_uk' => 'Маточина дискової борони 28071300 VX',
-                'name_en' => 'Disc Harrow Hub 28071300 VX',
-                'name_pl' => 'Piasta brony talerzowej 28071300 VX',
-                'desc_uk' => 'Маточина дискової борони VELNOX 28071300 VX — аналог HORSCH. Призначена для дискових борон Horsch Tiger LT та подібних серій. Виготовлена з ​​якісної сталі з прецизійним підшипниковим вузлом для тривалого ресурсу в агресивних ґрунтових умовах.',
-                'desc_en' => 'VELNOX 28071300 VX disc harrow hub — HORSCH equivalent. Designed for Horsch Tiger LT and similar series disc harrows. Made from quality steel with precision bearing assembly for long service life in demanding soil conditions.',
-                'desc_pl' => 'Piasta brony talerzowej VELNOX 28071300 VX — odpowiednik HORSCH. Przeznaczona do bron talerzowych Horsch Tiger LT i podobnych serii. Wykonana z wysokiej jakości stali z precyzyjnym węzłem łożyskowym dla długiej żywotności w wymagających warunkach glebowych.',
-            ],
-            [
-                'slug'    => 'baa-0004-vx',
-                'article' => 'BAA-0004 VX',
-                'table_id' => $hubT2,
-                'specs'   => [
-                    'hub_J_mm'        => '98',
-                    'hub_D_mm'        => '117',
-                    'hub_hole_thread' => '6xM12x1.25',
-                    'hub_d_mm'        => '27.95',
-                    'hub_C_mm'        => '25.4',
-                    'hub_M_thread'    => 'M22x1.5',
-                    'hub_L_mm'        => '102',
-                    'hub_L1_mm'       => '60',
-                    'hub_E_mm'        => '17',
-                    'hub_F_mm'        => '25',
-                    'mass_kg'         => '2.16',
-                    'cdyn_kn'         => '42.9',
-                    'co_kn'           => '36.3',
-                    'pu_kn'           => '1.53',
-                ],
-                'cross_refs' => [
-                    ['brand' => 'SKF',  'value' => '8395.TDA.5.05.015'],
-                    ['brand' => 'NSK',  'value' => 'AGHU2898X4E-DSCS'],
-                    ['brand' => 'FBJ',  'value' => 'AHU28117A-01'],
-                    ['brand' => 'INA',  'value' => 'BAA0004'],
-                    ['brand' => 'PEER', 'value' => 'F-673270.04.TILL'],
-                    ['brand' => 'FKL',  'value' => 'HUB-30MM'],
-                ],
-                'name_uk' => 'Ріжучий вузол BAA-0004 VX',
-                'name_en' => 'Cutting Node BAA-0004 VX',
-                'name_pl' => 'Węzeł tnący BAA-0004 VX',
-                'desc_uk' => 'Ріжучий вузол VELNOX BAA-0004 VX — застосовується у дискових плугах та сектор-культиваторах провідних виробників: Bednar, Köckerling, Gaspardo, Holmer та ін. Точна геометрія та якісний підшипниковий вузол забезпечують надійну роботу в умовах підвищеного навантаження.',
-                'desc_en' => 'VELNOX BAA-0004 VX cutting node — used in disc ploughs and cultivators from leading manufacturers: Bednar, Köckerling, Gaspardo, Holmer etc. Precise geometry and quality bearing assembly ensure reliable operation under high-load conditions.',
-                'desc_pl' => 'Węzeł tnący VELNOX BAA-0004 VX — stosowany w pługach talerzowych i kultywatorach czołowych producentów: Bednar, Köckerling, Gaspardo, Holmer i in. Precyzyjna geometria i wysokiej jakości węzeł łożyskowy zapewniają niezawodną pracę w warunkach dużych obciążeń.',
-            ],
-            [
-                'slug'    => 'pl-140-vx',
-                'article' => 'PL-140 VX',
-                'table_id' => $hubT3,
-                'specs'   => [
-                    'hub_J_mm'        => '104',
-                    'hub_D_mm'        => '140',
-                    'hub_D1_mm'       => '62',
-                    'hub_d_mm'        => '30',
-                    'hub_hole_thread' => 'M12',
-                    'hub_L_mm'        => '35',
-                    'hub_B_mm'        => '23.8',
-                    'mass_kg'         => '1.5',
-                    'cdyn_kn'         => '31',
-                    'co_kn'           => '22.2',
-                    'pu_kn'           => '0.932',
-                ],
-                'cross_refs' => [
-                    ['brand' => 'Vaderstad', 'value' => '405814'],
-                    ['brand' => 'Vaderstad', 'value' => '418531'],
-                    ['brand' => 'Vaderstad', 'value' => '420013'],
-                    ['brand' => 'Vaderstad', 'value' => '420832'],
-                    ['brand' => 'FKL',       'value' => 'PL-140'],
-                    ['brand' => 'FBJ',       'value' => 'SAH017'],
-                ],
-                'name_uk' => 'Маточина сівалки PL-140 VX',
-                'name_en' => 'Seeder Hub PL-140 VX',
-                'name_pl' => 'Piasta siewnika PL-140 VX',
-                'desc_uk' => 'Маточина сівалки VELNOX PL-140 VX — аналог FKL/FBJ PL-140 / SAH017. Призначена для швидкісних сівалок Väderstad Rapid та подібних серій. Забезпечує точне та плавне ущільнення ґрунту при посіві.',
-                'desc_en' => 'VELNOX PL-140 VX seeder hub — FKL/FBJ PL-140 / SAH017 equivalent. Designed for Väderstad Rapid and similar high-speed seeders. Ensures precise and smooth soil packing during seeding.',
-                'desc_pl' => 'Piasta siewnika VELNOX PL-140 VX — odpowiednik FKL/FBJ PL-140 / SAH017. Przeznaczona do siewników szybkobieżnych Väderstad Rapid i podobnych serii. Zapewnia precyzyjne i płynne zagęszczenie gleby podczas siewu.',
-            ],
-        ];
-
-        foreach ($hubProducts as $p) {
-            DB::table('products')->updateOrInsert(
-                ['slug' => $p['slug']],
-                ['slug' => $p['slug'], 'article' => $p['article'], 'product_table_id' => $p['table_id']]
-            );
-            $productId = DB::table('products')->where('slug', $p['slug'])->value('id');
-
-            foreach ($p['specs'] as $key => $value) {
-                $sid = $specId($key);
-                if (!$sid) continue;
-                DB::table('product_specs')->updateOrInsert(
-                    ['product_id' => $productId, 'spec_id' => $sid],
-                    ['value' => $value]
-                );
-            }
-
-            DB::table('product_cross_refs')->where('product_id', $productId)->delete();
-            foreach ($p['cross_refs'] as $ref) {
-                DB::table('product_cross_refs')->insert(['product_id' => $productId, 'brand' => $ref['brand'], 'value' => $ref['value'], 'type' => $ref['type'] ?? 'bearing']);
-            }
-
-            foreach (['uk', 'en', 'pl'] as $locale) {
-                DB::table('translations')->updateOrInsert(
-                    ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
-                    ['value' => $p["name_{$locale}"]]
-                );
-                if (isset($p["desc_{$locale}"])) {
-                    DB::table('translations')->updateOrInsert(
-                        ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'desc'],
-                        ['value' => $p["desc_{$locale}"]]
-                    );
-                }
-            }
-        }
     }
 }
