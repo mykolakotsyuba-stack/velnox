@@ -3,471 +3,208 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Product;
-use App\Http\Resources\ProductResource;
-use App\Http\Resources\ProductListResource;
-use Illuminate\Http\Request;
+use App\Models\Translation;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     /**
-     * Список товарів з фільтрацією
-     * GET /api/v1/products?category=hubs&cdyn_min=30&locale=en
+     * GET /api/v1/products?category=bearings&locale=uk
      */
     public function index(Request $request): JsonResponse
     {
         $locale = $request->get('locale', 'en');
 
-        $query = Product::with('category')
-            ->where('is_active', true);
+        $query = DB::table('products')
+            ->join('product_tables', 'products.product_table_id', '=', 'product_tables.id')
+            ->join('categories', 'product_tables.category_id', '=', 'categories.id')
+            ->select('products.id', 'products.slug', 'products.article', 'categories.slug as category_slug');
 
-        // Фільтр по категорії
         if ($category = $request->get('category')) {
-            $query->whereHas('category', fn($q) => $q->where('slug', $category));
+            $query->where('categories.slug', $category);
         }
 
-        // Пошук за артикулом або позначенням
-        if ($search = $request->get('q')) {
-            $lower = mb_strtolower($search);
-            $query->where(function ($q) use ($search, $lower) {
-                $q->whereRaw("LOWER(article) LIKE ?", ["%{$lower}%"])
-                  ->orWhereRaw("LOWER(fkl_designation) LIKE ?", ["%{$lower}%"])
-                  ->orWhereRaw("LOWER(oem_cross) LIKE ?", ["%{$lower}%"])
-                  ->orWhereRaw("LOWER(json_extract(specs, '$.\"Cross-Reference\"')) LIKE ?", ["%{$lower}%"])
-                  ->orWhereRaw("LOWER(json_extract(specs, '$.cross_reference')) LIKE ?", ["%{$lower}%"])
-                  ->orWhereRaw("LOWER(json_extract(specs, '$.\"Bearing designation\"')) LIKE ?", ["%{$lower}%"])
-                  ->orWhereRaw("LOWER(json_extract(specs, '$.bearing_designation')) LIKE ?", ["%{$lower}%"]);
-            });
-        }
+        $products   = $query->get();
+        $productIds = $products->pluck('id')->toArray();
 
-        // Фільтр по Cdyn
-        if ($min = $request->get('cdyn_min')) {
-            $query->whereRaw("(specs->>'Cdyn')::numeric >= ?", [$min]);
-        }
-        if ($max = $request->get('cdyn_max')) {
-            $query->whereRaw("(specs->>'Cdyn')::numeric <= ?", [$max]);
-        }
+        $names = DB::table('translations')
+            ->where('entity_type', 'product')
+            ->whereIn('entity_id', $productIds)
+            ->whereIn('locale', [$locale, 'en'])
+            ->where('field', 'name')
+            ->get()
+            ->groupBy('entity_id');
 
-        // Пошук по OEM cross ref
-        if ($oem = $request->get('oem')) {
-            $query->whereJsonContains('oem_cross', $oem);
-        }
+        $data = $products->map(function ($p) use ($names, $locale) {
+            $nameRows = $names->get($p->id, collect());
+            $name = $nameRows->firstWhere('locale', $locale)?->value
+                 ?? $nameRows->firstWhere('locale', 'en')?->value
+                 ?? $p->article;
 
-        $perPage = $request->get('per_page', 24);
-        $products = $query->paginate($perPage);
+            return [
+                'slug'     => $p->slug,
+                'article'  => $p->article,
+                'category' => $p->category_slug,
+                'name'     => $name,
+            ];
+        });
 
         return response()->json([
-            'data' => $products->getCollection()->map(
-                fn($p) => [
-                    'slug'      => $p->slug,
-                    'article'   => $p->article,
-                    'category'  => $p->category?->slug,
-                    'oem_cross' => $p->oem_cross ?? [],
-                    'specs'     => $p->specs,
-                    'name'      => $p->getTranslation($locale)['product_name'] ?? $p->article,
-                ]
-            ),
-            'meta' => [
-                'total'        => $products->total(),
-                'per_page'     => $products->perPage(),
-                'current_page' => $products->currentPage(),
-                'last_page'    => $products->lastPage(),
-            ],
+            'data' => $data,
+            'meta' => ['total' => $data->count()],
         ]);
     }
 
     /**
-     * Картка товару — повний JSON за форматом ТЗ
-     * GET /api/v1/products/{slug}?locale=en
+     * GET /api/v1/products/{slug}?locale=uk
+     *
+     * Full product card:
+     *   specs   → ordered array [{key, label, value, unit}]
+     *   images  → product-level overrides table-level by type (RULE 4)
      */
     public function show(string $slug, Request $request): JsonResponse
     {
-        $product = Product::with(['category', 'images'])
-            ->where('slug', $slug)
-            ->where('is_active', true)
-            ->firstOrFail();
+        $locale  = $request->get('locale', 'en');
+        $product = Product::with('productTable.category')->where('slug', $slug)->firstOrFail();
 
-        return response()->json($product->toApiArray(
-            $request->get('locale', 'en')
-        ));
-    }
+        // ── Specs ──
+        $rawSpecs = DB::table('product_specs')
+            ->join('spec_definitions', 'product_specs.spec_id', '=', 'spec_definitions.id')
+            ->where('product_specs.product_id', $product->id)
+            ->orderBy('spec_definitions.sort_order')
+            ->select('spec_definitions.id as spec_def_id', 'spec_definitions.key', 'product_specs.value')
+            ->get();
 
-    /**
-     * Table 2: Performance Data — GET /api/v1/products/tables/performance
-     */
-    public function tablePerformance(Request $request): JsonResponse
-    {
-        $locale = $request->get('locale', 'en');
+        $specDefIds = $rawSpecs->pluck('spec_def_id')->unique()->toArray();
 
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'performance')
+        $specTrans = DB::table('translations')
+            ->where('entity_type', 'spec_definitions')
+            ->whereIn('entity_id', $specDefIds)
+            ->whereIn('locale', [$locale, 'en'])
+            ->whereIn('field', ['label', 'unit'])
             ->get()
-            ->map(fn($p) => [
-                'Part Number' => $p->specs['part_number'] ?? '-',
-                'Bearing designation' => $p->specs['bearing_designation'] ?? $p->article,
-                'Brand name' => $p->specs['brand_name'] ?? '-',
-                'Cross-Refference' => $p->specs['cross_reference'] ?? '-',
-                'Bore diameter d (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
-                'Total housing width A1 (mm)' => $p->specs['total_housing_width_a1_mm'] ?? '-',
-                'Housing flange thickness A2 (mm)' => $p->specs['housing_flange_thickness_a2_mm'] ?? '-',
-                'Distance between the holes J (mm)' => $p->specs['distance_between_holes_j_mm'] ?? '-',
-                'Total length L (mm)' => $p->specs['total_length_l_mm'] ?? '-',
-                'Hole / Thread H/T' => $p->specs['hole_thread_ht'] ?? '-',
-                'Overall width A (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
-                'Mass kg' => $p->specs['mass_kg'] ?? '-',
-                'Dynamic load rating Cdyn (kN)' => $p->specs['dynamic_load_rating_cdyn_kn'] ?? '-',
-                'Static load rating Co (kN)' => $p->specs['static_load_rating_co_kn'] ?? '-',
-                'Fatigue load limit Pu (kN)' => $p->specs['fatigue_load_limit_pu_kn'] ?? '-',
-            ]);
+            ->groupBy('entity_id');
 
-        return response()->json($products);
-    }
+        $specs = $rawSpecs->map(function ($s) use ($specTrans, $locale) {
+            $trans = $specTrans->get($s->spec_def_id, collect());
+            $label = $trans->first(fn($t) => $t->locale === $locale && $t->field === 'label')
+                  ?? $trans->first(fn($t) => $t->locale === 'en'     && $t->field === 'label');
+            $unit  = $trans->first(fn($t) => $t->locale === $locale && $t->field === 'unit')
+                  ?? $trans->first(fn($t) => $t->locale === 'en'     && $t->field === 'unit');
+            return [
+                'key'   => $s->key,
+                'label' => $label?->value ?? $s->key,
+                'value' => $s->value,
+                'unit'  => $unit?->value  ?? '',
+            ];
+        });
 
-    /**
-     * Table 3: Cross-References — GET /api/v1/products/tables/cross-references
-     */
-    public function tableCrossReferences(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'cross-references')
+        // ── Cross refs ──
+        $crossRefs = DB::table('product_cross_refs')
+            ->where('product_id', $product->id)
+            ->select('brand', 'value')
             ->get()
-            ->map(fn($p) => [
-                'Part Number' => $p->article,
-                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
-                'Brand \nname' => $p->specs['brand_name'] ?? '-',
-                'Cross-Refference' => $p->specs['cross_reference'] ?? '-',
-                'Bore diameter d (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
-                'Total length L (mm)' => $p->specs['total_length_l_mm'] ?? '-',
-                'Distance between the holes J (mm)' => $p->specs['distance_between_holes_j_mm'] ?? '-',
-                'Hole / Thread H/T (mm)' => $p->specs['hole_thread_ht_mm'] ?? '-',
-                'Overall width A (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
-                'Total housing width A1 (mm)' => $p->specs['total_housing_width_a1_mm'] ?? '-',
-                'Housing flange thickness A2 (mm)' => $p->specs['housing_flange_thickness_a2_mm'] ?? '-',
-                'Width inner ring B (mm)' => $p->specs['width_inner_ring_b_mm'] ?? '-',
-                'Static load rating Co (kN)' => $p->specs['static_load_rating_co_kn'] ?? '-',
-                'Dynamic load rating Cdyn (kN)' => $p->specs['dynamic_load_rating_cdyn_kn'] ?? '-',
-                'Fatigue load limit Pu (kN)' => $p->specs['fatigue_load_limit_pu_kn'] ?? '-',
-            ]);
+            ->map(fn($r) => ['brand' => $r->brand, 'value' => $r->value]);
 
-        return response()->json($products);
-    }
+        // ── Installations ──
+        $installations = DB::table('product_installations')
+            ->where('product_id', $product->id)
+            ->pluck('value');
 
-    /**
-     * Table 4: Extended Specs — GET /api/v1/products/tables/extended-specs
-     */
-    public function tableExtendedSpecs(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'extended-specs')
-            ->get()
-            ->map(fn($p) => [
-                'Part Number' => $p->article,
-                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
-                'Brand \nname' => $p->specs['brand_name'] ?? '-',
-                'Cross-Refference' => $p->specs['cross_reference'] ?? '-',
-                'Bore diameter d (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
-                'Centering diameter d1 (mm)' => $p->specs['centering_diameter_d1_mm'] ?? '-',
-                'Housing overall width L1 (mm)' => $p->specs['housing_overall_width_l1_mm'] ?? '-',
-                'Distance between the holes J1 (mm)' => $p->specs['distance_between_holes_j1_mm'] ?? '-',
-                'Housing overall width L2 (mm)' => $p->specs['housing_overall_width_l2_mm'] ?? '-',
-                'Distance between the holes J2 (mm)' => $p->specs['distance_between_holes_j2_mm'] ?? '-',
-                'Overall width A (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
-                'Flange width A1 (mm)' => $p->specs['flange_width_a1_mm'] ?? '-',
-                'Flange width A2 (mm)' => $p->specs['flange_width_a2_mm'] ?? '-',
-                'Centering diameter height A3 (mm)' => $p->specs['centering_diameter_height_a3_mm'] ?? '-',
-                'Threaded hole size T' => $p->specs['threaded_hole_size_t'] ?? '-',
-                'Hole diameter H (mm)' => $p->specs['hole_diameter_h_mm'] ?? '-',
-                'Mass kg' => $p->specs['mass_kg'] ?? '-',
-            ]);
+        // ── Images: product-level overrides table-level by type (RULE 4) ──
+        $tableAssets   = DB::table('product_assets')
+            ->where('entity_type', 'product_table')
+            ->where('entity_id', $product->product_table_id)
+            ->orderBy('sort_order')->get();
 
-        return response()->json($products);
-    }
+        $productAssets = DB::table('product_assets')
+            ->where('entity_type', 'product')
+            ->where('entity_id', $product->id)
+            ->orderBy('sort_order')->get();
 
-    /**
-     * Table 5: Additional Data — GET /api/v1/products/tables/additional-data
-     */
-    public function tableAdditionalData(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'additional-data')
-            ->get()
-            ->map(fn($p) => [
-                'Part Number' => $p->article,
-                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
-                'Brand \nname' => $p->specs['brand_name'] ?? '-',
-                'Cross-Refference' => $p->specs['cross_reference'] ?? '-',
-                'Bore diameter d (mm)' => $p->specs['bore_diameter_d_mm'] ?? '-',
-                'Outside diameter D (mm)' => $p->specs['outside_diameter_d_mm'] ?? '-',
-                'Pitch circle diameter J (mm)' => $p->specs['pitch_circle_diameter_j_mm'] ?? '-',
-                'Hole / Thread H/T' => $p->specs['hole_thread_ht'] ?? '-',
-                'Overall width A (mm)' => $p->specs['overall_width_a_mm'] ?? '-',
-                'Housing flange thickness A2 (mm)' => $p->specs['housing_flange_thickness_a2_mm'] ?? '-',
-                'Width inner ring B (mm)' => $p->specs['width_inner_ring_b_mm'] ?? '-',
-                'Mass kg' => $p->specs['mass_kg'] ?? '-',
-                'Static load rating Co (kN)' => $p->specs['static_load_rating_co_kn'] ?? '-',
-                'Dynamic load rating Cdyn (kN)' => $p->specs['dynamic_load_rating_cdyn_kn'] ?? '-',
-                'Fatigue load limit Pu (kN)' => $p->specs['fatigue_load_limit_pu_kn'] ?? '-',
-            ]);
-
-        return response()->json($products);
-    }
-
-    /**
-     * Hubs Table 1: 28071300 VX (Disk Harrows) — GET /api/v1/products/tables/hubs-table1
-     */
-    public function tableHubsTable1(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'hubs-table1')
-            ->get()
-            ->map(fn($p) => [
-                'Part Number' => $p->article,
-                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
-                'Brand name' => $p->specs['brand_name'] ?? '-',
-                'J (mm)' => $p->specs['j_mm'] ?? '-',
-                'D (mm)' => $p->specs['D_mm'] ?? '-',
-                'D1 (mm)' => $p->specs['D1_mm'] ?? '-',
-                'd (mm)' => $p->specs['d_mm'] ?? '-',
-                'C (mm)' => $p->specs['C_mm'] ?? '-',
-                'H/T' => $p->specs['hole_thread'] ?? '-',
-                'G' => $p->specs['G'] ?? '-',
-                'L (mm)' => $p->specs['L_mm'] ?? '-',
-                'L1 (mm)' => $p->specs['L1_mm'] ?? '-',
-                'F (mm)' => $p->specs['F_mm'] ?? '-',
-                'Mass (kg)' => $p->specs['mass_kg'] ?? '-',
-                'Cdyn (kN)' => $p->specs['cdyn_kn'] ?? '-',
-                'Co (kN)' => $p->specs['co_kn'] ?? '-',
-                'Pu (kN)' => $p->specs['pu_kn'] ?? '-',
-            ]);
-
-        return response()->json($products);
-    }
-
-    /**
-     * Hubs Table 2: BAA-0004 VX (Cutting Nodes) — GET /api/v1/products/tables/hubs-table2
-     */
-    public function tableHubsTable2(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'hubs-table2')
-            ->get()
-            ->map(fn($p) => [
-                'Part Number' => $p->article,
-                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
-                'Brand name' => $p->specs['brand_name'] ?? '-',
-                'J (mm)' => $p->specs['j_mm'] ?? '-',
-                'D (mm)' => $p->specs['D_mm'] ?? '-',
-                'H/T' => $p->specs['hole_thread'] ?? '-',
-                'd (mm)' => $p->specs['d_mm'] ?? '-',
-                'C (mm)' => $p->specs['C_mm'] ?? '-',
-                'M' => $p->specs['M_thread'] ?? '-',
-                'L (mm)' => $p->specs['L_mm'] ?? '-',
-                'L1 (mm)' => $p->specs['L1_mm'] ?? '-',
-                'E (mm)' => $p->specs['E_mm'] ?? '-',
-                'F (mm)' => $p->specs['F_mm'] ?? '-',
-                'Mass (kg)' => $p->specs['mass_kg'] ?? '-',
-                'Cdyn (kN)' => $p->specs['cdyn_kn'] ?? '-',
-                'Co (kN)' => $p->specs['co_kn'] ?? '-',
-                'Pu (kN)' => $p->specs['pu_kn'] ?? '-',
-            ]);
-
-        return response()->json($products);
-    }
-
-    /**
-     * Hubs Table 3: PL-140 VX (Seeders) — GET /api/v1/products/tables/hubs-table3
-     */
-    public function tableHubsTable3(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'hubs-table3')
-            ->get()
-            ->map(fn($p) => [
-                'Part Number' => $p->article,
-                'Bearing designation' => $p->specs['bearing_designation'] ?? '-',
-                'Brand name' => $p->specs['brand_name'] ?? '-',
-                'J (mm)' => $p->specs['j_mm'] ?? '-',
-                'D (mm)' => $p->specs['D_mm'] ?? '-',
-                'D1 (mm)' => $p->specs['D1_mm'] ?? '-',
-                'd (mm)' => $p->specs['d_mm'] ?? '-',
-                'H/T' => $p->specs['hole_thread'] ?? '-',
-                'L (mm)' => $p->specs['L_mm'] ?? '-',
-                'B (mm)' => $p->specs['B_mm'] ?? '-',
-                'Mass (kg)' => $p->specs['mass_kg'] ?? '-',
-                'Cdyn (kN)' => $p->specs['cdyn_kn'] ?? '-',
-                'Co (kN)' => $p->specs['co_kn'] ?? '-',
-                'Pu (kN)' => $p->specs['pu_kn'] ?? '-',
-            ]);
-
-        return response()->json($products);
-    }
-
-    /**
-     * Agro Table 1: Series 1726 bearings — GET /api/v1/products/tables/agro-table1
-     */
-    public function tableAgroTable1(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'agro-table1')
-            ->get()
-            ->map(fn($p) => [
-                'Part Number'        => $p->article,
-                'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
-                'Brand name'         => $p->specs['brand_name'] ?? '-',
-                'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
-                'd (mm)'             => $p->specs['d_mm'] ?? '-',
-                'D (mm)'             => $p->specs['D_mm'] ?? '-',
-                'B (mm)'             => $p->specs['B_mm'] ?? '-',
-                'd1 (mm)'            => $p->specs['d1_mm'] ?? '-',
-                'r1,2 (mm)'          => $p->specs['r_mm'] ?? '-',
-                'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
-                'Co (kN)'            => $p->specs['co_kn'] ?? '-',
-                'Pu (kN)'            => $p->specs['pu_kn'] ?? '-',
-                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
-            ]);
-        return response()->json($products);
-    }
-
-    /**
-     * Agro Table 2: DHU R-type — GET /api/v1/products/tables/agro-table2
-     */
-    public function tableAgroTable2(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'agro-table2')
-            ->get()
-            ->map(fn($p) => [
-                'Part Number'        => $p->article,
-                'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
-                'Brand name'         => $p->specs['brand_name'] ?? '-',
-                'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
-                'd (inch)'           => $p->specs['d_inch'] ?? '-',
-                'd (mm)'             => $p->specs['d_mm'] ?? '-',
-                'B (mm)'             => $p->specs['B_mm'] ?? '-',
-                'C (mm)'             => $p->specs['C_mm'] ?? '-',
-                'Da (mm)'            => $p->specs['Da_mm'] ?? '-',
-                'L (mm)'             => $p->specs['L_mm'] ?? '-',
-                'A (mm)'             => $p->specs['A_mm'] ?? '-',
-                'A1 (mm)'            => $p->specs['A1_mm'] ?? '-',
-                'J (mm)'             => $p->specs['J_mm'] ?? '-',
-                'N (mm)'             => $p->specs['N_mm'] ?? '-',
-                'Fr (kN)'            => $p->specs['fr_kn'] ?? '-',
-                'Fa (kN)'            => $p->specs['fa_kn'] ?? '-',
-                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
-                'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
-                'Co (kN)'            => $p->specs['co_kn'] ?? '-',
-            ]);
-        return response()->json($products);
-    }
-
-    /**
-     * Agro Table 3: DHU S-type (square bore) — GET /api/v1/products/tables/agro-table3
-     */
-    public function tableAgroTable3(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'agro-table3')
-            ->get()
-            ->map(fn($p) => [
-                'Part Number'        => $p->article,
-                'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
-                'Brand name'         => $p->specs['brand_name'] ?? '-',
-                'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
-                'd (inch)'           => $p->specs['d_inch'] ?? '-',
-                'd (mm)'             => $p->specs['d_mm'] ?? '-',
-                'B (mm)'             => $p->specs['B_mm'] ?? '-',
-                'C (mm)'             => $p->specs['C_mm'] ?? '-',
-                'a (mm)'             => $p->specs['a_mm'] ?? '-',
-                'Da (mm)'            => $p->specs['Da_mm'] ?? '-',
-                'L (mm)'             => $p->specs['L_mm'] ?? '-',
-                'A (mm)'             => $p->specs['A_mm'] ?? '-',
-                'A1 (mm)'            => $p->specs['A1_mm'] ?? '-',
-                'J (mm)'             => $p->specs['J_mm'] ?? '-',
-                'N (mm)'             => $p->specs['N_mm'] ?? '-',
-                'M (mm)'             => $p->specs['M_mm'] ?? '-',
-                'Fr (kN)'            => $p->specs['fr_kn'] ?? '-',
-                'Fa (kN)'            => $p->specs['fa_kn'] ?? '-',
-                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
-                'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
-                'Co (kN)'            => $p->specs['co_kn'] ?? '-',
-                'Pu (kN)'            => $p->specs['pu_kn'] ?? '-',
-            ]);
-        return response()->json($products);
-    }
-
-    /**
-     * Agro Table 4: AA-type assembly — GET /api/v1/products/tables/agro-table4
-     */
-    public function tableAgroTable4(Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', 'agro-table4')
-            ->get()
-            ->map(fn($p) => [
-                'Part Number'        => $p->article,
-                'Bearing designation'=> $p->specs['bearing_designation'] ?? '-',
-                'Brand name'         => $p->specs['brand_name'] ?? '-',
-                'Cross-Reference'    => $p->specs['cross_reference'] ?? '-',
-                'd (inch)'           => $p->specs['d_inch'] ?? '-',
-                'd (mm)'             => $p->specs['d_mm'] ?? '-',
-                'B (mm)'             => $p->specs['B_mm'] ?? '-',
-                'A (mm)'             => $p->specs['A_mm'] ?? '-',
-                'A1 (mm)'            => $p->specs['A1_mm'] ?? '-',
-                'C (mm)'             => $p->specs['C_mm'] ?? '-',
-                'Da (mm)'            => $p->specs['Da_mm'] ?? '-',
-                'D (mm)'             => $p->specs['D_mm'] ?? '-',
-                'J (mm)'             => $p->specs['J_mm'] ?? '-',
-                'N (mm)'             => $p->specs['N_mm'] ?? '-',
-                'Mass (kg)'          => $p->specs['mass_kg'] ?? '-',
-                'Cdyn (kN)'          => $p->specs['cdyn_kn'] ?? '-',
-                'Co (kN)'            => $p->specs['co_kn'] ?? '-',
-                'Pu (kN)'            => $p->specs['pu_kn'] ?? '-',
-            ]);
-        return response()->json($products);
-    }
-
-    /**
-     * Універсальний метод для отримання даних будь-якої таблиці за її групою
-     * GET /api/v1/products/tables/{group}
-     */
-    public function tableByGroup(string $group, Request $request): JsonResponse
-    {
-        $products = Product::where('is_active', true)
-            ->whereJsonContains('specs->table_group', $group)
-            ->get()
-            ->map(fn($p) => $p->specs);
-
-        return response()->json($products);
-    }
-
-    /**
-     * Імпорт товарів з 1С (захищений Sanctum-токеном)
-     * POST /api/v1/import/products
-     * Body: JSON-масив товарів
-     */
-    public function import(Request $request): JsonResponse
-    {
-        $items = $request->json()->all();
-        $imported = 0;
-
-        foreach ($items as $item) {
-            Product::updateOrCreate(
-                ['slug' => $item['slug'] ?? str($item['article'])->slug()],
-                [
-                    'article'         => $item['article'],
-                    'fkl_designation' => $item['fkl_designation'] ?? null,
-                    'category_id'     => Category::where('slug', $item['category_id'])->value('id'),
-                    'specs'           => $item['specs'] ?? [],
-                    'oem_cross'       => $item['oem_cross'] ?? [],
-                    'installations'   => $item['installations'] ?? [],
-                    'translations'    => $item['translations'] ?? [],
-                    'is_active'       => true,
-                ]
-            );
-            $imported++;
+        $byType = [];
+        foreach ($tableAssets as $a) {
+            $byType[$a->type][] = ['type' => $a->type, 'path' => $a->path, 'sort_order' => $a->sort_order];
+        }
+        foreach ($productAssets as $a) {
+            $byType[$a->type] = [['type' => $a->type, 'path' => $a->path, 'sort_order' => $a->sort_order]];
         }
 
-        return response()->json(['imported' => $imported]);
+        $images = [];
+        foreach ($byType as $assets) {
+            foreach ($assets as $img) {
+                $images[] = $img;
+            }
+        }
+        usort($images, fn($a, $b) => $a['sort_order'] <=> $b['sort_order']);
+
+        // ── Name & desc ──
+        $name = Translation::where('entity_type', 'product')->where('entity_id', $product->id)
+                    ->where('locale', $locale)->where('field', 'name')->value('value')
+             ?? Translation::where('entity_type', 'product')->where('entity_id', $product->id)
+                    ->where('locale', 'en')->where('field', 'name')->value('value')
+             ?? $product->article;
+
+        $desc = Translation::where('entity_type', 'product')->where('entity_id', $product->id)
+                    ->where('locale', $locale)->where('field', 'desc')->value('value');
+
+        $metaTitle = Translation::where('entity_type', 'product')->where('entity_id', $product->id)
+                        ->where('locale', $locale)->where('field', 'meta_title')->value('value');
+
+        $metaDesc = Translation::where('entity_type', 'product')->where('entity_id', $product->id)
+                        ->where('locale', $locale)->where('field', 'meta_description')->value('value');
+
+        $model3d = collect($images)->firstWhere('type', 'model_3d');
+
+        // ── Schema overlay data from product_tables ──
+        $productTable = DB::table('product_tables')
+            ->where('id', $product->product_table_id)
+            ->first();
+
+        $schemaSvg = DB::table('product_assets')
+            ->where('entity_type', 'product_table')
+            ->where('entity_id', $product->product_table_id)
+            ->where('type', 'schema_svg')
+            ->orderBy('sort_order')
+            ->value('path');
+
+        $dimLabels = [];
+        $highlightConfig = json_decode($productTable->highlight_config ?? '{}', true) ?? [];
+        foreach ($highlightConfig as $specKey => $points) {
+            foreach ($points as $pt) {
+                $dimLabels[] = [
+                    'key'   => $specKey,
+                    'label' => $pt['label'],
+                    'point' => ['x' => $pt['x'], 'y' => $pt['y']],
+                ];
+            }
+        }
+
+        return response()->json([
+            'slug'               => $product->slug,
+            'article'            => $product->article,
+            'name'               => $name,
+            'desc'               => $desc,
+            'product_table_slug' => $product->productTable?->slug,
+            'category_slug'      => $product->productTable?->category?->slug,
+            'specs'              => $specs->values(),
+            'cross_refs'         => $crossRefs->values(),
+            'installations'      => $installations->values(),
+            'images'             => $images,
+            'model_3d'           => $model3d ? $model3d['path'] : null,
+            'schema_svg'         => $schemaSvg,
+            'dim_labels'         => $dimLabels,
+            'schema_viewbox'     => $productTable->schema_viewbox ?? null,
+            'meta_title'         => $metaTitle,
+            'meta_description'   => $metaDesc,
+        ]);
+    }
+
+    public function import(): JsonResponse
+    {
+        return response()->json(['message' => 'Not implemented in new architecture'], 501);
     }
 }
