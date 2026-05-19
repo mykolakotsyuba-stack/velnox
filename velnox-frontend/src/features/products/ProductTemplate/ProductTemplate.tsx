@@ -115,12 +115,12 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                                 <div className={styles.specsColumn}>
                                     <SpecsTable specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
                                     {product.cross_refs.length > 0 && (
-                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.2s' }}>
+                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s' }}>
                                             <CrossReferences refs={product.cross_refs} />
                                         </div>
                                     )}
                                     {product.installations.length > 0 && (
-                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.4s' }}>
+                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.6s ease-out 0.4s, transform 0.6s ease-out 0.4s' }}>
                                             <Installations items={product.installations} />
                                         </div>
                                     )}
@@ -133,7 +133,7 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                                     {!activeBlueprintConfig && staticSchemaSrc && (
                                         <BlueprintViewer article={product.article} specs={specsMap} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
                                     )}
-                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
+                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s' }}>
                                         <CtaBlock product={product} locale={locale} />
                                     </div>
                                 </div>
@@ -160,12 +160,12 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                                 <div className={styles.specsColumn}>
                                     <SpecsTable specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
                                     {product.cross_refs.length > 0 && (
-                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.2s' }}>
+                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s' }}>
                                             <CrossReferences refs={product.cross_refs} />
                                         </div>
                                     )}
                                     {product.installations.length > 0 && (
-                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.4s' }}>
+                                        <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.6s ease-out 0.4s, transform 0.6s ease-out 0.4s' }}>
                                             <Installations items={product.installations} />
                                         </div>
                                     )}
@@ -177,7 +177,7 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                                     {!activeBlueprintConfig && staticSchemaSrc && (
                                         <BlueprintViewer article={product.article} specs={specsMap} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
                                     )}
-                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
+                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s' }}>
                                         <CtaBlock product={product} locale={locale} />
                                     </div>
                                 </div>

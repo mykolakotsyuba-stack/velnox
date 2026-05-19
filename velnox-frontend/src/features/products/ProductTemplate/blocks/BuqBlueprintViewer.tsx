@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Maximize2, X } from 'lucide-react';
+import { Maximize2, X, PanelRight } from 'lucide-react';
 import type { SpecItem } from '@/entities/product/model/types';
 
 type ProductSpecs = Record<string, string | number | null>;
@@ -89,6 +89,7 @@ export function BuqBlueprintViewer({
     dimLabels = [], svgSrc = '/velnox/images/schemes/bearings-schema.svg', viewBox = SVG_VB_DEFAULT,
 }: BuqBlueprintViewerProps) {
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [showModalSpecs, setShowModalSpecs] = useState(false);
     const t = useTranslations('product');
 
     const effectiveViewBox = viewBox || SVG_VB_DEFAULT;
@@ -127,9 +128,17 @@ export function BuqBlueprintViewer({
             </section>
 
             <div className={`${styles.modalOverlay} ${isFullscreen ? styles.open : ''}`}>
-                <div className={styles.modalContent}>
+                <div className={`${styles.modalContent} ${showModalSpecs ? styles.modalWithSpecs : ''}`}>
                     <button className={styles.closeButton} onClick={() => setIsFullscreen(false)} aria-label="Close fullscreen">
-                        <X size={32} />
+                        <X size={24} />
+                    </button>
+                    <button
+                        className={`${styles.specsToggle} ${showModalSpecs ? styles.specsToggleActive : ''}`}
+                        onClick={() => setShowModalSpecs(v => !v)}
+                        aria-label="Toggle specs"
+                        title="Характеристики"
+                    >
+                        <PanelRight size={20} />
                     </button>
                     <div className={styles.modalDrawing}>
                         <div className={styles.modalImageWrapper}>
@@ -142,13 +151,15 @@ export function BuqBlueprintViewer({
                             <DimensionOverlay specs={specs} hoveredSpec={hoveredSpec} dimLabels={dimLabels} viewBox={effectiveViewBox} />
                         </div>
                     </div>
-                    <div className={styles.modalSpecs}>
-                        <SpecsTable
-                            specs={modalSpecs}
-                            hoveredSpec={hoveredSpec}
-                            onHoverSpec={onHoverSpec}
-                        />
-                    </div>
+                    {showModalSpecs && (
+                        <div className={styles.modalSpecs}>
+                            <SpecsTable
+                                specs={modalSpecs}
+                                hoveredSpec={hoveredSpec}
+                                onHoverSpec={onHoverSpec}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </>
