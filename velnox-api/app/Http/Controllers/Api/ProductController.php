@@ -105,9 +105,9 @@ class ProductController extends Controller
         // ── Cross refs ──
         $crossRefs = DB::table('product_cross_refs')
             ->where('product_id', $product->id)
-            ->select('brand', 'value')
+            ->select('brand', 'value', 'type')
             ->get()
-            ->map(fn($r) => ['brand' => $r->brand, 'value' => $r->value]);
+            ->map(fn($r) => ['brand' => $r->brand, 'value' => $r->value, 'type' => $r->type ?? 'bearing']);
 
         // ── Installations ──
         $installations = DB::table('product_installations')

@@ -517,21 +517,94 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 if (res2.ok) {
                     const data2 = await res2.json();
                     if (data2.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t2': data2.table.schema_src }));
-                    setTable2Data(data2.products ?? []);
+                    setTable2Data((data2.products ?? []).map((p: any) => {
+                        const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
+                        const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
+                        return {
+                            part_number:                    p.article,
+                            bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
+                            brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
+                            cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
+                            bore_diameter_d_mm:             p.specs.d_mm    ?? null,
+                            total_housing_width_a1_mm:      p.specs.A1_mm   ?? null,
+                            housing_flange_thickness_a2_mm: p.specs.A2_mm   ?? null,
+                            distance_between_holes_j_mm:    p.specs.J_mm    ?? null,
+                            total_length_l_mm:              p.specs.L_mm    ?? null,
+                            hole_thread_ht:                 p.specs.H_T     ?? null,
+                            overall_width_a_mm:             p.specs.A_mm    ?? null,
+                            mass_kg:                        p.specs.mass_kg ?? null,
+                            dynamic_load_rating_cdyn_kn:    p.specs.cdyn_kn ?? null,
+                            static_load_rating_co_kn:       p.specs.co_kn   ?? null,
+                            fatigue_load_limit_pu_kn:       p.specs.pu_kn   ?? null,
+                        };
+                    }));
                 }
                 if (res3.ok) {
                     const data3 = await res3.json();
                     if (data3.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t3': data3.table.schema_src }));
-                    setTable3Data(data3.products ?? []);
+                    setTable3Data((data3.products ?? []).map((p: any) => {
+                        const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
+                        const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
+                        return {
+                            part_number:                    p.article,
+                            bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
+                            brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
+                            cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
+                            bore_diameter_d_mm:             p.specs.d_mm    ?? null,
+                            distance_between_holes_j_mm:    p.specs.J_mm    ?? null,
+                            total_length_l_mm:              p.specs.L_mm    ?? null,
+                            hole_thread_ht_mm:              p.specs.H_T     ?? null,
+                            overall_width_a_mm:             p.specs.A_mm    ?? null,
+                            total_housing_width_a1_mm:      p.specs.A1_mm   ?? null,
+                            housing_flange_thickness_a2_mm: p.specs.A2_mm   ?? null,
+                            width_inner_ring_b_mm:          p.specs.B_mm    ?? null,
+                            static_load_rating_co_kn:       p.specs.co_kn   ?? null,
+                            dynamic_load_rating_cdyn_kn:    p.specs.cdyn_kn ?? null,
+                            fatigue_load_limit_pu_kn:       p.specs.pu_kn   ?? null,
+                        };
+                    }));
                 }
                 if (res4.ok) {
                     const data4 = await res4.json();
-                    setTable4Data(data4.products ?? []);
+                    setTable4Data((data4.products ?? []).map((p: any) => {
+                        const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
+                        const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
+                        return {
+                            part_number:                    p.article,
+                            bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
+                            brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
+                            cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
+                            bore_diameter_d_mm:             p.specs.d_mm    ?? null,
+                            outer_diameter_d_mm:            p.specs.D_mm    ?? null,
+                            length_l1_mm:                   p.specs.L1_mm   ?? null,
+                            length_l2_mm:                   p.specs.L2_mm   ?? null,
+                            distance_between_holes_j_mm:    p.specs.J_mm    ?? null,
+                            overall_width_a_mm:             p.specs.A_mm    ?? null,
+                            mass_kg:                        p.specs.mass_kg ?? null,
+                        };
+                    }));
                 }
                 if (res5.ok) {
                     const data5 = await res5.json();
                     if (data5.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t5': data5.table.schema_src }));
-                    setTable5Data(data5.products ?? []);
+                    setTable5Data((data5.products ?? []).map((p: any) => {
+                        const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
+                        const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
+                        return {
+                            part_number:                    p.article,
+                            bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
+                            brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
+                            cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
+                            bore_diameter_d_mm:             p.specs.d_mm    ?? null,
+                            outer_diameter_d_mm:            p.specs.D_mm    ?? null,
+                            distance_between_holes_j_mm:    p.specs.J_mm    ?? null,
+                            overall_width_a_mm:             p.specs.A_mm    ?? null,
+                            width_inner_ring_b_mm:          p.specs.B_mm    ?? null,
+                            mass_kg:                        p.specs.mass_kg ?? null,
+                            dynamic_load_rating_cdyn_kn:    p.specs.cdyn_kn ?? null,
+                            static_load_rating_co_kn:       p.specs.co_kn   ?? null,
+                        };
+                    }));
                 }
             } catch (err) {
                 console.error('Error fetching table data:', err);

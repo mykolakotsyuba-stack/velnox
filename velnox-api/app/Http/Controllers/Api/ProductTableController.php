@@ -80,7 +80,7 @@ class ProductTableController extends Controller
         // All cross-refs for these products
         $allCrossRefs = DB::table('product_cross_refs')
             ->whereIn('product_id', $productIds)
-            ->select('product_id', 'brand', 'value')
+            ->select('product_id', 'brand', 'value', 'type')
             ->get()
             ->groupBy('product_id');
 
@@ -90,7 +90,7 @@ class ProductTableController extends Controller
                 $specs[$spec->key] = $spec->value;
             }
             $crossRefs = $allCrossRefs->get($p->id, collect())
-                ->map(fn($r) => ['brand' => $r->brand, 'value' => $r->value])
+                ->map(fn($r) => ['brand' => $r->brand, 'value' => $r->value, 'type' => $r->type ?? 'bearing'])
                 ->values()
                 ->all();
 
