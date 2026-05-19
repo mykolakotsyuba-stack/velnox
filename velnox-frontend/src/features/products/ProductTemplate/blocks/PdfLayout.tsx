@@ -10,14 +10,28 @@ interface PdfLayoutProps {
 }
 
 export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, locale, pageUrl }, ref) => {
-    const t = useTranslations('product');
-    const tc = useTranslations('contacts');
+    const t    = useTranslations('product');
+    const tcat = useTranslations('categories');
+    const tc   = useTranslations('contacts');
 
-    const translation = product.translations[locale] ?? product.translations['en'];
-    const productName = translation?.product_name ?? product.article;
-    const sealingDesc = translation?.sealing_desc;
+    const productName = product.name;
+    const desc = product.desc;
 
-    const rows = Object.entries(product.specs).filter(([_, value]) => value != null);
+    const galleryImages = product.images
+        .filter(i => i.type === 'gallery')
+        .sort((a, b) => a.sort_order - b.sort_order);
+
+    // Product photo — first gallery image
+    const firstPhoto = galleryImages[0]?.path ?? null;
+
+    // Drawing thumbnails — remaining gallery images (drawing-2, drawing-3, ...)
+    const drawingImages = galleryImages.slice(1);
+
+    // Schema — svg from product_table, fallback to schema_png/svg from product_assets
+    const schemaSrc = product.schema_svg
+        ?? product.images.find(i => i.type === 'schema_png')?.path
+        ?? product.images.find(i => i.type === 'schema_svg')?.path
+        ?? null;
 
     // Contact data from contacts page translations (auto-updates when contacts page changes)
     const phone = tc('routing.block1.phone');
@@ -43,8 +57,8 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                     crossOrigin="anonymous"
                 />
                 <div className={styles.headerRight}>
-                    <div className={styles.headerTitle}>КАТАЛОГ ПРОДУКЦІЇ</div>
-                    <div className={styles.headerSub}>Підшипникові вузли / Bearing Units</div>
+                    <div className={styles.headerTitle}>{t('pdf_catalog_title')}</div>
+                    <div className={styles.headerSub}>{tcat(product.category_slug)}</div>
                 </div>
             </header>
 
@@ -53,24 +67,21 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                 {/* ── TOP ROW: photo + title + meta ── */}
                 <div className={styles.topRow}>
                     <div className={styles.photoCol}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            src="/velnox/images/products/buq-bearing-photo.png"
-                            alt={product.article}
-                            className={styles.photo}
-                            crossOrigin="anonymous"
-                        />
+                        {firstPhoto && (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                                src={firstPhoto}
+                                alt={product.article}
+                                className={styles.photo}
+                                crossOrigin="anonymous"
+                            />
+                        )}
                     </div>
                     <div className={styles.infoCol}>
                         <h1 className={styles.article}>{product.article}</h1>
                         <h2 className={styles.productName}>{productName}</h2>
-                        {product.fkl_designation && (
-                            <span className={styles.fklBadge}>
-                                FKL: {product.fkl_designation}
-                            </span>
-                        )}
-                        {sealingDesc && (
-                            <p className={styles.sealingText}>{sealingDesc}</p>
+                        {desc && (
+                            <p className={styles.sealingText}>{desc}</p>
                         )}
                     </div>
                 </div>
@@ -79,19 +90,19 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                 <div className={styles.drawingSection}>
                     <div className={styles.sectionHeader}>
                         <span className={styles.sectionDot} />
-                        <span className={styles.sectionTitle}>Технічне креслення</span>
+                        <span className={styles.sectionTitle}>{t('pdf_drawing_title')}</span>
                         <div className={styles.sectionLine} />
                     </div>
                     <div className={styles.drawingWrapper}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            src="/velnox/images/schemes/bearings-schema.svg"
-                            alt="Технічне креслення BUQ"
-                            className={styles.drawing}
-                            crossOrigin="anonymous"
-                            width="1360"
-                            height="740"
-                        />
+                        {schemaSrc && (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                                src={schemaSrc}
+                                alt={`Технічне креслення ${product.article}`}
+                                className={styles.drawing}
+                                crossOrigin="anonymous"
+                            />
+                        )}
                     </div>
                 </div>
 
@@ -101,47 +112,41 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                     <div className={styles.specsCol}>
                         <div className={styles.sectionHeader}>
                             <span className={styles.sectionDot} />
-                            <span className={styles.sectionTitle}>Характеристики</span>
+                            <span className={styles.sectionTitle}>{t('specs_table')}</span>
                             <div className={styles.sectionLine} />
                         </div>
                         <table className={styles.specsTable}>
                             <tbody>
-                                {rows.map(([key, value]) => {
-                                    const valStr = typeof value === 'object' && value !== null
-                                        ? `${(value as any).value ?? ''} ${(value as any).unit ?? ''}`.trim()
-                                        : String(value);
-                                    const label = t.has(key) ? t(key) : key.replace(/_/g, ' ').toUpperCase();
-                                    return (
-                                        <tr key={key}>
-                                            <th className={styles.specKey}>{label}</th>
-                                            <td className={styles.specValue}>{valStr}</td>
-                                        </tr>
-                                    );
-                                })}
+                                {product.specs.map((spec) => (
+                                    <tr key={spec.key}>
+                                        <th className={styles.specKey}>{spec.label}</th>
+                                        <td className={styles.specValue}>{spec.unit ? `${spec.value} ${spec.unit}` : spec.value}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
 
                     <div className={styles.refsCol}>
-                        {product.oem_cross && product.oem_cross.length > 0 && (
+                        {product.cross_refs.length > 0 && (
                             <div>
                                 <div className={styles.sectionHeader}>
                                     <span className={styles.sectionDot} />
-                                    <span className={styles.sectionTitle}>Крос-референси</span>
+                                    <span className={styles.sectionTitle}>{t('cross_refs')}</span>
                                     <div className={styles.sectionLine} />
                                 </div>
                                 <ul className={styles.refList}>
-                                    {product.oem_cross.slice(0, 14).map((ref, i) => (
-                                        <li key={i}>{ref}</li>
+                                    {product.cross_refs.slice(0, 14).map((ref, i) => (
+                                        <li key={i}>{ref.brand}: {ref.value}</li>
                                     ))}
                                 </ul>
                             </div>
                         )}
-                        {product.installations && product.installations.length > 0 && (
+                        {product.installations.length > 0 && (
                             <div style={{ marginTop: '12px' }}>
                                 <div className={styles.sectionHeader}>
                                     <span className={styles.sectionDot} />
-                                    <span className={styles.sectionTitle}>Застосування</span>
+                                    <span className={styles.sectionTitle}>{t('installations')}</span>
                                     <div className={styles.sectionLine} />
                                 </div>
                                 <ul className={styles.refList}>
@@ -149,6 +154,28 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                                         <li key={i}>{inst}</li>
                                     ))}
                                 </ul>
+                            </div>
+                        )}
+
+                        {drawingImages.length > 0 && (
+                            <div style={{ marginTop: '12px' }}>
+                                <div className={styles.sectionHeader}>
+                                    <span className={styles.sectionDot} />
+                                    <span className={styles.sectionTitle}>{t('drawings')}</span>
+                                    <div className={styles.sectionLine} />
+                                </div>
+                                <div className={styles.drawingThumbGrid}>
+                                    {drawingImages.map((img, i) => (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img
+                                            key={i}
+                                            src={img.path}
+                                            alt={`${t('drawings')} ${i + 1}`}
+                                            className={styles.drawingThumb}
+                                            crossOrigin="anonymous"
+                                        />
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
@@ -178,7 +205,7 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                             </div>
                         )}
                         <div className={styles.footerCopy}>
-                            © {new Date().getFullYear()} VELNOX. Всі права захищено.
+                            © {new Date().getFullYear()} VELNOX. {t('pdf_copyright')}
                         </div>
                     </div>
                 </div>

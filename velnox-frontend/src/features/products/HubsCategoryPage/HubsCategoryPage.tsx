@@ -235,20 +235,70 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             try {
                 const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
                 const [res1, res2, res3] = await Promise.all([
-                    fetch(`${base}/v1/products/tables/hubs-t1`),
-                    fetch(`${base}/v1/products/tables/hubs-t2`),
-                    fetch(`${base}/v1/products/tables/hubs-t3`),
+                    fetch(`${base}/v1/product-tables/hubs-t1?locale=${locale}`),
+                    fetch(`${base}/v1/product-tables/hubs-t2?locale=${locale}`),
+                    fetch(`${base}/v1/product-tables/hubs-t3?locale=${locale}`),
                 ]);
                 const [data1, data2, data3] = await Promise.all([res1.json(), res2.json(), res3.json()]);
-                setTable1Data(Array.isArray(data1) ? data1.filter((r: any) => r.part_number) : []);
-                setTable2Data(Array.isArray(data2) ? data2 : []);
-                setTable3Data(Array.isArray(data3) ? data3 : []);
+
+                const mapT1 = (p: any) => ({
+                    part_number:  p.article,
+                    j_mm:         p.specs?.hub_J_mm,
+                    D_mm:         p.specs?.hub_D_mm,
+                    D1_mm:        p.specs?.hub_D1_mm,
+                    d_mm:         p.specs?.hub_d_mm,
+                    C_mm:         p.specs?.hub_C_mm,
+                    hole_thread:  p.specs?.hub_hole_thread,
+                    G:            p.specs?.hub_G,
+                    L_mm:         p.specs?.hub_L_mm,
+                    L1_mm:        p.specs?.hub_L1_mm,
+                    F_mm:         p.specs?.hub_F_mm,
+                    mass_kg:      p.specs?.mass_kg,
+                    cdyn_kn:      p.specs?.cdyn_kn,
+                    co_kn:        p.specs?.co_kn,
+                    pu_kn:        p.specs?.pu_kn,
+                });
+                const mapT2 = (p: any) => ({
+                    part_number:  p.article,
+                    j_mm:         p.specs?.hub_J_mm,
+                    D_mm:         p.specs?.hub_D_mm,
+                    hole_thread:  p.specs?.hub_hole_thread,
+                    d_mm:         p.specs?.hub_d_mm,
+                    C_mm:         p.specs?.hub_C_mm,
+                    M_thread:     p.specs?.hub_M_thread,
+                    L_mm:         p.specs?.hub_L_mm,
+                    L1_mm:        p.specs?.hub_L1_mm,
+                    E_mm:         p.specs?.hub_E_mm,
+                    F_mm:         p.specs?.hub_F_mm,
+                    mass_kg:      p.specs?.mass_kg,
+                    cdyn_kn:      p.specs?.cdyn_kn,
+                    co_kn:        p.specs?.co_kn,
+                    pu_kn:        p.specs?.pu_kn,
+                });
+                const mapT3 = (p: any) => ({
+                    part_number:  p.article,
+                    j_mm:         p.specs?.hub_J_mm,
+                    D_mm:         p.specs?.hub_D_mm,
+                    D1_mm:        p.specs?.hub_D1_mm,
+                    d_mm:         p.specs?.hub_d_mm,
+                    hole_thread:  p.specs?.hub_hole_thread,
+                    L_mm:         p.specs?.hub_L_mm,
+                    B_mm:         p.specs?.hub_B_mm,
+                    mass_kg:      p.specs?.mass_kg,
+                    cdyn_kn:      p.specs?.cdyn_kn,
+                    co_kn:        p.specs?.co_kn,
+                    pu_kn:        p.specs?.pu_kn,
+                });
+
+                setTable1Data(Array.isArray(data1?.products) ? data1.products.map(mapT1).filter((r: any) => r.part_number) : []);
+                setTable2Data(Array.isArray(data2?.products) ? data2.products.map(mapT2) : []);
+                setTable3Data(Array.isArray(data3?.products) ? data3.products.map(mapT3) : []);
             } catch (err) {
                 console.error('Error fetching hub tables:', err);
             }
         };
         fetchTables();
-    }, []);
+    }, [locale]);
 
         const handleFilterChange = useCallback((col: string, val: string) => {
         setFilters(prev => {
@@ -415,7 +465,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     </div>
                     <div className={styles.heroImageWrap}>
                         <Image
-                            src="/velnox/images/hubs/hero-hub.png"
+                            src="/images/hubs/hero-hub.png"
                             alt="VELNOX Bearing Hub"
                             width={520}
                             height={520}
@@ -452,7 +502,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             <section ref={app1Ref.ref} className={`${styles.blueprintBlock} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
                         {/* HORSCH background photo */}
                         <Image
-                            src="/velnox/images/hubs/horsch-field.png"
+                            src="/images/hubs/horsch-field.png"
                             alt=""
                             fill
                             priority
@@ -523,7 +573,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                         <h3>{t('hubsPage.block2.table1.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table1.desc')}</p>
                         <div className={styles.tableDiagramContainer}>
-                            <Image src="/velnox/images/products/_shared/hubs-t1/schema.webp" alt="Hub Table 1 Technical Drawing" width={1200} height={800} style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }} loading="lazy" />
+                            <Image src="/images/products/hubs-t1/schema.png" alt="Hub Table 1 Technical Drawing" width={1200} height={800} style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }} loading="lazy" />
                         </div>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
@@ -591,7 +641,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             {/* ── APP BLOCK 2 — CUTTING NODES: text RIGHT, machine visible LEFT ── */}
             <section ref={app2Ref.ref} className={`${styles.blueprintBlock} ${app2Ref.inView ? styles.blueprintVisible : ''}`}>
                 <Image
-                    src="/velnox/images/hubs/bednar-field.png"
+                    src="/images/hubs/bednar-field.png"
                     alt=""
                     fill
                     priority={false}
@@ -628,9 +678,6 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table2.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table2.desc')}</p>
-                        <div className={styles.tableDiagramContainer}>
-                            <Image src="/velnox/images/products/_shared/hubs-t2/schema.webp" alt="Hub Table 2 Technical Drawing" width={1200} height={800} style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }} loading="lazy" />
-                        </div>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
@@ -697,7 +744,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             {/* ── APP BLOCK 3 ── */}
             <section ref={app3Ref.ref} className={`${styles.blueprintBlock} ${app3Ref.inView ? styles.blueprintVisible : ''}`}>
                 <Image
-                    src="/velnox/images/hubs/seeder-field.png"
+                    src="/images/hubs/seeder-field.png"
                     alt=""
                     fill
                     priority={false}
@@ -732,9 +779,6 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table3.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table3.desc')}</p>
-                        <div className={styles.tableDiagramContainer}>
-                            <Image src="/velnox/images/products/_shared/hubs-t3/schema.webp" alt="Hub Table 3 Technical Drawing" width={1200} height={800} style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }} loading="lazy" />
-                        </div>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>

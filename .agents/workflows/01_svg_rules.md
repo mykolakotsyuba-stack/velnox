@@ -52,7 +52,31 @@ Font metrics (Helvetica, CorelDRAW):
 - fnt0 (282px): HALF1=78 (1 char), HALF2=155 (2 chars), CAP0=102
 - fnt1 (353px): HALF1_F1=97 (1 char), CAP1=127
 
-## Static File Path
+## Static File Path — CRITICAL (basePath rule, updated 2026-05-19)
 
-SVG files in `public/images/schemes/` are served at `/velnox/images/schemes/filename.svg`  
-The `/velnox` prefix is `basePath` in `next.config.mjs` — never omit it.
+`basePath = '/velnox'` in next.config changes path logic depending on the element:
+
+| Where used | Path format | Reason |
+|---|---|---|
+| `<Image>` (next/image) | `/images/...` — WITHOUT `/velnox/` | Next.js adds basePath automatically |
+| `<img>` (plain HTML, BuqBlueprintViewer) | `/velnox/images/...` — WITH `/velnox/` | Browser requests directly |
+| `fetch()` | `/velnox/images/...` — WITH `/velnox/` | Same as `<img>` |
+| **DB** (product_assets.path) | `/images/...` — WITHOUT `/velnox/` | API → frontend → `<Image>`, Next.js adds prefix |
+
+**Diagnosis:** if nginx log shows `GET /images/... 404` (no `/velnox/`) — `<Image>` stripped basePath from a path that already had it. Remove `/velnox/` from DB/code source.
+
+## DIM_LABELS → Now in DB (updated 2026-05-19)
+
+Dimension labels are NO LONGER hardcoded in `BuqBlueprintViewer.tsx`.
+
+They come from `product_tables.highlight_config` JSON field in the database:
+```json
+{
+  "d_mm": [{"label": "d", "x": 7820, "y": -115340}],
+  "J_mm": [{"label": "J", "x": 8600, "y": -117200}]
+}
+```
+
+`ProductController` reads `highlight_config` + `schema_viewbox` from `product_tables` and returns `dim_labels` array + `schema_viewbox` in the product API response.
+
+**To add/update dimension labels:** edit `product_tables.highlight_config` in DB seeder (DatabaseSeeder.php), then re-seed.

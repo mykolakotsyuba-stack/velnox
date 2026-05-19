@@ -80,12 +80,13 @@
 
 .isModal .table {
     font-size: 12.5px;
-    flex: 1;
+    align-self: flex-start;
+    width: 100%;
 }
 
 .isModal .table th,
 .isModal .table td {
-    padding: 6px 8px;
+    padding: 4px 8px;
     word-break: normal;
     white-space: normal;
 }

@@ -700,8 +700,10 @@
     }
 
     .techTable th {
-        white-space: nowrap;
+        white-space: normal;
+        word-break: break-word;
         padding: 8px 6px;
+        min-width: 60px;
     }
 
     .actionCol {
@@ -709,11 +711,11 @@
         padding-left: 12px !important;
     }
 
-    /* First column: Part Number — fixed width */
+    /* First column: Позначення Velnox — fixed width */
     .techTable th:nth-child(1), .techTable td:nth-child(1) { width: 120px; min-width: 100px; }
-    /* Second column: Designation/Cross-Ref — allow to grow */
+    /* Second column: Перехресні аналоги — allow to grow */
     .techTable th:nth-child(2), .techTable td:nth-child(2) { min-width: 120px; }
-    /* Third column: Brand — compact */
+    /* Third column: Бренд — compact */
     .techTable th:nth-child(3), .techTable td:nth-child(3) { width: 70px; min-width: 60px; }
 }
 

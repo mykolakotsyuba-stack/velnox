@@ -6,92 +6,43 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * Product — основна сутність каталогу VELNOX
- *
- * @property string $slug           Артикул (URL-slug), напр. "28071300-VX"
- * @property string $article        Оригінальний артикул, напр. "28071300 VX"
- * @property string $fkl_designation  Внутрішнє позначення FKL (напр. "PL-127")
- * @property int    $category_id
- * @property array  $specs          JSONB: { d, D, B, C, alpha, mass, Cdyn, Co, Pu }
- * @property array  $oem_cross      JSONB: ["28085600", "PN60041", ...]
- * @property array  $installations  JSONB: ["HORSCH Focus", "HORSCH Joker", ...]
- * @property array  $translations   JSONB: { uk: {...}, en: {...}, pl: {...} }
- * @property string|null $model_3d_url
- * @property string|null $drawing_url
- */
 class Product extends Model
 {
     protected $fillable = [
         'slug',
         'article',
-        'fkl_designation',
-        'category_id',
-        'specs',
-        'oem_cross',
-        'installations',
-        'translations',
-        'model_3d_url',
-        'drawing_url',
-        'schema_key',
-        'is_active',
+        'product_table_id',
     ];
 
-    protected $casts = [
-        'specs'         => 'array',
-        'oem_cross'     => 'array',
-        'installations' => 'array',
-        'translations'  => 'array',
-        'is_active'     => 'boolean',
-    ];
-
-    // ===== RELATIONS =====
-
-    public function category(): BelongsTo
+    public function productTable(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(ProductTable::class);
     }
 
-    public function images(): HasMany
+    public function specs(): HasMany
     {
-        return $this->hasMany(ProductImage::class, 'product_slug', 'slug')
-            ->orderBy('sort_order');
+        return $this->hasMany(ProductSpec::class);
     }
 
-    // ===== HELPERS =====
-
-    /**
-     * Повертає переклад для заданої мови з fallback на EN
-     */
-    public function getTranslation(string $locale): array
+    public function assets(): HasMany
     {
-        return $this->translations[$locale]
-            ?? $this->translations['en']
-            ?? [];
+        return $this->hasMany(ProductAsset::class, 'entity_id')
+            ->where('entity_type', 'product');
     }
 
-    /**
-     * Формує масив у форматі JSON з ТЗ VELNOX
-     */
-    public function toApiArray(string $locale = 'en'): array
+    public function crossRefs(): HasMany
     {
-        return [
-            'article'          => $this->article,
-            'fkl_designation'  => $this->fkl_designation,
-            'slug'             => $this->slug,
-            'category_id'      => $this->category->slug ?? $this->category_id,
-            'specs'            => $this->specs,
-            'oem_cross'        => $this->oem_cross ?? [],
-            'installations'    => $this->installations ?? [],
-            'model_3d_url'     => $this->model_3d_url,
-            'drawing_url'      => $this->drawing_url,
-            'schema_key'       => $this->schema_key,
-            'images'           => $this->images->map(fn ($img) => [
-                'path'       => $img->path,
-                'type'       => $img->type,
-                'sort_order' => $img->sort_order,
-            ])->values()->all(),
-            'translations'     => $this->translations,
-        ];
+        return $this->hasMany(ProductCrossRef::class);
+    }
+
+    public function installations(): HasMany
+    {
+        return $this->hasMany(ProductInstallation::class);
+    }
+
+    public function translations(): HasMany
+    {
+        return $this->hasMany(Translation::class, 'entity_id')
+            ->where('entity_type', 'product');
     }
 }

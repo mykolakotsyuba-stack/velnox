@@ -404,7 +404,11 @@
     "pu_kn": "Fatigue Load Limit Pu (kN)",
     "E_mm": "E (mm) — Distance E",
     "M_thread": "M — Thread M",
-    "B_mm": "B (mm) — Width B"
+    "B_mm": "B (mm) — Width B",
+    "pdf_catalog_title": "PRODUCT CATALOG",
+    "pdf_drawing_title": "Technical Drawing",
+    "drawings": "Drawings",
+    "pdf_copyright": "All rights reserved."
   },
   "news": {
     "categories": {
@@ -441,6 +445,9 @@
       "table1": {
         "title": "Table 1: Dimensional Specifications and Mountings of Bearing Units",
         "desc": "",
+        "col_article": "VELNOX Part Number",
+        "col_cross_ref": "Cross-References",
+        "col_brand": "Brand",
         "col_designation": "Designation",
         "col_d": "Inner Diameter (d, mm)",
         "col_j": "Mounting Distances (J, mm)",

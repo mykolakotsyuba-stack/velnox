@@ -6,44 +6,72 @@ use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
     /**
-     * Всі активні категорії
-     * GET /api/v1/categories?locale=en
+     * GET /api/v1/categories?locale=uk
      */
     public function index(Request $request): JsonResponse
     {
         $locale = $request->get('locale', 'en');
 
-        $categories = Category::where('is_active', true)
-            ->orderBy('sort_order')
-            ->get()
-            ->map(fn($c) => [
-                'slug'          => $c->slug,
-                'name'          => $c->getName($locale),
-                'product_count' => $c->products()->where('is_active', true)->count(),
-            ]);
+        $categories = Category::orderBy('sort_order')->get();
+        $catIds     = $categories->pluck('id')->toArray();
 
-        return response()->json(['data' => $categories]);
+        $names = DB::table('translations')
+            ->where('entity_type', 'category')
+            ->whereIn('entity_id', $catIds)
+            ->whereIn('locale', [$locale, 'en'])
+            ->where('field', 'name')
+            ->get()
+            ->groupBy('entity_id');
+
+        $data = $categories->map(function ($c) use ($names, $locale) {
+            $nameRows = $names->get($c->id, collect());
+            $name = $nameRows->firstWhere('locale', $locale)?->value
+                 ?? $nameRows->firstWhere('locale', 'en')?->value
+                 ?? $c->slug;
+
+            return ['slug' => $c->slug, 'name' => $name];
+        });
+
+        return response()->json(['data' => $data]);
     }
 
     /**
-     * Категорія + перелік товарів у ній
-     * GET /api/v1/categories/{slug}?locale=en
+     * GET /api/v1/categories/{slug}?locale=uk
      */
     public function show(string $slug, Request $request): JsonResponse
     {
-        $locale = $request->get('locale', 'en');
+        $locale   = $request->get('locale', 'en');
+        $category = Category::where('slug', $slug)->firstOrFail();
 
-        $category = Category::where('slug', $slug)
-            ->where('is_active', true)
-            ->firstOrFail();
+        $name = DB::table('translations')
+            ->where('entity_type', 'category')
+            ->where('entity_id', $category->id)
+            ->where('locale', $locale)
+            ->where('field', 'name')
+            ->value('value')
+            ?? DB::table('translations')
+                ->where('entity_type', 'category')
+                ->where('entity_id', $category->id)
+                ->where('locale', 'en')
+                ->where('field', 'name')
+                ->value('value')
+            ?? $category->slug;
+
+        // Tables in this category with their slugs
+        $tables = DB::table('product_tables')
+            ->where('category_id', $category->id)
+            ->orderBy('sort_order')
+            ->pluck('slug');
 
         return response()->json([
-            'slug'  => $category->slug,
-            'name'  => $category->getName($locale),
+            'slug'   => $category->slug,
+            'name'   => $name,
+            'tables' => $tables,
         ]);
     }
 }

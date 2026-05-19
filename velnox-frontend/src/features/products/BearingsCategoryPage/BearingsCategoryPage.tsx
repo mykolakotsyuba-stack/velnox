@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import styles from './bearings.module.css';
 import type { Locale, ProductListItem } from '@/entities/product/model/types';
-import buqData from '../data/buqTable1Data.json';
 
 /* ─── Shared Hooks ─── */
 function useInView(threshold = 0.12) {
@@ -402,7 +401,17 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
     const [filters, setFilters] = useState<Record<string, string[]>>({});
     const [openFilterCol, setOpenFilterCol] = useState<string | null>(null);
 
+    // Mapping: internal col key → spec_definitions.key (for API spec_labels lookup)
+    const T1_COL_TO_SPEC: Record<string, string> = {
+        d_mm: 'd_mm', d_inch: 'd_inch',
+        A1: 'A1_mm', A2: 'A2_mm', J: 'J_mm', L: 'L_mm', N: 'N_mm', A: 'A_mm',
+        mass_kg: 'mass_kg', Cdyn: 'cdyn_kn', Co: 'co_kn', Pu: 'pu_kn',
+    };
+
     // Table data states
+    const [tableSchemas, setTableSchemas] = useState<Record<string, string | null>>({});
+    const [table1SpecLabels, setTable1SpecLabels] = useState<Record<string, string>>({});
+    const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
     const [table4Data, setTable4Data] = useState<any[]>([]);
@@ -474,17 +483,56 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
         const fetchTableData = async () => {
             try {
                 const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-                const [res2, res3, res4, res5] = await Promise.all([
-                    fetch(`${apiBase}/v1/products/tables/bearings-t2`),
-                    fetch(`${apiBase}/v1/products/tables/bearings-t3`),
-                    fetch(`${apiBase}/v1/products/tables/bearings-t4`),
-                    fetch(`${apiBase}/v1/products/tables/bearings-t5`),
+                const [res1, res2, res3, res4, res5] = await Promise.all([
+                    fetch(`${apiBase}/v1/product-tables/bearings-t1?locale=${locale}`),
+                    fetch(`${apiBase}/v1/product-tables/bearings-t2?locale=${locale}`),
+                    fetch(`${apiBase}/v1/product-tables/bearings-t3?locale=${locale}`),
+                    fetch(`${apiBase}/v1/product-tables/bearings-t4?locale=${locale}`),
+                    fetch(`${apiBase}/v1/product-tables/bearings-t5?locale=${locale}`),
                 ]);
 
-                if (res2.ok) setTable2Data(await res2.json());
-                if (res3.ok) setTable3Data(await res3.json());
-                if (res4.ok) setTable4Data(await res4.json());
-                if (res5.ok) setTable5Data(await res5.json());
+                if (res1.ok) {
+                    const data = await res1.json();
+                    if (data.table?.spec_labels) setTable1SpecLabels(data.table.spec_labels);
+                    if (data.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t1': data.table.schema_src }));
+                    setTable1Data(data.products.map((p: any) => ({
+                        slug:     p.slug,
+                        article:  p.article,
+                        brand:    p.cross_refs.map((r: any) => r.brand).join(' / '),
+                        cross_ref: p.cross_refs.map((r: any) => r.value).join('\n'),
+                        d_mm:     p.specs.d_mm    ?? null,
+                        d_inch:   p.specs.d_inch   ?? null,
+                        A1:       p.specs.A1_mm    ?? null,
+                        A2:       p.specs.A2_mm    ?? null,
+                        J:        p.specs.J_mm     ?? null,
+                        L:        p.specs.L_mm     ?? null,
+                        N:        p.specs.N_mm     ?? null,
+                        A:        p.specs.A_mm     ?? null,
+                        mass_kg:  p.specs.mass_kg  ?? null,
+                        Cdyn:     p.specs.cdyn_kn  ?? null,
+                        Co:       p.specs.co_kn    ?? null,
+                        Pu:       p.specs.pu_kn    ?? null,
+                    })));
+                }
+                if (res2.ok) {
+                    const data2 = await res2.json();
+                    if (data2.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t2': data2.table.schema_src }));
+                    setTable2Data(data2.products ?? []);
+                }
+                if (res3.ok) {
+                    const data3 = await res3.json();
+                    if (data3.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t3': data3.table.schema_src }));
+                    setTable3Data(data3.products ?? []);
+                }
+                if (res4.ok) {
+                    const data4 = await res4.json();
+                    setTable4Data(data4.products ?? []);
+                }
+                if (res5.ok) {
+                    const data5 = await res5.json();
+                    if (data5.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t5': data5.table.schema_src }));
+                    setTable5Data(data5.products ?? []);
+                }
             } catch (err) {
                 console.error('Error fetching table data:', err);
             } finally {
@@ -493,7 +541,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
         };
 
         fetchTableData();
-    }, []);
+    }, [locale]);
 
         const handleFilterChange = useCallback((col: string, val: string) => {
         setFilters(prev => {
@@ -507,7 +555,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
     // Table 1: BUQ Dimensional Specs
     const filteredT1 = useMemo(() => {
-        let rows = buqData as any[];
+        let rows = table1Data as any[];
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
             rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
@@ -518,7 +566,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             }
         });
         return rows;
-    }, [searchQuery, filters]);
+    }, [searchQuery, filters, table1Data]);
 
     // Table 2: Performance data — from API
     const filteredT2 = useMemo(() => {
@@ -583,8 +631,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
     // Unique bore diameter values across all tables
     const allOptions = useMemo(() => {
         const all: Record<string, Set<string>> = {};
-        const buq = buqData as any[];
-        [...buq, ...table2Data, ...table3Data, ...table4Data, ...table5Data].forEach(r => {
+        [...table1Data, ...table2Data, ...table3Data, ...table4Data, ...table5Data].forEach(r => {
             Object.keys(r).forEach(k => {
                 const v = r[k];
                 if (v != null && String(v).trim() !== '' && String(v).trim() !== '-') {
@@ -685,7 +732,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <div className={styles.buqDrawingCompositeSingle}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                                src="/velnox/images/products/_shared/bearings-t1/schema.webp"
+                                src={tableSchemas['bearings-t1'] ?? '/velnox/images/products/bearings-t1/schema.png'}
                                 alt="BUQ Series Technical Drawing"
                                 style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
                             />
@@ -700,24 +747,21 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={`${styles.techTable} ${styles.techTableCompact}`}>
                                 <thead>
                                     <tr>
-                                        <Th col="article" label="Позначення Velnox" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="cross_ref" label="Перехресні аналоги" toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="brand" label="Бренд" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['brand'] || []} selectedFilters={filters['brand'] || []} onFilterChange={handleFilterChange} />
-                                        <Th
-                                            col="d_mm" label="Діаметр отвору d (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1}
-
-                                        hasFilter filterOptions={allOptions['d_mm'] || []} selectedFilters={filters['d_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="d_inch" label="Діаметр отвору d (дюйм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['d_inch'] || []} selectedFilters={filters['d_inch'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="A1" label="Загальна ширина корпусу A1 (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A1'] || []} selectedFilters={filters['A1'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="A2" label="Товщина фланця корпусу A2 (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A2'] || []} selectedFilters={filters['A2'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="J" label="Відстань між отворами J (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['J'] || []} selectedFilters={filters['J'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="L" label="Загальна довжина L (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L'] || []} selectedFilters={filters['L'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="N" label="Діаметр отвору N (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['N'] || []} selectedFilters={filters['N'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="A" label="Загальна ширина A (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A'] || []} selectedFilters={filters['A'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="mass_kg" label="Маса (кг)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Cdyn" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Cdyn'] || []} selectedFilters={filters['Cdyn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Co" label="Статична вантажо-підйомність Co (кН)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Co'] || []} selectedFilters={filters['Co'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Pu" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Pu'] || []} selectedFilters={filters['Pu'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="article" label={t('block2.table1.col_article')} toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="cross_ref" label={t('block2.table1.col_cross_ref')} toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="brand" label={t('block2.table1.col_brand')} toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['brand'] || []} selectedFilters={filters['brand'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="d_mm"    label={table1SpecLabels[T1_COL_TO_SPEC['d_mm']]    || 'Діаметр отвору d (мм)'}           toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['d_mm'] || []} selectedFilters={filters['d_mm'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="d_inch"  label={table1SpecLabels[T1_COL_TO_SPEC['d_inch']]  || 'Діаметр отвору d (дюйм)'}          toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['d_inch'] || []} selectedFilters={filters['d_inch'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="A1"      label={table1SpecLabels[T1_COL_TO_SPEC['A1']]      || 'Загальна ширина корпусу A1 (мм)'}   toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A1'] || []} selectedFilters={filters['A1'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="A2"      label={table1SpecLabels[T1_COL_TO_SPEC['A2']]      || 'Товщина фланця корпусу A2 (мм)'}    toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A2'] || []} selectedFilters={filters['A2'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="J"       label={table1SpecLabels[T1_COL_TO_SPEC['J']]       || 'Відстань між отворами J (мм)'}       toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['J'] || []} selectedFilters={filters['J'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="L"       label={table1SpecLabels[T1_COL_TO_SPEC['L']]       || 'Загальна довжина L (мм)'}            toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L'] || []} selectedFilters={filters['L'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="N"       label={table1SpecLabels[T1_COL_TO_SPEC['N']]       || 'Діаметр отвору N (мм)'}              toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['N'] || []} selectedFilters={filters['N'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="A"       label={table1SpecLabels[T1_COL_TO_SPEC['A']]       || 'Загальна ширина A (мм)'}             toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A'] || []} selectedFilters={filters['A'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="mass_kg" label={table1SpecLabels[T1_COL_TO_SPEC['mass_kg']] || 'Маса (кг)'}                          toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Cdyn"    label={table1SpecLabels[T1_COL_TO_SPEC['Cdyn']]    || 'Динамічна вантажопідйомність Cdyn (кН)'} toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Cdyn'] || []} selectedFilters={filters['Cdyn'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Co"      label={table1SpecLabels[T1_COL_TO_SPEC['Co']]      || 'Статична вантажопідйомність Co (кН)'}    toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Co'] || []} selectedFilters={filters['Co'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="Pu"      label={table1SpecLabels[T1_COL_TO_SPEC['Pu']]      || 'Гранична втомна міцність Pu (кН)'}        toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Pu'] || []} selectedFilters={filters['Pu'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
@@ -742,7 +786,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Маса (кг)">{row.mass_kg}</td>
                                             <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row.Cdyn}</td>
                                             <td data-label="Статична вантажо-підйомність Co (кН)">{row.Co}</td>
-                                            <td data-label="Граничне навантаження втомної міцності Pu (кН)">{row.Pu}</td>
+                                            <td data-label="Гранична втомна міцність Pu (кН)">{row.Pu}</td>
                                             <td className={styles.actionCol}>
                                                 <button className={styles.reqBtn} onClick={() => setModalProduct(row.article)}>
                                                     {t('block2.btn_request')}
@@ -766,7 +810,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <div className={styles.tableDiagramContainer}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                                src="/velnox/images/products/_shared/bearings-t2/schema.webp"
+                                src={tableSchemas['bearings-t2'] ?? '/velnox/images/products/bearings-t2/schema.png'}
                                 alt="BUQ 308-2T3H-DS Technical Drawing"
                                 style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
                                 loading="lazy"
@@ -837,7 +881,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         <div className={styles.tableDiagramContainer}>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                                src="/velnox/images/products/_shared/bearings-t3/schema.webp"
+                                src={tableSchemas['bearings-t3'] ?? '/velnox/images/products/bearings-t3/schema.png'}
                                 alt="BUQ 309-2T3H Technical Drawing"
                                 style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
                                 loading="lazy"
@@ -949,12 +993,11 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     <div className={styles.tableBlock}>
                         <h3>{t('block2.table5.title')}</h3>
                         <div className={styles.tableDiagramContainer}>
-                            <Image
-                                src="/velnox/images/products/_shared/bearings-t5/schema.webp"
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={tableSchemas['bearings-t5'] ?? '/velnox/images/products/bearings-t5/schema.png'}
                                 alt="BUP 207-X3L Technical Drawing"
-                                width={1200}
-                                height={800}
-                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }}
+                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
                                 loading="lazy"
                             />
                         </div>

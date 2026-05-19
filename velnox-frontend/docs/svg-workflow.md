@@ -146,19 +146,40 @@ circle_cy = text_y - half_cap_height     (baseline → центр літери)
 
 ---
 
-## 5. DIM_LABELS в BuqBlueprintViewer.tsx
+## 5. DIM_LABELS — зберігається в БД, НЕ у компоненті
 
-```tsx
-const DIM_LABELS: DimLabel[] = [
-    { key: 'N',      label: 'N',  point: { x: text_x + HALF1,    y: text_y - CAP0 } },
-    { key: 'B',      label: 'B',  point: { x: text_x + HALF1_F1, y: text_y - CAP1 } },
-    // ...
-];
+Дані підсвічування зберігаються у полі **`highlight_config`** (jsonb) таблиці `product_tables`.
+
+### Формат highlight_config в БД
+
+```json
+{
+  "d_mm":   [{"label": "d",  "x": 1319, "y": 1416}],
+  "d_inch": [{"label": "d",  "x": 1319, "y": 1416}],
+  "J_mm":   [{"label": "J",  "x": 555,  "y": 1788}],
+  "A_mm":   [{"label": "A",  "x": 492,  "y": 974},
+              {"label": "A",  "x": 491,  "y": 1890}]
+}
 ```
 
-- `key` — відповідає полю в `ProductSpecs` (наприклад `'d_mm'`, `'A2'`)
-- Якщо два ключі на одній літері (`d_mm` і `d_inch`) — `point` однаковий
-- `SVG_VB` константа = viewBox SVG-файлу (змінювати разом)
+- Ключ = spec key (RULE 13: bearings без prefix → `d_mm`; інші → `hub_d_mm`, тощо)
+- `x, y` = **центр кола підсвічування** у координатах SVG viewBox (вже розраховані)
+- Один ключ може мати кілька точок (наприклад, `A_mm` зображено у 3 видах)
+- Два ключі на одній літері (наприклад, `d_mm` і `d_inch`) → однакові `x, y`
+
+### Як API перетворює highlight_config → dim_labels
+
+`ProductController.php` читає `highlight_config`, розгортає в масив:
+```json
+[
+  {"key": "d_mm",   "label": "d", "point": {"x": 1319, "y": 1416}},
+  {"key": "d_inch", "label": "d", "point": {"x": 1319, "y": 1416}},
+  ...
+]
+```
+Компонент `BuqBlueprintViewer` отримує цей масив через prop `dimLabels` — ніяких хардкодів у компоненті.
+
+`SVG_VB_DEFAULT` у компоненті — лише fallback якщо `schema_viewbox` в БД порожній.
 
 ---
 
@@ -176,14 +197,19 @@ const DIM_LABELS: DimLabel[] = [
 
 ## 7. Шляхи до файлів
 
-| Файл | Шлях |
-|---|---|
-| SVG-схема | `public/images/schemes/bearings-schema.svg` |
-| URL в браузері | `/velnox/images/schemes/bearings-schema.svg` |
-| Компонент | `src/features/products/ProductTemplate/blocks/BuqBlueprintViewer.tsx` |
-| CSS | `src/features/products/ProductTemplate/blocks/BuqBlueprintViewer.module.css` |
+Конвенція для нових таблиць — за прикладом bearings-t1:
 
-Префікс `/velnox` — `basePath` з `next.config.mjs`. Без нього файл не знайдеться.
+| Тип файлу | Локальний шлях | URL / БД path |
+|---|---|---|
+| SVG-схема | `public/images/products/<table-slug>/schema.svg` | `/velnox/images/products/<table-slug>/schema.svg` |
+| PNG-схема (для таблиці категорії) | `public/images/products/<table-slug>/schema.png` | `/velnox/images/products/<table-slug>/schema.png` |
+| Фото продукту | `public/images/products/<table-slug>/velnox-<article-slug>.webp` | `/velnox/images/products/<table-slug>/velnox-<article-slug>.webp` |
+| Креслення 1,2,3 | `public/images/products/<table-slug>/velnox-<article-slug>-drawing-1.webp` | `/velnox/images/products/<table-slug>/velnox-<article-slug>-drawing-1.webp` |
+| Компонент | `src/features/products/ProductTemplate/blocks/BuqBlueprintViewer.tsx` | — |
+
+**Правило іменування**: `velnox-{article-slug}.webp`, `velnox-{article-slug}-drawing-{n}.webp`, `velnox-{article-slug}-schema.webp`  
+**Prefix `/velnox`** — basePath з `next.config.mjs`. Без нього — 404.  
+**SVG лишається як `.svg`** — векторний, WebP не потрібен.
 
 ---
 
@@ -196,18 +222,207 @@ expect deploy_frontend_auto.exp
 
 ---
 
-## 9. Чеклист для нового SVG-креслення
+## 9. Чеклист: підключення SVG для нової product_table
 
+### A. Підготовка SVG-файлу
 - [ ] CorelDRAW: As Text, Embed Font, Used Only
-- [ ] Зберегти на Desktop з ASCII-назвою
-- [ ] Файл > 100KB, є `<text` елементи
-- [ ] Python: знайти bounding box → viewBox з margin
-- [ ] Запустити скрипт обробки (п.3)
-- [ ] Валідація `ET.fromstring()` пройшла без помилок
-- [ ] Скопіювати в `public/images/schemes/`
-- [ ] Оновити `SVG_VB` в компоненті
-- [ ] Оновити `aspect-ratio` в CSS
-- [ ] Знайти `<text` координати кожної літери-розміру
-- [ ] Розрахувати `point` для `DIM_LABELS`
+- [ ] Зберегти на Desktop з ASCII-назвою (наприклад `Untitled-1.svg`)
+- [ ] Перевірити: файл > 100KB і є `<text` елементи
+- [ ] Python: bounding-box скрипт (п.2) → отримати viewBox з 5% margin
+- [ ] Python: скрипт обробки (п.3) — видалити DOCTYPE, виставити viewBox/width/height
+- [ ] Валідація `ET.fromstring()` без помилок
+- [ ] Скопіювати в `public/images/products/<table-slug>/schema.svg`
+- [ ] Завантажити на сервер + додати запис `product_assets`:
+  - `entity_type = 'product_table'`, `entity_id = <id таблиці>`, `type = 'schema_svg'`
+  - `path = '/velnox/images/products/<table-slug>/schema.svg'`
+
+### B. Розрахунок кіл підсвічування
+- [ ] Відкрити SVG в текстовому редакторі → знайти `<text` для кожної літери-розміру
+- [ ] Для кожної літери прочитати `x` і `y` (baseline + left anchor)
+- [ ] Розрахувати центр кола: `cx = x + half_text_width`, `cy = y - half_cap_height`
+  - Метрики шрифту — п.4
+- [ ] Скласти `highlight_config` JSON:
+  ```json
+  {"d_mm":[{"label":"d","x":CX,"y":CY}], "d_inch":[{"label":"d","x":CX,"y":CY}], ...}
+  ```
+  - Дотримуватись RULE 13: bearings → без prefix, hubs → `hub_`, тощо
+  - Якщо літера зображена в кількох видах → масив з кількох точок
+
+### C. Оновити БД (рядок product_tables для цієї таблиці)
+- [ ] `highlight_config` = JSON з кроку B
+- [ ] `schema_viewbox` = рядок viewBox (наприклад `'0 800 2400 1160'`)
+
+### D. CSS фронтенду
+- [ ] `aspect-ratio` НЕ потрібно чіпати — задається динамічно через inline style з viewBox prop. Кожна схема має свої пропорції автоматично.
 - [ ] Перевірити що немає `padding` на `.panelImage`
-- [ ] Деплой і візуальна перевірка
+
+### E. Деплой і перевірка
+- [ ] `expect deploy_frontend_auto.exp` з `/Users/localmac/Desktop/Велнокс`
+- [ ] Відкрити сторінку товару → ховер на кожен spec → коло з'являється на правій літері
+
+---
+
+## 10. Повний чеклист: додавання нової product_table з нуля
+
+> Користувач надає: файли (фото, креслення, SVG) або скріни таблиці зі специфікаціями.  
+> ШІ генерує SQL на основі файлів і шаблону bearings-t1.
+
+### A. Зображення — підготовка та конвенція
+
+**Конвертація в WebP** (нові таблиці — тільки WebP):
+```bash
+# macOS: brew install webp
+cwebp -q 85 main.jpeg -o velnox-buq-308-2t3h-ds.webp
+cwebp -q 85 drawing-1.png -o velnox-buq-308-2t3h-ds-drawing-1.webp
+```
+
+| Тип файлу | Назва файлу |
+|---|---|
+| Фото продукту (головне) | `velnox-{article-slug}.webp` |
+| Креслення 1, 2, 3 | `velnox-{article-slug}-drawing-{n}.webp` |
+| Схема PNG (для таблиці категорії) | `schema.png` (спільна для таблиці, не для продукту) |
+| Схема SVG (для картки товару) | `schema.svg` (спільна для таблиці) |
+
+Розмістити в: `public/images/products/<table-slug>/`
+
+---
+
+### B. БД — product_tables
+
+```sql
+INSERT INTO product_tables (slug, category_slug, name, spec_columns, highlight_config, schema_viewbox)
+VALUES (
+  'bearings-t2',
+  'bearings',
+  'BUQ-308-2T3H-DS — Таблиця 2',
+  '["d_mm","A1_mm","A2_mm","J_mm","L_mm","H_T","A_mm","mass_kg","cdyn_kn","co_kn","pu_kn"]',
+  NULL,   -- заповнити після кроку C (SVG)
+  NULL    -- заповнити після кроку C (SVG)
+);
+```
+
+- `category_slug` — повинен існувати в таблиці `categories`
+- `spec_columns` — JSON-масив ключів у порядку відображення в таблиці
+- `highlight_config` і `schema_viewbox` — заповнюються після обробки SVG (чеклист п.9)
+
+---
+
+### C. БД — product_assets для таблиці (schema_png + schema_svg)
+
+```sql
+-- schema.png — показується ВГОРІ таблиці на сторінці категорії (bearings, hubs тощо)
+INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
+VALUES ('product_table', <table_id>, 'schema_png', '/velnox/images/products/bearings-t2/schema.png', 0);
+
+-- schema.svg — інтерактивний viewer на картці товару
+INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
+VALUES ('product_table', <table_id>, 'schema_svg', '/velnox/images/products/bearings-t2/schema.svg', 0);
+```
+
+> `schema_png` → API повертає як `table.schema_src` → відображається над таблицею в BearingsCategoryPage.  
+> `schema_svg` → API повертає як `product.schema_svg` → BuqBlueprintViewer на картці.
+
+---
+
+### D. БД — products (один рядок на продукт)
+
+```sql
+INSERT INTO products (slug, article, product_table_id, category_slug)
+VALUES ('buq-308-2t3h-ds', 'BUQ-308-2T3H-DS', <table_id>, 'bearings');
+```
+
+- `slug` — URL-safe, унікальний. Генерується з артикулу: нижній регістр, пробіли/спецсимволи → дефіс
+- Назва картки клікабельна → `/products/<category_slug>/<slug>`
+
+---
+
+### E. БД — product_specs
+
+```sql
+INSERT INTO product_specs (product_id, spec_key, value)
+VALUES
+  (<product_id>, 'd_mm',    '40'),
+  (<product_id>, 'A1_mm',   '56'),
+  (<product_id>, 'A2_mm',   '21'),
+  (<product_id>, 'J_mm',    '101.5'),
+  (<product_id>, 'L_mm',    '130'),
+  (<product_id>, 'H_T',     '1.1/4'),
+  (<product_id>, 'A_mm',    '51.2'),
+  (<product_id>, 'mass_kg', '2.5'),
+  (<product_id>, 'cdyn_kn', '62.3'),
+  (<product_id>, 'co_kn',   '45.2'),
+  (<product_id>, 'pu_kn',   '1.898');
+```
+
+---
+
+### F. БД — translations
+
+```sql
+-- Назва продукту (uk/en/pl)
+INSERT INTO translations (entity_type, entity_id, locale, field, value)
+VALUES
+  ('product', <product_id>, 'uk', 'name', 'Підшипниковий вузол BUQ-308-2T3H-DS'),
+  ('product', <product_id>, 'en', 'name', 'Bearing Unit BUQ-308-2T3H-DS'),
+  ('product', <product_id>, 'pl', 'name', 'Jednostka łożyskowa BUQ-308-2T3H-DS');
+
+-- Опис (якщо є)
+INSERT INTO translations (entity_type, entity_id, locale, field, value)
+VALUES ('product', <product_id>, 'uk', 'desc', 'Чавунний квадратний фланцевий корпус...');
+```
+
+---
+
+### G. БД — product_assets для продукту (фото + креслення)
+
+```sql
+-- Головне фото (gallery, sort_order=0)
+INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
+VALUES ('product', <product_id>, 'gallery', '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds.webp', 0);
+
+-- Креслення (gallery, sort_order=1,2,3...)
+INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
+VALUES
+  ('product', <product_id>, 'gallery', '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds-drawing-1.webp', 1),
+  ('product', <product_id>, 'gallery', '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds-drawing-2.webp', 2);
+```
+
+> Перший gallery-елемент (sort_order=0) — головне фото на картці і в PDF.  
+> Решта gallery-елементи — креслення, показуються як thumbnails.
+
+---
+
+### H. БД — product_cross_refs (якщо є)
+
+```sql
+INSERT INTO product_cross_refs (product_id, brand, value)
+VALUES
+  (<product_id>, 'SKF',  'FYJ 40 TF'),
+  (<product_id>, 'SNR',  'EXF308/UCF308'),
+  (<product_id>, 'FAG',  'UCF208');
+```
+
+---
+
+### I. Клікабельні картки (перевірка)
+
+На сторінці категорії (`/products/bearings`) картки продуктів мають:
+- Заголовок — `<Link href="/{locale}/products/{category_slug}/{slug}">` — клікабельний за статтею
+- API: `GET /api/v1/products?category=bearings&locale=uk` → повертає `slug` для кожного продукту
+
+Перевірити: `slug` в БД збігається з роутом; `category_slug` правильний.
+
+---
+
+### J. SVG + highlight_config (чеклист п.9)
+
+Виконати повний чеклист з **розділу 9** після того як є SVG-файл.
+
+---
+
+### K. Деплой і перевірка
+
+- [ ] `expect deploy_frontend_auto.exp` з `/Users/localmac/Desktop/Велнокс`
+- [ ] Сторінка категорії: схема над таблицею, всі рядки таблиці, назви клікабельні
+- [ ] Картка товару: фото завантажується, схема з'являється, ховер підсвічує розміри
+- [ ] PDF: фото + схема + специфікації + креслення — все з БД, без хардкоду

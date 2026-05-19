@@ -20,9 +20,6 @@ export function ProductHeader({ product, productName, locale }: ProductHeaderPro
             </div>
 
             <div className={styles.meta}>
-                {product.fkl_designation && (
-                    <span className={styles.badge}>FKL: {product.fkl_designation}</span>
-                )}
                 <span className={styles.badge}>ISO/DIN Standard</span>
             </div>
         </header>

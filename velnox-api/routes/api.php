@@ -1,59 +1,32 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductTableController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\LeadController;
 
-/*
-|--------------------------------------------------------------------------
-| VELNOX API Routes
-|--------------------------------------------------------------------------
-|
-| База: /api/v1/
-| Всі відповіді — JSON у форматі згідно ТЗ VELNOX
-|
-*/
-
 Route::prefix('v1')->group(function () {
 
-    // Категорії продуктів
+    // Categories
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{slug}', [CategoryController::class, 'show']);
 
-    // Продукти
-    Route::get('/products', [ProductController::class, 'index']);       // ?category=hubs&cdyn_min=30&cdyn_max=100&locale=en
+    // Product table (for category page)
+    Route::get('/product-tables/{slug}', [ProductTableController::class, 'show']);
 
-    // Tables для сторінки bearings (мають йти ДО {slug} маршруту!)
-    Route::get('/products/tables/performance', [ProductController::class, 'tablePerformance']);
-    Route::get('/products/tables/cross-references', [ProductController::class, 'tableCrossReferences']);
-    Route::get('/products/tables/extended-specs', [ProductController::class, 'tableExtendedSpecs']);
-    Route::get('/products/tables/additional-data', [ProductController::class, 'tableAdditionalData']);
+    // Products
+    Route::get('/products', [ProductController::class, 'index']);
+    Route::get('/products/{slug}', [ProductController::class, 'show']);
 
-    // Tables для сторінки hubs (мають йти ДО {slug} маршруту!)
-    Route::get('/products/tables/hubs-table1', [ProductController::class, 'tableHubsTable1']);
-    Route::get('/products/tables/hubs-table2', [ProductController::class, 'tableHubsTable2']);
-    Route::get('/products/tables/hubs-table3', [ProductController::class, 'tableHubsTable3']);
-
-    // Tables для сторінки agro (мають йти ДО {slug} маршруту!)
-    Route::get('/products/tables/agro-table1', [ProductController::class, 'tableAgroTable1']);
-    Route::get('/products/tables/agro-table2', [ProductController::class, 'tableAgroTable2']);
-    Route::get('/products/tables/agro-table3', [ProductController::class, 'tableAgroTable3']);
-    Route::get('/products/tables/agro-table4', [ProductController::class, 'tableAgroTable4']);
-
-    // Универсальный маршрут для KIT-таблиць та інших груп
-    Route::get('/products/tables/{group}', [ProductController::class, 'tableByGroup']);
-
-    Route::get('/products/{slug}', [ProductController::class, 'show']); // ?locale=en
-
-    // Новини
-    Route::get('/news', [NewsController::class, 'index']);              // ?category=oem-solutions&locale=en
+    // News
+    Route::get('/news', [NewsController::class, 'index']);
     Route::get('/news/{slug}', [NewsController::class, 'show']);
 
-    // Імпорт з 1С (захищений API-токеном)
-    Route::middleware('auth:sanctum')->post('/import/products', [ProductController::class, 'import']);
-
-    // Ліди — форма «Запит до інженера»
+    // Leads
     Route::post('/leads/engineer', [LeadController::class, 'engineerRequest']);
+
+    // Import from 1C (token-protected)
+    Route::middleware('auth:sanctum')->post('/import/products', [ProductController::class, 'import']);
 });

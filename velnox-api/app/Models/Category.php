@@ -8,28 +8,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     protected $fillable = [
-        'slug',     // 'hubs', 'bearings', 'agro', 'kit', 'custom'
-        'name_en',
-        'name_uk',
-        'name_pl',
+        'slug',
         'sort_order',
-        'is_active',
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
-
-    public function products(): HasMany
+    public function productTables(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(ProductTable::class);
     }
 
-    /**
-     * Назва категорії для заданої мови
-     */
-    public function getName(string $locale = 'en'): string
+    public function translations(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->{"name_{$locale}"} ?? $this->name_en ?? '';
+        return $this->hasMany(Translation::class, 'entity_id')
+            ->where('entity_type', 'category');
     }
 }

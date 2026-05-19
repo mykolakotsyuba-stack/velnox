@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Maximize2, X } from 'lucide-react';
-import type { ProductSpecs } from '@/entities/product/model/types';
+import type { SpecItem } from '@/entities/product/model/types';
 import { SpecsTable } from './SpecsTable';
 import styles from './BlueprintViewer.module.css';
 import { useTranslations } from 'next-intl';
 
 interface BlueprintViewerProps {
     article: string;
-    specs: ProductSpecs;
+    specs: SpecItem[] | Record<string, string>;
     hoveredSpec: string | null;
     onHoverSpec?: (key: string | null) => void;
     schemaSrc?: string;
@@ -25,6 +25,14 @@ export function BlueprintViewer({
 }: BlueprintViewerProps) {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const t = useTranslations('product');
+
+    // Normalize specs for marker lookup (support both SpecItem[] and Record<string,string>)
+    const specsMap: Record<string, string> = Array.isArray(specs)
+        ? Object.fromEntries((specs as SpecItem[]).map(s => [s.key, s.value]))
+        : specs as Record<string, string>;
+    const specsArray: SpecItem[] = Array.isArray(specs)
+        ? specs as SpecItem[]
+        : Object.entries(specs as Record<string, string>).map(([key, value]) => ({ key, label: key, value, unit: '' }));
 
     // Coordinats mapping for the 1024x1024 base blueprint image
     // These coordinates map the JSON spec keys ('d_mm', 'J', 'L', etc.) 
@@ -65,7 +73,7 @@ export function BlueprintViewer({
             {/* Dynamic Markers */}
             {Object.entries(markers).map(([key, marker]) => {
                 const isActive = hoveredSpec === key;
-                if (specs[key] == null && !isActive) return null; // Only render if spec exists or is hovered
+                if (specsMap[key] == null && !isActive) return null; // Only render if spec exists or is hovered
 
                 return (
                     <g
@@ -172,7 +180,7 @@ export function BlueprintViewer({
 
                     <div className={styles.modalSpecs}>
                         <SpecsTable
-                            specs={specs}
+                            specs={specsArray}
                             hoveredSpec={hoveredSpec}
                             onHoverSpec={onHoverSpec}
                             isModal={true}

@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import type { CrossRef } from '@/entities/product/model/types';
 import styles from './CrossReferences.module.css';
 
 interface CrossReferencesProps {
-    refs: string[];
+    refs: CrossRef[];
 }
 
 export function CrossReferences({ refs }: CrossReferencesProps) {
@@ -19,9 +20,10 @@ export function CrossReferences({ refs }: CrossReferencesProps) {
         <section className={styles.section}>
             <h2 className={styles.title}>{t('cross_refs')}</h2>
             <div className={styles.grid}>
-                {displayRefs.map((ref) => (
-                    <div key={ref} className={styles.pill}>
-                        {ref}
+                {displayRefs.map((ref, i) => (
+                    <div key={i} className={styles.pill}>
+                        <span className={styles.brand}>{ref.brand}</span>
+                        <span className={styles.value}>{ref.value}</span>
                     </div>
                 ))}
             </div>

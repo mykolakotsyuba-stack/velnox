@@ -1,0 +1,13 @@
+#!/usr/bin/expect -f
+set timeout 60
+set password "12345678"
+
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@mail.irbis.ua
+expect "password:" { send "$password\r" }
+expect "$ "
+send "cd /srv/projects/velnox/api && php update_descriptions.php\r"
+expect "$ "
+send "rm update_descriptions.php\r"
+expect "$ "
+send "exit\r"
+expect eof

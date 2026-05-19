@@ -21,14 +21,32 @@
 }
 
 .pill {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     background: rgba(59, 130, 246, 0.1);
     border: 1px solid rgba(59, 130, 246, 0.2);
     color: #3b82f6;
     padding: 6px 14px;
-    border-radius: 20px;
+    border-radius: 12px;
     font-size: 14px;
     font-weight: 500;
     transition: all 0.2s ease;
+}
+
+.brand {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.65;
+    line-height: 1.2;
+}
+
+.value {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
 }
 
 .pill:hover {

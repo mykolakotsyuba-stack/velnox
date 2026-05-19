@@ -347,7 +347,11 @@
     "F_mm": "Długość części gwintowanej F (mm)",
     "cdyn_kn": "Nośność dynamiczna Cdyn (kN)",
     "co_kn": "Nośność statyczna Co (kN)",
-    "pu_kn": "Graniczne obciążenie zmęczeniowe Pu (kN)"
+    "pu_kn": "Graniczne obciążenie zmęczeniowe Pu (kN)",
+    "pdf_catalog_title": "KATALOG PRODUKTÓW",
+    "pdf_drawing_title": "Rysunek techniczny",
+    "drawings": "Rysunki",
+    "pdf_copyright": "Wszelkie prawa zastrzeżone."
   },
   "news": {
     "categories": {
@@ -384,6 +388,9 @@
       "table1": {
         "title": "Tabela 1: Wymiary gabarytowe i przyłączeniowe zespołów łożyskowych",
         "desc": "",
+        "col_article": "Oznaczenie Velnox",
+        "col_cross_ref": "Analogi krzyżowe",
+        "col_brand": "Marka",
         "col_designation": "Oznaczenie",
         "col_d": "Średnica wewnętrzna (d, mm)",
         "col_j": "Rozstaw montażowy (J, mm)",
