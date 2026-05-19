@@ -14,6 +14,7 @@ import type { DimLabel } from '../blueprintAssets';
 interface BuqBlueprintViewerProps {
     article: string;
     specs: ProductSpecs;
+    specsItems?: SpecItem[];
     hoveredSpec: string | null;
     onHoverSpec?: (key: string | null) => void;
     dimLabels?: DimLabel[];
@@ -54,7 +55,6 @@ function DimensionOverlay({ specs, hoveredSpec, dimLabels, viewBox }: {
 
     return (
         <svg
-            className={styles.svgOverlay}
             viewBox={viewBox}
             preserveAspectRatio="xMidYMid meet"
             xmlns="http://www.w3.org/2000/svg"
@@ -85,24 +85,19 @@ function DimensionOverlay({ specs, hoveredSpec, dimLabels, viewBox }: {
 }
 
 export function BuqBlueprintViewer({
-    article, specs, hoveredSpec, onHoverSpec,
+    article, specs, specsItems, hoveredSpec, onHoverSpec,
     dimLabels = [], svgSrc = '/velnox/images/schemes/bearings-schema.svg', viewBox = SVG_VB_DEFAULT,
 }: BuqBlueprintViewerProps) {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const t = useTranslations('product');
 
-    const innerContent = (
-        <div className={styles.blueprintInner}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-                src={svgSrc}
-                alt={`BUQ Series Technical Drawing ${article}`}
-                className={styles.panelImage}
-                style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
-            />
-            <DimensionOverlay specs={specs} hoveredSpec={hoveredSpec} dimLabels={dimLabels} viewBox={viewBox} />
-        </div>
-    );
+    const effectiveViewBox = viewBox || SVG_VB_DEFAULT;
+
+    // Use translated SpecItem[] in modal if provided, fall back to raw keys
+    const modalSpecs: SpecItem[] = specsItems ??
+        Object.entries(specs)
+            .filter(([, v]) => v != null)
+            .map(([key, value]) => ({ key, label: key, value: String(value), unit: '' }));
 
     return (
         <>
@@ -112,14 +107,22 @@ export function BuqBlueprintViewer({
                 </h2>
                 <div
                     className={styles.blueprintWrapper}
-                    style={{ aspectRatio: viewBoxAspect(viewBox) }}
+                    style={{ aspectRatio: viewBoxAspect(effectiveViewBox) }}
                     onClick={() => setIsFullscreen(true)}
                     title={t('expand', { defaultMessage: 'Розгорнути' })}
                 >
                     <button className={styles.expandButton} aria-label="Expand blueprint">
                         <Maximize2 size={20} />
                     </button>
-                    {innerContent}
+                    <div className={styles.blueprintInner}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={svgSrc}
+                            alt={`BUQ Series Technical Drawing ${article}`}
+                            style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                        />
+                        <DimensionOverlay specs={specs} hoveredSpec={hoveredSpec} dimLabels={dimLabels} viewBox={effectiveViewBox} />
+                    </div>
                 </div>
             </section>
 
@@ -129,10 +132,22 @@ export function BuqBlueprintViewer({
                         <X size={32} />
                     </button>
                     <div className={styles.modalDrawing}>
-                        {innerContent}
+                        <div className={styles.modalImageWrapper}>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={svgSrc}
+                                alt={`BUQ Series Technical Drawing ${article} fullscreen`}
+                                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain' }}
+                            />
+                            <DimensionOverlay specs={specs} hoveredSpec={hoveredSpec} dimLabels={dimLabels} viewBox={effectiveViewBox} />
+                        </div>
                     </div>
                     <div className={styles.modalSpecs}>
-                        <SpecsTable specs={Object.entries(specs).filter(([,v]) => v != null).map(([key, value]) => ({ key, label: key, value: String(value), unit: '' } as SpecItem))} hoveredSpec={hoveredSpec} onHoverSpec={onHoverSpec} />
+                        <SpecsTable
+                            specs={modalSpecs}
+                            hoveredSpec={hoveredSpec}
+                            onHoverSpec={onHoverSpec}
+                        />
                     </div>
                 </div>
             </div>

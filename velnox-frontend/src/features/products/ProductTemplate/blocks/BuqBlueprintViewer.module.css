@@ -209,8 +209,15 @@
     padding: 24px;
     min-height: 0;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
+    overflow: hidden;
+}
+
+.modalImageWrapper {
+    position: relative;
+    width: 100%;
+    min-height: 0;
 }
 
 .modalSpecs {

@@ -11,8 +11,6 @@ import { Installations } from './blocks/Installations';
 import { CtaBlock } from '@/widgets/CtaBlock';
 import { PhotoGallery } from './blocks/PhotoGallery';
 import { ModelBlock3D } from './blocks/VisualPanel';
-import { getProductImages, PRODUCT_3D, TABLE_GROUP_IMAGES, SLUG_TO_TABLE_GROUP } from './productAssets';
-import { BLUEPRINT_MAP, SCHEMA_CONFIG } from './blueprintAssets';
 import { DistributorsBlock } from '@/widgets/DistributorsBlock';
 import { ProductHeader } from './blocks/ProductHeader';
 import styles from './ProductTemplate.module.css';
@@ -52,36 +50,39 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
     const techSection = useInView(0.1);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // i18n fallback: якщо locale відсутній — використовується EN
-    const translation = product.translations[locale] ?? product.translations['en'];
-    const productName = translation?.product_name ?? product.article;
-    const sealingDesc = translation?.sealing_desc;
+    // Name and description — already translated by API
+    const productName = product.name;
+    const desc = product.desc;
 
-    // Table-group images always win over per-product DB images
-    const tg = product.table_group ?? SLUG_TO_TABLE_GROUP[product.slug];
-    const tableGroupImgs = tg ? TABLE_GROUP_IMAGES[tg] : null;
-    const apiImages = product.images?.filter(i => i.type !== 'schema').map(i => i.path);
-    const demoImages = tableGroupImgs ?? (apiImages?.length ? apiImages : getProductImages(product.slug, product.article));
+    // Gallery images from DB (RULE 4 priority already applied by API)
+    const galleryImages = product.images
+        .filter(i => i.type === 'gallery')
+        .sort((a, b) => a.sort_order - b.sort_order)
+        .map(i => i.path);
 
-    const model3d = PRODUCT_3D[product.slug];
+    // Schema from DB (PNG takes priority over SVG for static display)
+    const dbSchemaSrc = product.images.find(i => i.type === 'schema_png')?.path
+        ?? product.images.find(i => i.type === 'schema_svg')?.path
+        ?? null;
 
-    const blueprint = (product.schema_key ? SCHEMA_CONFIG[product.schema_key] : null)
-        ?? BLUEPRINT_MAP[product.slug];
+    // 3D model path from DB
+    const model3dSrc = product.model_3d;
 
-    // Схема з каталогу (table_group) завжди має пріоритет — для всіх продуктів
-    const sharedSchemaSrc = tg ? `/velnox/images/products/_shared/${tg}/schema.png` : null;
-    // Якщо є схема таблиці — показуємо її (замість старого SVG); інакше fallback на DB
-    const staticSchemaSrc = sharedSchemaSrc
-        ?? (!blueprint ? (product.images?.find(i => i.type === 'schema')?.path ?? null) : null);
-    // BuqBlueprintViewer показується тільки якщо немає нової схеми з каталогу
-    const activeBlueprintConfig = sharedSchemaSrc ? null : blueprint;
+    // Schema overlay: SVG + dim_labels + viewBox come directly from API (product_tables via ProductController)
+    const activeBlueprintConfig = (product.schema_svg && product.dim_labels?.length > 0)
+        ? { svgSrc: product.schema_svg, viewBox: product.schema_viewbox ?? '', dimLabels: product.dim_labels }
+        : null;
+    const staticSchemaSrc = !activeBlueprintConfig ? dbSchemaSrc : null;
+
+    // Adapter: blueprint viewers expect Record<string, string>
+    const specsMap = Object.fromEntries(product.specs.map(s => [s.key, s.value]));
 
     return (
         <article className={styles.page}>
             <div className={styles.container} ref={containerRef}>
                 {/* Навігація */}
                 <Breadcrumbs
-                    category={product.category_id}
+                    category={product.category_slug}
                     productName={productName}
                     locale={locale}
                 />
@@ -94,18 +95,17 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
 
                 <div className={styles.body}>
 
-                    {model3d ? (
-                        /* ── Layout з 3D: hero 3D → опис → [спеки | галерея+схема+CTA] ── */
+                    {model3dSrc ? (
+                        /* ── Layout з 3D: hero 3D → опис → [спеки | галерея+CTA] → blueprint full-width ── */
                         <>
                             <ModelBlock3D
-                                src={model3d.file}
+                                src={model3dSrc}
                                 label={productName}
-                                sizeMb={model3d.sizeMb}
                                 hero
                             />
 
-                            {sealingDesc && (
-                                <p className={styles.productDesc}>{sealingDesc}</p>
+                            {desc && (
+                                <p className={styles.productDesc}>{desc}</p>
                             )}
 
                             <div
@@ -114,44 +114,46 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                             >
                                 <div className={styles.specsColumn}>
                                     <SpecsTable specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
-                                    {product.oem_cross?.length > 0 && (
+                                    {product.cross_refs.length > 0 && (
                                         <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.2s' }}>
-                                            <CrossReferences refs={product.oem_cross} />
+                                            <CrossReferences refs={product.cross_refs} />
                                         </div>
                                     )}
-                                    {product.installations?.length > 0 && (
+                                    {product.installations.length > 0 && (
                                         <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.4s' }}>
                                             <Installations items={product.installations} />
                                         </div>
                                     )}
                                 </div>
                                 <div className={styles.drawingColumn}>
-                                    <PhotoGallery images={demoImages} altText={product.article} />
-                                    {activeBlueprintConfig && (
-                                        <BuqBlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={activeBlueprintConfig.dimLabels} svgSrc={activeBlueprintConfig.svgSrc} viewBox={activeBlueprintConfig.viewBox} />
-                                    )}
-                                    {!activeBlueprintConfig && staticSchemaSrc && (
-                                        <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
-                                    )}
-                                    {!activeBlueprintConfig && !staticSchemaSrc && product.category_id === 'bearings' && (
-                                        <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
-                                    )}
+                                    <PhotoGallery images={galleryImages} altText={product.article} />
                                     <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
                                         <CtaBlock product={product} locale={locale} />
                                     </div>
                                 </div>
                             </div>
+
+                            {(activeBlueprintConfig || staticSchemaSrc) && (
+                                <div className={styles.blueprintSection}>
+                                    {activeBlueprintConfig && (
+                                        <BuqBlueprintViewer article={product.article} specs={specsMap} specsItems={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={activeBlueprintConfig.dimLabels} svgSrc={activeBlueprintConfig.svgSrc} viewBox={activeBlueprintConfig.viewBox} />
+                                    )}
+                                    {!activeBlueprintConfig && staticSchemaSrc && (
+                                        <BlueprintViewer article={product.article} specs={specsMap} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
+                                    )}
+                                </div>
+                            )}
                         </>
                     ) : (
-                        /* ── Layout без 3D: [галерея | опис] → [спеки | схема+CTA] ── */
+                        /* ── Layout без 3D: [галерея | опис] → [спеки | CTA] → blueprint full-width ── */
                         <>
                             <div className={styles.topSection}>
                                 <aside className={styles.visual}>
-                                    <PhotoGallery images={demoImages} altText={product.article} />
+                                    <PhotoGallery images={galleryImages} altText={product.article} />
                                 </aside>
                                 <div className={styles.summary}>
-                                    {sealingDesc && (
-                                        <p className={styles.productDesc}>{sealingDesc}</p>
+                                    {desc && (
+                                        <p className={styles.productDesc}>{desc}</p>
                                     )}
                                 </div>
                             </div>
@@ -162,32 +164,34 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                             >
                                 <div className={styles.specsColumn}>
                                     <SpecsTable specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
-                                    {product.oem_cross?.length > 0 && (
+                                    {product.cross_refs.length > 0 && (
                                         <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.2s' }}>
-                                            <CrossReferences refs={product.oem_cross} />
+                                            <CrossReferences refs={product.cross_refs} />
                                         </div>
                                     )}
-                                    {product.installations?.length > 0 && (
+                                    {product.installations.length > 0 && (
                                         <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.4s' }}>
                                             <Installations items={product.installations} />
                                         </div>
                                     )}
                                 </div>
                                 <div className={styles.drawingColumn}>
-                                    {activeBlueprintConfig && (
-                                        <BuqBlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={activeBlueprintConfig.dimLabels} svgSrc={activeBlueprintConfig.svgSrc} viewBox={activeBlueprintConfig.viewBox} />
-                                    )}
-                                    {!activeBlueprintConfig && staticSchemaSrc && (
-                                        <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
-                                    )}
-                                    {!activeBlueprintConfig && !staticSchemaSrc && product.category_id === 'bearings' && (
-                                        <BlueprintViewer article={product.article} specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
-                                    )}
                                     <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
                                         <CtaBlock product={product} locale={locale} />
                                     </div>
                                 </div>
                             </div>
+
+                            {(activeBlueprintConfig || staticSchemaSrc) && (
+                                <div className={styles.blueprintSection}>
+                                    {activeBlueprintConfig && (
+                                        <BuqBlueprintViewer article={product.article} specs={specsMap} specsItems={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={activeBlueprintConfig.dimLabels} svgSrc={activeBlueprintConfig.svgSrc} viewBox={activeBlueprintConfig.viewBox} />
+                                    )}
+                                    {!activeBlueprintConfig && staticSchemaSrc && (
+                                        <BlueprintViewer article={product.article} specs={specsMap} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
+                                    )}
+                                </div>
+                            )}
                         </>
                     )}
 
