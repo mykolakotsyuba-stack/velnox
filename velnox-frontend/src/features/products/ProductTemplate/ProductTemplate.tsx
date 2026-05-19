@@ -127,25 +127,20 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                                 </div>
                                 <div className={styles.drawingColumn}>
                                     <PhotoGallery images={galleryImages} altText={product.article} />
-                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
-                                        <CtaBlock product={product} locale={locale} />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {(activeBlueprintConfig || staticSchemaSrc) && (
-                                <div className={styles.blueprintSection}>
                                     {activeBlueprintConfig && (
                                         <BuqBlueprintViewer article={product.article} specs={specsMap} specsItems={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={activeBlueprintConfig.dimLabels} svgSrc={activeBlueprintConfig.svgSrc} viewBox={activeBlueprintConfig.viewBox} />
                                     )}
                                     {!activeBlueprintConfig && staticSchemaSrc && (
                                         <BlueprintViewer article={product.article} specs={specsMap} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
                                     )}
+                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
+                                        <CtaBlock product={product} locale={locale} />
+                                    </div>
                                 </div>
-                            )}
+                            </div>
                         </>
                     ) : (
-                        /* ── Layout без 3D: [галерея | опис] → [спеки | CTA] → blueprint full-width ── */
+                        /* ── Layout без 3D: [галерея | опис] → [спеки | схема+CTA] ── */
                         <>
                             <div className={styles.topSection}>
                                 <aside className={styles.visual}>
@@ -176,22 +171,17 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
                                     )}
                                 </div>
                                 <div className={styles.drawingColumn}>
-                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
-                                        <CtaBlock product={product} locale={locale} />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {(activeBlueprintConfig || staticSchemaSrc) && (
-                                <div className={styles.blueprintSection}>
                                     {activeBlueprintConfig && (
                                         <BuqBlueprintViewer article={product.article} specs={specsMap} specsItems={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} dimLabels={activeBlueprintConfig.dimLabels} svgSrc={activeBlueprintConfig.svgSrc} viewBox={activeBlueprintConfig.viewBox} />
                                     )}
                                     {!activeBlueprintConfig && staticSchemaSrc && (
                                         <BlueprintViewer article={product.article} specs={specsMap} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaSrc={staticSchemaSrc} />
                                     )}
+                                    <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.6s ease-out 0.3s' }}>
+                                        <CtaBlock product={product} locale={locale} />
+                                    </div>
                                 </div>
-                            )}
+                            </div>
                         </>
                     )}
 
