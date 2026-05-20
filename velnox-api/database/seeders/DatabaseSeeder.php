@@ -648,8 +648,17 @@ class DatabaseSeeder extends Seeder
                 'slug'          => 'bearings-t3',
                 'category_id'   => $bearingsCatId,
                 'spec_columns'  => json_encode(['d_mm','L_mm','J_mm','H_T','A_mm','A1_mm','A2_mm','B_mm','mass_kg','cdyn_kn','co_kn','pu_kn']),
-                'highlight_config' => json_encode((object)[]),
-                'schema_viewbox'  => null,
+                'highlight_config' => json_encode([
+                    'd_mm'  => [['label' => 'd',   'x' => 1014, 'y' => 2401]],
+                    'L_mm'  => [['label' => 'L',   'x' => 436,  'y' => 2715]],
+                    'J_mm'  => [['label' => 'J',   'x' => 437,  'y' => 2678]],
+                    'H_T'   => [['label' => 'H/T', 'x' => 244,  'y' => 2083]],
+                    'A_mm'  => [['label' => 'A',   'x' => 372,  'y' => 2074], ['label' => 'A', 'x' => 368, 'y' => 2758]],
+                    'A1_mm' => [['label' => 'A1',  'x' => 871,  'y' => 2723]],
+                    'A2_mm' => [['label' => 'A2',  'x' => 824,  'y' => 2681]],
+                    'B_mm'  => [['label' => 'B',   'x' => 1014, 'y' => 2130]],
+                ]),
+                'schema_viewbox'  => '0 0 2237 2817',
                 'sort_order'    => 3,
             ]
         );
