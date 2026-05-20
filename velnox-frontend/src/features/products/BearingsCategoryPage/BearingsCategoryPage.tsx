@@ -520,6 +520,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
                         return {
                             part_number:                    p.article,
+                            has_model_3d:                   p.has_model_3d ?? false,
                             bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
                             brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
                             cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
@@ -545,6 +546,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
                         return {
                             part_number:                    p.article,
+                            has_model_3d:                   p.has_model_3d ?? false,
                             bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
                             brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
                             cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
@@ -569,6 +571,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
                         return {
                             part_number:                    p.article,
+                            has_model_3d:                   p.has_model_3d ?? false,
                             bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
                             brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
                             cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
@@ -590,6 +593,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
                         return {
                             part_number:                    p.article,
+                            has_model_3d:                   p.has_model_3d ?? false,
                             bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
                             brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
                             cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
@@ -842,6 +846,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Позначення Velnox" className={styles.partNumCell}>
                                                 <Link href={`/${locale}/products/bearings/${row.slug}`} className={styles.designationLink}>
                                                     {row.article}
+                                                    {row.has_model_3d && <span className={styles.badge3d}>3D</span>}
                                                 </Link>
                                             </td>
                                             <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row.cross_ref)}</td>
@@ -918,6 +923,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Позначення Velnox" className={styles.partNumCell}>
                                                 <Link href={`/${locale}/products/bearings/${slug2}`} className={styles.designationLink}>
                                                     {row['part_number'] || '-'}
+                                                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
                                                 </Link>
                                             </td>
                                             <td data-label="Позначення підшипника">{renderTightCell(row['bearing_designation'])}</td>
@@ -995,6 +1001,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Позначення Velnox" className={styles.partNumCell}>
                                                 <Link href={`/${locale}/products/bearings/${slug3}`} className={styles.designationLink}>
                                                     {row['part_number'] || '-'}
+                                                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
                                                 </Link>
                                             </td>
                                             <td data-label="Позначення підшипника">{renderTightCell(row['bearing_designation'])}</td>

@@ -84,7 +84,15 @@ class ProductTableController extends Controller
             ->get()
             ->groupBy('product_id');
 
-        $productsData = $products->map(function ($p) use ($allSpecs, $allCrossRefs) {
+        $model3dIds = DB::table('product_assets')
+            ->whereIn('entity_id', $productIds)
+            ->where('entity_type', 'product')
+            ->where('type', 'model_3d')
+            ->pluck('entity_id')
+            ->flip()
+            ->toArray();
+
+        $productsData = $products->map(function ($p) use ($allSpecs, $allCrossRefs, $model3dIds) {
             $specs = [];
             foreach ($allSpecs->get($p->id, collect()) as $spec) {
                 $specs[$spec->key] = $spec->value;
@@ -95,10 +103,11 @@ class ProductTableController extends Controller
                 ->all();
 
             return [
-                'slug'       => $p->slug,
-                'article'    => $p->article,
-                'specs'      => $specs,
-                'cross_refs' => $crossRefs,
+                'slug'         => $p->slug,
+                'article'      => $p->article,
+                'has_model_3d' => isset($model3dIds[$p->id]),
+                'specs'        => $specs,
+                'cross_refs'   => $crossRefs,
             ];
         })->values();
 
