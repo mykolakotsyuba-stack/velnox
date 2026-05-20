@@ -1067,9 +1067,17 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT4.map((row, i) => (
+                                    {sortedT4.map((row, i) => {
+                                        const slug4 = articleToSlug(row['part_number'] || '');
+                                        return (
                                         <tr key={i}>
-                                            <td data-label="Позначення Velnox">{row['part_number'] || '-'}</td>
+                                            <td data-label="Позначення Velnox">
+                                                {row['part_number'] ? (
+                                                    <Link href={`/${locale}/products/bearings/${slug4}`} className={styles.designationLink}>
+                                                        {row['part_number']}
+                                                    </Link>
+                                                ) : '-'}
+                                            </td>
                                             <td data-label="Позначення підшипника">{renderDesignationCell(row['bearing_designation'])}</td>
                                             <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
                                             <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
@@ -1092,7 +1100,8 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))}
+                                    );
+                                    })}
                                     {filteredT4.length === 0 && (
                                         <tr><td colSpan={18} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
