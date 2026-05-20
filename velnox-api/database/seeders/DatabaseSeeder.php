@@ -717,6 +717,15 @@ class DatabaseSeeder extends Seeder
                 'name_uk' => 'BUQ 309-2T3H',
                 'name_en' => 'BUQ 309-2T3H',
                 'name_pl' => 'BUQ 309-2T3H',
+                'desc_uk'       => 'Квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори серії 309 для прикочувальних котків з внутрішнім діаметром d = 45 мм. Кріпильна база J = 105 мм, довжина корпусу L = 137 мм, ширина внутрішнього кільця B = 51.1 мм, Cdyn = 59.6 кН, Co = 80.8 кН, Pu = 2.503 кН. Посилена герметизація — трикромкове ущільнення в парі з двокромковим з кожної сторони — забезпечує ресурс у вузлах з ударними навантаженнями та абразивним середовищем. Пряма заміна FKL LSQFR 309 2TB.H.T та вузла CJI 309 GGG+19000509; використовується у прикочувальних котках Farmet (арт. 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607, R17015300).',
+                'meta_title_uk' => 'VELNOX BUQ 309-2T3H — вузол котка d45, Farmet M14581 LEFG 209 TDT',
+                'meta_desc_uk'  => 'Фланцевий вузол VELNOX BUQ 309-2T3H, d=45 мм, Cdyn 59.6 кН. Пряма заміна Farmet M14581, 4000412, FKL LEFG 209 TDT. Для котків.',
+                'desc_en'       => 'Square flange bearing unit with 4 mounting holes, 309 series, for press wheels, bore diameter d = 45 mm. Mounting base J = 105 mm, housing length L = 137 mm, inner ring width B = 51.1 mm, Cdyn = 59.6 kN, Co = 80.8 kN, Pu = 2.503 kN. Reinforced sealing — triple-lip seal paired with a double-lip seal on each side — ensures service life in assemblies subject to impact loads and abrasive environments. Direct replacement for FKL LSQFR 309 2TB.H.T and the CJI 309 GGG+19000509 assembly; used in Farmet press wheels (part no. 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607, R17015300).',
+                'meta_title_en' => 'VELNOX BUQ 309-2T3H — press wheel unit d45, Farmet M14581 LEFG 209 TDT',
+                'meta_desc_en'  => 'Flange bearing unit VELNOX BUQ 309-2T3H, d=45 mm, Cdyn 59.6 kN. Direct replacement for Farmet M14581, 4000412, FKL LEFG 209 TDT. For press wheels.',
+                'desc_pl'       => 'Kwadratowy kołnierzowy węzeł łożyskowy na 4 otwory montażowe, seria 309, do rolek dogniatających, średnica wewnętrzna d = 45 mm. Baza montażowa J = 105 mm, długość obudowy L = 137 mm, szerokość pierścienia wewnętrznego B = 51,1 mm, Cdyn = 59,6 kN, Co = 80,8 kN, Pu = 2,503 kN. Wzmocnione uszczelnienie — trójkrawędziowy uszczelniacz w parze z dwukrawędziowym po każdej stronie — zapewnia żywotność w węzłach narażonych na obciążenia udarowe i środowisko ścierne. Bezpośredni zamiennik FKL LSQFR 309 2TB.H.T i węzła CJI 309 GGG+19000509; stosowany w rolkach dogniatających Farmet (nr art. 4000412, M14581, 15626ND, 18888ND, M10257, M13082ND, M15626, M17627, M24607, R17015300).',
+                'meta_title_pl' => 'VELNOX BUQ 309-2T3H — węzeł rolki d45, Farmet M14581 LEFG 209 TDT',
+                'meta_desc_pl'  => 'Kołnierzowy węzeł łożyskowy VELNOX BUQ 309-2T3H, d=45 mm, Cdyn 59,6 kN. Bezpośredni zamiennik Farmet M14581, 4000412, FKL LEFG 209 TDT. Do rolek dogniatających.',
             ],
         ];
 
@@ -746,6 +755,17 @@ class DatabaseSeeder extends Seeder
                     ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
                     ['value' => $p["name_{$locale}"]]
                 );
+            }
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                foreach (['desc' => 'desc', 'meta_title' => 'meta_title', 'meta_desc' => 'meta_description'] as $suffix => $field) {
+                    $val = $p["{$suffix}_{$locale}"] ?? null;
+                    if ($val) {
+                        DB::table('translations')->updateOrInsert(
+                            ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => $field],
+                            ['value' => $val]
+                        );
+                    }
+                }
             }
 
             // 3D model asset (file exists: public/models/BUQ-309-2T3H.glb)
