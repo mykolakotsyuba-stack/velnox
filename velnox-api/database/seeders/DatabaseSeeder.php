@@ -737,6 +737,14 @@ class DatabaseSeeder extends Seeder
                     ['value' => $p["name_{$locale}"]]
                 );
             }
+
+            // 3D model asset (file exists: public/models/BUQ-309-2T3H.glb)
+            if ($p['slug'] === 'buq-309-2t3h') {
+                DB::table('product_assets')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'type' => 'model_3d'],
+                    ['path' => '/velnox/models/BUQ-309-2T3H.glb', 'sort_order' => 0]
+                );
+            }
         }
 
     }
