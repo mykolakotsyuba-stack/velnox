@@ -93,21 +93,21 @@ class DatabaseSeeder extends Seeder
         // 4. TRANSLATIONS — spec_definitions (label + unit)
         // =========================================================
         $specTranslations = [
-            'd_mm'    => ['uk' => ['label' => 'd (мм) — Внутрішній діаметр',      'unit' => 'мм'],  'en' => ['label' => 'd (mm) — Bore diameter',           'unit' => 'mm'],  'pl' => ['label' => 'd (mm) — Średnica wewnętrzna',     'unit' => 'mm']],
-            'd_inch'  => ['uk' => ['label' => 'd — Внутрішній діаметр (дюйми)',   'unit' => 'дюйм'],'en' => ['label' => 'd — Bore diameter (inches)',        'unit' => 'in'],  'pl' => ['label' => 'd — Średnica wewnętrzna (cale)',   'unit' => 'cal']],
-            'A1_mm'   => ['uk' => ['label' => 'Загальна ширина корпусу A1 (мм)',    'unit' => 'мм'],  'en' => ['label' => 'Overall housing width A1 (mm)',     'unit' => 'mm'],  'pl' => ['label' => 'Całkowita szerokość A1 (mm)',       'unit' => 'mm']],
-            'A2_mm'   => ['uk' => ['label' => 'Товщина фланця корпусу A2 (мм)',   'unit' => 'мм'],  'en' => ['label' => 'Housing flange thickness A2 (mm)',   'unit' => 'mm'],  'pl' => ['label' => 'Grubość kołnierza A2 (mm)',         'unit' => 'mm']],
-            'J_mm'    => ['uk' => ['label' => 'Відстань між отворами J (мм)',     'unit' => 'мм'],  'en' => ['label' => 'Bolt hole spacing J (mm)',           'unit' => 'mm'],  'pl' => ['label' => 'Rozstaw otworów J (mm)',            'unit' => 'mm']],
-            'L_mm'    => ['uk' => ['label' => 'Загальна довжина L (мм)',          'unit' => 'мм'],  'en' => ['label' => 'Overall length L (mm)',              'unit' => 'mm'],  'pl' => ['label' => 'Długość całkowita L (mm)',          'unit' => 'mm']],
-            'N_mm'    => ['uk' => ['label' => 'Діаметр отвору N (мм)',            'unit' => 'мм'],  'en' => ['label' => 'Bolt hole diameter N (mm)',          'unit' => 'mm'],  'pl' => ['label' => 'Średnica otworu N (mm)',            'unit' => 'mm']],
-            'A_mm'    => ['uk' => ['label' => 'Загальна ширина A (мм)',           'unit' => 'мм'],  'en' => ['label' => 'Overall width A (mm)',               'unit' => 'mm'],  'pl' => ['label' => 'Szerokość całkowita A (mm)',        'unit' => 'mm']],
-            'mass_kg' => ['uk' => ['label' => 'Маса',                             'unit' => 'кг'],  'en' => ['label' => 'Mass',                              'unit' => 'kg'],  'pl' => ['label' => 'Masa',                             'unit' => 'kg']],
-            'cdyn_kn' => ['uk' => ['label' => 'C — динамічне навантаження',       'unit' => 'кН'],  'en' => ['label' => 'C — Dynamic load rating',           'unit' => 'kN'],  'pl' => ['label' => 'C — Nośność dynamiczna',           'unit' => 'kN']],
-            'co_kn'   => ['uk' => ['label' => 'C₀ — статичне навантаження',       'unit' => 'кН'],  'en' => ['label' => 'C₀ — Static load rating',           'unit' => 'kN'],  'pl' => ['label' => 'C₀ — Nośność statyczna',           'unit' => 'kN']],
-            'pu_kn'   => ['uk' => ['label' => 'Pu — гранична втомна навантага',   'unit' => 'кН'],  'en' => ['label' => 'Pu — Fatigue load limit',           'unit' => 'kN'],  'pl' => ['label' => 'Pu — Graniczne obciążenie zmęczeniowe', 'unit' => 'kN']],
-            'B_mm'    => ['uk' => ['label' => 'B (мм) — ширина внутр. кільця',   'unit' => 'мм'],  'en' => ['label' => 'B (mm) — inner ring width',         'unit' => 'mm'],  'pl' => ['label' => 'B (mm) — szerokość pierścienia',   'unit' => 'mm']],
-            'D_mm'    => ['uk' => ['label' => 'D (мм) — зовн. діаметр корпусу',  'unit' => 'мм'],  'en' => ['label' => 'D (mm) — housing outside diameter', 'unit' => 'mm'],  'pl' => ['label' => 'D (mm) — zewn. śr. obudowy',      'unit' => 'mm']],
-            'H_T'     => ['uk' => ['label' => 'H/T — отвір / різьба',            'unit' => ''],    'en' => ['label' => 'H/T — hole / thread',               'unit' => ''],    'pl' => ['label' => 'H/T — otwór / gwint',             'unit' => '']],
+            'd_mm'    => ['uk' => ['label' => 'Діаметр отвору d (мм)',                            'unit' => 'мм'],  'en' => ['label' => 'Bore diameter d (mm)',                          'unit' => 'mm'],  'pl' => ['label' => 'Średnica otworu d (mm)',                        'unit' => 'mm']],
+            'd_inch'  => ['uk' => ['label' => 'Діаметр отвору d (дюйм)',                          'unit' => 'дюйм'],'en' => ['label' => 'Bore diameter d (inch)',                        'unit' => 'in'],  'pl' => ['label' => 'Średnica otworu d (cal)',                       'unit' => 'cal']],
+            'A1_mm'   => ['uk' => ['label' => 'Загальна ширина корпусу A1 (мм)',                   'unit' => 'мм'],  'en' => ['label' => 'Overall housing width A1 (mm)',                 'unit' => 'mm'],  'pl' => ['label' => 'Całkowita szerokość obudowy A1 (mm)',           'unit' => 'mm']],
+            'A2_mm'   => ['uk' => ['label' => 'Товщина фланця корпусу A2 (мм)',                   'unit' => 'мм'],  'en' => ['label' => 'Housing flange thickness A2 (mm)',               'unit' => 'mm'],  'pl' => ['label' => 'Grubość kołnierza obudowy A2 (mm)',             'unit' => 'mm']],
+            'J_mm'    => ['uk' => ['label' => 'Відстань між отворами J (мм)',                     'unit' => 'мм'],  'en' => ['label' => 'Bolt hole spacing J (mm)',                       'unit' => 'mm'],  'pl' => ['label' => 'Rozstaw otworów J (mm)',                        'unit' => 'mm']],
+            'L_mm'    => ['uk' => ['label' => 'Загальна довжина L (мм)',                          'unit' => 'мм'],  'en' => ['label' => 'Overall length L (mm)',                          'unit' => 'mm'],  'pl' => ['label' => 'Długość całkowita L (mm)',                      'unit' => 'mm']],
+            'N_mm'    => ['uk' => ['label' => 'Діаметр отвору N (мм)',                            'unit' => 'мм'],  'en' => ['label' => 'Bolt hole diameter N (mm)',                      'unit' => 'mm'],  'pl' => ['label' => 'Średnica otworu N (mm)',                        'unit' => 'mm']],
+            'A_mm'    => ['uk' => ['label' => 'Загальна ширина A (мм)',                           'unit' => 'мм'],  'en' => ['label' => 'Overall width A (mm)',                           'unit' => 'mm'],  'pl' => ['label' => 'Szerokość całkowita A (mm)',                    'unit' => 'mm']],
+            'mass_kg' => ['uk' => ['label' => 'Маса',                                             'unit' => 'кг'],  'en' => ['label' => 'Mass',                                          'unit' => 'kg'],  'pl' => ['label' => 'Masa',                                         'unit' => 'kg']],
+            'cdyn_kn' => ['uk' => ['label' => 'Динамічна вантажо-підйомність Cdyn (кН)',          'unit' => 'кН'],  'en' => ['label' => 'Dynamic load rating Cdyn (kN)',                 'unit' => 'kN'],  'pl' => ['label' => 'Nośność dynamiczna Cdyn (kN)',                  'unit' => 'kN']],
+            'co_kn'   => ['uk' => ['label' => 'Статична вантажо-підйомність Co (кН)',             'unit' => 'кН'],  'en' => ['label' => 'Static load rating Co (kN)',                    'unit' => 'kN'],  'pl' => ['label' => 'Nośność statyczna Co (kN)',                     'unit' => 'kN']],
+            'pu_kn'   => ['uk' => ['label' => 'Гранична навантаженість втомної міцності Pu (кН)', 'unit' => 'кН'],  'en' => ['label' => 'Fatigue load limit Pu (kN)',                    'unit' => 'kN'],  'pl' => ['label' => 'Graniczne obciążenie zmęczeniowe Pu (kN)',      'unit' => 'kN']],
+            'B_mm'    => ['uk' => ['label' => 'Ширина внутрішнього кільця B (мм)',                'unit' => 'мм'],  'en' => ['label' => 'Inner ring width B (mm)',                        'unit' => 'mm'],  'pl' => ['label' => 'Szerokość pierścienia wewnętrznego B (mm)',     'unit' => 'mm']],
+            'D_mm'    => ['uk' => ['label' => 'D (мм) — зовн. діаметр корпусу',                  'unit' => 'мм'],  'en' => ['label' => 'D (mm) — housing outside diameter',             'unit' => 'mm'],  'pl' => ['label' => 'D (mm) — zewn. śr. obudowy',                   'unit' => 'mm']],
+            'H_T'     => ['uk' => ['label' => 'Отвір / Різьба H/T',                              'unit' => ''],    'en' => ['label' => 'Hole / Thread H/T',                             'unit' => ''],    'pl' => ['label' => 'Otwór / Gwint H/T',                            'unit' => '']],
             'L1_mm'   => ['uk' => ['label' => 'L1 (мм) — довжина секції 1',      'unit' => 'мм'],  'en' => ['label' => 'L1 (mm) — section 1 length',        'unit' => 'mm'],  'pl' => ['label' => 'L1 (mm) — długość sekcji 1',       'unit' => 'mm']],
             'L2_mm'   => ['uk' => ['label' => 'L2 (мм) — довжина секції 2',      'unit' => 'мм'],  'en' => ['label' => 'L2 (mm) — section 2 length',        'unit' => 'mm'],  'pl' => ['label' => 'L2 (mm) — długość sekcji 2',       'unit' => 'mm']],
         ];
@@ -636,6 +636,106 @@ class DatabaseSeeder extends Seeder
                         );
                     }
                 }
+            }
+        }
+
+        // =========================================================
+        // 8. PRODUCT TABLE: bearings-t3
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'bearings-t3'],
+            [
+                'slug'          => 'bearings-t3',
+                'category_id'   => $bearingsCatId,
+                'spec_columns'  => json_encode(['d_mm','L_mm','J_mm','H_T','A_mm','A1_mm','A2_mm','B_mm','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'highlight_config' => json_encode((object)[]),
+                'schema_viewbox'  => null,
+                'sort_order'    => 3,
+            ]
+        );
+        $t3 = $tableId('bearings-t3');
+
+        foreach ([
+            ['uk' => 'Підшипниковий вузол BUQ 309-2T3H', 'en' => 'Bearing Unit BUQ 309-2T3H', 'pl' => 'Węzeł łożyskowy BUQ 309-2T3H'],
+        ] as $names) {
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product_table', 'entity_id' => $t3, 'locale' => $locale, 'field' => 'name'],
+                    ['value' => $names[$locale]]
+                );
+            }
+        }
+
+        // =========================================================
+        // 9. PRODUCTS — bearings-t3
+        // =========================================================
+        $t3Products = [
+            [
+                'slug'    => 'buq-309-2t3h',
+                'article' => 'BUQ 309-2T3H',
+                'table_id' => $t3,
+                'specs'   => [
+                    'd_mm'    => '45',
+                    'L_mm'    => '137',
+                    'J_mm'    => '105',
+                    'H_T'     => '14',
+                    'A_mm'    => '54',
+                    'A1_mm'   => '44',
+                    'A2_mm'   => '22',
+                    'B_mm'    => '51.1',
+                    'mass_kg' => '3.4',
+                    'cdyn_kn' => '59.6',
+                    'co_kn'   => '80.8',
+                    'pu_kn'   => '2.503',
+                ],
+                'cross_refs' => [
+                    ['brand' => 'CT-AGRI',  'value' => 'CJI 309 GGG+19000509 (Assy)',  'type' => 'bearing'],
+                    ['brand' => 'FKL',      'value' => 'LSQFR 309-2TB.H.T',            'type' => 'bearing'],
+                    ['brand' => 'CT-AGRI',  'value' => 'LSQFR 309-2TB.H.T',            'type' => 'bearing'],
+                    ['brand' => 'Farmet',   'value' => '4000412',                       'type' => 'application'],
+                    ['brand' => 'Farmet',   'value' => 'M14581',                        'type' => 'application'],
+                    ['brand' => 'Farmet',   'value' => '15626ND',                       'type' => 'application'],
+                    ['brand' => 'Farmet',   'value' => '18888ND',                       'type' => 'application'],
+                    ['brand' => 'Farmet',   'value' => 'M10257',                        'type' => 'application'],
+                    ['brand' => 'Farmet',   'value' => 'M13082ND',                      'type' => 'application'],
+                    ['brand' => 'Farmet',   'value' => 'M15626',                        'type' => 'application'],
+                    ['brand' => 'Farmet',   'value' => 'M17627',                        'type' => 'application'],
+                    ['brand' => 'Farmet',   'value' => 'M24607',                        'type' => 'application'],
+                    ['brand' => '19000509А','value' => 'CJI309GGG+',                   'type' => 'application'],
+                    ['brand' => 'FKL',      'value' => 'LEFG 209 TDT',                 'type' => 'application'],
+                ],
+                'name_uk' => 'BUQ 309-2T3H',
+                'name_en' => 'BUQ 309-2T3H',
+                'name_pl' => 'BUQ 309-2T3H',
+            ],
+        ];
+
+        foreach ($t3Products as $p) {
+            DB::table('products')->updateOrInsert(
+                ['slug' => $p['slug']],
+                ['slug' => $p['slug'], 'article' => $p['article'], 'product_table_id' => $p['table_id']]
+            );
+            $productId = DB::table('products')->where('slug', $p['slug'])->value('id');
+
+            foreach ($p['specs'] as $key => $value) {
+                $sid = $specId($key);
+                if (!$sid) continue;
+                DB::table('product_specs')->updateOrInsert(
+                    ['product_id' => $productId, 'spec_id' => $sid],
+                    ['value' => $value]
+                );
+            }
+
+            DB::table('product_cross_refs')->where('product_id', $productId)->delete();
+            foreach ($p['cross_refs'] as $ref) {
+                DB::table('product_cross_refs')->insert(['product_id' => $productId, 'brand' => $ref['brand'], 'value' => $ref['value'], 'type' => $ref['type']]);
+            }
+
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
+                    ['value' => $p["name_{$locale}"]]
+                );
             }
         }
 
