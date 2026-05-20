@@ -357,8 +357,6 @@ function PackerRollerIntro() {
 }
 
 /* ─── Helpers ─── */
-const HAS_3D = new Set(['buq-309-2t3h', 'bucr-sg-309-s2', 'bup-207-x3l']);
-
 function articleToSlug(article: string): string {
     return article.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
