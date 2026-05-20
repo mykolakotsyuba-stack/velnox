@@ -971,47 +971,56 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
+                                        <Th col="part_number" label="Позначення Velnox" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="bearing_designation" label="Позначення підшипника" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="brand_name" label="Бренд" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="cross_reference" label="Перехресні аналоги" toggle={tog3} sortCol={sc3} sortDir={sd3} />
                                         <Th col="bore_diameter_d_mm" label="Діаметр отвору d (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['bore_diameter_d_mm'] || []} selectedFilters={filters['bore_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="total_length_l_mm" label="Загальна довжина L (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['total_length_l_mm'] || []} selectedFilters={filters['total_length_l_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="distance_between_holes_j_mm" label="Відстань між отворами J (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['distance_between_holes_j_mm'] || []} selectedFilters={filters['distance_between_holes_j_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="hole_thread_ht_mm" label="Отвір / Різьба H/T (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['hole_thread_ht_mm'] || []} selectedFilters={filters['hole_thread_ht_mm'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="hole_thread_ht_mm" label="Отвір / Різьба H/T" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['hole_thread_ht_mm'] || []} selectedFilters={filters['hole_thread_ht_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="overall_width_a_mm" label="Загальна ширина A (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['overall_width_a_mm'] || []} selectedFilters={filters['overall_width_a_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="total_housing_width_a1_mm" label="Загальна ширина корпусу A1 (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['total_housing_width_a1_mm'] || []} selectedFilters={filters['total_housing_width_a1_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="housing_flange_thickness_a2_mm" label="Товщина фланця корпусу A2 (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['housing_flange_thickness_a2_mm'] || []} selectedFilters={filters['housing_flange_thickness_a2_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="width_inner_ring_b_mm" label="Ширина внутрішнього кільця B (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['width_inner_ring_b_mm'] || []} selectedFilters={filters['width_inner_ring_b_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="static_load_rating_co_kn" label="Статична вантажо-підйомність Co (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['static_load_rating_co_kn'] || []} selectedFilters={filters['static_load_rating_co_kn'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="dynamic_load_rating_cdyn_kn" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['dynamic_load_rating_cdyn_kn'] || []} selectedFilters={filters['dynamic_load_rating_cdyn_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="fatigue_load_limit_pu_kn" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="fatigue_load_limit_pu_kn" label="Гранична навантаженість втомної міцності Pu (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT3.map((row, i) => (
+                                    {sortedT3.map((row, i) => {
+                                        const slug3 = articleToSlug(row['part_number'] || '');
+                                        return (
                                         <tr key={i}>
+                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/bearings/${slug3}`} className={styles.designationLink}>
+                                                    {row['part_number'] || '-'}
+                                                </Link>
+                                            </td>
                                             <td data-label="Позначення підшипника">{renderTightCell(row['bearing_designation'])}</td>
                                             <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
                                             <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
                                             <td data-label="Діаметр отвору d (мм)">{row['bore_diameter_d_mm'] || '-'}</td>
                                             <td data-label="Загальна довжина L (мм)">{row['total_length_l_mm'] || '-'}</td>
                                             <td data-label="Відстань між отворами J (мм)">{row['distance_between_holes_j_mm'] || '-'}</td>
-                                            <td data-label="Отвір / Різьба H/T (мм)">{row['hole_thread_ht_mm'] || '-'}</td>
+                                            <td data-label="Отвір / Різьба H/T">{row['hole_thread_ht_mm'] || '-'}</td>
                                             <td data-label="Загальна ширина A (мм)">{row['overall_width_a_mm'] || '-'}</td>
                                             <td data-label="Загальна ширина корпусу A1 (мм)">{row['total_housing_width_a1_mm'] || '-'}</td>
                                             <td data-label="Товщина фланця корпусу A2 (мм)">{row['housing_flange_thickness_a2_mm'] || '-'}</td>
                                             <td data-label="Ширина внутрішнього кільця B (мм)">{row['width_inner_ring_b_mm'] || '-'}</td>
                                             <td data-label="Статична вантажо-підйомність Co (кН)">{row['static_load_rating_co_kn'] || '-'}</td>
                                             <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row['dynamic_load_rating_cdyn_kn'] || '-'}</td>
-                                            <td data-label="Граничне навантаження втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
+                                            <td data-label="Гранична навантаженість втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
                                             <td className={styles.actionCol}>
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || row['bearing_designation'] || '')}>
+                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || '')}>
                                                     {t('block2.btn_request')}
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))}
+                                        );
+                                    })}
                                     {filteredT3.length === 0 && (
                                         <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
