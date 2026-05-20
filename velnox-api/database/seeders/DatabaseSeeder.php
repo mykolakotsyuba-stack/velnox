@@ -884,6 +884,19 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        foreach ([
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2.webp',          'sort_order' => 1],
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-drawing-1.webp', 'sort_order' => 2],
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-drawing-2.webp', 'sort_order' => 3],
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-schema.webp',   'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t4/schema.svg',                           'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $t4, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
         // =========================================================
         // 13. PRODUCTS — bearings-t4
         // =========================================================
