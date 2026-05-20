@@ -658,7 +658,7 @@ class DatabaseSeeder extends Seeder
                     'A2_mm' => [['label' => 'A2',  'x' => 824,  'y' => 2681]],
                     'B_mm'  => [['label' => 'B',   'x' => 1014, 'y' => 2130]],
                 ]),
-                'schema_viewbox'  => '0 0 2237 2817',
+                'schema_viewbox'  => '150 2036 2117 786',
                 'sort_order'    => 3,
             ]
         );
