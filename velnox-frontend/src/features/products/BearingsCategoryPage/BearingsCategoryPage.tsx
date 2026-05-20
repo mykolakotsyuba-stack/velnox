@@ -1071,12 +1071,11 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         const slug4 = articleToSlug(row['part_number'] || '');
                                         return (
                                         <tr key={i}>
-                                            <td data-label="Позначення Velnox">
-                                                {row['part_number'] ? (
-                                                    <Link href={`/${locale}/products/bearings/${slug4}`} className={styles.designationLink}>
-                                                        {row['part_number']}
-                                                    </Link>
-                                                ) : '-'}
+                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/bearings/${slug4}`} className={styles.designationLink}>
+                                                    {row['part_number'] || '-'}
+                                                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
+                                                </Link>
                                             </td>
                                             <td data-label="Позначення підшипника">{renderDesignationCell(row['bearing_designation'])}</td>
                                             <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
