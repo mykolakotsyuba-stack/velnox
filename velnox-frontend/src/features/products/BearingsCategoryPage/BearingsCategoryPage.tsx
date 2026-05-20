@@ -1046,6 +1046,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
                                 <thead>
                                     <tr>
+                                        <Th col="part_number" label="Позначення Velnox" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th col="bearing_designation" label="Позначення підшипника" toggle={tog4} sortCol={sc4} sortDir={sd4} />
                                         <Th col="brand_name" label="Бренд" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="cross_reference" label="Перехресні аналоги" toggle={tog4} sortCol={sc4} sortDir={sd4} />
@@ -1068,6 +1069,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                 <tbody>
                                     {sortedT4.map((row, i) => (
                                         <tr key={i}>
+                                            <td data-label="Позначення Velnox">{row['part_number'] || '-'}</td>
                                             <td data-label="Позначення підшипника">{renderDesignationCell(row['bearing_designation'])}</td>
                                             <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
                                             <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
@@ -1092,7 +1094,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         </tr>
                                     ))}
                                     {filteredT4.length === 0 && (
-                                        <tr><td colSpan={17} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={18} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
