@@ -655,15 +655,25 @@ class DatabaseSeeder extends Seeder
         );
         $t3 = $tableId('bearings-t3');
 
+        foreach (['uk' => 'Підшипниковий вузол BUQ 309-2T3H', 'en' => 'Bearing Unit BUQ 309-2T3H', 'pl' => 'Węzeł łożyskowy BUQ 309-2T3H'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $t3, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
         foreach ([
-            ['uk' => 'Підшипниковий вузол BUQ 309-2T3H', 'en' => 'Bearing Unit BUQ 309-2T3H', 'pl' => 'Węzeł łożyskowy BUQ 309-2T3H'],
-        ] as $names) {
-            foreach (['uk', 'en', 'pl'] as $locale) {
-                DB::table('translations')->updateOrInsert(
-                    ['entity_type' => 'product_table', 'entity_id' => $t3, 'locale' => $locale, 'field' => 'name'],
-                    ['value' => $names[$locale]]
-                );
-            }
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t3/velnox-buq-309-2t3h.webp',          'sort_order' => 1],
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t3/velnox-buq-309-2t3h-drawing-1.webp', 'sort_order' => 2],
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t3/velnox-buq-309-2t3h-drawing-2.webp', 'sort_order' => 3],
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t3/velnox-buq-309-2t3h-drawing-3.webp', 'sort_order' => 4],
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t3/velnox-buq-309-2t3h-schema.webp',   'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t3/schema.svg',                          'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $t3, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
         }
 
         // =========================================================
