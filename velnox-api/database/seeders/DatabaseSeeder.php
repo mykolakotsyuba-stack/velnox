@@ -870,8 +870,21 @@ class DatabaseSeeder extends Seeder
                 'slug'             => 'bearings-t4',
                 'category_id'      => $bearingsCatId,
                 'spec_columns'     => json_encode(['d_mm','d1_mm','L1_mm','J1_mm','L2_mm','J2_mm','A_mm','A1_mm','A2_mm','A3_mm','T_size','H_mm','mass_kg','cdyn_kn','co_kn','pu_kn']),
-                'highlight_config' => json_encode(new \stdClass()),
-                'schema_viewbox'   => null,
+                'highlight_config' => json_encode([
+                    'd_mm'   => [['label'=>'d',  'x'=>1168,'y'=>1004]],
+                    'd1_mm'  => [['label'=>'d1', 'x'=>1513,'y'=>1003]],
+                    'L1_mm'  => [['label'=>'L1', 'x'=>609, 'y'=>1465]],
+                    'J1_mm'  => [['label'=>'J1', 'x'=>607, 'y'=>1415]],
+                    'L2_mm'  => [['label'=>'L2', 'x'=>986, 'y'=>676]],
+                    'J2_mm'  => [['label'=>'J2', 'x'=>939, 'y'=>723]],
+                    'A_mm'   => [['label'=>'A',  'x'=>1350,'y'=>1465]],
+                    'A1_mm'  => [['label'=>'A1', 'x'=>1438,'y'=>1419]],
+                    'A2_mm'  => [['label'=>'A2', 'x'=>1261,'y'=>1389]],
+                    'A3_mm'  => [['label'=>'A3', 'x'=>1261,'y'=>1323]],
+                    'T_size' => [['label'=>'T',  'x'=>243, 'y'=>774]],
+                    'H_mm'   => [['label'=>'H',  'x'=>139, 'y'=>1008]],
+                ]),
+                'schema_viewbox'   => '90 444 2314 1389',
                 'sort_order'       => 4,
             ]
         );
@@ -940,6 +953,15 @@ class DatabaseSeeder extends Seeder
                 'name_uk' => 'BUCR-SG-309-S2',
                 'name_en' => 'BUCR-SG-309-S2',
                 'name_pl' => 'BUCR-SG-309-S2',
+                'desc_uk' => 'Тандемний (здвоєний) підшипниковий вузол типу Gaspardo з двома симетричними корпусними секціями (L1 = 152 мм, L2 = 150 мм) та посадковим діаметром d = 45 мм, діаметром корпусу d1 = 74 мм, масою 5.6 кг. Монтажні бази J1 = J2 = 120 мм, кріплення 4×M12×1.25 з кожного боку, висота A = 66.9 мм; конструкція розрахована на асиметричне навантаження секційних вузлів посівних і ґрунтообробних комплексів. Посилена багатокромкова система ущільнень захищає підшипник від ґрунтової вологи, насіннєвого пилу та абразиву під час постійної польової роботи. Пряма заміна OEM-вузлів Gaspardo (арт. 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300), FKL ZGKU 309 2S та RBF PN00102; застосовується у висівних секціях та прикочувальних котках техніки Gaspardo/Maschio.',
+                'desc_en' => 'Tandem (double) Gaspardo-type bearing unit with two symmetrical housing sections (L1 = 152 mm, L2 = 150 mm), bore diameter d = 45 mm, housing diameter d1 = 74 mm, weight 5.6 kg. Mounting bases J1 = J2 = 120 mm, fastening 4×M12×1.25 per side, height A = 66.9 mm; design is intended for asymmetric loading of sectional assemblies in seeding and tillage equipment. The reinforced multi-lip sealing system protects the bearing from soil moisture, seed dust and abrasives during continuous field operation. Direct replacement for Gaspardo OEM units (p/n 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300), FKL ZGKU 309 2S and RBF PN00102; used in seeding sections and press wheels of Gaspardo/Maschio equipment.',
+                'desc_pl' => 'Tandemowy (podwójny) węzeł łożyskowy typu Gaspardo z dwiema symetrycznymi sekcjami obudowy (L1 = 152 mm, L2 = 150 mm), średnicą otworu d = 45 mm, średnicą obudowy d1 = 74 mm, masą 5,6 kg. Bazy montażowe J1 = J2 = 120 mm, mocowanie 4×M12×1,25 z każdej strony, wysokość A = 66,9 mm; konstrukcja przeznaczona do asymetrycznego obciążenia węzłów sekcyjnych agregatów siewnych i uprawowych. Wzmocniony wielokrawędziowy system uszczelnień chroni łożysko przed wilgocią glebową, pyłem nasiennym i ścierniwem podczas ciągłej pracy polowej. Bezpośredni zamiennik węzłów OEM Gaspardo (nr art. 17014180, M23400435, M23400436, M43400413, M43400468, M43400468R, R17015300), FKL ZGKU 309 2S i RBF PN00102; stosowany w sekcjach siewnych i rolkach dogniatających maszyn Gaspardo/Maschio.',
+                'meta_title_uk' => 'VELNOX BUCR-SG-309-S2 — тандемний вузол Gaspardo M43400468',
+                'meta_title_en' => 'VELNOX BUCR-SG-309-S2 — tandem Gaspardo bearing unit M43400468',
+                'meta_title_pl' => 'VELNOX BUCR-SG-309-S2 — tandemowy węzeł Gaspardo M43400468',
+                'meta_desc_uk'  => 'Тандемний вузол VELNOX BUCR-SG-309-S2 для Gaspardo, d=45 мм, 4×M12, маса 5.6 кг. Заміна Gaspardo M43400468, 17014180, FKL ZGKU 309 2S.',
+                'meta_desc_en'  => 'Tandem bearing unit VELNOX BUCR-SG-309-S2 for Gaspardo, d=45 mm, 4×M12, weight 5.6 kg. Replacement for Gaspardo M43400468, 17014180, FKL ZGKU 309 2S.',
+                'meta_desc_pl'  => 'Tandemowy węzeł łożyskowy VELNOX BUCR-SG-309-S2 do Gaspardo, d=45 mm, 4×M12, masa 5,6 kg. Zamiennik Gaspardo M43400468, 17014180, FKL ZGKU 309 2S.',
             ],
         ];
 
@@ -974,6 +996,17 @@ class DatabaseSeeder extends Seeder
                     ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
                     ['value' => $p["name_{$locale}"]]
                 );
+            }
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                foreach (['desc' => 'desc', 'meta_title' => 'meta_title', 'meta_desc' => 'meta_description'] as $suffix => $field) {
+                    $val = $p["{$suffix}_{$locale}"] ?? null;
+                    if ($val) {
+                        DB::table('translations')->updateOrInsert(
+                            ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => $field],
+                            ['value' => $val]
+                        );
+                    }
+                }
             }
 
             // 3D model asset (file exists: public/models/BUCR-SG-309-S2.glb)

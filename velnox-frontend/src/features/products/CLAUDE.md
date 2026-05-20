@@ -77,15 +77,25 @@ ls /srv/projects/velnox/frontend/public/images/products/
 ```
 Не повинно бути папок зі старими назвами (без `bearings-t2/` префіксу, без `velnox-` префіксу у файлах).
 
-3. **Після деплою — завжди hard refresh**: Cmd+Shift+R (Mac) або Ctrl+Shift+R (Win).
-   ISR cache (`revalidate: 60`) може обслуговувати стару версію сторінки.
+3. **⛔ ОБОВ'ЯЗКОВО після додавання нових зображень — два кроки в такому порядку:**
 
-4. **Якщо підозра на webpack cache** (показуються старі зображення після hard refresh):
-```bash
-# SSH на сервер:
-rm -rf /srv/projects/velnox/frontend/.next/cache/
-# Потім повний деплой
-```
+   **Крок A — API seed** (записує assets в БД):
+   ```bash
+   cd /Users/localmac/Desktop/Велнокс
+   expect deploy_api_migrate_seed.exp
+   ```
+   **Причина:** gallery/schema_png/schema_svg зберігаються в `product_assets` (БД). Без сіду API повертає `images: []` і картка показує "No images available" — файли є на диску, але БД про них не знає.
+
+   **Крок B — Frontend clean deploy** (rebuild з новими файлами):
+   ```bash
+   expect clean_deploy_frontend.exp
+   ```
+   **Причина:** Next.js кешує списки файлів під час build. Без rebuild — навіть якщо БД правильна — статичні сторінки можуть не бачити нових файлів.
+
+   **Ніколи не використовуй `deploy_frontend_auto.exp` для нових зображень** — тільки `clean_deploy_frontend.exp`.
+
+4. **Після деплою — завжди hard refresh**: Cmd+Shift+R (Mac) або Ctrl+Shift+R (Win).
+   ISR cache (`revalidate: 60`) може обслуговувати стару версію сторінки.
 
 ---
 
