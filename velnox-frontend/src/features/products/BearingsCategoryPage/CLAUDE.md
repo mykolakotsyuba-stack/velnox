@@ -3,6 +3,31 @@
 ## КРИТИЧНЕ ПРАВИЛО
 
 **НІКОЛИ не змінюй структуру колонок жодної з 5 таблиць без явної вказівки з НОВОЮ специфікацією.**
+
+---
+
+## Обов'язкові елементи для кожної таблиці з Part Number
+
+Кожна таблиця, що має `part_number` (Позначення Velnox), **ОБОВ'ЯЗКОВО** повинна мати:
+
+1. **Гіперпосилання** на картку товару:
+```tsx
+const slugN = articleToSlug(row['part_number'] || '');
+<td data-label="Позначення Velnox" className={styles.partNumCell}>
+    <Link href={`/${locale}/products/bearings/${slugN}`} className={styles.designationLink}>
+        {row['part_number'] || '-'}
+        {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
+    </Link>
+</td>
+```
+
+2. **Позначка 3D** (`badge3d`) всередині Link — якщо `row['has_model_3d'] === true`
+
+3. **`has_model_3d`** має бути у `setTableNData` маппінгу: `has_model_3d: p.has_model_3d ?? false`
+
+**Why:** без Link — користувач не може перейти на картку. Без badge3d — не видно що є 3D модель. `has_model_3d` приходить з API (`product_assets` type='model_3d' → `has_model_3d: true`).
+
+---
 Правила нижче — джерело правди. Вони мають пріоритет над будь-якими "покращеннями" або "вирівнюванням з іншими сторінками".
 
 **МОВА ПІДПИСІВ — АВТОПЕРЕКЛАД:**
