@@ -1,5 +1,94 @@
 # Правила для features/products
 
+---
+
+## ⛔ КРИТИЧНО: Зображення — єдине джерело правди
+
+**Єдине джерело правди для зображень: таблиця `product_assets` в БД. Ніяких хардкодів.**
+
+- `productAssets.ts` — мертвий код зі старими захардкодженими шляхами. **Ніколи не імпортувати.** При нагоді — видалити.
+- `ProductTemplate.tsx` бере `product.images` з API → `product_assets`. Так і має бути.
+
+---
+
+## ⛔ КРИТИЧНО: Файли нової таблиці — формат і назви
+
+**Перед будь-якою роботою з новою таблицею — перевір файли. Якщо файлів немає або вони не відповідають правилам — СТОП, запитай у власника нові.**
+
+### Правило іменування (обов'язково для всіх нових таблиць)
+
+| Тип | Назва файлу | Приклад для BUQ-308-2T3H-DS |
+|---|---|---|
+| Фото продукту (головне) | `velnox-{article-slug}.webp` | `velnox-buq-308-2t3h-ds.webp` |
+| Креслення 1, 2, 3 | `velnox-{article-slug}-drawing-{n}.webp` | `velnox-buq-308-2t3h-ds-drawing-1.webp` |
+| Схема PNG (preview) | `velnox-{article-slug}-schema.webp` | `velnox-buq-308-2t3h-ds-schema.webp` |
+| Схема SVG (vector) | `schema.svg` | `schema.svg` |
+
+- Формат: **WebP** для фото/PNG. SVG лишається `.svg`.
+- Якщо файли вже є зі старими назвами (jpeg/png без префіксу) — **уточни у власника**: залишати чи він дасть нові. Ніколи не конвертуй без підтвердження.
+
+### Де лежать файли
+
+```
+public/images/products/<table-slug>/
+  velnox-{article-slug}.webp
+  velnox-{article-slug}-drawing-1.webp
+  velnox-{article-slug}-drawing-2.webp
+  velnox-{article-slug}-drawing-3.webp
+  velnox-{article-slug}-schema.webp
+  schema.svg
+```
+
+### Прив'язка схем — обов'язково, без цього схеми не відображаються
+
+**schema_png (WebP) → над таблицею на категорійній сторінці:**
+```sql
+INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
+VALUES ('product_table', <table_id>, 'schema_png', '/velnox/images/products/<slug>/velnox-<article-slug>-schema.webp', 0);
+```
+
+**schema_svg → у вьювері на кожній картці продукту:**
+```sql
+INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
+VALUES ('product_table', <table_id>, 'schema_svg', '/velnox/images/products/<slug>/schema.svg', 0);
+```
+
+Без цих записів у `product_assets` — схема не з'явиться ні на категорійній сторінці, ні на картці товару.
+
+---
+
+## ⛔ КРИТИЧНО: Заміна зображень на сервері
+
+### Проблема: rsync без --delete НЕ видаляє старі файли
+
+`rsync` лише додає/оновлює файли. Старі папки залишаються на сервері навіть після видалення локально.
+
+### Обов'язковий порядок при заміні зображень:
+
+1. **Перед деплоєм**: SSH → вручну `rm -rf` старі директорії:
+```bash
+# У expect-сесії на сервері:
+rm -rf /srv/projects/velnox/frontend/public/images/products/<old-dir>/
+```
+
+2. **Перевірити список** папок після:
+```bash
+ls /srv/projects/velnox/frontend/public/images/products/
+```
+Не повинно бути папок зі старими назвами (без `bearings-t2/` префіксу, без `velnox-` префіксу у файлах).
+
+3. **Після деплою — завжди hard refresh**: Cmd+Shift+R (Mac) або Ctrl+Shift+R (Win).
+   ISR cache (`revalidate: 60`) може обслуговувати стару версію сторінки.
+
+4. **Якщо підозра на webpack cache** (показуються старі зображення після hard refresh):
+```bash
+# SSH на сервер:
+rm -rf /srv/projects/velnox/frontend/.next/cache/
+# Потім повний деплой
+```
+
+---
+
 ## SVG технічні креслення — обов'язково читати перед правкою
 
 Продуктові картки і категорійні сторінки використовують SVG-схеми з CorelDRAW з інтерактивним overlay підсвічування розмірів. Є низка нетривіальних правил, порушення яких ламає відображення.
@@ -67,7 +156,7 @@ style={{ aspectRatio: viewBoxAspect(effectiveViewBox) }}
 ```
 /velnox/images/products/<table-slug>/schema.svg
 ```
-Приклад (еталон): `/velnox/images/products/bearings-t1/schema.svg`  
+Приклад: `/velnox/images/products/bearings-t1/schema.svg`  
 Префікс `/velnox` — `basePath` з `next.config.mjs`. Без нього — 404.
 В БД `product_assets.path` ЗАВЖДИ з `/velnox/`.
 
@@ -105,21 +194,24 @@ img:      width:100%; height:100%; objectFit:contain; display:block
 
 ---
 
-## Як додати нову product_table
+## Як додати нову product_table — двофазний процес
 
-**Повний чеклист (з нуля)**: [`docs/svg-workflow.md`](../../docs/svg-workflow.md) (розділ 10)  
-**SVG + highlight_config**: [`docs/svg-workflow.md`](../../docs/svg-workflow.md) (розділ 9)
+Повний чеклист зі стопами: [`docs/svg-workflow.md`](../../docs/svg-workflow.md) (розділ 10)
 
-Коротко — що потрібно для нової таблиці:
-1. **Файли**: фото + креслення → WebP (`velnox-{article-slug}.webp`), schema.png + schema.svg
-2. **БД product_tables**: slug, category_slug, spec_columns, (highlight_config + schema_viewbox — після SVG)
-3. **БД product_assets (table)**: schema_png (`entity_type='product_table'`) → відображається НАД таблицею на сторінці категорії; schema_svg — для інтерактивного viewer на картці
-4. **БД products + product_specs**: один рядок на продукт, spec values
-5. **БД translations**: name/desc на uk/en/pl
-6. **БД product_assets (product)**: gallery (sort_order=0 → фото, 1,2,3 → креслення)
-7. **БД product_cross_refs**: якщо є аналоги
-8. **SVG**: CorelDRAW As Text → Python bounding box → скрипт обробки → highlight_config → schema_viewbox
-9. **Картки клікабельні**: slug у БД → `/products/{category_slug}/{slug}`
+### ФАЗА 1 — Таблиця і структура (зупинка після кожного кроку)
+1. Запитати: категорія + номер таблиці + назва
+2. Запитати структуру колонок (`spec_columns`) — **кожна таблиця різна, не копіювати сліпо**
+3. Внести дані (products, specs, cross_refs)
+4. **⛔ СТОП** — власник перевіряє таблицю на сайті → "ok"
+
+### ФАЗА 2 — Картки товарів (окремий чекліст зі стопами)
+1. **Файли першим** — власник надає → перевіряємо назви/формат → якщо не відповідають правилам — повідомляємо одразу
+2. **⛔ СТОП** — власник підтверджує файли
+3. Галерея в БД (фото + креслення) → **⛔ СТОП** — власник перевіряє галерею
+4. Описи — **запитати у власника** uk/en/pl, не генерувати → **⛔ СТОП** — власник перевіряє тексти
+5. Технічні характеристики → **⛔ СТОП** — власник підтверджує specs на картці
+6. SVG схема: viewBox + highlight_config (п.9) + assets в БД → **⛔ СТОП** — власник перевіряє схему і підсвічування
+7. Власник каже "все ок" → додаємо в сідер → коміт
 
 ---
 

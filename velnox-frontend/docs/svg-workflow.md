@@ -28,47 +28,103 @@ File → Export → формат SVG. Обов'язкові параметри:
 
 CorelDRAW розміщує об'єкти **за межами сторінки** в SVG-координатах. Сторінка `viewBox` показує область `(0, 0)`, але реальне креслення знаходиться при **від'ємних Y-координатах** (наприклад, Y ≈ -117000).
 
-### Як знайти правильний viewBox
+### ⛔ КРИТИЧНО: три пастки при розрахунку viewBox
+
+#### Пастка 1 — `<path d=...>` всередині `<g transform="matrix(...)">` мають ЛОКАЛЬНІ координати
+
+CorelDRAW може обгорнути частину елементів у трансформовану групу (`<g transform="matrix(...)">`).  
+Координати `d=` всередині такої групи — **локальні**, не глобальні. Наївний bbox-скрипт бере їх як є і отримує хибні межі.
+
+**Перевірка перед bbox:**
+```python
+import re
+with open('schema.svg', 'r', encoding='utf-8') as f:
+    content = f.read()
+g_transforms = re.findall(r'<g[^>]*transform="([^"]*)"', content)
+print(f"Transformed groups: {len(g_transforms)}")
+for t in g_transforms: print(f"  {t}")
+```
+Якщо є — виключи вміст цих груп з bbox або застосуй матрицю вручну.
+
+#### Пастка 2 — `<image>` елемент (3D фото) розтягує viewBox
+
+CorelDRAW може вставити 3D фотку як `<image x=... y=... width=... height=...>` в SVG.  
+Якщо фото знаходиться **праворуч** від креслення (не перекривається по x), воно додає велику ширину → aspect ratio > 2.0 → креслення рендериться маленьким у широкому вікні.
+
+**Перевірка:**
+```python
+for m in re.finditer(r'<image([^>]+)>', content):
+    tag = m.group(1)
+    x = re.search(r'\bx="([^"]+)"', tag)
+    y = re.search(r'\by="([^"]+)"', tag)
+    w = re.search(r'\bwidth="([^"]+)"', tag)
+    h = re.search(r'\bheight="([^"]+)"', tag)
+    print(f"image: x={x and x.group(1)} y={y and y.group(1)} w={w and w.group(1)} h={h and h.group(1)}")
+```
+
+**Правило:** рахуй viewBox **без `<image>`**. Додавай image до viewBox тільки якщо воно перекривається з технічним кресленням по x (тобто не стирчить окремо праворуч).
+
+#### Пастка 3 — перевіряй aspect ratio після розрахунку
+
+Після отримання viewBox:
+```python
+vb_parts = viewbox_string.split()
+aspect = float(vb_parts[2]) / float(vb_parts[3])
+print(f"Aspect ratio: {aspect:.2f}")
+if aspect > 2.0:
+    print("⚠️  ШИРОКО: креслення буде маленьким у панелі. Перевір пастку 2 (image елемент).")
+```
+**Нормальний діапазон:** 1.2 – 2.0. Якщо більше — щось тягне viewBox вбік.
+
+---
+
+### Правильний скрипт bbox (без трансформованих груп і image)
 
 ```python
 import re
 
-with open('/Users/localmac/Desktop/Untitled-1.svg', 'r', encoding='utf-8') as f:
+with open('schema.svg', 'r', encoding='utf-8') as f:
     content = f.read()
+
+# Видаляємо трансформовані групи (локальні координати)
+content_clean = re.sub(r'<g[^>]*transform="matrix[^"]*"[^>]*>.*?</g>', '', content, flags=re.DOTALL)
+# Видаляємо image елементи
+content_clean = re.sub(r'<image[^>]*/>', '', content_clean)
+content_clean = re.sub(r'<image[^>]*>.*?</image>', '', content_clean, flags=re.DOTALL)
 
 xs, ys = [], []
 
-# polygon/polyline points
-for pts in re.findall(r'points="([^"]+)"', content):
+for pts in re.findall(r'points="([^"]+)"', content_clean):
     for p in pts.strip().split():
         if ',' in p:
             x, y = p.split(',')
-            xs.append(float(x)); ys.append(float(y))
+            try: xs.append(float(x)); ys.append(float(y))
+            except: pass
 
-# line x1/y1/x2/y2
-for m in re.finditer(r'<line[^>]+>', content):
+for m in re.finditer(r'<line[^>]+>', content_clean):
     tag = m.group()
-    for attr in ['x1', 'x2']:
+    for attr, lst in [('x1',xs),('x2',xs),('y1',ys),('y2',ys)]:
         v = re.search(rf'{attr}="([^"]+)"', tag)
-        if v: xs.append(float(v.group(1)))
-    for attr in ['y1', 'y2']:
-        v = re.search(rf'{attr}="([^"]+)"', tag)
-        if v: ys.append(float(v.group(1)))
+        if v:
+            try: lst.append(float(v.group(1)))
+            except: pass
 
-# path M команди
-for d in re.findall(r'd="([^"]+)"', content):
-    for m in re.finditer(r'[Mm]\s*([-\d.]+)[,\s]+([-\d.]+)', d):
-        xs.append(float(m.group(1))); ys.append(float(m.group(2)))
+for m in re.finditer(r'<text([^>]+)>', content_clean):
+    tag = m.group(1)
+    for attr, lst in [('x',xs),('y',ys)]:
+        v = re.search(rf'\b{attr}="([^"]+)"', tag)
+        if v:
+            try: lst.append(float(v.group(1)))
+            except: pass
 
-xmin, xmax = min(xs), max(xs)
-ymin, ymax = min(ys), max(ys)
-margin_x = (xmax - xmin) * 0.05
-margin_y = (ymax - ymin) * 0.05
-w = (xmax - xmin) + 2 * margin_x
-h = (ymax - ymin) + 2 * margin_y
+margin = 0.04
+rx = max(xs)-min(xs); ry = max(ys)-min(ys)
+mx = rx*margin; my = ry*margin
+x0 = min(xs)-mx; y0 = min(ys)-my
+w = rx+2*mx; h = ry+2*my
 
-print(f'viewBox="{xmin-margin_x:.0f} {ymin-margin_y:.0f} {w:.0f} {h:.0f}"')
-print(f'aspect-ratio: {w:.0f} / {h:.0f}')
+print(f'viewBox: "{x0:.0f} {y0:.0f} {w:.0f} {h:.0f}"')
+print(f'aspect:  {w/h:.2f}  (норма: 1.2–2.0)')
 ```
 
 **Поточний BUQ bearings**: `viewBox="7000 -117700 13600 7400"`, aspect-ratio `13600/7400`
@@ -167,6 +223,22 @@ circle_cy = text_y - half_cap_height     (baseline → центр літери)
 - Один ключ може мати кілька точок (наприклад, `A_mm` зображено у 3 видах)
 - Два ключі на одній літері (наприклад, `d_mm` і `d_inch`) → однакові `x, y`
 
+### ⛔ Як відрізнити розмірну мітку від анотації перерізу
+
+CorelDRAW часто ставить **анотації перерізу** типу "A–A", "B–B" разом із розмірними мітками. Обидва — просто `<text>` у SVG, але в `highlight_config` мають потрапляти **тільки розмірні мітки**.
+
+**Ознаки анотації перерізу (НЕ включати в highlight_config):**
+- Текст виду `"A-"`, `"А"` (кирилиця!) або `"B"` з'являється парою поруч: `x1 ≈ x2`, `y1 = y2`
+- Знаходиться **у верхній частині** SVG (y < ~800 для типового bearings креслення)
+- Пов'язаний з лінією-стрілкою перерізу, а не з розмірною лінією знизу
+
+**Ознаки розмірної мітки (включати):**
+- Текст `"A"`, `"J"`, `"L"`, `"d"` тощо, що з'являється **зі стрілками з обох боків** (розмірна лінія)
+- Знаходиться в **нижній або правій частині** креслення (типово y > 1000 для bearings)
+- Для одного розміру, що показаний у кількох видах — буде **кілька однакових текстів** на різних x (всі включаємо)
+
+**Правило:** якщо та сама літера зустрічається і у верхній (y < mid), і в нижній (y > mid) частині SVG — верхня = анотація перерізу, нижня = розмірна мітка. Включаємо **тільки нижню**.
+
 ### Як API перетворює highlight_config → dim_labels
 
 `ProductController.php` читає `highlight_config`, розгортає в масив:
@@ -197,19 +269,14 @@ circle_cy = text_y - half_cap_height     (baseline → центр літери)
 
 ## 7. Шляхи до файлів
 
-Конвенція для нових таблиць — за прикладом bearings-t1:
+| Файл | Шлях |
+|---|---|
+| SVG-схема | `public/images/schemes/bearings-schema.svg` |
+| URL в браузері | `/velnox/images/schemes/bearings-schema.svg` |
+| Компонент | `src/features/products/ProductTemplate/blocks/BuqBlueprintViewer.tsx` |
+| CSS | `src/features/products/ProductTemplate/blocks/BuqBlueprintViewer.module.css` |
 
-| Тип файлу | Локальний шлях | URL / БД path |
-|---|---|---|
-| SVG-схема | `public/images/products/<table-slug>/schema.svg` | `/velnox/images/products/<table-slug>/schema.svg` |
-| PNG-схема (для таблиці категорії) | `public/images/products/<table-slug>/schema.png` | `/velnox/images/products/<table-slug>/schema.png` |
-| Фото продукту | `public/images/products/<table-slug>/velnox-<article-slug>.webp` | `/velnox/images/products/<table-slug>/velnox-<article-slug>.webp` |
-| Креслення 1,2,3 | `public/images/products/<table-slug>/velnox-<article-slug>-drawing-1.webp` | `/velnox/images/products/<table-slug>/velnox-<article-slug>-drawing-1.webp` |
-| Компонент | `src/features/products/ProductTemplate/blocks/BuqBlueprintViewer.tsx` | — |
-
-**Правило іменування**: `velnox-{article-slug}.webp`, `velnox-{article-slug}-drawing-{n}.webp`, `velnox-{article-slug}-schema.webp`  
-**Prefix `/velnox`** — basePath з `next.config.mjs`. Без нього — 404.  
-**SVG лишається як `.svg`** — векторний, WebP не потрібен.
+Префікс `/velnox` — `basePath` з `next.config.mjs`. Без нього файл не знайдеться.
 
 ---
 
@@ -231,10 +298,10 @@ expect deploy_frontend_auto.exp
 - [ ] Python: bounding-box скрипт (п.2) → отримати viewBox з 5% margin
 - [ ] Python: скрипт обробки (п.3) — видалити DOCTYPE, виставити viewBox/width/height
 - [ ] Валідація `ET.fromstring()` без помилок
-- [ ] Скопіювати в `public/images/products/<table-slug>/schema.svg`
+- [ ] Скопіювати в `public/images/schemes/<нова-назва>.svg`
 - [ ] Завантажити на сервер + додати запис `product_assets`:
   - `entity_type = 'product_table'`, `entity_id = <id таблиці>`, `type = 'schema_svg'`
-  - `path = '/velnox/images/products/<table-slug>/schema.svg'`
+  - `path = '/velnox/images/schemes/<нова-назва>.svg'` (З prefix `/velnox/`)
 
 ### B. Розрахунок кіл підсвічування
 - [ ] Відкрити SVG в текстовому редакторі → знайти `<text` для кожної літери-розміру
@@ -262,167 +329,41 @@ expect deploy_frontend_auto.exp
 
 ---
 
-## 10. Повний чеклист: додавання нової product_table з нуля
+## 10. Правила заміни зображень — обов'язково
 
-> Користувач надає: файли (фото, креслення, SVG) або скріни таблиці зі специфікаціями.  
-> ШІ генерує SQL на основі файлів і шаблону bearings-t1.
+### Проблема rsync без --delete
 
-### A. Зображення — підготовка та конвенція
+Скрипт `deploy_frontend_auto.exp` використовує `rsync` БЕЗ `--delete`.  
+Старі файли залишаються на сервері навіть після видалення локально.  
+Це призводить до появи старих зображень на картках продуктів.
 
-**Конвертація в WebP** (нові таблиці — тільки WebP):
+### Порядок при заміні/додаванні нових зображень:
+
+**Крок 1** — перед деплоєм видалити стару директорію з сервера:
 ```bash
-# macOS: brew install webp
-cwebp -q 85 main.jpeg -o velnox-buq-308-2t3h-ds.webp
-cwebp -q 85 drawing-1.png -o velnox-buq-308-2t3h-ds-drawing-1.webp
+# через expect-сесію або окремий скрипт:
+rm -rf /srv/projects/velnox/frontend/public/images/products/<old-dir>/
+ls /srv/projects/velnox/frontend/public/images/products/  # перевірити
 ```
 
-| Тип файлу | Назва файлу |
-|---|---|
-| Фото продукту (головне) | `velnox-{article-slug}.webp` |
-| Креслення 1, 2, 3 | `velnox-{article-slug}-drawing-{n}.webp` |
-| Схема PNG (для таблиці категорії) | `schema.png` (спільна для таблиці, не для продукту) |
-| Схема SVG (для картки товару) | `schema.svg` (спільна для таблиці) |
-
-Розмістити в: `public/images/products/<table-slug>/`
-
----
-
-### B. БД — product_tables
-
-```sql
-INSERT INTO product_tables (slug, category_slug, name, spec_columns, highlight_config, schema_viewbox)
-VALUES (
-  'bearings-t2',
-  'bearings',
-  'BUQ-308-2T3H-DS — Таблиця 2',
-  '["d_mm","A1_mm","A2_mm","J_mm","L_mm","H_T","A_mm","mass_kg","cdyn_kn","co_kn","pu_kn"]',
-  NULL,   -- заповнити після кроку C (SVG)
-  NULL    -- заповнити після кроку C (SVG)
-);
+**Крок 2** — деплой:
+```bash
+cd /Users/localmac/Desktop/Велнокс
+expect deploy_frontend_auto.exp
 ```
 
-- `category_slug` — повинен існувати в таблиці `categories`
-- `spec_columns` — JSON-масив ключів у порядку відображення в таблиці
-- `highlight_config` і `schema_viewbox` — заповнюються після обробки SVG (чеклист п.9)
+**Крок 3** — перевірка: **обов'язково Cmd+Shift+R** (hard refresh).  
+ISR cache (`revalidate: 60`) може показати стару версію сторінки звичайним F5.
 
----
-
-### C. БД — product_assets для таблиці (schema_png + schema_svg)
-
-```sql
--- schema.png — показується ВГОРІ таблиці на сторінці категорії (bearings, hubs тощо)
-INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
-VALUES ('product_table', <table_id>, 'schema_png', '/velnox/images/products/bearings-t2/schema.png', 0);
-
--- schema.svg — інтерактивний viewer на картці товару
-INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
-VALUES ('product_table', <table_id>, 'schema_svg', '/velnox/images/products/bearings-t2/schema.svg', 0);
+**Якщо після hard refresh все одно старі фото** — webpack cache:
+```bash
+# SSH на сервер, видалити webpack cache:
+rm -rf /srv/projects/velnox/frontend/.next/cache/
+# Потім повний деплой знову
 ```
 
-> `schema_png` → API повертає як `table.schema_src` → відображається над таблицею в BearingsCategoryPage.  
-> `schema_svg` → API повертає як `product.schema_svg` → BuqBlueprintViewer на картці.
+### Єдине джерело правди для зображень
 
----
-
-### D. БД — products (один рядок на продукт)
-
-```sql
-INSERT INTO products (slug, article, product_table_id, category_slug)
-VALUES ('buq-308-2t3h-ds', 'BUQ-308-2T3H-DS', <table_id>, 'bearings');
-```
-
-- `slug` — URL-safe, унікальний. Генерується з артикулу: нижній регістр, пробіли/спецсимволи → дефіс
-- Назва картки клікабельна → `/products/<category_slug>/<slug>`
-
----
-
-### E. БД — product_specs
-
-```sql
-INSERT INTO product_specs (product_id, spec_key, value)
-VALUES
-  (<product_id>, 'd_mm',    '40'),
-  (<product_id>, 'A1_mm',   '56'),
-  (<product_id>, 'A2_mm',   '21'),
-  (<product_id>, 'J_mm',    '101.5'),
-  (<product_id>, 'L_mm',    '130'),
-  (<product_id>, 'H_T',     '1.1/4'),
-  (<product_id>, 'A_mm',    '51.2'),
-  (<product_id>, 'mass_kg', '2.5'),
-  (<product_id>, 'cdyn_kn', '62.3'),
-  (<product_id>, 'co_kn',   '45.2'),
-  (<product_id>, 'pu_kn',   '1.898');
-```
-
----
-
-### F. БД — translations
-
-```sql
--- Назва продукту (uk/en/pl)
-INSERT INTO translations (entity_type, entity_id, locale, field, value)
-VALUES
-  ('product', <product_id>, 'uk', 'name', 'Підшипниковий вузол BUQ-308-2T3H-DS'),
-  ('product', <product_id>, 'en', 'name', 'Bearing Unit BUQ-308-2T3H-DS'),
-  ('product', <product_id>, 'pl', 'name', 'Jednostka łożyskowa BUQ-308-2T3H-DS');
-
--- Опис (якщо є)
-INSERT INTO translations (entity_type, entity_id, locale, field, value)
-VALUES ('product', <product_id>, 'uk', 'desc', 'Чавунний квадратний фланцевий корпус...');
-```
-
----
-
-### G. БД — product_assets для продукту (фото + креслення)
-
-```sql
--- Головне фото (gallery, sort_order=0)
-INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
-VALUES ('product', <product_id>, 'gallery', '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds.webp', 0);
-
--- Креслення (gallery, sort_order=1,2,3...)
-INSERT INTO product_assets (entity_type, entity_id, type, path, sort_order)
-VALUES
-  ('product', <product_id>, 'gallery', '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds-drawing-1.webp', 1),
-  ('product', <product_id>, 'gallery', '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds-drawing-2.webp', 2);
-```
-
-> Перший gallery-елемент (sort_order=0) — головне фото на картці і в PDF.  
-> Решта gallery-елементи — креслення, показуються як thumbnails.
-
----
-
-### H. БД — product_cross_refs (якщо є)
-
-```sql
-INSERT INTO product_cross_refs (product_id, brand, value)
-VALUES
-  (<product_id>, 'SKF',  'FYJ 40 TF'),
-  (<product_id>, 'SNR',  'EXF308/UCF308'),
-  (<product_id>, 'FAG',  'UCF208');
-```
-
----
-
-### I. Клікабельні картки (перевірка)
-
-На сторінці категорії (`/products/bearings`) картки продуктів мають:
-- Заголовок — `<Link href="/{locale}/products/{category_slug}/{slug}">` — клікабельний за статтею
-- API: `GET /api/v1/products?category=bearings&locale=uk` → повертає `slug` для кожного продукту
-
-Перевірити: `slug` в БД збігається з роутом; `category_slug` правильний.
-
----
-
-### J. SVG + highlight_config (чеклист п.9)
-
-Виконати повний чеклист з **розділу 9** після того як є SVG-файл.
-
----
-
-### K. Деплой і перевірка
-
-- [ ] `expect deploy_frontend_auto.exp` з `/Users/localmac/Desktop/Велнокс`
-- [ ] Сторінка категорії: схема над таблицею, всі рядки таблиці, назви клікабельні
-- [ ] Картка товару: фото завантажується, схема з'являється, ховер підсвічує розміри
-- [ ] PDF: фото + схема + специфікації + креслення — все з БД, без хардкоду
+Всі шляхи до зображень — тільки в таблиці `product_assets` в БД.  
+`productAssets.ts` — мертвий код, не імпортувати і не оновлювати.  
+При нагоді — видалити файл `ProductTemplate/productAssets.ts`.

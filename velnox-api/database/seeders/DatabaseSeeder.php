@@ -202,16 +202,26 @@ class DatabaseSeeder extends Seeder
         // =========================================================
         $extraTables = [
             [
-                'slug'       => 'bearings-t2',
-                'sort_order' => 2,
-                'names'      => ['uk' => 'BUQ-308-2T3H-DS — Таблиця 2', 'en' => 'BUQ-308-2T3H-DS — Table 2', 'pl' => 'BUQ-308-2T3H-DS — Tabela 2'],
-                'assets'     => [
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t2/main.jpeg',     'sort_order' => 1],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t2/drawing-1.png', 'sort_order' => 2],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t2/drawing-2.png', 'sort_order' => 3],
-                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t2/drawing-3.png', 'sort_order' => 4],
-                    ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t2/schema.png',    'sort_order' => 1],
-                    ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t2/schema.svg',    'sort_order' => 1],
+                'slug'             => 'bearings-t2',
+                'sort_order'       => 2,
+                'schema_viewbox'   => '147 720 2059 773',
+                'highlight_config' => [
+                    'H_T'   => [['label' => 'H/T', 'x' => 251,  'y' => 734 ]],
+                    'd_mm'  => [['label' => 'd',   'x' => 1050, 'y' => 1069]],
+                    'A2_mm' => [['label' => 'A2',  'x' => 853,  'y' => 1366]],
+                    'A1_mm' => [['label' => 'A1',  'x' => 903,  'y' => 1413]],
+                    'A_mm'  => [['label' => 'A',   'x' => 892,  'y' => 1457], ['label' => 'A', 'x' => 383, 'y' => 1448]],
+                    'J_mm'  => [['label' => 'J',   'x' => 450,  'y' => 1366]],
+                    'L_mm'  => [['label' => 'L',   'x' => 450,  'y' => 1409]],
+                ],
+                'names'  => ['uk' => 'BUQ-308-2T3H-DS — Таблиця 2', 'en' => 'BUQ-308-2T3H-DS — Table 2', 'pl' => 'BUQ-308-2T3H-DS — Tabela 2'],
+                'assets' => [
+                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds.webp',          'sort_order' => 1],
+                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds-drawing-1.webp', 'sort_order' => 2],
+                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds-drawing-2.webp', 'sort_order' => 3],
+                    ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds-drawing-3.webp', 'sort_order' => 4],
+                    ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t2/velnox-buq-308-2t3h-ds-schema.webp',   'sort_order' => 0],
+                    ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t2/schema.svg',                            'sort_order' => 0],
                 ],
             ],
         ];
@@ -226,8 +236,8 @@ class DatabaseSeeder extends Seeder
                     'slug'             => $tbl['slug'],
                     'category_id'      => $bearingsCatId,
                     'spec_columns'     => json_encode($extraSpecCols[$tbl['slug']] ?? []),
-                    'highlight_config' => json_encode(new \stdClass()),
-                    'schema_viewbox'   => null,
+                    'highlight_config' => json_encode($tbl['highlight_config'] ?? new \stdClass()),
+                    'schema_viewbox'   => $tbl['schema_viewbox'] ?? null,
                     'sort_order'       => $tbl['sort_order'],
                 ]
             );
@@ -558,27 +568,34 @@ class DatabaseSeeder extends Seeder
                     'pu_kn'   => '1.898',
                 ],
                 'cross_refs' => [
-                    ['brand' => 'SNR',     'value' => 'CE066',                    'type' => 'bearing'],
-                    ['brand' => 'SNR',     'value' => 'LSQFR308 TBT.H.T.Zn',     'type' => 'bearing'],
-                    ['brand' => 'SNR',     'value' => 'UC 308 X1',                'type' => 'bearing'],
-                    ['brand' => 'SNR',     'value' => 'UCF308 A01X1',             'type' => 'bearing'],
-                    ['brand' => 'SNR',     'value' => 'XUCF308B01B169',           'type' => 'bearing'],
-                    ['brand' => 'FKL',     'value' => 'LSQFR308 TBS.H.T.Zn',     'type' => 'bearing'],
-                    ['brand' => 'PEER',    'value' => 'W308-40MM-FDT-MF-AP-SP1 (PER.W308RRBP52-F-A)', 'type' => 'bearing'],
+                    ['brand' => 'SNR',     'value' => 'CE066',                                    'type' => 'bearing'],
+                    ['brand' => 'FKL',     'value' => 'LSQFR308 TBT.H.T.Zn',                  'type' => 'bearing'],
+                    ['brand' => 'SNR',     'value' => 'UC 308 X1',                              'type' => 'bearing'],
+                    ['brand' => 'SNR',     'value' => 'UCF308 A01X1',                           'type' => 'bearing'],
+                    ['brand' => 'PEER',    'value' => 'W308-40MM-FDT-MF-AP-SP1 (PER.W308RRBP52-F-A)',           'type' => 'bearing'],
                     ['brand' => 'PEER',    'value' => 'W308-40MM-FDT-MF-AP-SP1 W308RRBP52-F-B (BX-PER.W308RRBP52-F)', 'type' => 'bearing'],
-                    ['brand' => 'AMAZONE', 'value' => '957305',                   'type' => 'application'],
-                    ['brand' => 'AMAZONE', 'value' => 'CE066',                    'type' => 'application'],
-                    ['brand' => 'AMAZONE', 'value' => 'CE078',                    'type' => 'application'],
-                    ['brand' => 'RBF',     'value' => 'PN00042 RBF Housing',      'type' => 'application'],
-                    ['brand' => 'Z&S',     'value' => 'SL308MR3L',               'type' => 'application'],
-                    ['brand' => 'UCFE',    'value' => 'UCFE308 A01X1 (=UC308X1+FE308A01)', 'type' => 'bearing'],
+                    ['brand' => 'SNR',     'value' => 'XUCF308B01B169',                         'type' => 'bearing'],
+                    ['brand' => 'AMAZONE', 'value' => '957305 AMAZONE',                          'type' => 'application'],
+                    ['brand' => 'AMAZONE', 'value' => 'CE066 AMAZONE',                           'type' => 'application'],
+                    ['brand' => 'AMAZONE', 'value' => 'CE078 AMAZONE',                           'type' => 'application'],
+                    ['brand' => 'FKL',     'value' => 'LSQFR308 TBS.H.T.Zn FKL',               'type' => 'application'],
+                    ['brand' => 'RBF',     'value' => 'PN00042 RBF Housing',                     'type' => 'application'],
+                    ['brand' => 'Z&S',     'value' => 'SL308MR3L Z&S',                          'type' => 'application'],
+                    ['brand' => 'UCFE',    'value' => 'UCFE308 A01X1= UC308X1+FE308A01',        'type' => 'application'],
+                    ['brand' => 'UCFE',    'value' => 'UCFE308 A01X1',                          'type' => 'application'],
                 ],
                 'name_uk' => 'BUQ-308-2T3H-DS',
                 'name_en' => 'BUQ-308-2T3H-DS',
                 'name_pl' => 'BUQ-308-2T3H-DS',
-                'desc_uk' => 'Посилений квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори для прикочувальних котків (аналог UCF 308 / UC 308 X1) з внутрішнім діаметром d = 40 мм. Кріпильна база J = 101.5 мм, довжина корпусу L = 130 мм, різьблення H/T = M12, Cdyn = 62.3 кН, Co = 45.2 кН, Pu = 1.898 кН, маса 2.5 кг. Посилена комбінована система ущільнень (індекс -DS) забезпечує герметичний захист зони кочення від ґрунтового пилу, вологи та абразиву в умовах постійного контакту з ґрунтом. Пряма заміна SNR CE066, FKL LSQFR308 TBT.H.T., PEER W308-40MM-FDT-MF-AP-SP1 та SNR UCF308 A01X1; застосовується у прикочувальних котках AMAZONE (арт. 957305, CE066, CE078) та інших європейських ґрунтообробних агрегатів.',
+                'desc_uk'       => 'Посилений квадратний фланцевий підшипниковий вузол на 4 кріпильні отвори для прикочувальних котків (аналог UCF 308 / UC 308 X1) з внутрішнім діаметром d = 40 мм. Кріпильна база J = 101.5 мм, довжина корпусу L = 130 мм, різьблення H/T = M12, Cdyn = 62.3 кН, Co = 45.2 кН, Pu = 1.898 кН, маса 2.5 кг. Посилена комбінована система ущільнень (індекс -DS) забезпечує герметичний захист зони кочення від ґрунтового пилу, вологи та абразиву в умовах постійного контакту з ґрунтом. Пряма заміна SNR CE066, FKL LSQFR308 TBT.H.T., PEER W308-40MM-FDT-MF-AP-SP1 та SNR UCF308 A01X1; застосовується у прикочувальних котках AMAZONE (арт. 957305, CE066, CE078) та інших європейських ґрунтообробних агрегатів.',
                 'meta_title_uk' => 'VELNOX BUQ-308-2T3H-DS — вузол котка d40, AMAZONE CE066',
                 'meta_desc_uk'  => 'Підшипниковий вузол VELNOX BUQ-308-2T3H-DS (d=40 мм, Cdyn 62.3 кН) для котків. Пряма заміна AMAZONE CE066, 957305, SNR UC 308 X1.',
+                'desc_en'       => 'Heavy-duty square flange bearing unit with 4 mounting holes for press wheels (equivalent to UCF 308 / UC 308 X1), bore diameter d = 40 mm. Mounting base J = 101.5 mm, housing length L = 130 mm, thread H/T = M12, Cdyn = 62.3 kN, Co = 45.2 kN, Pu = 1.898 kN, weight 2.5 kg. The reinforced combined sealing system (-DS) provides sealed protection of the rolling zone against soil dust, moisture and abrasives under continuous soil contact. Direct replacement for SNR CE066, FKL LSQFR308 TBT.H.T., PEER W308-40MM-FDT-MF-AP-SP1 and SNR UCF308 A01X1; used in AMAZONE press wheels (part no. 957305, CE066, CE078) and other European tillage equipment.',
+                'meta_title_en' => 'VELNOX BUQ-308-2T3H-DS — press wheel unit d40, AMAZONE CE066',
+                'meta_desc_en'  => 'VELNOX BUQ-308-2T3H-DS bearing unit (d=40 mm, Cdyn 62.3 kN) for press wheels. Direct replacement for AMAZONE CE066, 957305, SNR UC 308 X1.',
+                'desc_pl'       => 'Wzmocniony kwadratowy kołnierzowy węzeł łożyskowy na 4 otwory montażowe do rolek dogniatających (zamiennik UCF 308 / UC 308 X1), średnica wewnętrzna d = 40 mm. Baza montażowa J = 101,5 mm, długość obudowy L = 130 mm, gwint H/T = M12, Cdyn = 62,3 kN, Co = 45,2 kN, Pu = 1,898 kN, masa 2,5 kg. Wzmocniony kombinowany system uszczelnień (-DS) zapewnia hermetyczną ochronę strefy toczenia przed pyłem glebowym, wilgocią i ścierniwem przy stałym kontakcie z glebą. Bezpośredni zamiennik SNR CE066, FKL LSQFR308 TBT.H.T., PEER W308-40MM-FDT-MF-AP-SP1 i SNR UCF308 A01X1; stosowany w rolkach dogniatających AMAZONE (nr art. 957305, CE066, CE078) i innych europejskich agregatach uprawowych.',
+                'meta_title_pl' => 'VELNOX BUQ-308-2T3H-DS — węzeł rolki d40, AMAZONE CE066',
+                'meta_desc_pl'  => 'Węzeł łożyskowy VELNOX BUQ-308-2T3H-DS (d=40 mm, Cdyn 62,3 kN) do rolek. Bezpośredni zamiennik AMAZONE CE066, 957305, SNR UC 308 X1.',
             ],
         ];
 
@@ -609,12 +626,15 @@ class DatabaseSeeder extends Seeder
                     ['value' => $p["name_{$locale}"]]
                 );
             }
-            foreach (['desc_uk' => 'desc', 'meta_title_uk' => 'meta_title', 'meta_desc_uk' => 'meta_description'] as $key => $field) {
-                if (isset($p[$key])) {
-                    DB::table('translations')->updateOrInsert(
-                        ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => 'uk', 'field' => $field],
-                        ['value' => $p[$key]]
-                    );
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                foreach (['desc' => 'desc', 'meta_title' => 'meta_title', 'meta_desc' => 'meta_description'] as $suffix => $field) {
+                    $val = $p["{$suffix}_{$locale}"] ?? null;
+                    if ($val) {
+                        DB::table('translations')->updateOrInsert(
+                            ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => $field],
+                            ['value' => $val]
+                        );
+                    }
                 }
             }
         }

@@ -909,6 +909,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <Th col="dynamic_load_rating_cdyn_kn" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['dynamic_load_rating_cdyn_kn'] || []} selectedFilters={filters['dynamic_load_rating_cdyn_kn'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="static_load_rating_co_kn" label="Статична вантажо-підйомність Co (кН)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['static_load_rating_co_kn'] || []} selectedFilters={filters['static_load_rating_co_kn'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="fatigue_load_limit_pu_kn" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
+                                        <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -935,11 +936,16 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row['dynamic_load_rating_cdyn_kn'] || '-'}</td>
                                             <td data-label="Статична вантажо-підйомність Co (кН)">{row['static_load_rating_co_kn'] || '-'}</td>
                                             <td data-label="Граничне навантаження втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
+                                            <td className={styles.actionCol}>
+                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || '')}>
+                                                    {t('block2.btn_request')}
+                                                </button>
+                                            </td>
                                         </tr>
                                         );
                                     })}
                                     {filteredT2.length === 0 && (
-                                        <tr><td colSpan={14} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -979,6 +985,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <Th col="static_load_rating_co_kn" label="Статична вантажо-підйомність Co (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['static_load_rating_co_kn'] || []} selectedFilters={filters['static_load_rating_co_kn'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="dynamic_load_rating_cdyn_kn" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['dynamic_load_rating_cdyn_kn'] || []} selectedFilters={filters['dynamic_load_rating_cdyn_kn'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="fatigue_load_limit_pu_kn" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
+                                        <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -998,10 +1005,15 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Статична вантажо-підйомність Co (кН)">{row['static_load_rating_co_kn'] || '-'}</td>
                                             <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row['dynamic_load_rating_cdyn_kn'] || '-'}</td>
                                             <td data-label="Граничне навантаження втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
+                                            <td className={styles.actionCol}>
+                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || row['bearing_designation'] || '')}>
+                                                    {t('block2.btn_request')}
+                                                </button>
+                                            </td>
                                         </tr>
                                     ))}
                                     {filteredT3.length === 0 && (
-                                        <tr><td colSpan={14} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -1030,6 +1042,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <Th col="threaded_hole_size_t" label="Різьбовий отвір T" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['threaded_hole_size_t'] || []} selectedFilters={filters['threaded_hole_size_t'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="hole_diameter_h_mm" label="Діаметр отвору H (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['hole_diameter_h_mm'] || []} selectedFilters={filters['hole_diameter_h_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="mass_kg" label="Маса (кг)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
+                                        <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1051,10 +1064,15 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Різьбовий отвір T">{row['threaded_hole_size_t'] || '-'}</td>
                                             <td data-label="Діаметр отвору H (мм)">{row['hole_diameter_h_mm'] || '-'}</td>
                                             <td data-label="Маса (кг)">{row['mass_kg'] || '-'}</td>
+                                            <td className={styles.actionCol}>
+                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || row['bearing_designation'] || '')}>
+                                                    {t('block2.btn_request')}
+                                                </button>
+                                            </td>
                                         </tr>
                                     ))}
                                     {filteredT4.length === 0 && (
-                                        <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={17} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
@@ -1092,6 +1110,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         <Th col="static_load_rating_co_kn" label="Статична вантажо-підйомність Co (кН)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['static_load_rating_co_kn'] || []} selectedFilters={filters['static_load_rating_co_kn'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="dynamic_load_rating_cdyn_kn" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['dynamic_load_rating_cdyn_kn'] || []} selectedFilters={filters['dynamic_load_rating_cdyn_kn'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="fatigue_load_limit_pu_kn" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
+                                        <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1111,10 +1130,15 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                             <td data-label="Статична вантажо-підйомність Co (кН)">{row['static_load_rating_co_kn'] || '-'}</td>
                                             <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row['dynamic_load_rating_cdyn_kn'] || '-'}</td>
                                             <td data-label="Граничне навантаження втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
+                                            <td className={styles.actionCol}>
+                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || row['bearing_designation'] || '')}>
+                                                    {t('block2.btn_request')}
+                                                </button>
+                                            </td>
                                         </tr>
                                     ))}
                                     {filteredT5.length === 0 && (
-                                        <tr><td colSpan={14} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>
