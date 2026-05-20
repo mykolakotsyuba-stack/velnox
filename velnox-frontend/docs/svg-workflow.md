@@ -61,7 +61,13 @@ for m in re.finditer(r'<image([^>]+)>', content):
 
 **Правило:** `<image>` включати в bbox. Не виключати — інакше схема обріжеться по правому краю.
 
-#### Пастка 3 — aspect ratio після розрахунку
+#### Пастка 3 — рамка документа CorelDRAW отруює y_min
+
+CorelDRAW додає path-рамку всього документа (зазвичай 1 точка на y=0 або поза межами малюнка). Path-bbox знаходить цю точку і повертає y_min=0 — тоді viewBox включає весь порожній простір над малюнком, і схема "падає" в низ панелі.
+
+**Рішення:** y_min визначати з текстових міток (вони завжди на малюнку, ніколи на рамці). Path-bbox використовувати тільки для x і для перевірки.
+
+#### Пастка 4 — aspect ratio після розрахунку
 
 Після отримання viewBox:
 ```python
@@ -73,54 +79,91 @@ print(f"Aspect ratio: {aspect:.2f}")
 
 ---
 
-### Правильний скрипт bbox (без трансформованих груп; `<image>` включається)
+### Правильний скрипт bbox (текстові мітки = anchor для y; `<image>` включається)
+
+**Принцип:** y_min береться з найвищої текстової мітки (не з path bbox) — це захищає від рамки документа CorelDRAW.
 
 ```python
-import re
+import re, xml.etree.ElementTree as ET
 
-with open('schema.svg', 'r', encoding='utf-8') as f:
+svg_path = 'schema.svg'
+with open(svg_path, 'r', encoding='utf-8') as f:
     content = f.read()
 
-# Видаляємо трансформовані групи (локальні координати) і degenerate M0 0z path
-content_clean = re.sub(r'<g[^>]*transform="matrix[^"]*"[^>]*>.*?</g>', '', content, flags=re.DOTALL)
-content_clean = re.sub(r'<path[^>]*d="M0\s+0\s*z?"[^>]*/>', '', content_clean)
+tree = ET.parse(svg_path)
+root = tree.getroot()
 
-xs, ys = [], []
+# ── 1. y range з текстових міток (захист від рамки документа) ──
+text_ys = []
+for elem in root.iter():
+    tag = elem.tag.split('}')[-1] if '}' in elem.tag else elem.tag
+    if tag == 'text':
+        txt = ''.join(elem.itertext()).strip()
+        if txt:  # будь-який текст = частина малюнка
+            y = elem.get('y')
+            if y:
+                try: text_ys.append(float(y))
+                except: pass
 
-for pts in re.findall(r'points="([^"]+)"', content_clean):
-    for p in pts.strip().split():
-        if ',' in p:
-            x, y = p.split(',')
-            try: xs.append(float(x)); ys.append(float(y))
-            except: pass
+text_y_min = min(text_ys)
+text_y_max = max(text_ys)
+# Робоча y-зона: від найвищого тексту (мінус відступ) до кінця
+y_zone_min = text_y_min - 80
+y_zone_max = text_y_max + 80
 
-for m in re.finditer(r'<line[^>]+>', content_clean):
-    tag = m.group()
-    for attr, lst in [('x1',xs),('x2',xs),('y1',ys),('y2',ys)]:
-        v = re.search(rf'{attr}="([^"]+)"', tag)
-        if v:
-            try: lst.append(float(v.group(1)))
-            except: pass
+# ── 2. x range з paths у робочій y-зоні ──
+def parse_path_pts(d):
+    tokens = re.findall(r'[MmLlHhVvCcSsQqTtAaZz]|[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?', d)
+    cx, cy, pts = 0.0, 0.0, []
+    i = 0; cmd = 'M'
+    while i < len(tokens):
+        t = tokens[i]
+        if re.match(r'[MmLlHhVvCcSsQqTtAaZz]', t):
+            cmd = t; i += 1; continue
+        try:
+            if cmd in ('M','L','C','S','Q','T'):
+                x,y=float(tokens[i]),float(tokens[i+1]); pts.append((x,y)); cx,cy=x,y; i+=2
+                if cmd=='C': i+=4
+                elif cmd in ('S','Q'): i+=2
+            elif cmd in ('m','l','c','s','q','t'):
+                x,y=cx+float(tokens[i]),cy+float(tokens[i+1]); pts.append((x,y)); cx,cy=x,y; i+=2
+                if cmd=='c': i+=4
+                elif cmd in ('s','q'): i+=2
+            elif cmd=='H': cx=float(tokens[i]); pts.append((cx,cy)); i+=1
+            elif cmd=='h': cx+=float(tokens[i]); pts.append((cx,cy)); i+=1
+            elif cmd=='V': cy=float(tokens[i]); pts.append((cx,cy)); i+=1
+            elif cmd=='v': cy+=float(tokens[i]); pts.append((cx,cy)); i+=1
+            elif cmd in ('A','a'):
+                if cmd=='A': x,y=float(tokens[i+5]),float(tokens[i+6])
+                else: x,y=cx+float(tokens[i+5]),cy+float(tokens[i+6])
+                pts.append((x,y)); cx,cy=x,y; i+=7
+            else: i+=1
+        except: i+=1
+    return pts
 
-for m in re.finditer(r'<text([^>]+)>', content_clean):
-    tag = m.group(1)
-    for attr, lst in [('x',xs),('y',ys)]:
-        v = re.search(rf'\b{attr}="([^"]+)"', tag)
-        if v:
-            try: lst.append(float(v.group(1)))
-            except: pass
+xs_filtered = []
+for elem in root.iter():
+    tag = elem.tag.split('}')[-1] if '}' in elem.tag else elem.tag
+    if tag == 'path':
+        d = elem.get('d','')
+        if d:
+            for x,y in parse_path_pts(d):
+                if y_zone_min <= y <= y_zone_max:
+                    xs_filtered.append(x)
+    elif tag == 'image':  # embedded photo — включаємо в x range
+        x = float(elem.get('x', 0))
+        w = float(elem.get('width', 0))
+        xs_filtered.extend([x, x+w])
 
-margin = 0.04
-rx = max(xs)-min(xs); ry = max(ys)-min(ys)
-mx = rx*margin; my = ry*margin
-x0 = min(xs)-mx; y0 = min(ys)-my
-w = rx+2*mx; h = ry+2*my
+x0 = min(xs_filtered) - 30 if xs_filtered else 0
+x1 = max(xs_filtered) + 30 if xs_filtered else 2000
+w  = x1 - x0
+h  = y_zone_max - y_zone_min
 
-print(f'viewBox: "{x0:.0f} {y0:.0f} {w:.0f} {h:.0f}"')
-print(f'aspect:  {w/h:.2f}  (норма: 1.2–2.0)')
+print(f'viewBox: "{x0:.0f} {y_zone_min:.0f} {w:.0f} {h:.0f}"')
+print(f'aspect:  {w/h:.2f}  (норма: 1.2–3.0)')
+print(f'text y range: {text_y_min:.0f} – {text_y_max:.0f}')
 ```
-
-**Поточний BUQ bearings**: `viewBox="7000 -117700 13600 7400"`, aspect-ratio `13600/7400`
 
 ---
 
