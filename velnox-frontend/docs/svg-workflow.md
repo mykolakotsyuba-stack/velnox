@@ -48,37 +48,32 @@ for t in g_transforms: print(f"  {t}")
 
 #### Пастка 2 — `<image>` елемент (3D фото) розтягує viewBox
 
-CorelDRAW може вставити 3D фотку як `<image x=... y=... width=... height=...>` в SVG.  
-Якщо фото знаходиться **праворуч** від креслення (не перекривається по x), воно додає велику ширину → aspect ratio > 2.0 → креслення рендериться маленьким у широкому вікні.
+CorelDRAW вставляє 3D фото як `<image x=... y=... width=... height=...>` в SVG. Це **частина креслення** — її треба показувати, тому `<image>` **включається** в bbox за замовчуванням.
 
-**Перевірка:**
+**Перевір наявність:**
 ```python
 for m in re.finditer(r'<image([^>]+)>', content):
     tag = m.group(1)
     x = re.search(r'\bx="([^"]+)"', tag)
-    y = re.search(r'\by="([^"]+)"', tag)
     w = re.search(r'\bwidth="([^"]+)"', tag)
-    h = re.search(r'\bheight="([^"]+)"', tag)
-    print(f"image: x={x and x.group(1)} y={y and y.group(1)} w={w and w.group(1)} h={h and h.group(1)}")
+    print(f"image: x={x and x.group(1)} w={w and w.group(1)}")
 ```
 
-**Правило:** рахуй viewBox **без `<image>`**. Додавай image до viewBox тільки якщо воно перекривається з технічним кресленням по x (тобто не стирчить окремо праворуч).
+**Правило:** `<image>` включати в bbox. Не виключати — інакше схема обріжеться по правому краю.
 
-#### Пастка 3 — перевіряй aspect ratio після розрахунку
+#### Пастка 3 — aspect ratio після розрахунку
 
 Після отримання viewBox:
 ```python
 vb_parts = viewbox_string.split()
 aspect = float(vb_parts[2]) / float(vb_parts[3])
 print(f"Aspect ratio: {aspect:.2f}")
-if aspect > 2.0:
-    print("⚠️  ШИРОКО: креслення буде маленьким у панелі. Перевір пастку 2 (image елемент).")
 ```
-**Нормальний діапазон:** 1.2 – 2.0. Якщо більше — щось тягне viewBox вбік.
+**Нормальний діапазон:** 1.2 – 3.0. Якщо `<image>` є в схемі — aspect може бути 2.5–3.0, це нормально.
 
 ---
 
-### Правильний скрипт bbox (без трансформованих груп і image)
+### Правильний скрипт bbox (без трансформованих груп; `<image>` включається)
 
 ```python
 import re
@@ -86,11 +81,9 @@ import re
 with open('schema.svg', 'r', encoding='utf-8') as f:
     content = f.read()
 
-# Видаляємо трансформовані групи (локальні координати)
+# Видаляємо трансформовані групи (локальні координати) і degenerate M0 0z path
 content_clean = re.sub(r'<g[^>]*transform="matrix[^"]*"[^>]*>.*?</g>', '', content, flags=re.DOTALL)
-# Видаляємо image елементи
-content_clean = re.sub(r'<image[^>]*/>', '', content_clean)
-content_clean = re.sub(r'<image[^>]*>.*?</image>', '', content_clean, flags=re.DOTALL)
+content_clean = re.sub(r'<path[^>]*d="M0\s+0\s*z?"[^>]*/>', '', content_clean)
 
 xs, ys = [], []
 
