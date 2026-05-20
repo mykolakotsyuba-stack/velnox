@@ -786,5 +786,183 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // =========================================================
+        // 10. SPEC DEFINITIONS — new for bearings-t4
+        // =========================================================
+        $newSpecs = [
+            ['key' => 'd1_mm',  'svg_label' => 'd1', 'sort_order' => 33],
+            ['key' => 'J1_mm',  'svg_label' => 'J1', 'sort_order' => 34],
+            ['key' => 'J2_mm',  'svg_label' => 'J2', 'sort_order' => 35],
+            ['key' => 'A3_mm',  'svg_label' => 'A3', 'sort_order' => 36],
+            ['key' => 'T_size', 'svg_label' => null,  'sort_order' => 37],
+            ['key' => 'H_mm',   'svg_label' => 'H',  'sort_order' => 38],
+        ];
+        foreach ($newSpecs as $spec) {
+            DB::table('spec_definitions')->updateOrInsert(['key' => $spec['key']], $spec);
+        }
+
+        // =========================================================
+        // 11. SPEC TRANSLATIONS — new + update L1_mm / L2_mm
+        // =========================================================
+        $t4SpecTranslations = [
+            'd1_mm' => [
+                'uk' => ['label' => 'Діаметр центрування d1 (мм)',           'unit' => 'мм'],
+                'en' => ['label' => 'Centering diameter d1 (mm)',             'unit' => 'mm'],
+                'pl' => ['label' => 'Średnica centrowania d1 (mm)',           'unit' => 'mm'],
+            ],
+            'J1_mm' => [
+                'uk' => ['label' => 'Відстань між отворами J1 (мм)',          'unit' => 'мм'],
+                'en' => ['label' => 'Distance between holes J1 (mm)',         'unit' => 'mm'],
+                'pl' => ['label' => 'Rozstaw otworów J1 (mm)',                'unit' => 'mm'],
+            ],
+            'J2_mm' => [
+                'uk' => ['label' => 'Відстань між отворами J2 (мм)',          'unit' => 'мм'],
+                'en' => ['label' => 'Distance between holes J2 (mm)',         'unit' => 'mm'],
+                'pl' => ['label' => 'Rozstaw otworów J2 (mm)',                'unit' => 'mm'],
+            ],
+            'A3_mm' => [
+                'uk' => ['label' => 'Висота діаметру центрування A3 (мм)',    'unit' => 'мм'],
+                'en' => ['label' => 'Centering diameter height A3 (mm)',      'unit' => 'mm'],
+                'pl' => ['label' => 'Wysokość średnicy centrowania A3 (mm)',  'unit' => 'mm'],
+            ],
+            'T_size' => [
+                'uk' => ['label' => 'Розмір різьби T',                        'unit' => ''],
+                'en' => ['label' => 'Threaded hole size T',                   'unit' => ''],
+                'pl' => ['label' => 'Rozmiar gwintu T',                       'unit' => ''],
+            ],
+            'H_mm' => [
+                'uk' => ['label' => 'Отвір H (мм)',                           'unit' => 'мм'],
+                'en' => ['label' => 'Hole diameter H (mm)',                   'unit' => 'mm'],
+                'pl' => ['label' => 'Średnica otworu H (mm)',                 'unit' => 'mm'],
+            ],
+            // Update existing L1_mm / L2_mm to correct labels for T4
+            'L1_mm' => [
+                'uk' => ['label' => 'Загальна ширина корпусу L1 (мм)',        'unit' => 'мм'],
+                'en' => ['label' => 'Housing overall width L1 (mm)',          'unit' => 'mm'],
+                'pl' => ['label' => 'Całkowita szerokość obudowy L1 (mm)',    'unit' => 'mm'],
+            ],
+            'L2_mm' => [
+                'uk' => ['label' => 'Загальна ширина корпусу L2 (мм)',        'unit' => 'мм'],
+                'en' => ['label' => 'Housing overall width L2 (mm)',          'unit' => 'mm'],
+                'pl' => ['label' => 'Całkowita szerokość obudowy L2 (mm)',    'unit' => 'mm'],
+            ],
+        ];
+
+        foreach ($t4SpecTranslations as $key => $locales) {
+            $sid = $specId($key);
+            if (!$sid) continue;
+            foreach ($locales as $locale => $fields) {
+                foreach ($fields as $field => $value) {
+                    DB::table('translations')->updateOrInsert(
+                        ['entity_type' => 'spec_definitions', 'entity_id' => $sid, 'locale' => $locale, 'field' => $field],
+                        ['value' => $value]
+                    );
+                }
+            }
+        }
+
+        // =========================================================
+        // 12. PRODUCT TABLE: bearings-t4 (BUCR-SG-309-S2)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'bearings-t4'],
+            [
+                'slug'             => 'bearings-t4',
+                'category_id'      => $bearingsCatId,
+                'spec_columns'     => json_encode(['d_mm','d1_mm','L1_mm','J1_mm','L2_mm','J2_mm','A_mm','A1_mm','A2_mm','A3_mm','T_size','H_mm','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'highlight_config' => json_encode(new \stdClass()),
+                'schema_viewbox'   => null,
+                'sort_order'       => 4,
+            ]
+        );
+        $t4 = $tableId('bearings-t4');
+
+        foreach (['uk' => 'BUCR-SG-309-S2 — Таблиця 4', 'en' => 'BUCR-SG-309-S2 — Table 4', 'pl' => 'BUCR-SG-309-S2 — Tabela 4'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $t4, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        // =========================================================
+        // 13. PRODUCTS — bearings-t4
+        // =========================================================
+        $t4Products = [
+            [
+                'slug'    => 'bucr-sg-309-s2',
+                'article' => 'BUCR-SG-309-S2',
+                'specs'   => [
+                    'd_mm'    => '45',
+                    'd1_mm'   => '74',
+                    'L1_mm'   => '152',
+                    'J1_mm'   => '120',
+                    'L2_mm'   => '150',
+                    'J2_mm'   => '120',
+                    'A_mm'    => '66.9',
+                    'A1_mm'   => '18',
+                    'A2_mm'   => '12',
+                    'A3_mm'   => '7',
+                    'T_size'  => '4хM12x1.25',
+                    'H_mm'    => '4x12.3',
+                    'mass_kg' => '5.6',
+                    'cdyn_kn' => '52.7',
+                    'co_kn'   => '31.5',
+                    'pu_kn'   => '1.32',
+                ],
+                'cross_refs' => [
+                    ['brand' => 'CT-AGRI', 'value' => 'M43400468',                        'type' => 'bearing'],
+                    ['brand' => '',         'value' => 'M43400468 H.60 S.PAR',             'type' => 'bearing'],
+                    ['brand' => 'Ri.Ma',    'value' => 'M43400468 Bearing unit PN 0102',   'type' => 'bearing'],
+                    ['brand' => 'FKL',      'value' => 'ZGKU 309 2S',                      'type' => 'bearing'],
+                    ['brand' => 'RBF',      'value' => 'PN00102',                          'type' => 'bearing'],
+                    ['brand' => 'GASPARDO', 'value' => '17014180',                         'type' => 'application'],
+                    ['brand' => 'GASPARDO', 'value' => 'M23400435 — Bearing housing section', 'type' => 'application'],
+                    ['brand' => 'GASPARDO', 'value' => 'M23400436 — Bearing housing section', 'type' => 'application'],
+                    ['brand' => 'GASPARDO', 'value' => 'M43400413',                        'type' => 'application'],
+                    ['brand' => 'GASPARDO', 'value' => 'M43400468',                        'type' => 'application'],
+                    ['brand' => 'GASPARDO', 'value' => 'M43400468R',                       'type' => 'application'],
+                    ['brand' => 'GASPARDO', 'value' => 'R17015300',                        'type' => 'application'],
+                    ['brand' => 'GASPARDO', 'value' => 'M43400468 Bearing Unit',           'type' => 'application'],
+                ],
+                'name_uk' => 'BUCR-SG-309-S2',
+                'name_en' => 'BUCR-SG-309-S2',
+                'name_pl' => 'BUCR-SG-309-S2',
+            ],
+        ];
+
+        foreach ($t4Products as $p) {
+            DB::table('products')->updateOrInsert(
+                ['slug' => $p['slug']],
+                ['slug' => $p['slug'], 'article' => $p['article'], 'product_table_id' => $t4]
+            );
+            $productId = DB::table('products')->where('slug', $p['slug'])->value('id');
+
+            foreach ($p['specs'] as $key => $value) {
+                $sid = $specId($key);
+                if (!$sid) continue;
+                DB::table('product_specs')->updateOrInsert(
+                    ['product_id' => $productId, 'spec_id' => $sid],
+                    ['value' => $value]
+                );
+            }
+
+            DB::table('product_cross_refs')->where('product_id', $productId)->delete();
+            foreach ($p['cross_refs'] as $ref) {
+                DB::table('product_cross_refs')->insert([
+                    'product_id' => $productId,
+                    'brand'      => $ref['brand'],
+                    'value'      => $ref['value'],
+                    'type'       => $ref['type'],
+                ]);
+            }
+
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
+                    ['value' => $p["name_{$locale}"]]
+                );
+            }
+        }
+
     }
 }
