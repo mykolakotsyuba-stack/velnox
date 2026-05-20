@@ -570,18 +570,24 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
                         const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
                         return {
-                            part_number:                    p.article,
-                            has_model_3d:                   p.has_model_3d ?? false,
-                            bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
-                            brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
-                            cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
-                            bore_diameter_d_mm:             p.specs.d_mm    ?? null,
-                            outer_diameter_d_mm:            p.specs.D_mm    ?? null,
-                            length_l1_mm:                   p.specs.L1_mm   ?? null,
-                            length_l2_mm:                   p.specs.L2_mm   ?? null,
-                            distance_between_holes_j_mm:    p.specs.J_mm    ?? null,
-                            overall_width_a_mm:             p.specs.A_mm    ?? null,
-                            mass_kg:                        p.specs.mass_kg ?? null,
+                            part_number:                        p.article,
+                            has_model_3d:                       p.has_model_3d ?? false,
+                            bearing_designation:                bearingRefs.map((r: any) => r.value).join('\n'),
+                            brand_name:                         bearingRefs.map((r: any) => r.brand).join('\n'),
+                            cross_reference:                    appRefs.map((r: any) => r.value).join('\n'),
+                            bore_diameter_d_mm:                 p.specs.d_mm    ?? null,
+                            centering_diameter_d1_mm:           p.specs.d1_mm   ?? null,
+                            housing_overall_width_l1_mm:        p.specs.L1_mm   ?? null,
+                            distance_between_holes_j1_mm:       p.specs.J1_mm   ?? null,
+                            housing_overall_width_l2_mm:        p.specs.L2_mm   ?? null,
+                            distance_between_holes_j2_mm:       p.specs.J2_mm   ?? null,
+                            overall_width_a_mm:                 p.specs.A_mm    ?? null,
+                            flange_width_a1_mm:                 p.specs.A1_mm   ?? null,
+                            flange_width_a2_mm:                 p.specs.A2_mm   ?? null,
+                            centering_diameter_height_a3_mm:    p.specs.A3_mm   ?? null,
+                            threaded_hole_size_t:               p.specs.T_size  ?? null,
+                            hole_diameter_h_mm:                 p.specs.H_mm    ?? null,
+                            mass_kg:                            p.specs.mass_kg ?? null,
                         };
                     }));
                 }
