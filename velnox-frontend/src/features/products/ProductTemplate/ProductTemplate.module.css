@@ -10,16 +10,10 @@
     }
 }
 
-@keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+/* opacity-only — для position:sticky елементів (transform конфліктує зі sticky) */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
 @keyframes fadeInRight {
@@ -109,27 +103,29 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    opacity: 0;
-    animation: fadeInLeft 0.7s ease-out 0.2s forwards;
+    /* fadeIn (opacity only) — transform конфліктує з position:sticky і дає підгальмування */
+    animation: fadeIn 0.7s ease-out 0.2s both;
 }
 
 .summary {
     display: flex;
     flex-direction: column;
     gap: 32px;
-    opacity: 0;
-    animation: fadeInRight 0.7s ease-out 0.3s forwards;
+    will-change: transform, opacity;
+    animation: fadeInRight 0.7s ease-out 0.3s both;
 }
 
 .animateOnScroll {
     opacity: 0;
     transform: translateY(30px);
+    will-change: transform, opacity;
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .inView {
     opacity: 1 !important;
     transform: none !important;
+    will-change: auto;
 }
 
 .productDesc {
