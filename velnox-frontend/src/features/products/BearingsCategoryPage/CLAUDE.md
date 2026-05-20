@@ -98,30 +98,48 @@
 
 ## Таблиця 4 — BUCR-SG-309-S2 (T4)
 
-**Дані:** API → рядки з рядковими ключами. Ключ Brand: `Brand \\nname` (подвійний escape!)  
+**Дані:** API `/v1/product-tables/bearings-t4` → `p.specs.*` (short snake_case keys) + cross_refs  
 **Компонент:** `sortedT4`, `filteredT4`, `tog4`, `sc4`, `sd4`
 
-| # | col (ключ API) | label | hasFilter |
-|---|---|---|---|
-| 1 | `Part Number` | Part Number | ні |
-| 2 | `Bearing designation` | Bearing Designation | ні |
-| 3 | `Brand \\nname` | Brand | так |
-| 4 | `Cross-Refference` | Cross-Reference | ні |
-| 5 | `Bore diameter d (mm)` | Bore d (mm) | так |
-| 6 | `Centering diameter d1 (mm)` | d1 (mm) | так |
-| 7 | `Housing overall width L1 (mm)` | L1 (mm) | так |
-| 8 | `Distance between the holes J1 (mm)` | J1 (mm) | так |
-| 9 | `Housing overall width L2 (mm)` | L2 (mm) | так |
-| 10 | `Distance between the holes J2 (mm)` | J2 (mm) | так |
-| 11 | `Overall width A (mm)` | A (mm) | так |
-| 12 | `Flange width A1 (mm)` | A1 (mm) | так |
-| 13 | `Flange width A2 (mm)` | A2 (mm) | так |
-| 14 | `Centering diameter height A3 (mm)` | A3 (mm) | так |
-| 15 | `Threaded hole size T` | T | так |
-| 16 | `Hole diameter H (mm)` | H (mm) | так |
-| 17 | `Mass kg` | Mass (kg) | так |
+**setTable4Data маппінг (зафіксовано — не змінювати без явної вказівки):**
+- `part_number` ← `p.article`
+- `bearing_designation` ← `bearingRefs.map(r.value).join('\n')`
+- `brand_name` ← `bearingRefs.map(r.brand).join('\n')`
+- `cross_reference` ← `appRefs.map(r.value).join('\n')`
+- `bore_diameter_d_mm` ← `p.specs.d_mm`
+- `centering_diameter_d1_mm` ← `p.specs.d1_mm`
+- `housing_overall_width_l1_mm` ← `p.specs.L1_mm`
+- `distance_between_holes_j1_mm` ← `p.specs.J1_mm`
+- `housing_overall_width_l2_mm` ← `p.specs.L2_mm`
+- `distance_between_holes_j2_mm` ← `p.specs.J2_mm`
+- `overall_width_a_mm` ← `p.specs.A_mm`
+- `flange_width_a1_mm` ← `p.specs.A1_mm`
+- `flange_width_a2_mm` ← `p.specs.A2_mm`
+- `centering_diameter_height_a3_mm` ← `p.specs.A3_mm`
+- `threaded_hole_size_t` ← `p.specs.T_size`
+- `hole_diameter_h_mm` ← `p.specs.H_mm`
+- `mass_kg` ← `p.specs.mass_kg`
 
-**Немає actionCol** у T4.
+| # | col (ключ рядка) | label (УКР) | hasFilter |
+|---|---|---|---|
+| 1 | `part_number` | Позначення Velnox | ні |
+| 2 | `bearing_designation` | Позначення підшипника | ні |
+| 3 | `brand_name` | Бренд | так |
+| 4 | `cross_reference` | Перехресні аналоги | ні |
+| 5 | `bore_diameter_d_mm` | Діаметр отвору d (мм) | так |
+| 6 | `centering_diameter_d1_mm` | Центруючий діаметр d1 (мм) | так |
+| 7 | `housing_overall_width_l1_mm` | Загальна ширина корпусу L1 (мм) | так |
+| 8 | `distance_between_holes_j1_mm` | Відстань між отворами J1 (мм) | так |
+| 9 | `housing_overall_width_l2_mm` | Загальна ширина корпусу L2 (мм) | так |
+| 10 | `distance_between_holes_j2_mm` | Відстань між отворами J2 (мм) | так |
+| 11 | `overall_width_a_mm` | Загальна ширина A (мм) | так |
+| 12 | `flange_width_a1_mm` | Ширина фланця A1 (мм) | так |
+| 13 | `flange_width_a2_mm` | Ширина фланця A2 (мм) | так |
+| 14 | `centering_diameter_height_a3_mm` | Висота центруючого діаметра A3 (мм) | так |
+| 15 | `threaded_hole_size_t` | Різьбовий отвір T | так |
+| 16 | `hole_diameter_h_mm` | Діаметр отвору H (мм) | так |
+| 17 | `mass_kg` | Маса (кг) | так |
+| 18 | *(actionCol — кнопка Запит)* | — | — |
 
 ---
 
