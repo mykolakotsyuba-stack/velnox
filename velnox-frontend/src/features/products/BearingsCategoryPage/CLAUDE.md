@@ -10,7 +10,7 @@
 
 Кожна таблиця, що має `part_number` (Позначення Velnox), **ОБОВ'ЯЗКОВО** повинна мати:
 
-1. **Гіперпосилання** на картку товару:
+1. **Гіперпосилання** на картку товару — **ЗАВЖДИ** якщо є `part_number`:
 ```tsx
 const slugN = articleToSlug(row['part_number'] || '');
 <td data-label="Позначення Velnox" className={styles.partNumCell}>
@@ -21,11 +21,22 @@ const slugN = articleToSlug(row['part_number'] || '');
 </td>
 ```
 
-2. **Позначка 3D** (`badge3d`) всередині Link — якщо `row['has_model_3d'] === true`
+2. **Позначка 3D** (`badge3d`) — **ТІЛЬКИ якщо** `row['has_model_3d'] === true`
+   - Умова: у `product_assets` є запис `entity_type='product', type='model_3d'` для цього продукту
+   - API повертає `has_model_3d: true` лише якщо такий запис є в БД
+   - **Не всі продукти мають 3D модель** — без запису в БД badge не показується (це правильна поведінка)
 
 3. **`has_model_3d`** має бути у `setTableNData` маппінгу: `has_model_3d: p.has_model_3d ?? false`
 
-**Why:** без Link — користувач не може перейти на картку. Без badge3d — не видно що є 3D модель. `has_model_3d` приходить з API (`product_assets` type='model_3d' → `has_model_3d: true`).
+4. **Як перевірити чи є 3D:** `ls public/models/{article-slug}.glb` — якщо файл є → додати в сідер:
+```php
+DB::table('product_assets')->updateOrInsert(
+    ['entity_type' => 'product', 'entity_id' => $productId, 'type' => 'model_3d'],
+    ['path' => '/velnox/models/{ARTICLE-SLUG}.glb', 'sort_order' => 0]
+);
+```
+
+**Why:** без Link — користувач не може перейти на картку. Badge3D рендериться тільки якщо `has_model_3d` true — умова перевіряється на рівні API через `product_assets`, не хардкодиться.
 
 ---
 Правила нижче — джерело правди. Вони мають пріоритет над будь-якими "покращеннями" або "вирівнюванням з іншими сторінками".
