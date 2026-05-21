@@ -401,8 +401,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         
         return (
             <th className={styles.sortableTh} style={{ position: 'relative' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => toggle(col)}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '4px' }}>
+                    <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2px' }} onClick={() => toggle(col)}>
                         {label} <SortIcon dir={sortCol === col ? sortDir : null} />
                     </div>
                     {hasFilter && (
