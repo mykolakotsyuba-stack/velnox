@@ -282,7 +282,7 @@
   },
   "categories": {
     "bearings": "Bearing Units",
-    "hubs": "Bearing Hubs",
+    "hubs": "Agricultural Hub Units",
     "agro": "Special Agro Bearings & Engineering Solutions",
     "kit": "Assembly KIT Solutions",
     "custom": "Custom OEM Solutions"
@@ -541,7 +541,7 @@
   },
   "hubsPage": {
     "hero": {
-      "title": "VELNOX Hubs",
+      "title": "Agricultural Hub Units VELNOX",
       "subtitle": "VELNOX hubs are designed to replace original units from leading European and American agricultural machinery manufacturers. The focus is on a multi-level sealing system and stable operation under high loads.",
       "desc": ""
     },

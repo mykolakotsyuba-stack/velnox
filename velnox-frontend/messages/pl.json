@@ -282,7 +282,7 @@
   },
   "categories": {
     "bearings": "Węzły łożyskowe",
-    "hubs": "Piasty łożyskowe",
+    "hubs": "Rolnicze węzły piasty",
     "agro": "Specjalne łożyska agro i rozwiązania inżynieryjne",
     "kit": "Kompleksowe zestawy montażowe KIT",
     "custom": "Rozwiązania OEM na zamówienie"
@@ -484,7 +484,7 @@
   },
   "hubsPage": {
     "hero": {
-      "title": "Piasty VELNOX",
+      "title": "Rolnicze węzły piasty VELNOX",
       "subtitle": "Piasty VELNOX zostały zaprojektowane jako zamienniki oryginalnych jednostek wiodących europejskich i amerykańskich producentów maszyn rolniczych. Główny nacisk położono na wielopoziomowy system uszczelnień i stabilną pracę pod wysokim obciążeniem.",
       "desc": ""
     },
