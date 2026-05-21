@@ -1168,5 +1168,118 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // =========================================================
+        // 16. PRODUCT TABLE: hubs-t1
+        // =========================================================
+        $hubsCatId = $catId('hubs');
+
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'hubs-t1'],
+            [
+                'slug'             => 'hubs-t1',
+                'category_id'      => $hubsCatId,
+                'spec_columns'     => json_encode(['hub_J_mm', 'hub_D_mm', 'hub_D1_mm', 'hub_d_mm', 'hub_C_mm', 'hub_hole_thread', 'hub_G', 'hub_L_mm', 'hub_L1_mm', 'hub_F_mm', 'mass_kg', 'cdyn_kn', 'co_kn', 'pu_kn']),
+                'highlight_config' => null,
+                'schema_viewbox'   => null,
+                'sort_order'       => 1,
+            ]
+        );
+
+        $ht1 = $tableId('hubs-t1');
+
+        foreach (['uk' => 'Ступичний вузол HORSCH — Таблиця 1', 'en' => 'Hub Unit HORSCH — Table 1', 'pl' => 'Węzeł piasty HORSCH — Tabela 1'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $ht1, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        $ht1Products = [
+            [
+                'article' => '28071300 VX',
+                'slug'    => '28071300-vx',
+                'specs'   => [
+                    'hub_J_mm'        => '106',
+                    'hub_D_mm'        => '127.3',
+                    'hub_D1_mm'       => '64.2',
+                    'hub_d_mm'        => '55.7',
+                    'hub_C_mm'        => '38',
+                    'hub_hole_thread' => 'M12',
+                    'hub_G'           => '2xM20',
+                    'hub_L_mm'        => '106.5',
+                    'hub_L1_mm'       => '2',
+                    'hub_F_mm'        => '25',
+                    'mass_kg'         => '3.81',
+                    'cdyn_kn'         => '48.8',
+                    'co_kn'           => '35.3',
+                    'pu_kn'           => '1.483',
+                ],
+                'cross_refs' => [
+                    ['brand' => 'HORSCH', 'value' => '28071300', 'type' => 'application'],
+                    ['brand' => 'HORSCH', 'value' => '28077800', 'type' => 'application'],
+                    ['brand' => 'HORSCH', 'value' => '28077900', 'type' => 'application'],
+                    ['brand' => 'HORSCH', 'value' => '28085600', 'type' => 'application'],
+                    ['brand' => '',       'value' => 'PN60041',  'type' => 'application'],
+                ],
+                'name_uk'       => '28071300 VX',
+                'name_en'       => '28071300 VX',
+                'name_pl'       => '28071300 VX',
+                'desc_uk'       => 'Ступичний вузол у круглому фланцевому корпусі для ґрунтообробних машин HORSCH Focus / Joker з діаметром вала d = 55.7 мм та зовнішнім діаметром корпусу D = 127.3 мм; монтажний діаметр фланця J = 106 мм під кріплення M12, відстань між отворами C = 38 мм. Загальна довжина L = 106.5 мм, два мастильних ніпелі G 2×M20, динамічна вантажопідйомність Cdyn = 48.8 кН, статична Co = 35.3 кН, маса 3.81 кг. Захисна система — двокромкове контактне ущільнення з боку польового диска у поєднанні з металевим відбивачем бруду на фронтальній стороні, розраховане на роботу в умовах підвищеного абразивного та ударного навантаження. Прямий аналог HORSCH 28071300, 28077800, 28077900, 28085600 та PN60041; встановлюється на дискові сошники та диски культиваторів HORSCH серій Focus та Joker.',
+                'meta_title_uk' => 'VELNOX 28071300 VX — ступичний вузол HORSCH d55.7, Focus/Joker',
+                'meta_desc_uk'  => 'Ступичний вузол VELNOX 28071300 VX для HORSCH, d=55.7 мм, D=127.3 мм, Cdyn 48.8 кН. Аналог HORSCH 28071300, 28077800, 28085600, PN60041.',
+                'desc_en'       => 'Hub bearing unit in a round flanged housing for HORSCH Focus / Joker tillage equipment with shaft bore d = 55.7 mm and housing outer diameter D = 127.3 mm; flange bolt circle J = 106 mm for M12 fastening, hole spacing C = 38 mm. Overall length L = 106.5 mm, two grease nipples G 2×M20, dynamic load rating Cdyn = 48.8 kN, static Co = 35.3 kN, weight 3.81 kg. Sealing system — double-lip contact seal on the field disc side combined with a metal dirt deflector on the front face, designed for high abrasive and impact loads in tillage conditions. Direct equivalent of HORSCH 28071300, 28077800, 28077900, 28085600 and PN60041; fitted to disc coulters and discs on HORSCH Focus and Joker series cultivators.',
+                'meta_title_en' => 'VELNOX 28071300 VX — HORSCH hub unit d55.7, Focus/Joker',
+                'meta_desc_en'  => 'VELNOX 28071300 VX hub unit for HORSCH, d=55.7 mm, D=127.3 mm, Cdyn 48.8 kN. Replaces HORSCH 28071300, 28077800, 28085600, PN60041.',
+                'desc_pl'       => 'Węzeł piasty w okrągłej obudowie kołnierzowej do maszyn uprawowych HORSCH Focus / Joker ze średnicą otworu wału d = 55,7 mm i zewnętrzną średnicą obudowy D = 127,3 mm; koło podziałowe kołnierza J = 106 mm pod mocowanie M12, odstęp między otworami C = 38 mm. Długość całkowita L = 106,5 mm, dwa smarowniki G 2×M20, nośność dynamiczna Cdyn = 48,8 kN, statyczna Co = 35,3 kN, masa 3,81 kg. System uszczelnienia — dwuwargowy uszczelniacz stykowy od strony talerza polnego w połączeniu z metalowym deflektorem brudu od strony czołowej, zaprojektowany do pracy w warunkach wysokich obciążeń ściernych i udarowych. Bezpośredni odpowiednik HORSCH 28071300, 28077800, 28077900, 28085600 i PN60041; montowany w talerzowych redlicach i talerzach kultywatorów HORSCH serii Focus i Joker.',
+                'meta_title_pl' => 'VELNOX 28071300 VX — węzeł piasty HORSCH d55.7, Focus/Joker',
+                'meta_desc_pl'  => 'Węzeł piasty VELNOX 28071300 VX do HORSCH, d=55,7 mm, D=127,3 mm, Cdyn 48,8 kN. Zamiennik HORSCH 28071300, 28077800, 28085600, PN60041.',
+            ],
+        ];
+
+        foreach ($ht1Products as $p) {
+            DB::table('products')->updateOrInsert(
+                ['slug' => $p['slug']],
+                ['slug' => $p['slug'], 'article' => $p['article'], 'product_table_id' => $ht1]
+            );
+            $productId = DB::table('products')->where('slug', $p['slug'])->value('id');
+
+            foreach ($p['specs'] as $key => $value) {
+                $sid = $specId($key);
+                if (!$sid) continue;
+                DB::table('product_specs')->updateOrInsert(
+                    ['product_id' => $productId, 'spec_id' => $sid],
+                    ['value' => $value]
+                );
+            }
+
+            DB::table('product_cross_refs')->where('product_id', $productId)->delete();
+            foreach ($p['cross_refs'] as $ref) {
+                DB::table('product_cross_refs')->insert([
+                    'product_id' => $productId,
+                    'brand'      => $ref['brand'],
+                    'value'      => $ref['value'],
+                    'type'       => $ref['type'],
+                ]);
+            }
+
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
+                    ['value' => $p["name_{$locale}"]]
+                );
+            }
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                foreach (['desc' => 'desc', 'meta_title' => 'meta_title', 'meta_desc' => 'meta_description'] as $suffix => $field) {
+                    $val = $p["{$suffix}_{$locale}"] ?? null;
+                    if ($val) {
+                        DB::table('translations')->updateOrInsert(
+                            ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => $field],
+                            ['value' => $val]
+                        );
+                    }
+                }
+            }
+        }
+
     }
 }
