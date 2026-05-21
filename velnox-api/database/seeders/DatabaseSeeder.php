@@ -1459,7 +1459,7 @@ class DatabaseSeeder extends Seeder
                     'hub_hole_thread' => [['label' => 'H/T', 'x' => 578,  'y' => 440]],
                     'hub_B_mm'        => [['label' => 'B',   'x' => 1342, 'y' => 881]],
                 ]),
-                'schema_viewbox'   => '90 320 1430 1170',
+                'schema_viewbox'   => '30 340 2420 1160',
                 'sort_order'       => 3,
             ]
         );
