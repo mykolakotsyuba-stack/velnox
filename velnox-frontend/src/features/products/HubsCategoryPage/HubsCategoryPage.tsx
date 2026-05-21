@@ -241,6 +241,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 /* Row keys = spec_definitions.key — matches buildTxCols above */
                 const mapRow = (p: any) => ({
                     part_number:     p.article,
+                    has_model_3d:    p.has_model_3d ?? false,
                     oem:             (p.cross_refs ?? []).map((r: any) => r.brand ? `${r.value} ${r.brand}` : r.value).join('\n'),
                     ...p.specs,      // spreads all spec values with their original DB keys
                 });
@@ -282,6 +283,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             return (
                 <Link href={`/${locale}/products/hubs/${slug}`} className={ptStyles.designationLink}>
                     {row.part_number}
+                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
                 </Link>
             );
         }

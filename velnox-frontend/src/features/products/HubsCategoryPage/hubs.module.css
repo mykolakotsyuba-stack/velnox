@@ -1409,6 +1409,19 @@
     display: block;
 }
 
+.badge3d {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 1px 5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #fff;
+    background: var(--color-accent);
+    border-radius: 3px;
+    vertical-align: middle;
+}
+
 /* Seal badge for table */
 .sealBadge {
     display: inline-block;

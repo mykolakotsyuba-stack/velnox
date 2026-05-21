@@ -1332,7 +1332,7 @@ class DatabaseSeeder extends Seeder
                 'category_id'      => $hubsCatId,
                 'spec_columns'     => json_encode(['hub_J_mm', 'hub_D_mm', 'hub_hole_thread', 'hub_D1_mm', 'hub_C_mm', 'hub_M_thread', 'hub_L_mm', 'hub_L1_mm', 'hub_E_mm', 'hub_F_mm', 'mass_kg', 'cdyn_kn', 'co_kn', 'pu_kn']),
                 'highlight_config' => json_encode([
-                    'hub_J_mm'        => [['label' => 'J',   'x' => 1251, 'y' => 1739]],
+                    'hub_J_mm'        => [['label' => 'J',   'x' => 497,  'y' => 2220]],
                     'hub_D_mm'        => [['label' => 'D',   'x' => 1600, 'y' => 2274]],
                     'hub_hole_thread' => [['label' => 'H/T', 'x' => 497,  'y' => 1825]],
                     'hub_M_thread'    => [['label' => 'M',   'x' => 878,  'y' => 2269]],
