@@ -1335,7 +1335,6 @@ class DatabaseSeeder extends Seeder
                     'hub_J_mm'        => [['label' => 'J',   'x' => 1251, 'y' => 1739]],
                     'hub_D_mm'        => [['label' => 'D',   'x' => 1600, 'y' => 2274]],
                     'hub_hole_thread' => [['label' => 'H/T', 'x' => 497,  'y' => 1825]],
-                    'hub_C_mm'        => [['label' => 'С',   'x' => 492,  'y' => 2360], ['label' => 'С', 'x' => 1402, 'y' => 2418]],
                     'hub_M_thread'    => [['label' => 'M',   'x' => 878,  'y' => 2269]],
                     'hub_L_mm'        => [['label' => 'L',   'x' => 1269, 'y' => 1815]],
                     'hub_L1_mm'       => [['label' => 'L1',  'x' => 1351, 'y' => 1885]],
