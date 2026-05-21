@@ -352,8 +352,7 @@
 .controls {
     position: absolute;
     bottom: 44px;
-    left: 50%;
-    transform: translateX(-50%);
+    right: max(24px, calc((100vw - 1400px) / 2 + 80px)); /* Align with container padding */
     z-index: 5;
     display: flex;
     align-items: center;
@@ -509,7 +508,7 @@
 
 @media (max-width: 600px) {
     .sliderInner {
-        padding: 24px 20px 96px;
+        padding: 24px 20px 140px;
     }
 
     .slideContent {
@@ -520,5 +519,11 @@
     .slideActions {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .controls {
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 90px; /* Above the scroll hint */
     }
 }

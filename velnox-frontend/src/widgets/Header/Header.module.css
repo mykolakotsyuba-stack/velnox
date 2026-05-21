@@ -338,6 +338,6 @@
   }
 
   .logo img {
-    height: 48px;
+    height: 58px; /* Increased from 48px */
   }
 }
