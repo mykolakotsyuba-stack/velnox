@@ -1036,7 +1036,7 @@ class DatabaseSeeder extends Seeder
                     'A2_mm' => [['label' => 'A2',  'x' => 870,  'y' => 2497]],
                     'B_mm'  => [['label' => 'B',   'x' => 945,  'y' => 2171]],
                 ]),
-                'schema_viewbox'   => '0 0 2360 2665',
+                'schema_viewbox'   => '101 1827 2262 836',
                 'sort_order'       => 5,
             ]
         );
