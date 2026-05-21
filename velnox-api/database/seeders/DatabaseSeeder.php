@@ -1673,10 +1673,21 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        // product_assets for agro-t1 (schema_png, schema_svg at table level)
+        DB::table('product_assets')->updateOrInsert(
+            ['entity_type' => 'product_table', 'entity_id' => $at1, 'type' => 'schema_png'],
+            ['path' => '/velnox/images/products/agro-t1/velnox-agro-t1-schema.webp', 'sort_order' => 0]
+        );
+        DB::table('product_assets')->updateOrInsert(
+            ['entity_type' => 'product_table', 'entity_id' => $at1, 'type' => 'schema_svg'],
+            ['path' => '/velnox/images/products/agro-t1/schema.svg', 'sort_order' => 0]
+        );
+
         $at1Products = [
             [
-                'article' => '1726206-2RS1 VX',
-                'slug'    => '1726206-2rs1-vx',
+                'article'  => '1726206-2RS1 VX',
+                'slug'     => '1726206-2rs1-vx',
+                'model_3d' => '1726206-2RS1.glb',
                 'specs'   => ['d_mm'=>'30','D_mm'=>'62','B_mm'=>'16','d1_mm'=>'39.7','r_12_mm'=>'1','cdyn_kn'=>'19.5','co_kn'=>'11.2','pu_kn'=>'0.48','mass_kg'=>'0.18'],
                 'cross_refs' => [
                     ['brand'=>'TIMKEN',     'value'=>'1726206 2RS',   'type'=>'bearing'],
@@ -1701,8 +1712,9 @@ class DatabaseSeeder extends Seeder
                 'name_uk'=>'1726206-2RS1 VX','name_en'=>'1726206-2RS1 VX','name_pl'=>'1726206-2RS1 VX',
             ],
             [
-                'article' => '1726207-2RS1 VX',
-                'slug'    => '1726207-2rs1-vx',
+                'article'  => '1726207-2RS1 VX',
+                'slug'     => '1726207-2rs1-vx',
+                'model_3d' => '1726207-2RS1.glb',
                 'specs'   => ['d_mm'=>'35','D_mm'=>'72','B_mm'=>'17','d1_mm'=>'46.1','r_12_mm'=>'1','cdyn_kn'=>'25.5','co_kn'=>'15.3','pu_kn'=>'0.25','mass_kg'=>'0.66'],
                 'cross_refs' => [
                     ['brand'=>'TIMKEN',  'value'=>'1726207 2RS',   'type'=>'bearing'],
@@ -1725,8 +1737,9 @@ class DatabaseSeeder extends Seeder
                 'name_uk'=>'1726207-2RS1 VX','name_en'=>'1726207-2RS1 VX','name_pl'=>'1726207-2RS1 VX',
             ],
             [
-                'article' => '1726208-2RS1 VX',
-                'slug'    => '1726208-2rs1-vx',
+                'article'  => '1726208-2RS1 VX',
+                'slug'     => '1726208-2rs1-vx',
+                'model_3d' => '1726208-2RS1.glb',
                 'specs'   => ['d_mm'=>'40','D_mm'=>'80','B_mm'=>'18','d1_mm'=>'52','r_12_mm'=>'1.1','cdyn_kn'=>'30.7','co_kn'=>'19','pu_kn'=>'0.8','mass_kg'=>'0.32'],
                 'cross_refs' => [
                     ['brand'=>'TIMKEN',     'value'=>'1726208 2RS',    'type'=>'bearing'],
@@ -1747,8 +1760,9 @@ class DatabaseSeeder extends Seeder
                 'name_uk'=>'1726208-2RS1 VX','name_en'=>'1726208-2RS1 VX','name_pl'=>'1726208-2RS1 VX',
             ],
             [
-                'article' => '1726209-2RS1 VX',
-                'slug'    => '1726209-2rs1-vx',
+                'article'  => '1726209-2RS1 VX',
+                'slug'     => '1726209-2rs1-vx',
+                'model_3d' => '1726209-2RS1.glb',
                 'specs'   => ['d_mm'=>'45','D_mm'=>'85','B_mm'=>'19','d1_mm'=>'56.6','r_12_mm'=>'1.1','cdyn_kn'=>'32.5','co_kn'=>'20.4','pu_kn'=>'0.92','mass_kg'=>'0.37'],
                 'cross_refs' => [
                     ['brand'=>'TIMKEN',  'value'=>'1726209 2RS',    'type'=>'bearing'],
@@ -1772,9 +1786,10 @@ class DatabaseSeeder extends Seeder
                 'name_uk'=>'1726209-2RS1 VX','name_en'=>'1726209-2RS1 VX','name_pl'=>'1726209-2RS1 VX',
             ],
             [
-                'article' => '1726210-2RS1 VX',
-                'slug'    => '1726210-2rs1-vx',
-                'specs'   => ['d_mm'=>'50','D_mm'=>'90','B_mm'=>'20','d1_mm'=>'62.5','r_12_mm'=>'1.1','cdyn_kn'=>'35.1','co_kn'=>'23.2','pu_kn'=>'0.98','mass_kg'=>'0.41'],
+                'article'  => '1726210-2RS1 VX',
+                'slug'     => '1726210-2rs1-vx',
+                'model_3d' => '1726210-2RS1.glb',
+                'specs'    => ['d_mm'=>'50','D_mm'=>'90','B_mm'=>'20','d1_mm'=>'62.5','r_12_mm'=>'1.1','cdyn_kn'=>'35.1','co_kn'=>'23.2','pu_kn'=>'0.98','mass_kg'=>'0.41'],
                 'cross_refs' => [
                     ['brand'=>'TIMKEN',  'value'=>'1726210 2RS',    'type'=>'bearing'],
                     ['brand'=>'NSK-RHP', 'value'=>'1726210 2RS',    'type'=>'bearing'],
@@ -1785,14 +1800,14 @@ class DatabaseSeeder extends Seeder
                     ['brand'=>'Dominoni','value'=>'11330',          'type'=>'application'],
                     ['brand'=>'Kuhn',    'value'=>'81005000',       'type'=>'application'],
                     ['brand'=>'Kuhn',    'value'=>'81005099',       'type'=>'application'],
-                    ['brand'=>'',        'value'=>'1726210 2RS1',   'type'=>'application'],
                 ],
                 'name_uk'=>'1726210-2RS1 VX','name_en'=>'1726210-2RS1 VX','name_pl'=>'1726210-2RS1 VX',
             ],
             [
-                'article' => '1726306-2RS1 VX',
-                'slug'    => '1726306-2rs1-vx',
-                'specs'   => ['d_mm'=>'30','D_mm'=>'72','B_mm'=>'19','d1_mm'=>'44.6','r_12_mm'=>'1.1','cdyn_kn'=>'28.1','co_kn'=>'16','pu_kn'=>'0.67','mass_kg'=>'0.3'],
+                'article'  => '1726306-2RS1 VX',
+                'slug'     => '1726306-2rs1-vx',
+                'model_3d' => '1726306-2RS1.glb',
+                'specs'    => ['d_mm'=>'30','D_mm'=>'72','B_mm'=>'19','d1_mm'=>'44.6','r_12_mm'=>'1.1','cdyn_kn'=>'28.1','co_kn'=>'16','pu_kn'=>'0.67','mass_kg'=>'0.3'],
                 'cross_refs' => [
                     ['brand'=>'SKF',  'value'=>'1726306 2RS1',   'type'=>'bearing'],
                     ['brand'=>'NTN',  'value'=>'CS306LLU',       'type'=>'bearing'],
@@ -1803,13 +1818,13 @@ class DatabaseSeeder extends Seeder
                     ['brand'=>'RHP',  'value'=>'1726306-2RS',    'type'=>'bearing'],
                     ['brand'=>'FKL',  'value'=>'1726306 2S.T',   'type'=>'bearing'],
                     ['brand'=>'',     'value'=>'580306 K7C17',   'type'=>'application'],
-                    ['brand'=>'',     'value'=>'1726306 2RS1',   'type'=>'application'],
                 ],
                 'name_uk'=>'1726306-2RS1 VX','name_en'=>'1726306-2RS1 VX','name_pl'=>'1726306-2RS1 VX',
             ],
             [
-                'article' => '1726309-2RS1 VX',
-                'slug'    => '1726309-2rs1-vx',
+                'article'  => '1726309-2RS1 VX',
+                'slug'     => '1726309-2rs1-vx',
+                'model_3d' => '1726309-2RS1.glb',
                 'specs'   => ['d_mm'=>'45','D_mm'=>'100','B_mm'=>'25','d1_mm'=>'62.1','r_12_mm'=>'1.5','cdyn_kn'=>'52.7','co_kn'=>'31.5','pu_kn'=>'1.34','mass_kg'=>'0.73'],
                 'cross_refs' => [
                     ['brand'=>'TIMKEN', 'value'=>'1726309 2RS',    'type'=>'bearing'],
@@ -1864,6 +1879,33 @@ class DatabaseSeeder extends Seeder
                     ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
                     ['value' => $p["name_{$locale}"]]
                 );
+            }
+
+            if (!empty($p['model_3d'])) {
+                DB::table('product_assets')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'type' => 'model_3d'],
+                    ['path' => '/velnox/models/' . $p['model_3d'], 'sort_order' => 0]
+                );
+            }
+
+            // gallery per product (main + 3 drawings)
+            $galleryBase = '/velnox/images/products/agro-t1';
+            $slug = $p['slug'];
+            foreach ([
+                ['path' => "{$galleryBase}/velnox-{$slug}.webp",           'sort_order' => 1],
+                ['path' => "{$galleryBase}/velnox-{$slug}-drawing-1.webp", 'sort_order' => 2],
+                ['path' => "{$galleryBase}/velnox-{$slug}-drawing-2.webp", 'sort_order' => 3],
+                ['path' => "{$galleryBase}/velnox-{$slug}-drawing-3.webp", 'sort_order' => 4],
+            ] as $asset) {
+                $exists = DB::table('product_assets')
+                    ->where('entity_type', 'product')->where('entity_id', $productId)
+                    ->where('type', 'gallery')->where('path', $asset['path'])->exists();
+                if (!$exists) {
+                    DB::table('product_assets')->insert([
+                        'entity_type' => 'product', 'entity_id' => $productId,
+                        'type' => 'gallery', 'path' => $asset['path'], 'sort_order' => $asset['sort_order'],
+                    ]);
+                }
             }
         }
 
