@@ -515,7 +515,6 @@
 
 .techTable {
     width: 100%;
-    min-width: 100%; /* Allow table to squish to fit screen */
     border-collapse: collapse;
     text-align: left;
     table-layout: auto;
@@ -662,7 +661,7 @@
 @media (min-width: 1025px) {
     .techTable {
         width: 100%;
-        table-layout: auto;
+        table-layout: fixed;
     }
 
     .techTable td {
@@ -673,24 +672,14 @@
     }
 
     .techTable th {
-        white-space: nowrap;
+        white-space: normal;
+        word-break: break-word;
         padding: 8px 6px;
     }
 
     .actionCol {
-        width: 1%;
-        padding-left: 12px !important;
-    }
-
-    /* Колонка 1: Part Number */
-    .techTable th:nth-child(1), .techTable td:nth-child(1) { width: 120px; min-width: 100px; }
-    /* Колонка 2: Bearing/Designation */
-    .techTable th:nth-child(2), .techTable td:nth-child(2) { min-width: 120px; }
-    /* Колонка 3: Brand */
-    .techTable th:nth-child(3), .techTable td:nth-child(3) { width: 70px; min-width: 60px; }
-    
-    .techTable td {
-        vertical-align: middle;
+        width: 36px;
+        padding-left: 8px !important;
     }
 }
 
