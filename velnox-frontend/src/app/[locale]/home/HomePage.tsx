@@ -165,7 +165,7 @@ export function HomePage({ locale }: { locale: string }) {
             setFile(null);
             setPreviewUrl(null);
         } catch (err: any) {
-            setErrMsg('Помилка відправки. Будь ласка, перевірте дані або спробуйте пізніше.');
+            setErrMsg(t('cta.form.error_generic'));
             setCtaStatus('error');
         }
     };

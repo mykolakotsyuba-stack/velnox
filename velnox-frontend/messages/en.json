@@ -131,7 +131,8 @@
         "submit": "GET TECHNICAL CALCULATION",
         "sending": "Sending...",
         "success_title": "Request sent!",
-        "success_desc": "Our engineer will contact you shortly for a technical consultation."
+        "success_desc": "Our engineer will contact you shortly for a technical consultation.",
+        "error_generic": "Sending error. Please check your data or try again later."
       },
       "btn_catalog": "Go to Catalogue",
       "btn_engineer": "Contact an Engineer"

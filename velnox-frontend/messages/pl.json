@@ -133,7 +133,8 @@
         "submit": "UZYSKAJ OBLICZENIE TECHNICZNE",
         "sending": "Wysyłanie...",
         "success_title": "Zapytanie wysłane!",
-        "success_desc": "Nasz inżynier skontaktuje się z Tobą wkrótce w celu konsultacji technicznej."
+        "success_desc": "Nasz inżynier wkrótce skontaktuje się z Tobą w celu konsultacji technicznej.",
+        "error_generic": "Błąd wysyłania. Sprawdź dane lub spróbuj ponownie później."
       }
     },
     "oem_optimization": {
