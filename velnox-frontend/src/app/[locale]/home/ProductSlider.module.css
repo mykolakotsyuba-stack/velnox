@@ -181,23 +181,29 @@
     max-width: 580px;
 }
 
-/* Spec pill */
+/* Spec pill -> Minimalist Feature Row */
 .slideSpec {
     display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: color-mix(in srgb, var(--color-accent) 50%, transparent);
-    /* Darker background for contrast */
-    border: 1px solid var(--color-accent);
-    border-radius: 8px;
-    padding: 8px 16px;
-    font-size: 13px;
-    color: #FFFFFF;
-    /* Force white text for readability */
-    font-weight: 600;
+    align-items: flex-start;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 15px;
+    color: #475569; /* Matches the body text */
+    font-weight: 500;
+    line-height: 1.5;
     margin-bottom: 42px;
     width: fit-content;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
+}
+
+.slideSpec svg {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-top: 2px;
+    width: 18px;
+    height: 18px;
 }
 
 /* CTAs */
