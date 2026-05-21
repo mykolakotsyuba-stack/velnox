@@ -284,7 +284,7 @@
   "categories": {
     "bearings": "Węzły łożyskowe",
     "hubs": "Rolnicze węzły piasty",
-    "agro": "Specjalne łożyska agro i rozwiązania inżynieryjne",
+    "agro": "Specjalne łożyska agro",
     "kit": "Kompleksowe zestawy montażowe KIT",
     "custom": "Rozwiązania OEM na zamówienie"
   },
@@ -548,8 +548,8 @@
   },
   "agroPage": {
     "hero": {
-      "title": "Łożyska Agro VELNOX. Seria 17262",
-      "subtitle": "Łożyska serii specjalnej do maszyn rolniczych. Bezpośredni zamiennik jednostek OEM CLAAS, John Deere, KUHN, Gaspardo, Capello.",
+      "title": "Specjalne łożyska agro VELNOX",
+      "subtitle": "Specjalne łożyska do ciężkich maszyn rolniczych",
       "desc": "Seria 17262 i inne — łożyska rolnicze o zwiększonych tolerancjach pierścienia wewnętrznego, zaprojektowane do pracy w siewnikach, hederach i agregatach talerzowych w warunkach pyłu ściernego i wilgoci."
     },
     "block2": {

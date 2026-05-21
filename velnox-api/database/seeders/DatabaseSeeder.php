@@ -74,7 +74,7 @@ class DatabaseSeeder extends Seeder
         $catTranslations = [
             ['slug' => 'bearings', 'uk' => 'Підшипникові вузли',      'en' => 'Bearing Units',           'pl' => 'Węzły łożyskowe'],
             ['slug' => 'hubs',     'uk' => 'Аграрні ступичні вузли',  'en' => 'Agricultural Hub Units',  'pl' => 'Rolnicze węzły piasty'],
-            ['slug' => 'agro',     'uk' => 'Агро-підшипники',         'en' => 'Special Agro Bearings',   'pl' => 'Łożyska agro'],
+            ['slug' => 'agro',     'uk' => 'Спеціальні агропідшипники', 'en' => 'Special Agro Bearings',   'pl' => 'Specjalne łożyska agro'],
             ['slug' => 'kit',      'uk' => 'Збірні KIT-рішення',      'en' => 'Assembly KIT Solutions',  'pl' => 'Zestawy montażowe KIT'],
             ['slug' => 'custom',   'uk' => 'Кастомні OEM-рішення',    'en' => 'Custom OEM Solutions',    'pl' => 'Rozwiązania OEM na zamówienie'],
         ];
