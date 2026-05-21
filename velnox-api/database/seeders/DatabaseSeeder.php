@@ -1342,7 +1342,7 @@ class DatabaseSeeder extends Seeder
                     'hub_E_mm'        => [['label' => 'E',   'x' => 1147, 'y' => 1887]],
                     'hub_F_mm'        => [['label' => 'F',   'x' => 1031, 'y' => 1888]],
                 ]),
-                'schema_viewbox'   => '289 1677 1983 1112',
+                'schema_viewbox'   => '67 1658 2141 1194',
                 'sort_order'       => 2,
             ]
         );
