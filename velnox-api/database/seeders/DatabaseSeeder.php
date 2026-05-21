@@ -1179,8 +1179,19 @@ class DatabaseSeeder extends Seeder
                 'slug'             => 'hubs-t1',
                 'category_id'      => $hubsCatId,
                 'spec_columns'     => json_encode(['hub_J_mm', 'hub_D_mm', 'hub_D1_mm', 'hub_d_mm', 'hub_C_mm', 'hub_hole_thread', 'hub_G', 'hub_L_mm', 'hub_L1_mm', 'hub_F_mm', 'mass_kg', 'cdyn_kn', 'co_kn', 'pu_kn']),
-                'highlight_config' => null,
-                'schema_viewbox'   => null,
+                'highlight_config' => json_encode([
+                    'hub_J_mm'        => [['label' => 'J',   'x' => 355,  'y' => 856]],
+                    'hub_D_mm'        => [['label' => 'D',   'x' => 1536, 'y' => 816]],
+                    'hub_D1_mm'       => [['label' => 'D1',  'x' => 840,  'y' => 801]],
+                    'hub_d_mm'        => [['label' => 'd',   'x' => 864,  'y' => 801]],
+                    'hub_C_mm'        => [['label' => 'C',   'x' => 512,  'y' => 798]],
+                    'hub_hole_thread' => [['label' => 'H/T', 'x' => 465,  'y' => 383]],
+                    'hub_G'           => [['label' => 'G',   'x' => 931,  'y' => 693]],
+                    'hub_L_mm'        => [['label' => 'L',   'x' => 1232, 'y' => 1126]],
+                    'hub_L1_mm'       => [['label' => 'L1',  'x' => 935,  'y' => 992]],
+                    'hub_F_mm'        => [['label' => 'F',   'x' => 1058, 'y' => 1059]],
+                ]),
+                'schema_viewbox'   => '80 270 2260 1240',
                 'sort_order'       => 1,
             ]
         );
@@ -1235,6 +1246,36 @@ class DatabaseSeeder extends Seeder
                 'meta_desc_pl'  => 'Węzeł piasty VELNOX 28071300 VX do HORSCH, d=55,7 mm, D=127,3 mm, Cdyn 48,8 kN. Zamiennik HORSCH 28071300, 28077800, 28085600, PN60041.',
             ],
         ];
+
+        // product_assets for hubs-t1 (schema_png, schema_svg, gallery)
+        $ht1AssetBase = '/velnox/images/products/hubs-t1';
+        $ht1ArticleSlug = '28071300-vx';
+        foreach ([
+            ['type' => 'schema_png', 'path' => "{$ht1AssetBase}/velnox-{$ht1ArticleSlug}-schema.webp", 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => "{$ht1AssetBase}/schema.svg",                           'sort_order' => 0],
+            ['type' => 'gallery',    'path' => "{$ht1AssetBase}/velnox-{$ht1ArticleSlug}.webp",         'sort_order' => 1],
+            ['type' => 'gallery',    'path' => "{$ht1AssetBase}/velnox-{$ht1ArticleSlug}-drawing-1.webp",'sort_order' => 2],
+            ['type' => 'gallery',    'path' => "{$ht1AssetBase}/velnox-{$ht1ArticleSlug}-drawing-2.webp",'sort_order' => 3],
+            ['type' => 'gallery',    'path' => "{$ht1AssetBase}/velnox-{$ht1ArticleSlug}-drawing-3.webp",'sort_order' => 4],
+        ] as $asset) {
+            if ($asset['type'] === 'gallery') {
+                // gallery inserted by sort_order (multiple rows allowed)
+                $exists = DB::table('product_assets')
+                    ->where('entity_type', 'product_table')->where('entity_id', $ht1)
+                    ->where('type', 'gallery')->where('path', $asset['path'])->exists();
+                if (!$exists) {
+                    DB::table('product_assets')->insert([
+                        'entity_type' => 'product_table', 'entity_id' => $ht1,
+                        'type' => $asset['type'], 'path' => $asset['path'], 'sort_order' => $asset['sort_order'],
+                    ]);
+                }
+            } else {
+                DB::table('product_assets')->updateOrInsert(
+                    ['entity_type' => 'product_table', 'entity_id' => $ht1, 'type' => $asset['type']],
+                    ['path' => $asset['path'], 'sort_order' => $asset['sort_order']]
+                );
+            }
+        }
 
         foreach ($ht1Products as $p) {
             DB::table('products')->updateOrInsert(

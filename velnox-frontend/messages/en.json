@@ -541,6 +541,10 @@
     }
   },
   "hubsPage": {
+    "cols": {
+      "part_number": "Velnox Part No.",
+      "oem": "Cross-References"
+    },
     "hero": {
       "title": "Agricultural Hub Units VELNOX",
       "subtitle": "VELNOX hubs are designed to replace original units from leading European and American agricultural machinery manufacturers. The focus is on a multi-level sealing system and stable operation under high loads.",

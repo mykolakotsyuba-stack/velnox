@@ -1,0 +1,413 @@
+/* ────────────────────────────────────────────────────────
+   ProductTable — shared reusable table styles
+   Based on bearings design. Single source of truth.
+──────────────────────────────────────────────────────── */
+
+/* ─── Schema / Diagram above table ─── */
+.schemaCont {
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 32px 24px;
+    border: 1px solid var(--color-border);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    min-height: 200px;
+}
+
+.schemaImg {
+    max-width: 100%;
+    max-height: 480px;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+/* ─── Scroll wrapper ─── */
+.tableScroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* ─── Table base ─── */
+.techTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    /* table-layout: fixed forces columns to share width equally
+       → text wraps, no horizontal overflow for any column count */
+    table-layout: fixed;
+}
+
+/* ─── Header cells ─── */
+.techTable th {
+    background: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
+    padding: 12px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    border-bottom: 2px solid var(--color-border);
+    white-space: normal;
+    /* overflow-wrap only — breaks long words when unavoidable, NOT at any character */
+    overflow-wrap: break-word;
+    vertical-align: bottom;
+    line-height: 1.35;
+    position: relative;
+}
+
+/* ─── Data cells ─── */
+.techTable td {
+    padding: 11px 8px;
+    font-size: 13px;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    background: transparent;
+    transition: background 0.2s ease;
+    line-height: 1.5;
+    vertical-align: middle;
+    overflow-wrap: break-word;
+}
+
+.techTable tr:last-child td {
+    border-bottom: none;
+}
+
+.techTable tr:hover td {
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+    color: var(--color-text);
+}
+
+/* ─── Header inner layout ─── */
+.thInner {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    min-width: 0;
+}
+
+.thLabel {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow-wrap: break-word;
+    /* hyphens: auto + lang="uk" on table → proper syllable hyphenation */
+    hyphens: auto;
+    line-height: 1.35;
+}
+
+/* ─── Combined sort+filter menu ─── */
+.colMenu {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.colMenuBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    transition: opacity 0.15s, background 0.15s;
+    line-height: 1;
+}
+
+.colMenuBtn:hover {
+    opacity: 1;
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+.colMenuBtnActive {
+    opacity: 1;
+    color: var(--color-accent);
+}
+
+.colDropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    z-index: 300;
+    min-width: 180px;
+    max-height: 320px;
+    overflow-y: auto;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+}
+
+.colDropdownSection {
+    padding: 6px 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.colDropdownDivider {
+    height: 1px;
+    background: var(--color-border);
+    margin: 0;
+}
+
+.sortOption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 5px;
+    width: 100%;
+    transition: background 0.12s;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.sortOption span {
+    font-size: 13px;
+    width: 14px;
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+}
+
+.sortOption:hover {
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+}
+
+.sortOptionActive {
+    color: var(--color-accent);
+    font-weight: 700;
+}
+
+.sortOptionActive span {
+    color: var(--color-accent);
+}
+
+.filterOption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    color: var(--color-text);
+    user-select: none;
+    border-radius: 5px;
+    transition: background 0.12s;
+}
+
+.filterOption:hover {
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+}
+
+.filterOption input[type='checkbox'] {
+    margin: 0;
+    cursor: pointer;
+    accent-color: var(--color-accent);
+}
+
+/* ─── Action column (Запит button) ─── */
+.actionCol {
+    width: 80px;
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+/* ─── Request button ─── */
+.reqBtn {
+    background: transparent;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.reqBtn:hover {
+    background: var(--color-accent);
+    color: #fff;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent) 40%, transparent);
+}
+
+/* ─── Part number cell ─── */
+.partNumCell {
+    font-weight: 700;
+}
+
+.designationLink {
+    font-weight: 700;
+    color: var(--color-accent) !important;
+    text-decoration: none;
+    transition: color 0.2s;
+    display: inline-block;
+}
+
+.designationLink:hover {
+    color: color-mix(in srgb, var(--color-accent) 80%, white) !important;
+    text-decoration: underline;
+}
+
+/* ─── 3D badge ─── */
+.badge3d {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 1px 5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #fff;
+    background: var(--color-accent);
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.4;
+}
+
+/* ─── Analogues / OEM cell ─── */
+.analoguesCell {
+    font-size: 11px !important;
+    line-height: 1.5;
+    vertical-align: top;
+}
+
+.analoguesCell :global(.analogues-list) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.analoguesCell :global(.analogues-list) li {
+    padding: 1px 0;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    border-bottom: 1px dotted color-mix(in srgb, var(--color-border) 60%, transparent);
+}
+
+.analoguesCell :global(.analogues-list) li:last-child {
+    border-bottom: none;
+}
+
+/* ─── Empty state ─── */
+.emptyState {
+    text-align: center;
+    padding: 40px !important;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* ────────────────────────────────────────────────────────
+   MOBILE — Card view (≤ 1024px)
+──────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .tableScroll {
+        overflow-x: visible;
+        border: none;
+    }
+
+    .techTable thead {
+        display: none;
+    }
+
+    .techTable,
+    .techTable tbody,
+    .techTable tr,
+    .techTable td {
+        display: block;
+        width: 100%;
+    }
+
+    .techTable tr {
+        margin-bottom: 20px;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--color-surface);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .techTable td {
+        text-align: right;
+        padding: 11px 14px;
+        position: relative;
+        border-bottom: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+        font-size: 13px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .techTable td:last-child {
+        border-bottom: none;
+        background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+    }
+
+    .techTable td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        color: var(--color-text-muted);
+        text-align: left;
+        flex-shrink: 0;
+    }
+
+    .actionCol {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+
+    .reqBtn {
+        width: 100%;
+        padding: 11px;
+        font-size: 13px;
+    }
+}
+
+/* ────────────────────────────────────────────────────────
+   DESKTOP — Table view (≥ 1025px)
+──────────────────────────────────────────────────────── */
+@media (min-width: 1025px) {
+    .techTable {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .techTable th {
+        white-space: normal;
+        overflow-wrap: break-word;
+        padding: 12px 8px;
+    }
+
+    .techTable td {
+        white-space: normal;
+        padding: 11px 8px;
+        vertical-align: middle;
+    }
+}
