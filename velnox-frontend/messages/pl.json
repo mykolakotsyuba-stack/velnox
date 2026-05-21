@@ -606,6 +606,15 @@
       "desc": "Jednostki DHU z łożyskiem serii 209 do ciężkich bron tarczowych.",
       "applications": "Ciężkie brony tarczowe, maszyny uprawowe",
       "oem_focus": "John Deere, KUHN, KRAUSE, Great Plains, CASE, Sunflower"
+    },
+    "cols": {
+      "part_number": "Oznaczenie Velnox"
+    },
+    "block3": {
+      "title": "Dobierz łożysko agro do swojego zastosowania",
+      "text": "Bezpłatna konsultacja techniczna. Specyfikacje, modele 3D i dobór zamienników do Twojej maszyny.",
+      "btn_contact": "Skontaktuj się z inżynierem",
+      "btn_pdf": "Pobierz katalog PDF"
     }
   },
   "kitPage": {

@@ -671,6 +671,15 @@
       "desc": "Highly reliable sealed units for intensive harvesting operations under high load.",
       "applications": "Grain and forage harvesters",
       "oem_focus": "CLAAS Lexion, New Holland, Case IH"
+    },
+    "cols": {
+      "part_number": "Velnox Part No"
+    },
+    "block3": {
+      "title": "Find the right agro bearing for your application",
+      "text": "Free engineering consultation. Technical specs, 3D models, and cross-reference selection for your machine.",
+      "btn_contact": "Talk to an engineer",
+      "btn_pdf": "Download PDF catalogue"
     }
   },
   "kitPage": {

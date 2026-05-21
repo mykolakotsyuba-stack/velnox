@@ -3,14 +3,19 @@
 import { useTranslations } from 'next-intl';
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './agro.module.css';
 import type { Locale, ProductListItem } from '@/entities/product/model/types';
+import { ProductTable, type ColDef } from '@/features/products/shared/ProductTable/ProductTable';
+import { ProductSchema } from '@/features/products/shared/ProductSchema/ProductSchema';
+import ptStyles from '@/features/products/shared/ProductTable/productTable.module.css';
 
 interface AgroCategoryPageProps {
     locale: Locale;
     products?: ProductListItem[];
 }
 
+/* ─── helpers ─── */
 function useInView(threshold = 0.1) {
     const ref = useRef<HTMLElement>(null);
     const [inView, setInView] = useState(false);
@@ -25,6 +30,21 @@ function useInView(threshold = 0.1) {
         return () => obs.disconnect();
     }, [threshold]);
     return { ref, inView };
+}
+
+function articleToSlug(article: string): string {
+    return article.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+}
+
+function renderTightCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const items = val.split(/\n|;/).map(s => s.trim()).filter(Boolean);
+    if (items.length <= 1) return <span>{val}</span>;
+    return (
+        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
+            {items.map((item, i) => <li key={i} style={{ marginBottom: '2px' }}>{item}</li>)}
+        </ul>
+    );
 }
 
 /* ─── Lead Modal ─── */
@@ -86,127 +106,82 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
     );
 }
 
-/* ─── Sortable Table ─── */
-type SortDir = 'asc' | 'desc' | null;
+/* ─────────────────────────────────────────────────────────────────
+   Column builders — placeholder: will be filled with user data.
+   spec keys come from spec_labels (API). Non-spec keys:
+     part_number, oem, bearing_part, bearing_brand — from mapRow.
+──────────────────────────────────────────────────────────────────── */
+type SlMap = Record<string, string>;
 
-function SortIcon({ dir }: { dir: SortDir }) {
-    return <span className={styles.sortIcon} aria-hidden>{dir === 'asc' ? '↑' : dir === 'desc' ? '↓' : '↕'}</span>;
+function buildT1Cols(sl: SlMap, partLabel: string): ColDef[] {
+    // TODO: add spec columns when data is provided
+    return [
+        { key: 'part_number', label: partLabel, width: '120px' },
+    ];
 }
 
-
-/* ─── Render structured list for tight cells ─── */
-function renderTightCell(val: string | null | undefined) {
-    if (!val || val === '-') return <span>—</span>;
-    const items = val.split(/\n|;/).map(s => s.trim()).filter(Boolean);
-    if (items.length <= 1) return <span>{val}</span>;
-    return (
-        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
-            {items.map((item, i) => (
-                <li key={i} style={{ marginBottom: '2px' }}>{item}</li>
-            ))}
-        </ul>
-    );
+function buildT2Cols(sl: SlMap, partLabel: string): ColDef[] {
+    // TODO: add spec columns when data is provided
+    return [
+        { key: 'part_number', label: partLabel, width: '120px' },
+    ];
 }
 
-/* ─── Brand cell: кожен бренд з нового рядка ─── */
-function renderBrandCell(val: string | null | undefined) {
-    if (!val || val === '-') return <span>—</span>;
-    const brands = val.split(/\n|\//).map(s => s.trim()).filter(Boolean);
-    if (brands.length <= 1) return <span>{val}</span>;
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-            {brands.map((brand, i) => <span key={i}>{brand}</span>)}
-        </div>
-    );
+function buildT3Cols(sl: SlMap, partLabel: string): ColDef[] {
+    // TODO: add spec columns when data is provided
+    return [
+        { key: 'part_number', label: partLabel, width: '120px' },
+    ];
 }
 
-/* ─── Designation cell: список + перенос після ). Розбиває по \n і " / " (НЕ по "/" у дробах типу 1/4) ─── */
-function renderDesignationCell(val: string | null | undefined) {
-    if (!val || val === '-') return <span>—</span>;
-    const items: string[] = [];
-    val.split(/\n/).map(s => s.trim()).filter(Boolean)
-        .forEach(line => line.split(' / ').forEach(p => { const t = p.trim(); if (t) items.push(t); }));
-    const renderWithParenBreaks = (text: string) => {
-        const parts = text.split(') ');
-        if (parts.length <= 1) return <>{text}</>;
-        return <>{parts.map((part, j) => (
-            <span key={j}>{j < parts.length - 1 ? part + ')' : part}{j < parts.length - 1 && <br />}</span>
-        ))}</>;
-    };
-    if (items.length <= 1) return <span>{renderWithParenBreaks(items[0] ?? val)}</span>;
-    return (
-        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
-            {items.map((item, i) => (
-                <li key={i} style={{ marginBottom: '2px' }}>{renderWithParenBreaks(item)}</li>
-            ))}
-        </ul>
-    );
-}
-
-function useSortableTable(data: any[]) {
-    const [sortCol, setSortCol] = useState<string | null>(null);
-    const [sortDir, setSortDir] = useState<SortDir>(null);
-
-    const toggle = useCallback((col: string) => {
-        setSortCol(prev => {
-            if (prev !== col) { setSortDir('asc'); return col; }
-            setSortDir(d => d === 'asc' ? 'desc' : d === 'desc' ? null : 'asc');
-            return col;
-        });
-    }, []);
-
-    const sorted = useMemo(() => {
-        if (!sortCol || !sortDir) return data;
-        return [...data].sort((a, b) => {
-            const av = a[sortCol] ?? '', bv = b[sortCol] ?? '';
-            const an = parseFloat(String(av)), bn = parseFloat(String(bv));
-            const cmp = !isNaN(an) && !isNaN(bn) ? an - bn : String(av).localeCompare(String(bv));
-            return sortDir === 'asc' ? cmp : -cmp;
-        });
-    }, [data, sortCol, sortDir]);
-
-    return { sorted, sortCol, sortDir, toggle };
-}
-
+/* ─────────────────────────────────────────────────────────────────
+   Main Page Component
+──────────────────────────────────────────────────────────────────── */
 export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     const t = useTranslations();
-    const heroRef = useInView(0.12);
+    const heroRef     = useInView(0.12);
     const approachRef = useInView(0.1);
-    const app1Ref = useInView(0.2);
-    const app2Ref = useInView(0.2);
-    const specialRef = useInView(0.15);
+    const specialRef  = useInView(0.15);
+    const ctaRef      = useInView();
 
-    const [modalProduct, setModalProduct] = useState<string | null>(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [filters, setFilters] = useState<Record<string, string[]>>({});
-    const [openFilterCol, setOpenFilterCol] = useState<string | null>(null);
+    const [modalProduct, setModalProduct]   = useState<string | null>(null);
+    const [searchQuery, setSearchQuery]     = useState('');
 
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
 
-    const searchHeaderRef = useRef<HTMLDivElement>(null);
-    const specialBlockRef = useRef<HTMLDivElement>(null);
+    const [sl1, setSl1] = useState<SlMap>({});
+    const [sl2, setSl2] = useState<SlMap>({});
+    const [sl3, setSl3] = useState<SlMap>({});
+
+    const [schema1, setSchema1] = useState<string | null>(null);
+    const [schema2, setSchema2] = useState<string | null>(null);
+    const [schema3, setSchema3] = useState<string | null>(null);
+
+    const [tableName1, setTableName1] = useState('');
+    const [tableName2, setTableName2] = useState('');
+    const [tableName3, setTableName3] = useState('');
+
+    const searchHeaderRef  = useRef<HTMLDivElement>(null);
+    const specialBlockRef  = useRef<HTMLDivElement>(null);
     const [parallaxOffset, setParallaxOffset] = useState(0);
 
+    /* Sticky search + parallax */
     useEffect(() => {
         const handleScroll = () => {
             if (searchHeaderRef.current) {
                 const elementOffsetTop = searchHeaderRef.current.offsetTop;
-                if (window.scrollY > elementOffsetTop - 100) {
-                    searchHeaderRef.current.classList.add(styles.isSticky);
-                } else {
-                    searchHeaderRef.current.classList.remove(styles.isSticky);
-                }
+                searchHeaderRef.current.classList.toggle(
+                    styles.isSticky, window.scrollY > elementOffsetTop - 100
+                );
             }
-
             if (specialBlockRef.current) {
                 const rect = specialBlockRef.current.getBoundingClientRect();
-                const windowHeight = window.innerHeight;
-                if (rect.top < windowHeight && rect.bottom > 0) {
-                    // Calculate parallax: start moving when the block enters the viewport
-                    const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
-                    setParallaxOffset(scrollProgress * 150 - 75); // Range from -75px to 75px
+                const wh = window.innerHeight;
+                if (rect.top < wh && rect.bottom > 0) {
+                    const p = (wh - rect.top) / (wh + rect.height);
+                    setParallaxOffset(p * 150 - 75);
                 }
             }
         };
@@ -215,198 +190,94 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    /* Fetch all 3 tables */
     useEffect(() => {
         const fetchTables = async () => {
             try {
                 const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
                 const [res1, res2, res3] = await Promise.all([
-                    fetch(`${base}/v1/products/tables/agro-table1`),
-                    fetch(`${base}/v1/products/tables/agro-table2`),
-                    fetch(`${base}/v1/products/tables/agro-table3`),
+                    fetch(`${base}/v1/product-tables/agro-t1?locale=${locale}`),
+                    fetch(`${base}/v1/product-tables/agro-t2?locale=${locale}`),
+                    fetch(`${base}/v1/product-tables/agro-t3?locale=${locale}`),
                 ]);
-                const [d1, d2, d3] = await Promise.all([res1.json(), res2.json(), res3.json()]);
-                setTable1Data(Array.isArray(d1) ? d1 : []);
-                setTable2Data(Array.isArray(d2) ? d2 : []);
-                setTable3Data(Array.isArray(d3) ? d3 : []);
+                const safeJson = async (res: Response) =>
+                    res.ok ? res.json() : { products: [], table: {} };
+                const [data1, data2, data3] = await Promise.all([
+                    safeJson(res1), safeJson(res2), safeJson(res3),
+                ]);
+
+                if (data1.table?.spec_labels) setSl1(data1.table.spec_labels);
+                if (data2.table?.spec_labels) setSl2(data2.table.spec_labels);
+                if (data3.table?.spec_labels) setSl3(data3.table.spec_labels);
+
+                if (data1.table?.schema_src) setSchema1(data1.table.schema_src);
+                if (data2.table?.schema_src) setSchema2(data2.table.schema_src);
+                if (data3.table?.schema_src) setSchema3(data3.table.schema_src);
+
+                if (data1.table?.name) setTableName1(data1.table.name);
+                if (data2.table?.name) setTableName2(data2.table.name);
+                if (data3.table?.name) setTableName3(data3.table.name);
+
+                const mapRow = (p: any) => {
+                    const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing');
+                    const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
+                    return {
+                        part_number:   p.article,
+                        has_model_3d:  p.has_model_3d ?? false,
+                        bearing_part:  bearingRefs.map((r: any) => r.value).join('\n'),
+                        bearing_brand: bearingRefs.map((r: any) => r.brand).filter(Boolean).join('\n'),
+                        oem:           appRefs.map((r: any) => r.brand ? `${r.value} ${r.brand}` : r.value).join('\n'),
+                        ...p.specs,
+                    };
+                };
+
+                setTable1Data(Array.isArray(data1?.products) ? data1.products.map(mapRow) : []);
+                setTable2Data(Array.isArray(data2?.products) ? data2.products.map(mapRow) : []);
+                setTable3Data(Array.isArray(data3?.products) ? data3.products.map(mapRow) : []);
             } catch (err) {
                 console.error('Error fetching agro tables:', err);
             }
         };
         fetchTables();
-    }, []);
+    }, [locale]);
 
-        const handleFilterChange = useCallback((col: string, val: string) => {
-        setFilters(prev => {
-            const colFilters = prev[col] || [];
-            const newFilters = colFilters.includes(val)
-                ? colFilters.filter(x => x !== val)
-                : [...colFilters, val];
-            return { ...prev, [col]: newFilters };
-        });
-    }, []);
-
-    const filteredT1 = useMemo(() => {
-        let rows = table1Data;
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-        }
-        Object.entries(filters).forEach(([col, activeVals]) => {
-            if (activeVals.length > 0) {
-                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
-            }
-        });
-        return rows;
-    }, [searchQuery, filters, table1Data]);
-
-    const filteredT2 = useMemo(() => {
-        let rows = table2Data;
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-        }
-        Object.entries(filters).forEach(([col, activeVals]) => {
-            if (activeVals.length > 0) {
-                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
-            }
-        });
-        return rows;
-    }, [searchQuery, filters, table2Data]);
-
-    const filteredT3 = useMemo(() => {
-        let rows = table3Data;
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-        }
-        Object.entries(filters).forEach(([col, activeVals]) => {
-            if (activeVals.length > 0) {
-                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
-            }
-        });
-        return rows;
-    }, [searchQuery, filters, table3Data]);
-
-
-    
-    // Unique bore diameter values across all tables
-    const allOptions = useMemo(() => {
-        const all: Record<string, Set<string>> = {};
-        [...table1Data, ...table2Data, ...table3Data].forEach(r => {
-            Object.keys(r).forEach(k => {
-                const v = r[k];
-                if (v != null && String(v).trim() !== '' && String(v).trim() !== '-') {
-                    if (!all[k]) all[k] = new Set();
-                    all[k].add(String(v));
-                }
-            });
-        });
-        const result: Record<string, string[]> = {};
-        Object.keys(all).forEach(k => {
-            result[k] = [...all[k]].sort((a, b) => {
-                const numA = parseFloat(a);
-                const numB = parseFloat(b);
-                if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
-                return a.localeCompare(b);
-            });
-        });
-        return result;
-    }, [table1Data, table2Data, table3Data]);
-
-    const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
-    const { sorted: sortedT2, sortCol: sc2, sortDir: sd2, toggle: tog2 } = useSortableTable(filteredT2);
-    const { sorted: sortedT3, sortCol: sc3, sortDir: sd3, toggle: tog3 } = useSortableTable(filteredT3);
-
-    const app1Class = app1Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
-    const app2Class = app2Ref.inView ? `${styles.applicationsSection} ${styles.appSectionVisible}` : styles.applicationsSection;
-
-    function Th({ 
-        col, label, toggle, sortCol, sortDir, 
-        hasFilter, filterOptions, selectedFilters, onFilterChange 
-    }: { 
-        col: string; label: string; 
-        toggle: (c: string) => void; 
-        sortCol: string | null; sortDir: SortDir;
-        hasFilter?: boolean; filterOptions?: string[]; 
-        selectedFilters?: string[]; onFilterChange?: (col: string, val: string) => void;
-    }) {
-        const isFilterOpen = openFilterCol === col;
-        
-        return (
-            <th className={styles.sortableTh} style={{ position: 'relative' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => toggle(col)}>
-                        {label} <SortIcon dir={sortCol === col ? sortDir : null} />
-                    </div>
-                    {hasFilter && (
-                        <div style={{ position: 'relative' }}>
-                            <button 
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setOpenFilterCol(isFilterOpen ? null : col);
-                                }}
-                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: selectedFilters?.length ? 'var(--color-accent)' : 'inherit' }}
-                            >
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                                </svg>
-                            </button>
-                            {isFilterOpen && (
-                                <div style={{
-                                    position: 'absolute', top: '100%', left: 0, marginTop: '8px',
-                                    background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-                                    borderRadius: '6px', padding: '12px', zIndex: 100,
-                                    width: '180px', maxHeight: '250px', overflowY: 'auto',
-                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                                }} onClick={e => e.stopPropagation()}>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                        {filterOptions?.map(opt => (
-                                            <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
-                                                <input 
-                                                    type="checkbox" 
-                                                    checked={selectedFilters?.includes(opt) || false}
-                                                    onChange={() => onFilterChange?.(col, opt)}
-                                                />
-                                                {opt}
-                                            </label>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </div>
-            </th>
+    /* Global search */
+    const search = (rows: any[]) => {
+        if (!searchQuery) return rows;
+        const q = searchQuery.toLowerCase();
+        return rows.filter(row =>
+            Object.values(row).some(v => v && String(v).toLowerCase().includes(q))
         );
-    }
-
-    /* ── TABLE 1: Series 1726 agro bearings ── */
-    const table1Cols = [
-        'Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference',
-        'd (mm)', 'D (mm)', 'B (mm)', 'd1 (mm)', 'r1,2 (mm)',
-        'Cdyn (kN)', 'Co (kN)', 'Pu (kN)', 'Mass (kg)',
-    ];
-    const table1Labels: Record<string, string> = {
-        'Part Number': 'Part No',
-        'Bearing designation': 'Bearing',
-        'Brand name': 'Brand',
-        'Cross-Reference': 'Cross-Ref',
-        'd (mm)': 'd',
-        'D (mm)': 'D',
-        'B (mm)': 'B',
-        'd1 (mm)': 'd1',
-        'r1,2 (mm)': 'r1,2',
-        'Cdyn (kN)': 'Cdyn',
-        'Co (kN)': 'Co',
-        'Pu (kN)': 'Pu',
-        'Mass (kg)': 'Mass',
     };
-    /* ── TABLE 2: DHU R-type (round bore) ── */
-    const table2Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (inch)', 'd (mm)', 'B (mm)', 'C (mm)', 'Da (mm)', 'L (mm)', 'A (mm)', 'A1 (mm)', 'J (mm)', 'N (mm)', 'Fr (kN)', 'Fa (kN)', 'Mass (kg)', 'Cdyn (kN)', 'Co (kN)'];
-    const table2Labels: Record<string, string> = { 'Part Number': 'Part No', 'Bearing designation': 'Bearing', 'Brand name': 'Brand', 'Cross-Reference': 'Cross-Ref', 'd (inch)': 'd"', 'd (mm)': 'd', 'B (mm)': 'B', 'C (mm)': 'C', 'Da (mm)': 'Da', 'L (mm)': 'L', 'A (mm)': 'A', 'A1 (mm)': 'A1', 'J (mm)': 'J', 'N (mm)': 'N', 'Fr (kN)': 'Fr', 'Fa (kN)': 'Fa', 'Mass (kg)': 'Mass', 'Cdyn (kN)': 'Cdyn', 'Co (kN)': 'Co' };
-    /* ── TABLE 3: DHU S-type (square bore) ── */
-    const table3Cols = ['Part Number', 'Bearing designation', 'Brand name', 'Cross-Reference', 'd (inch)', 'd (mm)', 'B (mm)', 'C (mm)', 'a (mm)', 'Da (mm)', 'L (mm)', 'A (mm)', 'A1 (mm)', 'J (mm)', 'N (mm)', 'M (mm)', 'Fr (kN)', 'Fa (kN)', 'Mass (kg)', 'Cdyn (kN)', 'Co (kN)', 'Pu (kN)'];
-    const table3Labels: Record<string, string> = { ...table2Labels, 'a (mm)': 'a', 'M (mm)': 'M', 'Pu (kN)': 'Pu' };
+    const searchedT1 = useMemo(() => search(table1Data), [table1Data, searchQuery]);
+    const searchedT2 = useMemo(() => search(table2Data), [table2Data, searchQuery]);
+    const searchedT3 = useMemo(() => search(table3Data), [table3Data, searchQuery]);
+
+    const partLabel = t('agroPage.cols.part_number');
+    const colsT1 = useMemo(() => buildT1Cols(sl1, partLabel), [sl1, partLabel]);
+    const colsT2 = useMemo(() => buildT2Cols(sl2, partLabel), [sl2, partLabel]);
+    const colsT3 = useMemo(() => buildT3Cols(sl3, partLabel), [sl3, partLabel]);
+
+    const renderCell = useCallback((col: string, row: any) => {
+        if (col === 'part_number') {
+            const slug = articleToSlug(row.part_number || '');
+            return (
+                <Link href={`/${locale}/products/agro/${slug}`} className={ptStyles.designationLink}>
+                    {row.part_number}
+                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
+                </Link>
+            );
+        }
+        if (col === 'oem' || col === 'bearing_part' || col === 'bearing_brand')
+            return <span className={ptStyles.analoguesCell}>{renderTightCell(row[col])}</span>;
+        return row[col] ?? '—';
+    }, [locale]);
+
+    const reqBtn = useCallback((row: any) => (
+        <button className={ptStyles.reqBtn} onClick={() => setModalProduct(row.part_number || '')}>
+            {t('agroPage.block2.btn_request')}
+        </button>
+    ), [t]);
 
     return (
         <main className={styles.page}>
@@ -415,7 +286,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             )}
 
             {/* ── HERO ── */}
-            <section className={styles.hero} ref={heroRef.ref}>
+            <section className={styles.hero} ref={heroRef.ref as React.Ref<HTMLElement>}>
                 <div className={heroRef.inView
                     ? `${styles.container} ${styles.heroContainer} ${styles.animIn}`
                     : `${styles.container} ${styles.heroContainer}`}>
@@ -430,8 +301,6 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                     </div>
                 </div>
             </section>
-
-
 
             {/* ── STICKY SEARCH ── */}
             <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
@@ -459,86 +328,32 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 </div>
             </div>
 
-            {/* ── TABLES ── */}
+            {/* ── TABLE 1 ── */}
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
-
-                    {/* TABLE 1 */}
                     <div className={styles.tableBlock}>
-                        <h3>{t('agroPage.block2.table1.title')}</h3>
+                        <h3>{tableName1 || t('agroPage.block2.table1.title')}</h3>
                         <p className={styles.tableDesc}>{t('agroPage.block2.table1.desc')}</p>
-                        <div className={styles.tableDiagramContainer}>
-                            <Image
-                                src="/velnox/images/agro/scheme-table1.png"
-                                alt="Agro bearing series 1726 cross-section"
-                                width={700}
-                                height={320}
-                                style={{ maxWidth: '100%', height: 'auto' }}
-                            />
-                        </div>
-                        <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
-                                <thead>
-                                    <tr>
-                                        {table1Cols.map(col => (
-                                            <Th
-                                                key={col} col={col} label={table1Labels[col] ?? col} toggle={tog1} sortCol={sc1} sortDir={sd1}
-                                                hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
-                                                filterOptions={allOptions[col]}
-                                                selectedFilters={filters[col]}
-                                                onFilterChange={handleFilterChange}
-                                            />
-                                        ))}
-                                        <th className={styles.actionCol} />
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedT1.map((row, i) => (
-                                        <tr key={i}>
-                                            {table1Cols.map(col => (
-                                                <td
-                                                    key={col}
-                                                    className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
-                                                    data-label={table1Labels[col] ?? col}
-                                                >
-                                                    {col === 'Cross-Reference' ? renderTightCell(row[col])
-                                                     : col === 'Bearing designation' ? renderDesignationCell(row[col])
-                                                     : col === 'Brand name' ? renderBrandCell(row[col])
-                                                     : (row[col] ?? '-')}
-                                                </td>
-                                            ))}
-                                            <td className={styles.actionCol} data-label="">
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
-                                                    {t('agroPage.block2.btn_request')}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    {sortedT1.length === 0 && (
-                                        <tr><td colSpan={table1Cols.length + 1} className={styles.emptyState}>Нічого не знайдено</td></tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                        {schema1 && <ProductSchema src={schema1} alt="Agro table 1 — технічна схема" />}
+                        <ProductTable
+                            columns={colsT1}
+                            rows={searchedT1}
+                            renderCell={renderCell}
+                            actionCell={reqBtn}
+                        />
                     </div>
-
                 </div>
             </section>
 
-            {/* ════════════════════════════════════════════
-                SPECIAL AGRO BEARINGS BLOCK
-            ════════════════════════════════════════════ */}
-            <section 
+            {/* ── SPECIAL AGRO BEARINGS BLOCK ── */}
+            <section
                 ref={(node) => {
-                    // @ts-ignore
-                    specialRef.ref.current = node;
-                    // @ts-ignore
+                    (specialRef.ref as React.MutableRefObject<HTMLElement | null>).current = node;
                     specialBlockRef.current = node;
-                }} 
+                }}
                 className={`${styles.specialBlock} ${specialRef.inView ? styles.specialVisible : ''}`}
             >
-                {/* Parallax Background */}
-                <div 
+                <div
                     className={styles.specialParallaxContainer}
                     style={{ transform: `translateY(${parallaxOffset}px)` }}
                 >
@@ -551,24 +366,14 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         priority={false}
                     />
                 </div>
-
-                {/* Dark radial-gradient foreground overlay for depth */}
                 <div className={styles.specialBg} />
-
-                {/* Top hero text */}
                 <div className={styles.specialHero}>
                     <span className={styles.specialTagline}>{t('agroPage.special.tagline')}</span>
                     <h2 className={styles.specialTitle}>{t('agroPage.special.title')}</h2>
                     <p className={styles.specialLead}>{t('agroPage.special.lead')}</p>
-                    <p className={styles.specialDesc}>
-                        {t('agroPage.special.desc')}
-                    </p>
+                    <p className={styles.specialDesc}>{t('agroPage.special.desc')}</p>
                 </div>
-
-                {/* ── New Clean Layout: Features Grid ── */}
                 <div className={styles.specialFeaturesGrid}>
-                    
-                    {/* Feature 1: Longevity */}
                     <div className={styles.featureItem}>
                         <div className={styles.featureIcon}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="32">
@@ -583,8 +388,6 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                             ))}
                         </ul>
                     </div>
-
-                    {/* Feature 2: Housing */}
                     <div className={styles.featureItem}>
                         <div className={styles.featureIcon}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="32">
@@ -599,8 +402,6 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                             ))}
                         </ul>
                     </div>
-
-                    {/* Feature 3: Performance */}
                     <div className={styles.featureItem}>
                         <div className={styles.featureIcon}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="32">
@@ -615,10 +416,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                             ))}
                         </ul>
                     </div>
-
                 </div>
-
-                {/* CTA */}
                 <div className={styles.specialCta}>
                     <button className={styles.specialCtaBtn} onClick={() => setModalProduct('Спеціальні агропідшипники VELNOX')}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
@@ -629,122 +427,61 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 </div>
             </section>
 
-
+            {/* ── TABLE 2 ── */}
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
-
-                    {/* TABLE 2 */}
                     <div className={styles.tableBlock}>
-                        <h3>{t('agroPage.block2.table2.title')}</h3>
+                        <h3>{tableName2 || t('agroPage.block2.table2.title')}</h3>
                         <p className={styles.tableDesc}>{t('agroPage.block2.table2.desc')}</p>
-                        <div className={styles.diagramPlaceholder}>[ СХЕМА ]</div>
-                        <div className={styles.tableScroll}>
-                            <table className={`${styles.techTable} ${styles.techTableWide}`}>
-                                <thead>
-                                    <tr>
-                                        {table2Cols.map(col => (
-                                            <Th
-                                                key={col} col={col} label={table2Labels[col] ?? col} toggle={tog2} sortCol={sc2} sortDir={sd2}
-                                                hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
-                                                filterOptions={allOptions[col]}
-                                                selectedFilters={filters[col]}
-                                                onFilterChange={handleFilterChange}
-                                            />
-                                        ))}
-                                        <th className={styles.actionCol} />
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedT2.map((row, i) => (
-                                        <tr key={i}>
-                                            {table2Cols.map(col => (
-                                                <td
-                                                    key={col}
-                                                    className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
-                                                    data-label={table2Labels[col] ?? col}
-                                                >
-                                                    {col === 'Cross-Reference' ? renderTightCell(row[col])
-                                                     : col === 'Bearing designation' ? renderDesignationCell(row[col])
-                                                     : col === 'Brand name' ? renderBrandCell(row[col])
-                                                     : (row[col] ?? '-')}
-                                                </td>
-                                            ))}
-                                            <td className={styles.actionCol} data-label="">
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
-                                                    {t('agroPage.block2.btn_request')}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    {sortedT2.length === 0 && (
-                                        <tr><td colSpan={table2Cols.length + 1} className={styles.emptyState}>Нічого не знайдено</td></tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                        {schema2 && <ProductSchema src={schema2} alt="Agro table 2 — технічна схема" />}
+                        <ProductTable
+                            columns={colsT2}
+                            rows={searchedT2}
+                            renderCell={renderCell}
+                            actionCell={reqBtn}
+                        />
                     </div>
-
                 </div>
             </section>
 
-
+            {/* ── TABLE 3 ── */}
             <section className={styles.tablesSection}>
                 <div className={styles.tableSectionContainer}>
-
-                    {/* TABLE 3 */}
                     <div className={styles.tableBlock}>
-                        <h3>{t('agroPage.block2.table3.title')}</h3>
+                        <h3>{tableName3 || t('agroPage.block2.table3.title')}</h3>
                         <p className={styles.tableDesc}>{t('agroPage.block2.table3.desc')}</p>
-                        <div className={styles.diagramPlaceholder}>[ СХЕМА ]</div>
-                        <div className={styles.tableScroll}>
-                            <table className={`${styles.techTable} ${styles.techTableWide}`}>
-                                <thead>
-                                    <tr>
-                                        {table3Cols.map(col => (
-                                            <Th
-                                                key={col} col={col} label={table3Labels[col] ?? col} toggle={tog3} sortCol={sc3} sortDir={sd3}
-                                                hasFilter={!['Part Number', 'Cross-Reference', 'Bearing designation'].includes(col)}
-                                                filterOptions={allOptions[col]}
-                                                selectedFilters={filters[col]}
-                                                onFilterChange={handleFilterChange}
-                                            />
-                                        ))}
-                                        <th className={styles.actionCol} />
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedT3.map((row, i) => (
-                                        <tr key={i}>
-                                            {table3Cols.map(col => (
-                                                <td
-                                                    key={col}
-                                                    className={col === 'Part Number' ? styles.partNumCell : col === 'Cross-Reference' ? styles.analoguesCell : undefined}
-                                                    data-label={table3Labels[col] ?? col}
-                                                >
-                                                    {col === 'Cross-Reference' ? renderTightCell(row[col])
-                                                     : col === 'Bearing designation' ? renderDesignationCell(row[col])
-                                                     : col === 'Brand name' ? renderBrandCell(row[col])
-                                                     : (row[col] ?? '-')}
-                                                </td>
-                                            ))}
-                                            <td className={styles.actionCol} data-label="">
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['Part Number'] || '')}>
-                                                    {t('agroPage.block2.btn_request')}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    {sortedT3.length === 0 && (
-                                        <tr><td colSpan={table3Cols.length + 1} className={styles.emptyState}>Нічого не знайдено</td></tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                        {schema3 && <ProductSchema src={schema3} alt="Agro table 3 — технічна схема" />}
+                        <ProductTable
+                            columns={colsT3}
+                            rows={searchedT3}
+                            renderCell={renderCell}
+                            actionCell={reqBtn}
+                        />
                     </div>
-
                 </div>
             </section>
 
+            {/* ── CTA ── */}
+            <section className={styles.cta} ref={ctaRef.ref as React.Ref<HTMLElement>}>
+                <div className={`${styles.container} ${ctaRef.inView ? styles.animIn : ''}`}>
+                    <h2 className={styles.ctaTitle}>{t('agroPage.block3.title')}</h2>
+                    <p className={styles.ctaText}>{t('agroPage.block3.text')}</p>
+                    <div className={styles.ctaButtons}>
+                        <button className={styles.btnPrimary} onClick={() => setModalProduct('Agro Bearings — Engineering Support')}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            {t('agroPage.block3.btn_contact')}
+                        </button>
+                        <button className={styles.btnSecondary}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                            </svg>
+                            {t('agroPage.block3.btn_pdf')}
+                        </button>
+                    </div>
+                </div>
+            </section>
         </main>
     );
 }
