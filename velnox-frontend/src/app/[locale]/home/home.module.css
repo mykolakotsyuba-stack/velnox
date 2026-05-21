@@ -1295,7 +1295,8 @@
 
     .sectionInner,
     .heroInner,
-    .ctaInner {
+    .ctaInner,
+    .oemInner {
         padding-left: 48px;
         padding-right: 48px;
     }
@@ -1330,7 +1331,8 @@
     }
 
     .industryGrid,
-    .processTrack {
+    .processTrack,
+    .oemGrid {
         grid-template-columns: 1fr;
         gap: 24px;
     }
@@ -1343,7 +1345,8 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .sectionInner {
+    .sectionInner,
+    .oemInner {
         padding: 80px 32px;
     }
 
@@ -1369,9 +1372,14 @@
 
     .sectionInner,
     .heroInner,
-    .ctaInner {
+    .ctaInner,
+    .oemInner {
         padding: 60px 20px;
         gap: 40px;
+    }
+
+    .metricsGrid {
+        grid-template-columns: 1fr;
     }
 
     .ctaTitle {
