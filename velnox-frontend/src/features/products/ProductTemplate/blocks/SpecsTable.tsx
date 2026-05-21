@@ -21,7 +21,7 @@ export function SpecsTable({ specs, hoveredSpec, onHoverSpec, isModal = false }:
                 <tbody>
                     {specs.map((spec) => {
                         const isHovered = hoveredSpec === spec.key;
-                        const displayValue = spec.unit ? `${spec.value} ${spec.unit}` : spec.value;
+                        const displayValue = spec.value;
                         return (
                             <tr
                                 key={spec.key}
