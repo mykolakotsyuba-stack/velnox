@@ -244,6 +244,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
                 const mapT1 = (p: any) => ({
                     part_number:  p.article,
+                    oem:          (p.cross_refs ?? []).map((r: any) => r.brand ? `${r.value} ${r.brand}` : r.value).join('\n'),
                     j_mm:         p.specs?.hub_J_mm,
                     D_mm:         p.specs?.hub_D_mm,
                     D1_mm:        p.specs?.hub_D1_mm,
@@ -582,6 +583,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                 <thead>
                                     <tr>
                                         <Th col="Part Number" label="Позначення Velnox" toggle={tog1} sortCol={sc1} sortDir={sd1} />
+                                        <Th col="OEM" label="OEM" toggle={tog1} sortCol={sc1} sortDir={sd1} />
                                         <Th col="J (mm)" label="Діаметр ділильного кола J (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['j_mm'] || []} selectedFilters={filters['j_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="D (mm)" label="Зовнішній діаметр D (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['D_mm'] || []} selectedFilters={filters['D_mm'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="D1 (mm)" label="Зовнішній діаметр D1 (мм)" toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['D1_mm'] || []} selectedFilters={filters['D1_mm'] || []} onFilterChange={handleFilterChange} />
@@ -607,6 +609,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                                             <td data-label="Позначення Velnox" className={styles.partNumCell}>
                                                 <Link href={`/${locale}/products/hubs/${slugT1}`} className={styles.designationLink}>{row['part_number']}</Link>
                                             </td>
+                                            <td data-label="OEM" className={styles.analoguesCell}>{renderTightCell(row['oem'])}</td>
                                             <td data-label="J (мм)">{row['j_mm']}</td>
                                             <td data-label="D (мм)">{row['D_mm']}</td>
                                             <td data-label="D1 (мм)">{row['D1_mm']}</td>

@@ -2856,9 +2856,6 @@
 }
 
 /* Extra-compact variant for таблиць із 15+ колонками */
-.techTableWide {
-    min-width: 1400px; /* Force overflow so tableScroll can scroll horizontally */
-}
 .techTableWide th {
     font-size: 10px;
     padding-left: 4px;
