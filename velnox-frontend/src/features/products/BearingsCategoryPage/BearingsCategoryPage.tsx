@@ -598,19 +598,22 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                         const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
                         const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
                         return {
-                            part_number:                    p.article,
-                            has_model_3d:                   p.has_model_3d ?? false,
-                            bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
-                            brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
-                            cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
-                            bore_diameter_d_mm:             p.specs.d_mm    ?? null,
-                            outer_diameter_d_mm:            p.specs.D_mm    ?? null,
-                            distance_between_holes_j_mm:    p.specs.J_mm    ?? null,
-                            overall_width_a_mm:             p.specs.A_mm    ?? null,
-                            width_inner_ring_b_mm:          p.specs.B_mm    ?? null,
-                            mass_kg:                        p.specs.mass_kg ?? null,
-                            dynamic_load_rating_cdyn_kn:    p.specs.cdyn_kn ?? null,
-                            static_load_rating_co_kn:       p.specs.co_kn   ?? null,
+                            part_number:                        p.article,
+                            has_model_3d:                       p.has_model_3d ?? false,
+                            bearing_designation:                bearingRefs.map((r: any) => r.value).join('\n'),
+                            brand_name:                         bearingRefs.map((r: any) => r.brand).join('\n'),
+                            cross_reference:                    appRefs.map((r: any) => r.value).join('\n'),
+                            bore_diameter_d_mm:                 p.specs.d_mm    ?? null,
+                            outside_diameter_d_mm:              p.specs.D_mm    ?? null,
+                            pitch_circle_diameter_j_mm:         p.specs.J_mm    ?? null,
+                            hole_thread_ht:                     p.specs.H_T     ?? null,
+                            overall_width_a_mm:                 p.specs.A_mm    ?? null,
+                            housing_flange_thickness_a2_mm:     p.specs.A2_mm   ?? null,
+                            width_inner_ring_b_mm:              p.specs.B_mm    ?? null,
+                            mass_kg:                            p.specs.mass_kg ?? null,
+                            static_load_rating_co_kn:           p.specs.co_kn   ?? null,
+                            dynamic_load_rating_cdyn_kn:        p.specs.cdyn_kn ?? null,
+                            fatigue_load_limit_pu_kn:           p.specs.pu_kn   ?? null,
                         };
                     }));
                 }
@@ -1126,6 +1129,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
+                                        <th className={styles.partNumCol}>Позначення Velnox</th>
                                         <Th col="bearing_designation" label="Позначення підшипника" toggle={tog5} sortCol={sc5} sortDir={sd5} />
                                         <Th col="brand_name" label="Бренд" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
                                         <Th col="cross_reference" label="Перехресні аналоги" toggle={tog5} sortCol={sc5} sortDir={sd5} />
@@ -1144,8 +1148,16 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedT5.map((row, i) => (
+                                    {sortedT5.map((row, i) => {
+                                        const slug5 = articleToSlug(row['part_number'] || '');
+                                        return (
                                         <tr key={i}>
+                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
+                                                <Link href={`/${locale}/products/bearings/${slug5}`} className={styles.designationLink}>
+                                                    {row['part_number'] || '-'}
+                                                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
+                                                </Link>
+                                            </td>
                                             <td data-label="Позначення підшипника">{renderDesignationCell(row['bearing_designation'])}</td>
                                             <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
                                             <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
@@ -1166,9 +1178,10 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))}
+                                    );
+                                    })}
                                     {filteredT5.length === 0 && (
-                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
+                                        <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
                                     )}
                                 </tbody>
                             </table>

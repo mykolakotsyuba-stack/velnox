@@ -1018,5 +1018,114 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // =========================================================
+        // 14. PRODUCT TABLE: bearings-t5 (BUP-207-X3L)
+        //     Images are excluded — owner will provide new files
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'bearings-t5'],
+            [
+                'slug'             => 'bearings-t5',
+                'category_id'      => $bearingsCatId,
+                'spec_columns'     => json_encode(['d_mm','D_mm','J_mm','H_T','A_mm','A2_mm','B_mm','mass_kg','co_kn','cdyn_kn','pu_kn']),
+                'highlight_config' => json_encode(new \stdClass()),
+                'schema_viewbox'   => null,
+                'sort_order'       => 5,
+            ]
+        );
+        $t5 = $tableId('bearings-t5');
+
+        foreach (['uk' => 'BUP-207-X3L — Таблиця 5', 'en' => 'BUP-207-X3L — Table 5', 'pl' => 'BUP-207-X3L — Tabela 5'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $t5, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        // =========================================================
+        // 15. PRODUCTS — bearings-t5 (BUP-207-X3L)
+        // =========================================================
+        $t5Products = [
+            [
+                'slug'    => 'bup-207-x3l',
+                'article' => 'BUP 207-X3L',
+                'specs'   => [
+                    'd_mm'    => '35',
+                    'D_mm'    => '125',
+                    'J_mm'    => '100',
+                    'H_T'     => 'M12',
+                    'A_mm'    => '40',
+                    'A2_mm'   => '20',
+                    'B_mm'    => '28.3',
+                    'mass_kg' => '1.7',
+                    'co_kn'   => '15.3',
+                    'cdyn_kn' => '25.5',
+                    'pu_kn'   => '0.643',
+                ],
+                'cross_refs' => [
+                    ['brand' => 'PEER',      'value' => '207XTR-R-DFC-A534 (PER.207RRSB-FC-A)',  'type' => 'bearing'],
+                    ['brand' => 'RBF',       'value' => 'GH.PN 00032',                            'type' => 'bearing'],
+                    ['brand' => 'FKL',       'value' => 'LSGR 207-TBS',                           'type' => 'bearing'],
+                    ['brand' => 'CT-AGRI',   'value' => 'LSGR 207-TBS',                           'type' => 'bearing'],
+                    ['brand' => 'NTE',       'value' => 'LSGR 207-TBS',                           'type' => 'bearing'],
+                    ['brand' => 'RBF',       'value' => 'PN 00023',                               'type' => 'bearing'],
+                    ['brand' => 'RBF',       'value' => 'PN 00032',                               'type' => 'bearing'],
+                    ['brand' => 'LEMKEN',    'value' => '31910034 Lemken',                        'type' => 'application'],
+                    ['brand' => 'LEMKEN',    'value' => '3199372 Lemken',                         'type' => 'application'],
+                    ['brand' => 'OPALL AGRI','value' => '3421370 Opall Agri',                     'type' => 'application'],
+                    ['brand' => 'INA/FAG',   'value' => 'F232812 - 0200 INA/FAG Bearing',        'type' => 'application'],
+                    ['brand' => 'INA/FAG',   'value' => 'GGF35A08',                              'type' => 'application'],
+                    ['brand' => 'INA/FAG',   'value' => 'GGME07 - AH07 INA/FAG Housing',        'type' => 'application'],
+                    ['brand' => 'OPALL AGRI','value' => 'RCJ 35 35x118x39,9 4xM12',              'type' => 'application'],
+                    ['brand' => 'SNR',       'value' => 'UC 207 X1 SNR Bearing',                 'type' => 'application'],
+                ],
+                'name_uk' => 'BUP 207-X3L',
+                'name_en' => 'BUP 207-X3L',
+                'name_pl' => 'BUP 207-X3L',
+            ],
+        ];
+
+        foreach ($t5Products as $p) {
+            DB::table('products')->updateOrInsert(
+                ['slug' => $p['slug']],
+                ['slug' => $p['slug'], 'article' => $p['article'], 'product_table_id' => $t5]
+            );
+            $productId = DB::table('products')->where('slug', $p['slug'])->value('id');
+
+            foreach ($p['specs'] as $key => $value) {
+                $sid = $specId($key);
+                if (!$sid) continue;
+                DB::table('product_specs')->updateOrInsert(
+                    ['product_id' => $productId, 'spec_id' => $sid],
+                    ['value' => $value]
+                );
+            }
+
+            DB::table('product_cross_refs')->where('product_id', $productId)->delete();
+            foreach ($p['cross_refs'] as $ref) {
+                DB::table('product_cross_refs')->insert([
+                    'product_id' => $productId,
+                    'brand'      => $ref['brand'],
+                    'value'      => $ref['value'],
+                    'type'       => $ref['type'],
+                ]);
+            }
+
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
+                    ['value' => $p["name_{$locale}"]]
+                );
+            }
+
+            // 3D model asset (file exists: public/models/BUP-207-X3L.glb)
+            if ($p['slug'] === 'bup-207-x3l') {
+                DB::table('product_assets')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'type' => 'model_3d'],
+                    ['path' => '/velnox/models/BUP-207-X3L.glb', 'sort_order' => 0]
+                );
+            }
+        }
+
     }
 }
