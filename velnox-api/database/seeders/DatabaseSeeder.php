@@ -1389,9 +1389,18 @@ class DatabaseSeeder extends Seeder
                     ['brand' => 'RBF',        'value' => 'PN60014',        'type' => 'application'],
                     ['brand' => 'GASPARDO',   'value' => 'R18125110R',     'type' => 'application'],
                 ],
-                'name_uk' => 'BAA-0004 VX',
-                'name_en' => 'BAA-0004 VX',
-                'name_pl' => 'BAA-0004 VX',
+                'name_uk'       => 'BAA-0004 VX',
+                'name_en'       => 'BAA-0004 VX',
+                'name_pl'       => 'BAA-0004 VX',
+                'desc_uk'       => 'Компактна підшипникова маточина різального вузла з D-подібним отвором вала та 4 кріпильними отворами M12×1.25 на ділильному колі J = 98 мм; зовнішній діаметр корпусу 117 мм — геометричний аналог вузлів типу SKF BAA 0004 / INA F-673270.04.TILL. Посадковий діаметр вала D1 = 27.95 мм, розмір D-подібного пазу C = 25.4 мм, зовнішня різьба M22×1.5, загальна довжина L = 102 мм; динамічна вантажопідйомність Cdyn = 42.9 кН, статична Co = 36.3 кН, маса 2.16 кг. Маточина оснащена подвійним контактним ущільненням (тип DSCS / TILL) з обох сторін, розрахованим на роботу в абразивному агресивному середовищі ґрунтообробних операцій. Виступає прямою заміною OEM-вузлів Köckerling (642668, 910974), Bednar (KM040110), Gaspardo (F06160015, R18125110R) та Farmet (M11308); несучі аналоги: SKF BAA 0004, NSK AHU28117A-01, INA F-673270.04.TILL, ХАРП 8395.TDA.5.05.015.',
+                'meta_title_uk' => 'VELNOX BAA-0004 VX — маточина різального вузла J98, SKF BAA 0004, INA F-673270',
+                'meta_desc_uk'  => 'Підшипникова маточина VELNOX BAA-0004 VX, D1=27.95 мм, J=98 мм, Cdyn 42.9 кН. Заміна SKF BAA 0004, INA F-673270.04.TILL, Köckerling 642668, Bednar KM040110.',
+                'desc_en'       => 'Compact bearing hub for cutting-node assemblies with a D-shaped shaft bore and 4 mounting holes M12×1.25 on bolt circle J = 98 mm; outer housing diameter 117 mm — geometric equivalent of SKF BAA 0004 / INA F-673270.04.TILL. Shaft bore D1 = 27.95 mm, D-shaped slot C = 25.4 mm, external thread M22×1.5, overall length L = 102 mm; dynamic load capacity Cdyn = 42.9 kN, static Co = 36.3 kN, weight 2.16 kg. The hub features double contact sealing (DSCS / TILL type) on both sides, designed for operation in abrasive soil-tillage conditions. Direct replacement for OEM units Köckerling (642668, 910974), Bednar (KM040110), Gaspardo (F06160015, R18125110R) and Farmet (M11308); bearing equivalents: SKF BAA 0004, NSK AHU28117A-01, INA F-673270.04.TILL.',
+                'meta_title_en' => 'VELNOX BAA-0004 VX — cutting node hub J98, SKF BAA 0004, INA F-673270',
+                'meta_desc_en'  => 'VELNOX BAA-0004 VX bearing hub, D1=27.95 mm, J=98 mm, Cdyn 42.9 kN. Replaces SKF BAA 0004, INA F-673270.04.TILL, Köckerling 642668, Bednar KM040110.',
+                'desc_pl'       => 'Kompaktowy węzeł łożyskowy piasty elementu tnącego z otworem wałka w kształcie litery D i 4 otworami mocującymi M12×1.25 na kole podziałowym J = 98 mm; zewnętrzna średnica obudowy 117 mm — geometryczny odpowiednik SKF BAA 0004 / INA F-673270.04.TILL. Średnica otworu wału D1 = 27,95 mm, wymiar rowka D C = 25,4 mm, gwint zewnętrzny M22×1.5, długość całkowita L = 102 mm; nośność dynamiczna Cdyn = 42,9 kN, statyczna Co = 36,3 kN, masa 2,16 kg. Piasta wyposażona jest w podwójne uszczelnienie stykowe (typ DSCS / TILL) po obu stronach, przeznaczone do pracy w ściernym środowisku uprawy gleby. Bezpośredni zamiennik węzłów OEM Köckerling (642668, 910974), Bednar (KM040110), Gaspardo (F06160015, R18125110R) i Farmet (M11308); analogii łożyskowe: SKF BAA 0004, NSK AHU28117A-01, INA F-673270.04.TILL.',
+                'meta_title_pl' => 'VELNOX BAA-0004 VX — piasta węzła tnącego J98, SKF BAA 0004, INA F-673270',
+                'meta_desc_pl'  => 'Piasta łożyskowa VELNOX BAA-0004 VX, D1=27,95 mm, J=98 mm, Cdyn 42,9 kN. Zamiennik SKF BAA 0004, INA F-673270.04.TILL, Köckerling 642668, Bednar KM040110.',
             ],
         ];
 
@@ -1461,6 +1470,18 @@ class DatabaseSeeder extends Seeder
                     ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
                     ['value' => $p["name_{$locale}"]]
                 );
+            }
+
+            foreach (['desc' => 'desc', 'meta_title' => 'meta_title', 'meta_desc' => 'meta_description'] as $suffix => $field) {
+                foreach (['uk', 'en', 'pl'] as $locale) {
+                    $key = "{$suffix}_{$locale}";
+                    if (!empty($p[$key])) {
+                        DB::table('translations')->updateOrInsert(
+                            ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => $field],
+                            ['value' => $p[$key]]
+                        );
+                    }
+                }
             }
         }
 
