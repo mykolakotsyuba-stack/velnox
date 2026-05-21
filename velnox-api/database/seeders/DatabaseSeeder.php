@@ -1183,7 +1183,7 @@ class DatabaseSeeder extends Seeder
                     'hub_J_mm'        => [['label' => 'J',   'x' => 355,  'y' => 856]],
                     'hub_D_mm'        => [['label' => 'D',   'x' => 1536, 'y' => 816]],
                     'hub_D1_mm'       => [['label' => 'D1',  'x' => 840,  'y' => 801]],
-                    'hub_d_mm'        => [['label' => 'd',   'x' => 864,  'y' => 801]],
+                    'hub_d_mm'        => [['label' => 'd',   'x' => 899,  'y' => 801]],
                     'hub_C_mm'        => [['label' => 'C',   'x' => 512,  'y' => 798]],
                     'hub_hole_thread' => [['label' => 'H/T', 'x' => 465,  'y' => 383]],
                     'hub_G'           => [['label' => 'G',   'x' => 931,  'y' => 693]],
