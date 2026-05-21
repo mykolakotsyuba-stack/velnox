@@ -60,6 +60,8 @@ class DatabaseSeeder extends Seeder
             ['key' => 'hub_M_thread',    'svg_label' => null,   'sort_order' => 30],
             ['key' => 'hub_E_mm',        'svg_label' => 'E',    'sort_order' => 31],
             ['key' => 'hub_B_mm',        'svg_label' => 'B',    'sort_order' => 32],
+            ['key' => 'd1_mm',           'svg_label' => 'd1',   'sort_order' => 33],
+            ['key' => 'r_12_mm',         'svg_label' => null,   'sort_order' => 34],
         ];
 
         foreach ($specs as $spec) {
@@ -110,6 +112,8 @@ class DatabaseSeeder extends Seeder
             'H_T'     => ['uk' => ['label' => 'Отвір / Різьба H/T',                              'unit' => ''],    'en' => ['label' => 'Hole / Thread H/T',                             'unit' => ''],    'pl' => ['label' => 'Otwór / Gwint H/T',                            'unit' => '']],
             'L1_mm'   => ['uk' => ['label' => 'L1 (мм) — довжина секції 1',      'unit' => 'мм'],  'en' => ['label' => 'L1 (mm) — section 1 length',        'unit' => 'mm'],  'pl' => ['label' => 'L1 (mm) — długość sekcji 1',       'unit' => 'mm']],
             'L2_mm'   => ['uk' => ['label' => 'L2 (мм) — довжина секції 2',      'unit' => 'мм'],  'en' => ['label' => 'L2 (mm) — section 2 length',        'unit' => 'mm'],  'pl' => ['label' => 'L2 (mm) — długość sekcji 2',       'unit' => 'mm']],
+            'd1_mm'   => ['uk' => ['label' => 'Зовнішній діаметр внутрішнього кільця d1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Inner ring outside diameter d1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Zewnętrzna śr. pierścienia wewnętrznego d1 (mm)', 'unit' => 'mm']],
+            'r_12_mm' => ['uk' => ['label' => 'Розмір фаски r 1,2 (мм)',                       'unit' => 'мм'], 'en' => ['label' => 'Chamfer dimension r 1,2 (mm)',         'unit' => 'mm'], 'pl' => ['label' => 'Wymiar fazowania r 1,2 (mm)',                     'unit' => 'mm']],
         ];
 
         foreach ($specTranslations as $key => $locales) {
@@ -1642,6 +1646,224 @@ class DatabaseSeeder extends Seeder
                         );
                     }
                 }
+            }
+        }
+
+        // =========================================================
+        // 19. PRODUCT TABLE: agro-t1 (Series 1726 / Special Agro Bearings)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'agro-t1'],
+            [
+                'slug'             => 'agro-t1',
+                'category_id'      => $catId('agro'),
+                'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','d1_mm','r_12_mm','cdyn_kn','co_kn','pu_kn','mass_kg']),
+                'highlight_config' => json_encode(new \stdClass()),
+                'schema_viewbox'   => null,
+                'sort_order'       => 1,
+            ]
+        );
+
+        $at1 = DB::table('product_tables')->where('slug', 'agro-t1')->value('id');
+
+        foreach (['uk' => 'Серія 1726 — спеціальні агропідшипники', 'en' => 'Series 1726 — Special Agro Bearings', 'pl' => 'Seria 1726 — specjalne łożyska agro'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $at1, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        $at1Products = [
+            [
+                'article' => '1726206-2RS1 VX',
+                'slug'    => '1726206-2rs1-vx',
+                'specs'   => ['d_mm'=>'30','D_mm'=>'62','B_mm'=>'16','d1_mm'=>'39.7','r_12_mm'=>'1','cdyn_kn'=>'19.5','co_kn'=>'11.2','pu_kn'=>'0.48','mass_kg'=>'0.18'],
+                'cross_refs' => [
+                    ['brand'=>'TIMKEN',     'value'=>'1726206 2RS',   'type'=>'bearing'],
+                    ['brand'=>'NSK-RHP',    'value'=>'1726206 2RS',   'type'=>'bearing'],
+                    ['brand'=>'SKF',        'value'=>'1726206 2RS1',  'type'=>'bearing'],
+                    ['brand'=>'INA',        'value'=>'206 NPPB',      'type'=>'bearing'],
+                    ['brand'=>'SKF',        'value'=>'XG206NPPB',     'type'=>'bearing'],
+                    ['brand'=>'SNR',        'value'=>'6206 S EE',     'type'=>'bearing'],
+                    ['brand'=>'NTE',        'value'=>'CS 206 2RS',    'type'=>'bearing'],
+                    ['brand'=>'FBJ',        'value'=>'CS 206 2RS',    'type'=>'bearing'],
+                    ['brand'=>'ZKL',        'value'=>'UD 206',        'type'=>'bearing'],
+                    ['brand'=>'Dominoni',   'value'=>'10330',         'type'=>'application'],
+                    ['brand'=>'CLAAS',      'value'=>'211156.0',      'type'=>'application'],
+                    ['brand'=>'Rauch',      'value'=>'2152620',       'type'=>'application'],
+                    ['brand'=>'KUHN',       'value'=>'81023064',      'type'=>'application'],
+                    ['brand'=>'AGCO',       'value'=>'831087M1',      'type'=>'application'],
+                    ['brand'=>'JD',         'value'=>'JD10386',       'type'=>'application'],
+                    ['brand'=>'Capello',    'value'=>'PMS-000005',    'type'=>'application'],
+                    ['brand'=>'Kverneland', 'value'=>'VF06215766',    'type'=>'application'],
+                    ['brand'=>'KUHN',       'value'=>'YP800030',      'type'=>'application'],
+                ],
+                'name_uk'=>'1726206-2RS1 VX','name_en'=>'1726206-2RS1 VX','name_pl'=>'1726206-2RS1 VX',
+            ],
+            [
+                'article' => '1726207-2RS1 VX',
+                'slug'    => '1726207-2rs1-vx',
+                'specs'   => ['d_mm'=>'35','D_mm'=>'72','B_mm'=>'17','d1_mm'=>'46.1','r_12_mm'=>'1','cdyn_kn'=>'25.5','co_kn'=>'15.3','pu_kn'=>'0.25','mass_kg'=>'0.66'],
+                'cross_refs' => [
+                    ['brand'=>'TIMKEN',  'value'=>'1726207 2RS',   'type'=>'bearing'],
+                    ['brand'=>'NSK-RHP', 'value'=>'1726207 2RS',   'type'=>'bearing'],
+                    ['brand'=>'SKF',     'value'=>'1726207 2RS1',  'type'=>'bearing'],
+                    ['brand'=>'INA',     'value'=>'207 NPPB',      'type'=>'bearing'],
+                    ['brand'=>'SKF',     'value'=>'XG207NPPB',     'type'=>'bearing'],
+                    ['brand'=>'SNR',     'value'=>'6207 SEE',      'type'=>'bearing'],
+                    ['brand'=>'FBJ',     'value'=>'CS 207 2 RS',   'type'=>'bearing'],
+                    ['brand'=>'INA',     'value'=>'G207-XL-NPPB',  'type'=>'bearing'],
+                    ['brand'=>'Capello', 'value'=>'03.2026.00',    'type'=>'application'],
+                    ['brand'=>'Ziegler', 'value'=>'12-058340',     'type'=>'application'],
+                    ['brand'=>'CASE',    'value'=>'1407629R91',    'type'=>'application'],
+                    ['brand'=>'CASE',    'value'=>'3166063R91',    'type'=>'application'],
+                    ['brand'=>'MONOSEM', 'value'=>'4655.1',        'type'=>'application'],
+                    ['brand'=>'Kuhn',    'value'=>'81043576',      'type'=>'application'],
+                    ['brand'=>'MF',      'value'=>'831822M1',      'type'=>'application'],
+                    ['brand'=>'',        'value'=>'B96.00264',     'type'=>'application'],
+                ],
+                'name_uk'=>'1726207-2RS1 VX','name_en'=>'1726207-2RS1 VX','name_pl'=>'1726207-2RS1 VX',
+            ],
+            [
+                'article' => '1726208-2RS1 VX',
+                'slug'    => '1726208-2rs1-vx',
+                'specs'   => ['d_mm'=>'40','D_mm'=>'80','B_mm'=>'18','d1_mm'=>'52','r_12_mm'=>'1.1','cdyn_kn'=>'30.7','co_kn'=>'19','pu_kn'=>'0.8','mass_kg'=>'0.32'],
+                'cross_refs' => [
+                    ['brand'=>'TIMKEN',     'value'=>'1726208 2RS',    'type'=>'bearing'],
+                    ['brand'=>'SKF',        'value'=>'1726208 2RS1',   'type'=>'bearing'],
+                    ['brand'=>'SKF',        'value'=>'XG208NPPB',      'type'=>'bearing'],
+                    ['brand'=>'SNR',        'value'=>'6208 S EE',      'type'=>'bearing'],
+                    ['brand'=>'FBJ',        'value'=>'CS 208 2RS',     'type'=>'bearing'],
+                    ['brand'=>'INA',        'value'=>'G208-XL-NPPB',   'type'=>'bearing'],
+                    ['brand'=>'ZKL',        'value'=>'UD 208',         'type'=>'bearing'],
+                    ['brand'=>'Geringhoff', 'value'=>'025292',         'type'=>'application'],
+                    ['brand'=>'Geringhoff', 'value'=>'025293',         'type'=>'application'],
+                    ['brand'=>'Monosem',    'value'=>'30161042',       'type'=>'application'],
+                    ['brand'=>'Monosem',    'value'=>'4655.1A',        'type'=>'application'],
+                    ['brand'=>'LUK',        'value'=>'730004600',      'type'=>'application'],
+                    ['brand'=>'JD',         'value'=>'AZ23315',        'type'=>'application'],
+                    ['brand'=>'GASPARDO',   'value'=>'F04010184',      'type'=>'application'],
+                ],
+                'name_uk'=>'1726208-2RS1 VX','name_en'=>'1726208-2RS1 VX','name_pl'=>'1726208-2RS1 VX',
+            ],
+            [
+                'article' => '1726209-2RS1 VX',
+                'slug'    => '1726209-2rs1-vx',
+                'specs'   => ['d_mm'=>'45','D_mm'=>'85','B_mm'=>'19','d1_mm'=>'56.6','r_12_mm'=>'1.1','cdyn_kn'=>'32.5','co_kn'=>'20.4','pu_kn'=>'0.92','mass_kg'=>'0.37'],
+                'cross_refs' => [
+                    ['brand'=>'TIMKEN',  'value'=>'1726209 2RS',    'type'=>'bearing'],
+                    ['brand'=>'NSK-RHP', 'value'=>'1726209 2RS',    'type'=>'bearing'],
+                    ['brand'=>'SKF',     'value'=>'1726209 2RS1',   'type'=>'bearing'],
+                    ['brand'=>'INA',     'value'=>'209 NPPB',       'type'=>'bearing'],
+                    ['brand'=>'SKF',     'value'=>'XG209NPPB',      'type'=>'bearing'],
+                    ['brand'=>'FBJ',     'value'=>'CS 209 2RS',     'type'=>'bearing'],
+                    ['brand'=>'Claas',   'value'=>'000212102.0',    'type'=>'application'],
+                    ['brand'=>'Capello', 'value'=>'02.1032.00',     'type'=>'application'],
+                    ['brand'=>'Ziegler', 'value'=>'12-058421',      'type'=>'application'],
+                    ['brand'=>'NH',      'value'=>'340411240',      'type'=>'application'],
+                    ['brand'=>'NH',      'value'=>'81004584',       'type'=>'application'],
+                    ['brand'=>'MF',      'value'=>'831134M1',       'type'=>'application'],
+                    ['brand'=>'MF',      'value'=>'LA340411277',    'type'=>'application'],
+                    ['brand'=>'',        'value'=>'NWB00607',       'type'=>'application'],
+                    ['brand'=>'Capello', 'value'=>'PMS-000007',     'type'=>'application'],
+                    ['brand'=>'KUHN',    'value'=>'Z4009820',       'type'=>'application'],
+                    ['brand'=>'GRIMME',  'value'=>'B96.00293',      'type'=>'application'],
+                ],
+                'name_uk'=>'1726209-2RS1 VX','name_en'=>'1726209-2RS1 VX','name_pl'=>'1726209-2RS1 VX',
+            ],
+            [
+                'article' => '1726210-2RS1 VX',
+                'slug'    => '1726210-2rs1-vx',
+                'specs'   => ['d_mm'=>'50','D_mm'=>'90','B_mm'=>'20','d1_mm'=>'62.5','r_12_mm'=>'1.1','cdyn_kn'=>'35.1','co_kn'=>'23.2','pu_kn'=>'0.98','mass_kg'=>'0.41'],
+                'cross_refs' => [
+                    ['brand'=>'TIMKEN',  'value'=>'1726210 2RS',    'type'=>'bearing'],
+                    ['brand'=>'NSK-RHP', 'value'=>'1726210 2RS',    'type'=>'bearing'],
+                    ['brand'=>'SKF',     'value'=>'1726210 2RS1',   'type'=>'bearing'],
+                    ['brand'=>'INA',     'value'=>'210 NPPB',       'type'=>'bearing'],
+                    ['brand'=>'SKF',     'value'=>'XG210NPPB',      'type'=>'bearing'],
+                    ['brand'=>'FBJ',     'value'=>'CS 210 2RS',     'type'=>'bearing'],
+                    ['brand'=>'Dominoni','value'=>'11330',          'type'=>'application'],
+                    ['brand'=>'Kuhn',    'value'=>'81005000',       'type'=>'application'],
+                    ['brand'=>'Kuhn',    'value'=>'81005099',       'type'=>'application'],
+                    ['brand'=>'',        'value'=>'1726210 2RS1',   'type'=>'application'],
+                ],
+                'name_uk'=>'1726210-2RS1 VX','name_en'=>'1726210-2RS1 VX','name_pl'=>'1726210-2RS1 VX',
+            ],
+            [
+                'article' => '1726306-2RS1 VX',
+                'slug'    => '1726306-2rs1-vx',
+                'specs'   => ['d_mm'=>'30','D_mm'=>'72','B_mm'=>'19','d1_mm'=>'44.6','r_12_mm'=>'1.1','cdyn_kn'=>'28.1','co_kn'=>'16','pu_kn'=>'0.67','mass_kg'=>'0.3'],
+                'cross_refs' => [
+                    ['brand'=>'SKF',  'value'=>'1726306 2RS1',   'type'=>'bearing'],
+                    ['brand'=>'NTN',  'value'=>'CS306LLU',       'type'=>'bearing'],
+                    ['brand'=>'NSK',  'value'=>'CS306DDU',       'type'=>'bearing'],
+                    ['brand'=>'FAG',  'value'=>'76306-2RS',      'type'=>'bearing'],
+                    ['brand'=>'SKF',  'value'=>'1726306-2RS1',   'type'=>'bearing'],
+                    ['brand'=>'SNR',  'value'=>'6306SEE',        'type'=>'bearing'],
+                    ['brand'=>'RHP',  'value'=>'1726306-2RS',    'type'=>'bearing'],
+                    ['brand'=>'FKL',  'value'=>'1726306 2S.T',   'type'=>'bearing'],
+                    ['brand'=>'',     'value'=>'580306 K7C17',   'type'=>'application'],
+                    ['brand'=>'',     'value'=>'1726306 2RS1',   'type'=>'application'],
+                ],
+                'name_uk'=>'1726306-2RS1 VX','name_en'=>'1726306-2RS1 VX','name_pl'=>'1726306-2RS1 VX',
+            ],
+            [
+                'article' => '1726309-2RS1 VX',
+                'slug'    => '1726309-2rs1-vx',
+                'specs'   => ['d_mm'=>'45','D_mm'=>'100','B_mm'=>'25','d1_mm'=>'62.1','r_12_mm'=>'1.5','cdyn_kn'=>'52.7','co_kn'=>'31.5','pu_kn'=>'1.34','mass_kg'=>'0.73'],
+                'cross_refs' => [
+                    ['brand'=>'TIMKEN', 'value'=>'1726309 2RS',    'type'=>'bearing'],
+                    ['brand'=>'NSK',    'value'=>'1726309 2RS',    'type'=>'bearing'],
+                    ['brand'=>'SKF',    'value'=>'1726309 2RS1',   'type'=>'bearing'],
+                    ['brand'=>'NTN',    'value'=>'CS309LLU',       'type'=>'bearing'],
+                    ['brand'=>'NSK',    'value'=>'CS309DDU',       'type'=>'bearing'],
+                    ['brand'=>'FAG',    'value'=>'76309-2RS',      'type'=>'bearing'],
+                    ['brand'=>'IMT',    'value'=>'61200120',       'type'=>'bearing'],
+                    ['brand'=>'SNR',    'value'=>'1726309 2RS',    'type'=>'bearing'],
+                    ['brand'=>'',       'value'=>'309NPPB',        'type'=>'application'],
+                    ['brand'=>'GASPARDO','value'=>'F04010225R',    'type'=>'application'],
+                    ['brand'=>'GASPARDO','value'=>'MG43400468',    'type'=>'application'],
+                    ['brand'=>'GASPARDO','value'=>'23400434',      'type'=>'application'],
+                    ['brand'=>'GASPARDO','value'=>'76100409',      'type'=>'application'],
+                    ['brand'=>'GASPARDO','value'=>'61100438',      'type'=>'application'],
+                    ['brand'=>'GASPARDO','value'=>'43400468',      'type'=>'application'],
+                    ['brand'=>'ZARAMAK', 'value'=>'1726309 2RS1',  'type'=>'application'],
+                ],
+                'name_uk'=>'1726309-2RS1 VX','name_en'=>'1726309-2RS1 VX','name_pl'=>'1726309-2RS1 VX',
+            ],
+        ];
+
+        foreach ($at1Products as $p) {
+            DB::table('products')->updateOrInsert(
+                ['slug' => $p['slug']],
+                ['slug' => $p['slug'], 'article' => $p['article'], 'product_table_id' => $at1]
+            );
+            $productId = DB::table('products')->where('slug', $p['slug'])->value('id');
+
+            foreach ($p['specs'] as $key => $value) {
+                $sid = $specId($key);
+                if (!$sid) continue;
+                DB::table('product_specs')->updateOrInsert(
+                    ['product_id' => $productId, 'spec_id' => $sid],
+                    ['value' => $value]
+                );
+            }
+
+            DB::table('product_cross_refs')->where('product_id', $productId)->delete();
+            foreach ($p['cross_refs'] as $ref) {
+                DB::table('product_cross_refs')->insert([
+                    'product_id' => $productId,
+                    'brand'      => $ref['brand'],
+                    'value'      => $ref['value'],
+                    'type'       => $ref['type'],
+                ]);
+            }
+
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
+                    ['value' => $p["name_{$locale}"]]
+                );
             }
         }
 

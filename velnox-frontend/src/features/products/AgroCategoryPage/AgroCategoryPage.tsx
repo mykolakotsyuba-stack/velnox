@@ -114,9 +114,20 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
 type SlMap = Record<string, string>;
 
 function buildT1Cols(sl: SlMap, partLabel: string): ColDef[] {
-    // TODO: add spec columns when data is provided
     return [
-        { key: 'part_number', label: partLabel, width: '120px' },
+        { key: 'part_number',   label: partLabel,                                   width: '130px' },
+        { key: 'bearing_part',  label: 'Позначення підшипника',                     hasFilter: false },
+        { key: 'bearing_brand', label: 'Бренд',                                     hasFilter: false },
+        { key: 'oem',           label: 'Перехресні аналоги',                        hasFilter: false },
+        { key: 'd_mm',          label: sl['d_mm']    || 'Діаметр отвору d (мм)',    hasFilter: true },
+        { key: 'D_mm',          label: sl['D_mm']    || 'Зовнішній діаметр D (мм)', hasFilter: true },
+        { key: 'B_mm',          label: sl['B_mm']    || 'Ширина B (мм)',            hasFilter: true },
+        { key: 'd1_mm',         label: sl['d1_mm']   || 'd1 (мм)',                  hasFilter: true },
+        { key: 'r_12_mm',       label: sl['r_12_mm'] || 'r 1,2 (мм)',              hasFilter: true },
+        { key: 'cdyn_kn',       label: sl['cdyn_kn'] || 'Cdyn (кН)',               hasFilter: true },
+        { key: 'co_kn',         label: sl['co_kn']   || 'Co (кН)',                 hasFilter: true },
+        { key: 'pu_kn',         label: sl['pu_kn']   || 'Pu (кН)',                 hasFilter: true },
+        { key: 'mass_kg',       label: sl['mass_kg'] || 'Маса (кг)',               hasFilter: true },
     ];
 }
 
