@@ -141,7 +141,7 @@ function buildT2Cols(sl: SlMap, partLabel: string): ColDef[] {
         { key: 'hub_J_mm',       label: sl['hub_J_mm']       || 'J (mm)',   hasFilter: true },
         { key: 'hub_D_mm',       label: sl['hub_D_mm']       || 'D (mm)',   hasFilter: true },
         { key: 'hub_hole_thread',label: sl['hub_hole_thread'] || 'H/T',     hasFilter: true },
-        { key: 'hub_d_mm',       label: sl['hub_d_mm']       || 'd (mm)',   hasFilter: true },
+        { key: 'hub_D1_mm',      label: sl['hub_D1_mm']      || 'D1 (mm)',  hasFilter: true },
         { key: 'hub_C_mm',       label: sl['hub_C_mm']       || 'C (mm)',   hasFilter: true },
         { key: 'hub_M_thread',   label: sl['hub_M_thread']   || 'M',        hasFilter: true },
         { key: 'hub_L_mm',       label: sl['hub_L_mm']       || 'L (mm)',   hasFilter: true },
@@ -198,6 +198,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
     /* schema image URLs from product_assets in DB */
     const [schema1, setSchema1] = useState<string | null>(null);
+    const [schema2, setSchema2] = useState<string | null>(null);
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
 
@@ -235,6 +236,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
                 /* schema image from product_assets (type=schema_png) in DB */
                 if (data1.table?.schema_src) setSchema1(data1.table.schema_src);
+                if (data2.table?.schema_src) setSchema2(data2.table.schema_src);
 
                 /* Row keys = spec_definitions.key — matches buildTxCols above */
                 const mapRow = (p: any) => ({
@@ -450,6 +452,9 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table2.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table2.desc')}</p>
+                        {schema2 && (
+                            <ProductSchema src={schema2} alt="BAA-0004 VX — технічна схема" />
+                        )}
                         <ProductTable
                             columns={colsT2}
                             rows={searchedT2}

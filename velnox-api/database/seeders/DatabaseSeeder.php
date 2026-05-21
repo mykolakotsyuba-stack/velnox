@@ -1322,5 +1322,147 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // =========================================================
+        // 17. PRODUCT TABLE: hubs-t2
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'hubs-t2'],
+            [
+                'slug'             => 'hubs-t2',
+                'category_id'      => $hubsCatId,
+                'spec_columns'     => json_encode(['hub_J_mm', 'hub_D_mm', 'hub_hole_thread', 'hub_D1_mm', 'hub_C_mm', 'hub_M_thread', 'hub_L_mm', 'hub_L1_mm', 'hub_E_mm', 'hub_F_mm', 'mass_kg', 'cdyn_kn', 'co_kn', 'pu_kn']),
+                'highlight_config' => json_encode((object)[]),
+                'schema_viewbox'   => null,
+                'sort_order'       => 2,
+            ]
+        );
+
+        $ht2 = $tableId('hubs-t2');
+
+        foreach (['uk' => 'Ступичний вузол ріжучих вузлів — Таблиця 2', 'en' => 'Cutting Node Hub Unit — Table 2', 'pl' => 'Węzeł piasty węzłów tnących — Tabela 2'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $ht2, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        $ht2Products = [
+            [
+                'article' => 'BAA-0004 VX',
+                'slug'    => 'baa-0004-vx',
+                'specs'   => [
+                    'hub_J_mm'        => '98',
+                    'hub_D_mm'        => '117',
+                    'hub_hole_thread' => '4xM12x1.25',
+                    'hub_D1_mm'       => '27.95',
+                    'hub_C_mm'        => '25.4',
+                    'hub_M_thread'    => 'M22x1.5',
+                    'hub_L_mm'        => '102',
+                    'hub_L1_mm'       => '60',
+                    'hub_E_mm'        => '17',
+                    'hub_F_mm'        => '25',
+                    'mass_kg'         => '2.16',
+                    'cdyn_kn'         => '42.9',
+                    'co_kn'           => '36.3',
+                    'pu_kn'           => '1.53',
+                ],
+                'cross_refs' => [
+                    ['brand' => 'ХАРП', 'value' => '8395.TDA.5.05.015',    'type' => 'bearing'],
+                    ['brand' => 'SKF',  'value' => 'AGHU2898X4E-DSCS',     'type' => 'bearing'],
+                    ['brand' => 'NSK',  'value' => 'AHU28117A-01',          'type' => 'bearing'],
+                    ['brand' => 'SKF',  'value' => 'BAA 0004',              'type' => 'bearing'],
+                    ['brand' => 'FBJ',  'value' => 'BAA 0004 (SAH0004)',    'type' => 'bearing'],
+                    ['brand' => 'INA',  'value' => 'F-673270.04.TILL',      'type' => 'bearing'],
+                    ['brand' => 'PEER', 'value' => 'HUB 30мм ASSY (47661)', 'type' => 'bearing'],
+                    ['brand' => 'PEER', 'value' => 'HUB-30Мм-X-ASSY-A221', 'type' => 'bearing'],
+                    ['brand' => 'FKL',  'value' => 'IL-117-M22',            'type' => 'bearing'],
+                    ['brand' => 'RBF',  'value' => 'PN 60014',              'type' => 'bearing'],
+                    ['brand' => 'Holmer',     'value' => '1000042983',    'type' => 'application'],
+                    ['brand' => 'Köckerling', 'value' => '642668',         'type' => 'application'],
+                    ['brand' => 'Köckerling', 'value' => '910974',         'type' => 'application'],
+                    ['brand' => '',           'value' => 'BAA 0004',       'type' => 'application'],
+                    ['brand' => 'Gaspardo',   'value' => 'F06160015',      'type' => 'application'],
+                    ['brand' => '',           'value' => 'IL40-98/4T-M22', 'type' => 'application'],
+                    ['brand' => '',           'value' => 'Il50-98/4t-m22', 'type' => 'application'],
+                    ['brand' => 'BEDNAR',     'value' => 'KM040110',       'type' => 'application'],
+                    ['brand' => 'Farmet',     'value' => 'M11308',         'type' => 'application'],
+                    ['brand' => 'RBF',        'value' => 'PN60014',        'type' => 'application'],
+                    ['brand' => 'GASPARDO',   'value' => 'R18125110R',     'type' => 'application'],
+                ],
+                'name_uk' => 'BAA-0004 VX',
+                'name_en' => 'BAA-0004 VX',
+                'name_pl' => 'BAA-0004 VX',
+            ],
+        ];
+
+        // product_assets for hubs-t2 (schema_png, schema_svg, gallery)
+        $ht2AssetBase    = '/velnox/images/products/hubs-t2';
+        $ht2ArticleSlug  = 'baa-0004-vx';
+        foreach ([
+            ['type' => 'schema_png', 'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}-schema.webp", 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => "{$ht2AssetBase}/schema.svg",                            'sort_order' => 0],
+            ['type' => 'gallery',    'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}.webp",          'sort_order' => 1],
+            ['type' => 'gallery',    'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}-drawing-1.webp",'sort_order' => 2],
+            ['type' => 'gallery',    'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}-drawing-2.webp",'sort_order' => 3],
+            ['type' => 'gallery',    'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}-drawing-3.webp",'sort_order' => 4],
+        ] as $asset) {
+            if ($asset['type'] === 'gallery') {
+                $exists = DB::table('product_assets')
+                    ->where('entity_type', 'product_table')->where('entity_id', $ht2)
+                    ->where('type', 'gallery')->where('path', $asset['path'])->exists();
+                if (!$exists) {
+                    DB::table('product_assets')->insert([
+                        'entity_type' => 'product_table', 'entity_id' => $ht2,
+                        'type' => $asset['type'], 'path' => $asset['path'], 'sort_order' => $asset['sort_order'],
+                    ]);
+                }
+            } else {
+                DB::table('product_assets')->updateOrInsert(
+                    ['entity_type' => 'product_table', 'entity_id' => $ht2, 'type' => $asset['type']],
+                    ['path' => $asset['path'], 'sort_order' => $asset['sort_order']]
+                );
+            }
+        }
+
+        foreach ($ht2Products as $p) {
+            DB::table('products')->updateOrInsert(
+                ['slug' => $p['slug']],
+                ['slug' => $p['slug'], 'article' => $p['article'], 'product_table_id' => $ht2]
+            );
+            $productId = DB::table('products')->where('slug', $p['slug'])->value('id');
+
+            foreach ($p['specs'] as $key => $value) {
+                $sid = $specId($key);
+                if (!$sid) continue;
+                DB::table('product_specs')->updateOrInsert(
+                    ['product_id' => $productId, 'spec_id' => $sid],
+                    ['value' => $value]
+                );
+            }
+
+            DB::table('product_cross_refs')->where('product_id', $productId)->delete();
+            foreach ($p['cross_refs'] as $ref) {
+                DB::table('product_cross_refs')->insert([
+                    'product_id' => $productId,
+                    'brand'      => $ref['brand'],
+                    'value'      => $ref['value'],
+                    'type'       => $ref['type'],
+                ]);
+            }
+
+            // model_3d asset for BAA-0004 VX
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $productId, 'type' => 'model_3d'],
+                ['path' => '/velnox/models/baa-0004-vx.glb', 'sort_order' => 0]
+            );
+
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
+                    ['value' => $p["name_{$locale}"]]
+                );
+            }
+        }
+
     }
 }
