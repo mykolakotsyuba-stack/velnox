@@ -409,6 +409,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
     // Table data states
     const [tableSchemas, setTableSchemas] = useState<Record<string, string | null>>({});
     const [table1SpecLabels, setTable1SpecLabels] = useState<Record<string, string>>({});
+    const [table5SpecLabels, setTable5SpecLabels] = useState<Record<string, string>>({});
     const [table1Data, setTable1Data] = useState<any[]>([]);
     const [table2Data, setTable2Data] = useState<any[]>([]);
     const [table3Data, setTable3Data] = useState<any[]>([]);
@@ -594,6 +595,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 if (res5.ok) {
                     const data5 = await res5.json();
                     if (data5.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t5': data5.table.schema_src }));
+                    if (data5.table?.spec_labels) setTable5SpecLabels(data5.table.spec_labels);
                     setTable5Data((data5.products ?? []).map((p: any) => {
                         const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
                         const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
@@ -1129,21 +1131,21 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                             <table className={styles.techTable}>
                                 <thead>
                                     <tr>
-                                        <th className={styles.partNumCol}>Позначення Velnox</th>
-                                        <Th col="bearing_designation" label="Позначення підшипника" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="brand_name" label="Бренд" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="cross_reference" label="Перехресні аналоги" toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="bore_diameter_d_mm" label="Діаметр отвору d (мм)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['bore_diameter_d_mm'] || []} selectedFilters={filters['bore_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="outside_diameter_d_mm" label="Зовнішній діаметр D (мм)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['outside_diameter_d_mm'] || []} selectedFilters={filters['outside_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="pitch_circle_diameter_j_mm" label="Діаметр кола отворів J (мм)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['pitch_circle_diameter_j_mm'] || []} selectedFilters={filters['pitch_circle_diameter_j_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="hole_thread_ht" label="Отвір / Різьба H/T" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['hole_thread_ht'] || []} selectedFilters={filters['hole_thread_ht'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="overall_width_a_mm" label="Загальна ширина A (мм)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['overall_width_a_mm'] || []} selectedFilters={filters['overall_width_a_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="housing_flange_thickness_a2_mm" label="Товщина фланця корпусу A2 (мм)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['housing_flange_thickness_a2_mm'] || []} selectedFilters={filters['housing_flange_thickness_a2_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="width_inner_ring_b_mm" label="Ширина внутрішнього кільця B (мм)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['width_inner_ring_b_mm'] || []} selectedFilters={filters['width_inner_ring_b_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="mass_kg" label="Маса (кг)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="static_load_rating_co_kn" label="Статична вантажо-підйомність Co (кН)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['static_load_rating_co_kn'] || []} selectedFilters={filters['static_load_rating_co_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="dynamic_load_rating_cdyn_kn" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['dynamic_load_rating_cdyn_kn'] || []} selectedFilters={filters['dynamic_load_rating_cdyn_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="fatigue_load_limit_pu_kn" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
+                                        <th className={styles.partNumCol}>{t('cols.part_number')}</th>
+                                        <Th col="bearing_designation" label={t('cols.bearing_designation')} toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="brand_name" label={t('cols.brand')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="cross_reference" label={t('cols.cross_ref')} toggle={tog5} sortCol={sc5} sortDir={sd5} />
+                                        <Th col="bore_diameter_d_mm" label={table5SpecLabels['d_mm'] || t('cols.d_mm')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['bore_diameter_d_mm'] || []} selectedFilters={filters['bore_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="outside_diameter_d_mm" label={table5SpecLabels['D_mm'] || t('cols.out_d')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['outside_diameter_d_mm'] || []} selectedFilters={filters['outside_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="pitch_circle_diameter_j_mm" label={table5SpecLabels['J_mm'] || t('cols.pitch_j')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['pitch_circle_diameter_j_mm'] || []} selectedFilters={filters['pitch_circle_diameter_j_mm'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="hole_thread_ht" label={table5SpecLabels['H_T'] || t('cols.ht')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['hole_thread_ht'] || []} selectedFilters={filters['hole_thread_ht'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="overall_width_a_mm" label={table5SpecLabels['A_mm'] || t('cols.a')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['overall_width_a_mm'] || []} selectedFilters={filters['overall_width_a_mm'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="housing_flange_thickness_a2_mm" label={table5SpecLabels['A2_mm'] || t('cols.a2')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['housing_flange_thickness_a2_mm'] || []} selectedFilters={filters['housing_flange_thickness_a2_mm'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="width_inner_ring_b_mm" label={table5SpecLabels['B_mm'] || t('cols.b')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['width_inner_ring_b_mm'] || []} selectedFilters={filters['width_inner_ring_b_mm'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="mass_kg" label={table5SpecLabels['mass_kg'] || t('cols.mass')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="static_load_rating_co_kn" label={table5SpecLabels['co_kn'] || t('cols.co')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['static_load_rating_co_kn'] || []} selectedFilters={filters['static_load_rating_co_kn'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="dynamic_load_rating_cdyn_kn" label={table5SpecLabels['cdyn_kn'] || t('cols.cdyn')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['dynamic_load_rating_cdyn_kn'] || []} selectedFilters={filters['dynamic_load_rating_cdyn_kn'] || []} onFilterChange={handleFilterChange} />
+                                        <Th col="fatigue_load_limit_pu_kn" label={table5SpecLabels['pu_kn'] || t('cols.pu')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
                                         <th className={styles.actionCol}></th>
                                     </tr>
                                 </thead>
