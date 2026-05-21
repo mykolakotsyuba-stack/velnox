@@ -2858,10 +2858,6 @@
 }
 
 /* Extra-compact variant for таблиць із 15+ колонками */
-.techTableWide {
-    table-layout: fixed;
-    width: 100%;
-}
 .techTableWide th {
     font-size: 10px;
     padding-left: 4px;
@@ -2872,28 +2868,7 @@
     font-size: 11px;
     padding-left: 4px;
     padding-right: 4px;
-    overflow-wrap: break-word;
-    word-break: break-word;
 }
-
-/* Column widths for hubs-t1 (17 cols: Part# + OEM + 14 specs + action) */
-.techTableWide th:nth-child(1),  .techTableWide td:nth-child(1)  { width: 8%; }   /* Позначення */
-.techTableWide th:nth-child(2),  .techTableWide td:nth-child(2)  { width: 12%; }  /* OEM */
-.techTableWide th:nth-child(3),  .techTableWide td:nth-child(3)  { width: 5%; }   /* J */
-.techTableWide th:nth-child(4),  .techTableWide td:nth-child(4)  { width: 5%; }   /* D */
-.techTableWide th:nth-child(5),  .techTableWide td:nth-child(5)  { width: 5%; }   /* D1 */
-.techTableWide th:nth-child(6),  .techTableWide td:nth-child(6)  { width: 5%; }   /* d */
-.techTableWide th:nth-child(7),  .techTableWide td:nth-child(7)  { width: 5%; }   /* C */
-.techTableWide th:nth-child(8),  .techTableWide td:nth-child(8)  { width: 5%; }   /* H/T */
-.techTableWide th:nth-child(9),  .techTableWide td:nth-child(9)  { width: 5%; }   /* G */
-.techTableWide th:nth-child(10), .techTableWide td:nth-child(10) { width: 5%; }   /* L */
-.techTableWide th:nth-child(11), .techTableWide td:nth-child(11) { width: 4%; }   /* L1 */
-.techTableWide th:nth-child(12), .techTableWide td:nth-child(12) { width: 4%; }   /* F */
-.techTableWide th:nth-child(13), .techTableWide td:nth-child(13) { width: 4%; }   /* Mass */
-.techTableWide th:nth-child(14), .techTableWide td:nth-child(14) { width: 7%; }   /* Cdyn */
-.techTableWide th:nth-child(15), .techTableWide td:nth-child(15) { width: 7%; }   /* Co */
-.techTableWide th:nth-child(16), .techTableWide td:nth-child(16) { width: 6%; }   /* Pu */
-.techTableWide th:nth-child(17), .techTableWide td:nth-child(17) { width: 8%; }   /* Action */
 
 /* ─── Analogues cell (Cross-Reference) ─── */
 .analoguesCell {
