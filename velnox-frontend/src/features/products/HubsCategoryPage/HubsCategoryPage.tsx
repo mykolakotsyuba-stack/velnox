@@ -157,8 +157,11 @@ function buildT2Cols(sl: SlMap, partLabel: string): ColDef[] {
 
 function buildT3Cols(sl: SlMap, partLabel: string): ColDef[] {
     return [
-        { key: 'part_number',    label: partLabel,                   width: '110px' },
-        { key: 'hub_J_mm',       label: sl['hub_J_mm']       || 'J (mm)',   hasFilter: true },
+        { key: 'part_number',    label: partLabel,                              width: '110px' },
+        { key: 'bearing_part',   label: 'Позначення підшипника',                hasFilter: false },
+        { key: 'bearing_brand',  label: 'Бренд',                                hasFilter: false },
+        { key: 'oem',            label: 'OEM',                                  hasFilter: false },
+        { key: 'hub_J_mm',       label: sl['hub_J_mm']       || 'J (mm)',       hasFilter: true },
         { key: 'hub_D_mm',       label: sl['hub_D_mm']       || 'D (mm)',   hasFilter: true },
         { key: 'hub_D1_mm',      label: sl['hub_D1_mm']      || 'D1 (mm)',  hasFilter: true },
         { key: 'hub_d_mm',       label: sl['hub_d_mm']       || 'd (mm)',   hasFilter: true },
@@ -199,6 +202,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
     /* schema image URLs from product_assets in DB */
     const [schema1, setSchema1] = useState<string | null>(null);
     const [schema2, setSchema2] = useState<string | null>(null);
+    const [schema3, setSchema3] = useState<string | null>(null);
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
 
@@ -237,14 +241,21 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 /* schema image from product_assets (type=schema_png) in DB */
                 if (data1.table?.schema_src) setSchema1(data1.table.schema_src);
                 if (data2.table?.schema_src) setSchema2(data2.table.schema_src);
+                if (data3.table?.schema_src) setSchema3(data3.table.schema_src);
 
                 /* Row keys = spec_definitions.key — matches buildTxCols above */
-                const mapRow = (p: any) => ({
-                    part_number:     p.article,
-                    has_model_3d:    p.has_model_3d ?? false,
-                    oem:             (p.cross_refs ?? []).map((r: any) => r.brand ? `${r.value} ${r.brand}` : r.value).join('\n'),
-                    ...p.specs,      // spreads all spec values with their original DB keys
-                });
+                const mapRow = (p: any) => {
+                    const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing');
+                    const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
+                    return {
+                        part_number:   p.article,
+                        has_model_3d:  p.has_model_3d ?? false,
+                        bearing_part:  bearingRefs.map((r: any) => r.value).join('\n'),
+                        bearing_brand: bearingRefs.map((r: any) => r.brand).filter(Boolean).join('\n'),
+                        oem:           appRefs.map((r: any) => r.brand ? `${r.value} ${r.brand}` : r.value).join('\n'),
+                        ...p.specs,
+                    };
+                };
 
                 setTable1Data(Array.isArray(data1?.products) ? data1.products.map(mapRow).filter((r: any) => r.part_number) : []);
                 setTable2Data(Array.isArray(data2?.products) ? data2.products.map(mapRow) : []);
@@ -287,7 +298,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 </Link>
             );
         }
-        if (col === 'oem') return <span className={ptStyles.analoguesCell}>{renderTightCell(row.oem)}</span>;
+        if (col === 'oem' || col === 'bearing_part' || col === 'bearing_brand')
+            return <span className={ptStyles.analoguesCell}>{renderTightCell(row[col])}</span>;
         return row[col] ?? '—';
     }, [locale]);
 
@@ -496,6 +508,9 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     <div className={styles.tableBlock}>
                         <h3>{t('hubsPage.block2.table3.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table3.desc')}</p>
+                        {schema3 && (
+                            <ProductSchema src={schema3} alt="PL-140 VX — технічна схема" />
+                        )}
                         <ProductTable
                             columns={colsT3}
                             rows={searchedT3}

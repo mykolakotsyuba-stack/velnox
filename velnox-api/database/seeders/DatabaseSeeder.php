@@ -1442,6 +1442,157 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // =========================================================
+        // 18. PRODUCT TABLE: hubs-t3
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'hubs-t3'],
+            [
+                'slug'             => 'hubs-t3',
+                'category_id'      => $hubsCatId,
+                'spec_columns'     => json_encode(['hub_J_mm', 'hub_D_mm', 'hub_D1_mm', 'hub_d_mm', 'hub_hole_thread', 'hub_L_mm', 'hub_B_mm', 'mass_kg', 'cdyn_kn', 'co_kn', 'pu_kn']),
+                'highlight_config' => json_encode([
+                    'hub_J_mm'        => [['label' => 'J',   'x' => 613,  'y' => 897]],
+                    'hub_D_mm'        => [['label' => 'D',   'x' => 1079, 'y' => 940]],
+                    'hub_D1_mm'       => [['label' => 'D1',  'x' => 1140, 'y' => 942]],
+                    'hub_d_mm'        => [['label' => 'd',   'x' => 1197, 'y' => 942]],
+                    'hub_hole_thread' => [['label' => 'H/T', 'x' => 578,  'y' => 440]],
+                    'hub_B_mm'        => [['label' => 'B',   'x' => 1342, 'y' => 881]],
+                ]),
+                'schema_viewbox'   => '90 320 1430 1170',
+                'sort_order'       => 3,
+            ]
+        );
+
+        $ht3 = $tableId('hubs-t3');
+
+        foreach (['uk' => 'Ступичний вузол сівалок — Таблиця 3', 'en' => 'Seeder Hub Unit — Table 3', 'pl' => 'Węzeł piasty siewnika — Tabela 3'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $ht3, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        $ht3Products = [
+            [
+                'article' => 'PL-140 VX',
+                'slug'    => 'pl-140-vx',
+                'specs'   => [
+                    'hub_J_mm'        => '104',
+                    'hub_D_mm'        => '140',
+                    'hub_D1_mm'       => '62',
+                    'hub_d_mm'        => '30',
+                    'hub_hole_thread' => 'M12',
+                    'hub_L_mm'        => '35',
+                    'hub_B_mm'        => '23.8',
+                    'mass_kg'         => '1.5',
+                    'cdyn_kn'         => '31',
+                    'co_kn'           => '22.2',
+                    'pu_kn'           => '0.932',
+                ],
+                'cross_refs' => [
+                    ['brand' => 'FKL',      'value' => 'PL-140', 'type' => 'bearing'],
+                    ['brand' => 'FBJ',      'value' => 'SAH017', 'type' => 'bearing'],
+                    ['brand' => '',         'value' => '405814', 'type' => 'application'],
+                    ['brand' => '',         'value' => '418531', 'type' => 'application'],
+                    ['brand' => '',         'value' => '420013', 'type' => 'application'],
+                    ['brand' => 'Vaderstad','value' => '420832', 'type' => 'application'],
+                ],
+                'name_uk' => 'PL-140 VX',
+                'name_en' => 'PL-140 VX',
+                'name_pl' => 'PL-140 VX',
+                'desc_uk'        => 'Інтегрована підшипникова маточина сівалки з 4 кріпильними отворами M12 на ділильному колі J = 104 мм та зовнішнім діаметром корпусу D = 140 мм — геометричний аналог вузлів типу FKL PL-140 / FBJ SAH017. Посадковий діаметр вала D1 = 62 мм, загальна довжина L = 35 мм, ширина B = 23.8 мм; динамічна вантажопідйомність Cdyn = 31 кН, статична Co = 22.2 кН, маса 1.5 кг. Вузол оснащений контактним ущільненням з обох сторін для захисту від ґрунтового забруднення та вологи в умовах роботи посівних агрегатів. Пряма заміна OEM-вузлів Vaderstad (420832, 405814, 418531, 420013) та аналогів FKL PL-140, FBJ SAH017; застосовується у сівалках Vaderstad серій Rapid, Spirit, Tempo.',
+                'desc_en'        => 'Integrated seeder bearing hub with 4 M12 mounting holes on a bolt circle J = 104 mm and housing outer diameter D = 140 mm — geometric equivalent of FKL PL-140 / FBJ SAH017 assemblies. Shaft bore D1 = 62 mm, overall length L = 35 mm, width B = 23.8 mm; dynamic load rating Cdyn = 31 kN, static Co = 22.2 kN, mass 1.5 kg. The assembly is fitted with contact seals on both sides to protect against soil contamination and moisture in seeder operating conditions. Direct replacement for Vaderstad OEM assemblies (420832, 405814, 418531, 420013) and equivalents FKL PL-140, FBJ SAH017; used in Vaderstad Rapid, Spirit, Tempo series seeders.',
+                'desc_pl'        => 'Zintegrowana piastka łożyskowa siewnika z 4 otworami mocującymi M12 na okręgu podziałowym J = 104 mm i zewnętrzną średnicą obudowy D = 140 mm — geometryczny odpowiednik węzłów FKL PL-140 / FBJ SAH017. Średnica osadzenia wałka D1 = 62 mm, długość całkowita L = 35 mm, szerokość B = 23,8 mm; nośność dynamiczna Cdyn = 31 kN, statyczna Co = 22,2 kN, masa 1,5 kg. Węzeł wyposażony jest w uszczelnienia kontaktowe z obu stron zapewniające ochronę przed zanieczyszczeniem glebowym i wilgocią w warunkach pracy agregatów siewnych. Bezpośredni zamiennik węzłów OEM Vaderstad (420832, 405814, 418531, 420013) oraz odpowiedników FKL PL-140, FBJ SAH017; stosowany w siewnikach Vaderstad serii Rapid, Spirit, Tempo.',
+                'meta_title_uk'  => 'VELNOX PL-140 VX — маточина сівалки Vaderstad J104, FKL PL-140, SAH017',
+                'meta_title_en'  => 'VELNOX PL-140 VX — seeder hub Vaderstad J104, FKL PL-140, SAH017',
+                'meta_title_pl'  => 'VELNOX PL-140 VX — piasta siewnika Vaderstad J104, FKL PL-140, SAH017',
+                'meta_desc_uk'   => 'Підшипникова маточина VELNOX PL-140 VX для Vaderstad, D1=62 мм, J=104 мм, Cdyn 31 кН. Заміна FKL PL-140, FBJ SAH017, Vaderstad 420832.',
+                'meta_desc_en'   => 'VELNOX PL-140 VX bearing hub for Vaderstad, D1=62 mm, J=104 mm, Cdyn 31 kN. Replaces FKL PL-140, FBJ SAH017, Vaderstad 420832.',
+                'meta_desc_pl'   => 'Piastka łożyskowa VELNOX PL-140 VX do Vaderstad, D1=62 mm, J=104 mm, Cdyn 31 kN. Zamiennik FKL PL-140, FBJ SAH017, Vaderstad 420832.',
+            ],
+        ];
+
+        // product_assets for hubs-t3 (schema_png, schema_svg, gallery)
+        $ht3AssetBase   = '/velnox/images/products/hubs-t3';
+        $ht3ArticleSlug = 'pl-140-vx';
+        foreach ([
+            ['type' => 'schema_png', 'path' => "{$ht3AssetBase}/velnox-{$ht3ArticleSlug}-schema.webp", 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => "{$ht3AssetBase}/schema.svg",                            'sort_order' => 0],
+            ['type' => 'gallery',    'path' => "{$ht3AssetBase}/velnox-{$ht3ArticleSlug}.webp",          'sort_order' => 1],
+            ['type' => 'gallery',    'path' => "{$ht3AssetBase}/velnox-{$ht3ArticleSlug}-drawing-1.webp",'sort_order' => 2],
+            ['type' => 'gallery',    'path' => "{$ht3AssetBase}/velnox-{$ht3ArticleSlug}-drawing-2.webp",'sort_order' => 3],
+        ] as $asset) {
+            if ($asset['type'] === 'gallery') {
+                $exists = DB::table('product_assets')
+                    ->where('entity_type', 'product_table')->where('entity_id', $ht3)
+                    ->where('type', 'gallery')->where('path', $asset['path'])->exists();
+                if (!$exists) {
+                    DB::table('product_assets')->insert([
+                        'entity_type' => 'product_table', 'entity_id' => $ht3,
+                        'type' => $asset['type'], 'path' => $asset['path'], 'sort_order' => $asset['sort_order'],
+                    ]);
+                }
+            } else {
+                DB::table('product_assets')->updateOrInsert(
+                    ['entity_type' => 'product_table', 'entity_id' => $ht3, 'type' => $asset['type']],
+                    ['path' => $asset['path'], 'sort_order' => $asset['sort_order']]
+                );
+            }
+        }
+
+        foreach ($ht3Products as $p) {
+            DB::table('products')->updateOrInsert(
+                ['slug' => $p['slug']],
+                ['slug' => $p['slug'], 'article' => $p['article'], 'product_table_id' => $ht3]
+            );
+            $productId = DB::table('products')->where('slug', $p['slug'])->value('id');
+
+            foreach ($p['specs'] as $key => $value) {
+                $sid = $specId($key);
+                if (!$sid) continue;
+                DB::table('product_specs')->updateOrInsert(
+                    ['product_id' => $productId, 'spec_id' => $sid],
+                    ['value' => $value]
+                );
+            }
+
+            DB::table('product_cross_refs')->where('product_id', $productId)->delete();
+            foreach ($p['cross_refs'] as $ref) {
+                DB::table('product_cross_refs')->insert([
+                    'product_id' => $productId,
+                    'brand'      => $ref['brand'],
+                    'value'      => $ref['value'],
+                    'type'       => $ref['type'],
+                ]);
+            }
+
+            // model_3d asset for PL-140 VX
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $productId, 'type' => 'model_3d'],
+                ['path' => '/velnox/models/pl-140-vx.glb', 'sort_order' => 0]
+            );
+
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
+                    ['value' => $p["name_{$locale}"]]
+                );
+            }
+
+            foreach (['desc' => 'desc', 'meta_title' => 'meta_title', 'meta_desc' => 'meta_description'] as $suffix => $field) {
+                foreach (['uk', 'en', 'pl'] as $locale) {
+                    $key = "{$suffix}_{$locale}";
+                    if (!empty($p[$key])) {
+                        DB::table('translations')->updateOrInsert(
+                            ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => $field],
+                            ['value' => $p[$key]]
+                        );
+                    }
+                }
+            }
+        }
+
         foreach ($ht2Products as $p) {
             DB::table('products')->updateOrInsert(
                 ['slug' => $p['slug']],
