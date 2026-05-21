@@ -81,7 +81,7 @@ export function Header({ locale }: HeaderProps) {
 
                     {/* Лого */}
                     <Link href={`/${locale}`} className={styles.logo} onClick={closeAll}>
-                        <Image src={logoPath} alt="Velnox Logo" width={260} height={65} priority />
+                        <Image src={logoPath} alt="Velnox Logo" width={280} height={75} priority />
                     </Link>
 
                     {/* ── DESKTOP NAV ── */}

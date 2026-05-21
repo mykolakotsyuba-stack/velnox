@@ -4,10 +4,8 @@
   z-index: 100;
   background: var(--color-nav-bg);
   color: var(--color-nav-text);
-  border-bottom: none;
-  /* Removed the blue/indigo strip */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  /* Slightly more prominent shadow without border */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -31,7 +29,7 @@
 
 .logo img {
   width: auto;
-  height: 64px; /* Increased from 50px */
+  height: 72px; /* Increased from 64px */
   object-fit: contain;
   filter: none;
 }
@@ -40,7 +38,8 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 16px;
   flex: 1;
 }
 
@@ -62,6 +61,25 @@
   white-space: nowrap;
   font-family: inherit;
   line-height: 1;
+  position: relative;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+  background: var(--velnox-white);
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+  border-radius: 2px;
+}
+
+.navLink:hover::after {
+  transform: scaleX(1);
 }
 
 .navLink:hover {
@@ -313,5 +331,10 @@
 
   .container {
     gap: 0;
+    justify-content: space-between;
+  }
+
+  .logo img {
+    height: 48px;
   }
 }
