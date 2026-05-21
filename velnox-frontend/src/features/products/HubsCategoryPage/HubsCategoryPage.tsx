@@ -239,7 +239,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     fetch(`${base}/v1/product-tables/hubs-t2?locale=${locale}`),
                     fetch(`${base}/v1/product-tables/hubs-t3?locale=${locale}`),
                 ]);
-                const [data1, data2, data3] = await Promise.all([res1.json(), res2.json(), res3.json()]);
+                const safeJson = async (res: Response) => res.ok ? res.json() : { products: [] };
+                const [data1, data2, data3] = await Promise.all([safeJson(res1), safeJson(res2), safeJson(res3)]);
 
                 const mapT1 = (p: any) => ({
                     part_number:  p.article,
