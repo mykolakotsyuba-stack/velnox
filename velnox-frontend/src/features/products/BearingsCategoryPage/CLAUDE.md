@@ -212,8 +212,34 @@ DB::table('product_assets')->updateOrInsert(
 - `.techTable th` — `white-space: normal` (дозволяти перенос рядків у заголовках)
 - Горизонтальний скрол таблиці — **лише всередині `.tableScroll`**, не на рівні сторінки
 
+## ⛔ ЗАБОРОНА ХАРДКОДУ В ТАБЛИЦЯХ — ЄДИНЕ ДЖЕРЕЛО ПРАВДИ
+
+**Ніяких захардкоджених назв колонок або даних в коді. Все в одному місці — БД + messages.**
+
+### Назви колонок (заголовки thead):
+
+| Тип колонки | Звідки береться підпис | Приклад |
+|---|---|---|
+| **Spec-колонки** (d_mm, D_mm, J_mm, H_T, A_mm...) | `tableNSpecLabels['spec_key']` — з API `/product-tables/{slug}?locale=` поле `spec_labels` | `table5SpecLabels['d_mm'] \|\| t('cols.d_mm')` |
+| **Non-spec колонки** (part_number, bearing_designation, brand, cross_ref) | `t('cols.*')` — з `messages/uk\|en\|pl.json` → `bearingsPage.cols.*` | `t('cols.part_number')` |
+
+### Чому це правило існує:
+Без нього підписи хардкодились лише українською і не перекладались при зміні мови. API вже повертає `spec_labels` з правильним locale — треба лише підключити стан.
+
+### Як додати spec_labels для нової таблиці:
+```tsx
+const [tableNSpecLabels, setTableNSpecLabels] = useState<Record<string, string>>({});
+// у fetch:
+if (dataN.table?.spec_labels) setTableNSpecLabels(dataN.table.spec_labels);
+// у thead:
+<Th col="bore_diameter_d_mm" label={tableNSpecLabels['d_mm'] || t('cols.d_mm')} ... />
+```
+
+---
+
 ## Правила роботи ШІ
 
 1. Якщо тебе просять правити `/products/hubs` — **не відкривай і не правь** `BearingsCategoryPage.tsx` або `bearings.module.css`
 2. Якщо тебе просять правити `/products/bearings` — **не відкривай і не правь** `HubsCategoryPage.tsx` або `hubs.module.css`
 3. Перед будь-якою зміною колонок — перечитай таблицю специфікацій вище. Змінювати дозволено тільки якщо є явна нова специфікація від користувача.
+4. **Ніколи не хардкодити підписи колонок** — дивись розділ "ЗАБОРОНА ХАРДКОДУ" вище.

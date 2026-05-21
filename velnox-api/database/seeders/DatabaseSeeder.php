@@ -1020,7 +1020,6 @@ class DatabaseSeeder extends Seeder
 
         // =========================================================
         // 14. PRODUCT TABLE: bearings-t5 (BUP-207-X3L)
-        //     Images are excluded — owner will provide new files
         // =========================================================
         DB::table('product_tables')->updateOrInsert(
             ['slug' => 'bearings-t5'],
@@ -1028,8 +1027,16 @@ class DatabaseSeeder extends Seeder
                 'slug'             => 'bearings-t5',
                 'category_id'      => $bearingsCatId,
                 'spec_columns'     => json_encode(['d_mm','D_mm','J_mm','H_T','A_mm','A2_mm','B_mm','mass_kg','co_kn','cdyn_kn','pu_kn']),
-                'highlight_config' => json_encode(new \stdClass()),
-                'schema_viewbox'   => null,
+                'highlight_config' => json_encode([
+                    'd_mm'  => [['label' => 'd',   'x' => 401,  'y' => 2191]],
+                    'D_mm'  => [['label' => 'D',   'x' => 759,  'y' => 2213]],
+                    'J_mm'  => [['label' => 'J',   'x' => 417,  'y' => 2518]],
+                    'H_T'   => [['label' => 'H/T', 'x' => 1083, 'y' => 2011]],
+                    'A_mm'  => [['label' => 'A', 'x' => 348, 'y' => 1872], ['label' => 'A', 'x' => 342, 'y' => 2563], ['label' => 'A', 'x' => 911, 'y' => 2549]],
+                    'A2_mm' => [['label' => 'A2',  'x' => 870,  'y' => 2497]],
+                    'B_mm'  => [['label' => 'B',   'x' => 945,  'y' => 2171]],
+                ]),
+                'schema_viewbox'   => '0 0 2360 2665',
                 'sort_order'       => 5,
             ]
         );
@@ -1039,6 +1046,20 @@ class DatabaseSeeder extends Seeder
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product_table', 'entity_id' => $t5, 'locale' => $locale, 'field' => 'name'],
                 ['value' => $name]
+            );
+        }
+
+        foreach ([
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t5/velnox-bup-207-x3l.webp',          'sort_order' => 1],
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t5/velnox-bup-207-x3l-drawing-1.webp', 'sort_order' => 2],
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t5/velnox-bup-207-x3l-drawing-2.webp', 'sort_order' => 3],
+            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t5/velnox-bup-207-x3l-drawing-3.webp', 'sort_order' => 4],
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t5/velnox-bup-207-x3l-schema.webp',   'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t5/schema.svg',                         'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $t5, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
             );
         }
 
@@ -1082,6 +1103,15 @@ class DatabaseSeeder extends Seeder
                 'name_uk' => 'BUP 207-X3L',
                 'name_en' => 'BUP 207-X3L',
                 'name_pl' => 'BUP 207-X3L',
+                'desc_uk'       => 'Підшипниковий вузол у круглому фланцевому корпусі типу RCJ 35 / UC 207 X1 для ґрунтообробної техніки Lemken з внутрішнім діаметром d = 35 мм та зовнішнім діаметром корпусу D = 125 мм. Монтажна база J = 100 мм під різьбу M12, загальна ширина A = 40 мм, ширина внутрішнього кільця B = 28.3 мм, Cdyn = 25.5 кН, Co = 15.3 кН, маса 1.7 кг. Система захисту — багатокромкове ущільнення серії X3L (трикромкове контактне з базової сторони + посилене фронтальне), розраховане на ударні навантаження ґрунтообробного диска. Повний геометричний аналог Lemken 31910034 / 3199372, Opall Agri 3421370, INA/FAG F232812-0200, PEER 207XTR-R-DFC-A534 та SNR UC 207 X1; застосовується у дискових боронах Lemken серій Rubin, Heliodor, Kristall.',
+                'meta_title_uk' => 'VELNOX BUP 207-X3L — вузол Lemken d35, 31910034, UC 207 X1',
+                'meta_desc_uk'  => 'Підшипниковий вузол VELNOX BUP 207-X3L для Lemken, d=35 мм, D=125 мм, Cdyn 25.5 кН. Заміна Lemken 31910034, 3199372, SNR UC 207 X1.',
+                'desc_en'       => 'Bearing unit in a round flanged housing type RCJ 35 / UC 207 X1 for Lemken tillage equipment with bore diameter d = 35 mm and housing outer diameter D = 125 mm. Mounting base J = 100 mm for M12 bolts, overall width A = 40 mm, inner ring width B = 28.3 mm, Cdyn = 25.5 kN, Co = 15.3 kN, weight 1.7 kg. Protection system — multi-lip seal series X3L (triple-lip contact seal on the base side + reinforced frontal seal), designed for impact loads of a tillage disc. Full geometric equivalent of Lemken 31910034 / 3199372, Opall Agri 3421370, INA/FAG F232812-0200, PEER 207XTR-R-DFC-A534 and SNR UC 207 X1; used in Lemken disc harrows of the Rubin, Heliodor and Kristall series.',
+                'meta_title_en' => 'VELNOX BUP 207-X3L — Lemken bearing unit d35, 31910034, UC 207 X1',
+                'meta_desc_en'  => 'VELNOX BUP 207-X3L bearing unit for Lemken, d=35 mm, D=125 mm, Cdyn 25.5 kN. Replaces Lemken 31910034, 3199372, SNR UC 207 X1.',
+                'desc_pl'       => 'Węzeł łożyskowy w okrągłej obudowie kołnierzowej typu RCJ 35 / UC 207 X1 do maszyn uprawowych Lemken ze średnicą otworu d = 35 mm i zewnętrzną średnicą obudowy D = 125 mm. Baza montażowa J = 100 mm pod śruby M12, szerokość całkowita A = 40 mm, szerokość pierścienia wewnętrznego B = 28,3 mm, Cdyn = 25,5 kN, Co = 15,3 kN, masa 1,7 kg. System uszczelnienia — wielowargowy uszczelniacz serii X3L (trójwargowy uszczelniacz stykowy od strony podstawy + wzmocniony uszczelniacz czołowy), zaprojektowany na obciążenia udarowe tarczy uprawowej. Pełny geometryczny odpowiednik Lemken 31910034 / 3199372, Opall Agri 3421370, INA/FAG F232812-0200, PEER 207XTR-R-DFC-A534 i SNR UC 207 X1; stosowany w bronach talerzowych Lemken serii Rubin, Heliodor, Kristall.',
+                'meta_title_pl' => 'VELNOX BUP 207-X3L — węzeł Lemken d35, 31910034, UC 207 X1',
+                'meta_desc_pl'  => 'Węzeł łożyskowy VELNOX BUP 207-X3L do Lemken, d=35 mm, D=125 mm, Cdyn 25,5 kN. Zamiennik Lemken 31910034, 3199372, SNR UC 207 X1.',
             ],
         ];
 
@@ -1116,6 +1146,17 @@ class DatabaseSeeder extends Seeder
                     ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
                     ['value' => $p["name_{$locale}"]]
                 );
+            }
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                foreach (['desc' => 'desc', 'meta_title' => 'meta_title', 'meta_desc' => 'meta_description'] as $suffix => $field) {
+                    $val = $p["{$suffix}_{$locale}"] ?? null;
+                    if ($val) {
+                        DB::table('translations')->updateOrInsert(
+                            ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => $field],
+                            ['value' => $val]
+                        );
+                    }
+                }
             }
 
             // 3D model asset (file exists: public/models/BUP-207-X3L.glb)
