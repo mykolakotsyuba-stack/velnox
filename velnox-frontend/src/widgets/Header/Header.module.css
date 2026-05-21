@@ -256,40 +256,41 @@
 .mobileNavLink {
   display: block;
   padding: 14px 0;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--color-text-muted);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--velnox-white);
   text-decoration: none;
-  border-bottom: 1px solid var(--color-border);
-  transition: color 0.15s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  transition: opacity 0.15s;
 }
 
 .mobileNavLink:hover {
-  color: var(--color-accent);
+  opacity: 0.7;
 }
 
 .mobileSection {
-  padding: 14px 0 6px;
-  font-size: 11px;
-  font-weight: 600;
+  padding: 24px 0 8px;
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-text-muted);
-  border-bottom: 1px solid var(--color-border);
+  color: rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .mobileSubLink {
   display: block;
-  padding: 11px 0 11px 16px;
-  font-size: 14px;
-  color: var(--color-text-muted);
+  padding: 14px 0 14px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--velnox-white);
   text-decoration: none;
-  border-bottom: 1px solid var(--color-border);
-  transition: color 0.15s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: opacity 0.15s;
 }
 
 .mobileSubLink:hover {
-  color: var(--color-accent);
+  opacity: 0.7;
 }
 
 .mobileLangRow {
@@ -299,22 +300,24 @@
 }
 
 .mobileLangBtn {
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-text-muted);
-  background: rgba(0, 0, 0, 0.04);
-  border: 1px solid var(--color-border);
+  flex: 1;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--velnox-white);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   text-decoration: none;
-  transition: background 0.15s, color 0.15s;
+  transition: all 0.15s;
 }
 
 .mobileLangBtn:hover,
 .mobileLangActive {
-  color: var(--color-accent);
-  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
-  border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  color: var(--color-nav-bg);
+  background: var(--velnox-white);
+  border-color: var(--velnox-white);
 }
 
 /* ── Responsive breakpoints ── */
