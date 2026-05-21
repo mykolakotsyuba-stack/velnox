@@ -574,7 +574,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                         <h3>{t('hubsPage.block2.table1.title')}</h3>
                         <p className={styles.tableDesc}>{t('hubsPage.block2.table1.desc')}</p>
                         <div className={styles.tableDiagramContainer}>
-                            <Image src="/images/products/hubs-t1/schema.png" alt="Hub Table 1 Technical Drawing" width={1200} height={800} style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto' }} loading="lazy" />
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src="/velnox/images/products/hubs-t1/schema.png" alt="Hub Table 1 Technical Drawing" style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }} loading="lazy" />
                         </div>
                         <div className={styles.tableScroll}>
                             <table className={`${styles.techTable} ${styles.techTableWide}`}>
