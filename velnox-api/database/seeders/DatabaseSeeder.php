@@ -62,6 +62,12 @@ class DatabaseSeeder extends Seeder
             ['key' => 'hub_B_mm',        'svg_label' => 'B',    'sort_order' => 32],
             ['key' => 'd1_mm',           'svg_label' => 'd1',   'sort_order' => 33],
             ['key' => 'r_12_mm',         'svg_label' => null,   'sort_order' => 34],
+            // agro-t2 (DHU series)
+            ['key' => 'C_mm',            'svg_label' => 'C',    'sort_order' => 35],
+            ['key' => 'Da_mm',           'svg_label' => 'Da',   'sort_order' => 36],
+            ['key' => 'Fr_kn',           'svg_label' => null,   'sort_order' => 37],
+            ['key' => 'Fa_kn',           'svg_label' => null,   'sort_order' => 38],
+            ['key' => 'A_fl_mm',         'svg_label' => 'A',    'sort_order' => 39],
         ];
 
         foreach ($specs as $spec) {
@@ -114,6 +120,12 @@ class DatabaseSeeder extends Seeder
             'L2_mm'   => ['uk' => ['label' => 'L2 (мм) — довжина секції 2',      'unit' => 'мм'],  'en' => ['label' => 'L2 (mm) — section 2 length',        'unit' => 'mm'],  'pl' => ['label' => 'L2 (mm) — długość sekcji 2',       'unit' => 'mm']],
             'd1_mm'   => ['uk' => ['label' => 'Зовнішній діаметр внутрішнього кільця d1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Inner ring outside diameter d1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Zewnętrzna śr. pierścienia wewnętrznego d1 (mm)', 'unit' => 'mm']],
             'r_12_mm' => ['uk' => ['label' => 'Розмір фаски r 1,2 (мм)',                       'unit' => 'мм'], 'en' => ['label' => 'Chamfer dimension r 1,2 (mm)',         'unit' => 'mm'], 'pl' => ['label' => 'Wymiar fazowania r 1,2 (mm)',                     'unit' => 'mm']],
+            // agro-t2 (DHU series)
+            'C_mm'    => ['uk' => ['label' => 'Ширина зовнішнього кільця C (мм)',                                       'unit' => 'мм'], 'en' => ['label' => 'Outer ring width C (mm)',                                         'unit' => 'mm'], 'pl' => ['label' => 'Szerokość pierścienia zewnętrznego C (mm)',                   'unit' => 'mm']],
+            'Da_mm'   => ['uk' => ['label' => 'Діаметр центрування Da (мм)',                                            'unit' => 'мм'], 'en' => ['label' => 'Centering diameter Da (mm)',                                      'unit' => 'mm'], 'pl' => ['label' => 'Średnica centrowania Da (mm)',                                'unit' => 'mm']],
+            'Fr_kn'   => ['uk' => ['label' => 'Радіальне навантаження Fr (кН)',                                         'unit' => 'кН'], 'en' => ['label' => 'Radial load Fr (kN)',                                             'unit' => 'kN'], 'pl' => ['label' => 'Obciążenie promieniowe Fr (kN)',                              'unit' => 'kN']],
+            'Fa_kn'   => ['uk' => ['label' => 'Осьове навантаження Fa (кН)',                                            'unit' => 'кН'], 'en' => ['label' => 'Axial load Fa (kN)',                                              'unit' => 'kN'], 'pl' => ['label' => 'Obciążenie osiowe Fa (kN)',                                   'unit' => 'kN']],
+            'A_fl_mm' => ['uk' => ['label' => 'Відстань від фланця корпусу до торця внутрішнього кільця A (мм)',        'unit' => 'мм'], 'en' => ['label' => 'Flange face to inner ring end face distance A (mm)',             'unit' => 'mm'], 'pl' => ['label' => 'Odległość od kołnierza obudowy do czoła pierścienia wewn. A (mm)', 'unit' => 'mm']],
         ];
 
         foreach ($specTranslations as $key => $locales) {
