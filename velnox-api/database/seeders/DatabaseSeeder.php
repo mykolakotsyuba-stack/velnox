@@ -2001,5 +2001,167 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // =========================================================
+        // 20. PRODUCT TABLE: agro-t2 (DHU series)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'agro-t2'],
+            [
+                'slug'             => 'agro-t2',
+                'category_id'      => $catId('agro'),
+                'spec_columns'     => json_encode(['d_inch','d_mm','B_mm','C_mm','Da_mm','L_mm','A_fl_mm','A1_mm','J_mm','N_mm','Fr_kn','Fa_kn','cdyn_kn','co_kn','mass_kg']),
+                'highlight_config' => json_encode([
+                    'd_mm'    => [['label' => 'd',  'x' => 1151, 'y' => 721]],
+                    'd_inch'  => [['label' => 'd',  'x' => 1151, 'y' => 721]],
+                    'Da_mm'   => [['label' => 'Da', 'x' => 889,  'y' => 720]],
+                    'B_mm'    => [['label' => 'B',  'x' => 1015, 'y' => 764]],
+                    'A1_mm'   => [['label' => 'A1', 'x' => 922,  'y' => 419]],
+                    'L_mm'    => [['label' => 'L',  'x' => 533,  'y' => 1011]],
+                    'C_mm'    => [['label' => 'C',  'x' => 1039, 'y' => 1051]],
+                    'A_fl_mm' => [['label' => 'A',  'x' => 1019, 'y' => 392]],
+                ]),
+                'schema_viewbox'   => '0 280 2380 870',
+                'sort_order'       => 2,
+            ]
+        );
+
+        $at2 = DB::table('product_tables')->where('slug', 'agro-t2')->value('id');
+
+        foreach (['uk' => 'DHU — дискові фланцеві вузли', 'en' => 'DHU — Disc Hub Units', 'pl' => 'DHU — dyskowe węzły kołnierzowe'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $at2, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        // product_assets for agro-t2 (schema_png, schema_svg at table level)
+        DB::table('product_assets')->updateOrInsert(
+            ['entity_type' => 'product_table', 'entity_id' => $at2, 'type' => 'schema_png'],
+            ['path' => '/velnox/images/products/agro-t2/velnox-agro-t2-schema.webp', 'sort_order' => 0]
+        );
+        DB::table('product_assets')->updateOrInsert(
+            ['entity_type' => 'product_table', 'entity_id' => $at2, 'type' => 'schema_svg'],
+            ['path' => '/velnox/images/products/agro-t2/schema.svg', 'sort_order' => 0]
+        );
+
+        $at2Products = [
+            [
+                'article'  => 'DHU 1 1/2R209 VX',
+                'slug'     => 'dhu-1-12r209-vx',
+                'model_3d' => 'DHU-1-12R209.glb',
+                'specs'    => [
+                    'd_mm'    => '38.11',
+                    'd_inch'  => '1.5004',
+                    'A1_mm'   => '3.5',
+                    'J_mm'    => '127',
+                    'L_mm'    => '127',
+                    'N_mm'    => '13.5',
+                    'mass_kg' => '1.63',
+                    'cdyn_kn' => '32.5',
+                    'co_kn'   => '20.4',
+                    'B_mm'    => '42.85',
+                    'C_mm'    => '22',
+                    'Da_mm'   => '97',
+                    'Fr_kn'   => '7.7',
+                    'Fa_kn'   => '3.8',
+                    'A_fl_mm' => '39',
+                ],
+                'cross_refs' => [
+                    ['brand' => 'TIMKEN',     'value' => 'DHU 1 1/2 R209',          'type' => 'bearing'],
+                    ['brand' => 'CT-AGRI',    'value' => 'DHU 1 1/2 R209 FD209RB',  'type' => 'bearing'],
+                    ['brand' => 'RBF',        'value' => 'FD 209-1 1/2 RD',         'type' => 'bearing'],
+                    ['brand' => 'PEER',       'value' => 'ST 491 B',                 'type' => 'bearing'],
+                    ['brand' => 'PEER',       'value' => 'PER.GFD209RPPB52',         'type' => 'bearing'],
+                    ['brand' => 'FKL',        'value' => 'GWST209PPB38',             'type' => 'bearing'],
+                    ['brand' => 'KRAUSE',     'value' => '1934-12-0',                'type' => 'application'],
+                    ['brand' => 'KRAUSE',     'value' => '40-109',                   'type' => 'application'],
+                    ['brand' => 'Great Plains','value' => '822-208C',                'type' => 'application'],
+                    ['brand' => 'JD',         'value' => 'AA53919',                  'type' => 'application'],
+                    ['brand' => 'JD',         'value' => 'AN280333',                 'type' => 'application'],
+                    ['brand' => 'KUHN',       'value' => 'Q4045130',                 'type' => 'application'],
+                ],
+                'translations' => [
+                    'uk' => [
+                        'desc'             => 'Дисковий фланцевий підшипниковий вузол на 4 кріпильні отвори для дискових борін та ґрунтообробної техніки з дюймовою посадкою валу. Внутрішній діаметр d = 38.1 мм (1 1/2"), монтажна база J = 127 мм, загальна довжина L = 127 мм, діаметр центрування Da = 97 мм, ширина внутрішнього кільця B = 42.85 мм, Cdyn = 32.5 кН, Co = 20.4 кН, маса 1.63 кг. Система захисту VX — багатокромкове контактне ущільнення з обох сторін підшипника — забезпечує надійну герметизацію зони кочення в умовах прямого контакту з ґрунтом, пилом та вологою. Пряма геометрична заміна TIMKEN DHU 1 1/2 R209, CT-AGRI FD209RB, RBF FD 209-1 1/2 RD, PEER ST 491 B та FKL GWST209PPB38; застосовується у дискових боронах та культиваторах KRAUSE (арт. 1934-12-0, 40-109), Great Plains (арт. 822-208C), John Deere (арт. AA53919, AN280333) та KUHN (арт. Q4045130).',
+                        'meta_title'       => 'VELNOX DHU 1 1/2R209 VX — дисковий вузол 1 1/2", TIMKEN DHU 1 1/2 R209',
+                        'meta_description' => 'Дисковий вузол VELNOX DHU 1 1/2R209 VX, d=38.1 мм (1 1/2"), Cdyn 32.5 кН, Co 20.4 кН. Заміна TIMKEN DHU 1 1/2 R209, FKL GWST209PPB38, Great Plains 822-208C.',
+                    ],
+                    'en' => [
+                        'desc'             => 'Disc flanged bearing unit with 4 mounting holes for disc harrows and tillage equipment with inch shaft fit. Bore d = 38.1 mm (1 1/2"), mounting base J = 127 mm, overall length L = 127 mm, centring diameter Da = 97 mm, inner ring width B = 42.85 mm, Cdyn = 32.5 kN, Co = 20.4 kN, mass 1.63 kg. VX sealing system — multi-lip contact seals on both sides of the bearing — ensures reliable protection of the rolling zone in direct contact with soil, dust and moisture. Direct replacement for TIMKEN DHU 1 1/2 R209, CT-AGRI FD209RB, RBF FD 209-1 1/2 RD, PEER ST 491 B and FKL GWST209PPB38; used in disc harrows and cultivators from KRAUSE (part no. 1934-12-0, 40-109), Great Plains (part no. 822-208C), John Deere (part no. AA53919, AN280333) and KUHN (part no. Q4045130).',
+                        'meta_title'       => 'VELNOX DHU 1 1/2R209 VX — disc hub unit 1 1/2", TIMKEN DHU 1 1/2 R209',
+                        'meta_description' => 'Disc hub unit VELNOX DHU 1 1/2R209 VX, d=38.1 mm (1 1/2"), Cdyn 32.5 kN, Co 20.4 kN. Replacement for TIMKEN DHU 1 1/2 R209, FKL GWST209PPB38, Great Plains 822-208C.',
+                    ],
+                    'pl' => [
+                        'desc'             => 'Dyskowy kołnierzowy węzeł łożyskowy na 4 otwory montażowe do bron dyskowych i maszyn uprawowych z calowym pasowaniem wału. Średnica wewnętrzna d = 38,1 mm (1 1/2"), baza montażowa J = 127 mm, długość całkowita L = 127 mm, średnica centrowania Da = 97 mm, szerokość pierścienia wewnętrznego B = 42,85 mm, Cdyn = 32,5 kN, Co = 20,4 kN, masa 1,63 kg. System uszczelnień VX — wielokrawędziowe uszczelnienie stykowe po obu stronach łożyska — zapewnia niezawodną ochronę strefy tocznej przy bezpośrednim kontakcie z glebą, pyłem i wilgocią. Bezpośredni zamiennik TIMKEN DHU 1 1/2 R209, CT-AGRI FD209RB, RBF FD 209-1 1/2 RD, PEER ST 491 B i FKL GWST209PPB38; stosowany w bronach dyskowych i kultywatorach KRAUSE (nr kat. 1934-12-0, 40-109), Great Plains (nr kat. 822-208C), John Deere (nr kat. AA53919, AN280333) i KUHN (nr kat. Q4045130).',
+                        'meta_title'       => 'VELNOX DHU 1 1/2R209 VX — węzeł dyskowy 1 1/2", TIMKEN DHU 1 1/2 R209',
+                        'meta_description' => 'Dyskowy węzeł łożyskowy VELNOX DHU 1 1/2R209 VX, d=38,1 mm (1 1/2"), Cdyn 32,5 kN, Co 20,4 kN. Zamiennik TIMKEN DHU 1 1/2 R209, FKL GWST209PPB38, Great Plains 822-208C.',
+                    ],
+                ],
+            ],
+        ];
+
+        foreach ($at2Products as $p) {
+            DB::table('products')->updateOrInsert(
+                ['slug' => $p['slug']],
+                ['slug' => $p['slug'], 'article' => $p['article'], 'product_table_id' => $at2]
+            );
+            $productId = DB::table('products')->where('slug', $p['slug'])->value('id');
+
+            // specs
+            foreach ($p['specs'] as $key => $value) {
+                DB::table('product_specs')->updateOrInsert(
+                    ['product_id' => $productId, 'spec_id' => $specId($key)],
+                    ['value' => $value]
+                );
+            }
+
+            // cross_refs
+            DB::table('product_cross_refs')->where('product_id', $productId)->delete();
+            foreach ($p['cross_refs'] as $ref) {
+                DB::table('product_cross_refs')->insert([
+                    'product_id' => $productId,
+                    'brand'      => $ref['brand'],
+                    'value'      => $ref['value'],
+                    'type'       => $ref['type'],
+                ]);
+            }
+
+            // translations (name already exists; add desc/meta)
+            foreach ($p['translations'] as $locale => $fields) {
+                foreach ($fields as $field => $value) {
+                    DB::table('translations')->updateOrInsert(
+                        ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => $field],
+                        ['value' => $value]
+                    );
+                }
+            }
+
+            // model_3d
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $productId, 'type' => 'model_3d'],
+                ['path' => '/velnox/models/' . $p['model_3d'], 'sort_order' => 0]
+            );
+
+            // gallery
+            $galleryBase = '/velnox/images/products/agro-t2';
+            $slug = $p['slug'];
+            foreach ([
+                ['path' => "{$galleryBase}/velnox-dhu-1-1-2r209-vx.webp",           'sort_order' => 1],
+                ['path' => "{$galleryBase}/velnox-dhu-1-1-2r209-vx-drawing-1.webp", 'sort_order' => 2],
+                ['path' => "{$galleryBase}/velnox-dhu-1-1-2r209-vx-drawing-2.webp", 'sort_order' => 3],
+                ['path' => "{$galleryBase}/velnox-dhu-1-1-2r209-vx-drawing-3.webp", 'sort_order' => 4],
+            ] as $asset) {
+                $exists = DB::table('product_assets')
+                    ->where('entity_type', 'product')->where('entity_id', $productId)
+                    ->where('type', 'gallery')->where('path', $asset['path'])->exists();
+                if (!$exists) {
+                    DB::table('product_assets')->insert([
+                        'entity_type' => 'product', 'entity_id' => $productId,
+                        'type' => 'gallery', 'path' => $asset['path'], 'sort_order' => $asset['sort_order'],
+                    ]);
+                }
+            }
+        }
+
     }
 }
