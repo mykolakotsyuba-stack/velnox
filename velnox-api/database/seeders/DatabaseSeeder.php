@@ -1710,6 +1710,15 @@ class DatabaseSeeder extends Seeder
                     ['brand'=>'KUHN',       'value'=>'YP800030',      'type'=>'application'],
                 ],
                 'name_uk'=>'1726206-2RS1 VX','name_en'=>'1726206-2RS1 VX','name_pl'=>'1726206-2RS1 VX',
+                'desc_uk'       => 'Радіальний кульковий підшипник серії 1726 (тип 206) з розширеним внутрішнім кільцем діаметром d₁ = 39.7 мм — стандартний формат для монтажних вузлів сільськогосподарської техніки. Посадковий діаметр d = 30 мм, зовнішній D = 62 мм, ширина внутрішнього кільця B = 16 мм; динамічна вантажопідйомність — 19.5 кН, статична — 11.2 кН. Симетричне двостороннє контактне ущільнення 2RS1 утримує мастило та захищає зону кочення від ґрунтових частинок і вологи. Замінює SKF 1726206-2RS1, INA 206 NPPB, TIMKEN 1726206 2RS, SNR 6206 S EE; встановлюється в оригінальні вузли CLAAS (211156.0), KUHN (81023064, YP800030), John Deere (JD10386) та Kverneland (VF06215766).',
+                'meta_title_uk' => 'VELNOX 1726206-2RS1 VX — d30 мм, SKF 1726206-2RS1, CLAAS 211156.0',
+                'meta_desc_uk'  => 'Підшипник VELNOX 1726206-2RS1 VX, серія 1726: d=30 мм, D=62 мм, Cdyn 19.5 кН, 2RS1. Аналог SKF 1726206-2RS1, INA 206 NPPB. OEM: CLAAS 211156.0, KUHN 81023064.',
+                'desc_en'       => 'Radial ball bearing of the 1726 series (type 206) with an extended inner ring (shoulder diameter d₁ = 39.7 mm), a standard format for mounting assemblies in agricultural equipment. Bore diameter d = 30 mm, outer diameter D = 62 mm, inner ring width B = 16 mm; dynamic load rating — 19.5 kN, static — 11.2 kN. Symmetric double-sided contact seal 2RS1 retains grease and isolates the raceway from soil particles and moisture. Direct replacement for SKF 1726206-2RS1, INA 206 NPPB, TIMKEN 1726206 2RS, SNR 6206 S EE; fits OEM assemblies of CLAAS (211156.0), KUHN (81023064, YP800030), John Deere (JD10386) and Kverneland (VF06215766).',
+                'meta_title_en' => 'VELNOX 1726206-2RS1 VX — d30 mm, SKF 1726206-2RS1, CLAAS 211156.0',
+                'meta_desc_en'  => 'VELNOX 1726206-2RS1 VX bearing, 1726 series: d=30 mm, D=62 mm, Cdyn 19.5 kN, 2RS1. Replaces SKF 1726206-2RS1, INA 206 NPPB. OEM: CLAAS 211156.0, KUHN 81023064.',
+                'desc_pl'       => 'Promieniowe łożysko kulkowe serii 1726 (typ 206) z poszerzonym pierścieniem wewnętrznym (średnica oporowa d₁ = 39,7 mm) — standardowy wymiar dla węzłów montażowych maszyn rolniczych. Średnica otworu d = 30 mm, zewnętrzna D = 62 mm, szerokość pierścienia wewnętrznego B = 16 mm; nośność dynamiczna — 19,5 kN, statyczna — 11,2 kN. Symetryczne dwustronne uszczelnienie kontaktowe 2RS1 utrzymuje smar i chroni tor toczny przed cząstkami gleby i wilgocią. Zamiennik SKF 1726206-2RS1, INA 206 NPPB, TIMKEN 1726206 2RS, SNR 6206 S EE; pasuje do węzłów OEM CLAAS (211156.0), KUHN (81023064, YP800030), John Deere (JD10386) i Kverneland (VF06215766).',
+                'meta_title_pl' => 'VELNOX 1726206-2RS1 VX — d30 mm, SKF 1726206-2RS1, CLAAS 211156.0',
+                'meta_desc_pl'  => 'Łożysko VELNOX 1726206-2RS1 VX, seria 1726: d=30 mm, D=62 mm, Cdyn 19,5 kN, 2RS1. Zamiennik SKF 1726206-2RS1, INA 206 NPPB. OEM: CLAAS 211156.0, KUHN 81023064.',
             ],
             [
                 'article'  => '1726207-2RS1 VX',
@@ -1735,6 +1744,15 @@ class DatabaseSeeder extends Seeder
                     ['brand'=>'',        'value'=>'B96.00264',     'type'=>'application'],
                 ],
                 'name_uk'=>'1726207-2RS1 VX','name_en'=>'1726207-2RS1 VX','name_pl'=>'1726207-2RS1 VX',
+                'desc_uk'       => 'Радіальний кульковий підшипник серії 1726 (тип 207) з розширеним внутрішнім кільцем (d₁ = 46.1 мм) для вузлів посівної та ґрунтообробної техніки середнього типорозміру. Посадковий діаметр d = 35 мм, зовнішній D = 72 мм, ширина внутрішнього кільця B = 17 мм; динамічна вантажопідйомність — 25.5 кН, статична — 15.3 кН. Герметизація виконана двостороннім контактним ущільненням 2RS1 — гумові манжети з обох сторін ефективно блокують проникнення ґрунтових частинок. Аналог SKF 1726207-2RS1, INA G207-XL-NPPB, TIMKEN 1726207 2RS, SNR 6207 SEE; входить до вузлів сівалок MONOSEM (4655.1), Kuhn (81043576), CASE (1407629R91, 3166063R91) та Capello (03.2026.00).',
+                'meta_title_uk' => 'VELNOX 1726207-2RS1 VX — d35 мм, SKF 1726207-2RS1, MONOSEM 4655.1',
+                'meta_desc_uk'  => 'Підшипник VELNOX 1726207-2RS1 VX: d=35 мм, D=72 мм, Cdyn 25.5 кН, 2RS1. Аналог SKF 1726207-2RS1, INA G207-XL-NPPB. OEM: MONOSEM 4655.1, CASE 1407629R91.',
+                'desc_en'       => 'Radial ball bearing of the 1726 series (type 207) with an extended inner ring (d₁ = 46.1 mm) for medium-size assemblies in seeder and tillage equipment. Bore diameter d = 35 mm, outer diameter D = 72 mm, inner ring width B = 17 mm; dynamic load rating — 25.5 kN, static — 15.3 kN. Double-sided contact seal 2RS1 — rubber lip on both sides — effectively blocks ingress of soil particles. Interchangeable with SKF 1726207-2RS1, INA G207-XL-NPPB, TIMKEN 1726207 2RS, SNR 6207 SEE; used in OEM assemblies of MONOSEM seeders (4655.1), Kuhn (81043576), CASE (1407629R91, 3166063R91) and Capello harvesters (03.2026.00).',
+                'meta_title_en' => 'VELNOX 1726207-2RS1 VX — d35 mm, SKF 1726207-2RS1, MONOSEM 4655.1',
+                'meta_desc_en'  => 'VELNOX 1726207-2RS1 VX bearing: d=35 mm, D=72 mm, Cdyn 25.5 kN, 2RS1. Replaces SKF 1726207-2RS1, INA G207-XL-NPPB. OEM: MONOSEM 4655.1, CASE 1407629R91.',
+                'desc_pl'       => 'Promieniowe łożysko kulkowe serii 1726 (typ 207) z poszerzonym pierścieniem wewnętrznym (d₁ = 46,1 mm) do węzłów siewników i uprawiaków średniego rozmiaru. Średnica otworu d = 35 mm, zewnętrzna D = 72 mm, szerokość pierścienia wewnętrznego B = 17 mm; nośność dynamiczna — 25,5 kN, statyczna — 15,3 kN. Uszczelnienie dwustronne kontaktowe 2RS1 — gumowe wargowe z obu stron — skutecznie blokuje wnikanie cząstek glebowych. Zamiennik SKF 1726207-2RS1, INA G207-XL-NPPB, TIMKEN 1726207 2RS, SNR 6207 SEE; stosowany w siewnikach MONOSEM (4655.1), Kuhn (81043576), CASE (1407629R91, 3166063R91) i kombajnach Capello (03.2026.00).',
+                'meta_title_pl' => 'VELNOX 1726207-2RS1 VX — d35 mm, SKF 1726207-2RS1, MONOSEM 4655.1',
+                'meta_desc_pl'  => 'Łożysko VELNOX 1726207-2RS1 VX: d=35 mm, D=72 mm, Cdyn 25,5 kN, 2RS1. Zamiennik SKF 1726207-2RS1, INA G207-XL-NPPB. OEM: MONOSEM 4655.1, CASE 1407629R91.',
             ],
             [
                 'article'  => '1726208-2RS1 VX',
@@ -1758,6 +1776,15 @@ class DatabaseSeeder extends Seeder
                     ['brand'=>'GASPARDO',   'value'=>'F04010184',      'type'=>'application'],
                 ],
                 'name_uk'=>'1726208-2RS1 VX','name_en'=>'1726208-2RS1 VX','name_pl'=>'1726208-2RS1 VX',
+                'desc_uk'       => 'Радіальний кульковий підшипник серії 1726 (тип 208) з розширеним внутрішнім кільцем (d₁ = 52 мм) для навантажених вузлів жатних апаратів і сівалкових механізмів. Посадковий діаметр d = 40 мм, зовнішній D = 80 мм, ширина внутрішнього кільця B = 18 мм; динамічна вантажопідйомність — 30.7 кН, статична — 19.0 кН. Захист від абразивних частинок і вологи забезпечується симетричним контактним ущільненням 2RS1 з обох сторін. Прямий аналог SKF 1726208-2RS1, INA G208-XL-NPPB, TIMKEN 1726208 2RS, ZKL UD 208; замінює OEM-деталі жаток Geringhoff (025292, 025293), сівалок Monosem (4655.1A), John Deere (AZ23315) та Gaspardo (F04010184).',
+                'meta_title_uk' => 'VELNOX 1726208-2RS1 VX — d40 мм, SKF 1726208-2RS1, Geringhoff, JD AZ23315',
+                'meta_desc_uk'  => 'Підшипник VELNOX 1726208-2RS1 VX: d=40 мм, D=80 мм, Cdyn 30.7 кН, 2RS1. Аналог SKF 1726208-2RS1, INA G208-XL-NPPB. OEM: Geringhoff 025292, JD AZ23315.',
+                'desc_en'       => 'Radial ball bearing of the 1726 series (type 208) with an extended inner ring (d₁ = 52 mm) for loaded assemblies in header cutting mechanisms and seeder units. Bore diameter d = 40 mm, outer diameter D = 80 mm, inner ring width B = 18 mm; dynamic load rating — 30.7 kN, static — 19.0 kN. Symmetric double-sided contact seal 2RS1 provides full protection against abrasive particles and moisture. Direct replacement for SKF 1726208-2RS1, INA G208-XL-NPPB, TIMKEN 1726208 2RS, ZKL UD 208; substitutes OEM parts in Geringhoff headers (025292, 025293), Monosem seeders (4655.1A), John Deere (AZ23315) and Gaspardo (F04010184).',
+                'meta_title_en' => 'VELNOX 1726208-2RS1 VX — d40 mm, SKF 1726208-2RS1, Geringhoff, JD AZ23315',
+                'meta_desc_en'  => 'VELNOX 1726208-2RS1 VX bearing: d=40 mm, D=80 mm, Cdyn 30.7 kN, 2RS1. Replaces SKF 1726208-2RS1, INA G208-XL-NPPB. OEM: Geringhoff 025292, JD AZ23315.',
+                'desc_pl'       => 'Promieniowe łożysko kulkowe serii 1726 (typ 208) z poszerzonym pierścieniem wewnętrznym (d₁ = 52 mm) do obciążonych węzłów głowic tnących i mechanizmów siewnych. Średnica otworu d = 40 mm, zewnętrzna D = 80 mm, szerokość pierścienia wewnętrznego B = 18 mm; nośność dynamiczna — 30,7 kN, statyczna — 19,0 kN. Symetryczne kontaktowe uszczelnienie 2RS1 z obu stron chroni przed cząstkami ściernymi i wilgocią. Bezpośredni zamiennik SKF 1726208-2RS1, INA G208-XL-NPPB, TIMKEN 1726208 2RS, ZKL UD 208; zastępuje elementy OEM w hederach Geringhoff (025292, 025293), siewnikach Monosem (4655.1A), John Deere (AZ23315) i Gaspardo (F04010184).',
+                'meta_title_pl' => 'VELNOX 1726208-2RS1 VX — d40 mm, SKF 1726208-2RS1, Geringhoff, JD AZ23315',
+                'meta_desc_pl'  => 'Łożysko VELNOX 1726208-2RS1 VX: d=40 mm, D=80 mm, Cdyn 30,7 kN, 2RS1. Zamiennik SKF 1726208-2RS1, INA G208-XL-NPPB. OEM: Geringhoff 025292, JD AZ23315.',
             ],
             [
                 'article'  => '1726209-2RS1 VX',
@@ -1784,6 +1811,15 @@ class DatabaseSeeder extends Seeder
                     ['brand'=>'GRIMME',  'value'=>'B96.00293',      'type'=>'application'],
                 ],
                 'name_uk'=>'1726209-2RS1 VX','name_en'=>'1726209-2RS1 VX','name_pl'=>'1726209-2RS1 VX',
+                'desc_uk'       => 'Радіальний кульковий підшипник серії 1726 (тип 209) з розширеним внутрішнім кільцем (d₁ = 56.6 мм) для вузлів збиральних і посівних машин із підвищеним радіальним навантаженням. Посадковий діаметр d = 45 мм, зовнішній D = 85 мм, ширина внутрішнього кільця B = 19 мм; динамічна вантажопідйомність — 32.5 кН, статична — 20.4 кН. Двостороннє гумово-контактне ущільнення 2RS1 формує повну герметизацію зони кочення в умовах ґрунтового забруднення. Аналог SKF 1726209-2RS1, INA 209 NPPB, TIMKEN 1726209 2RS, FBJ CS 209 2RS; застосовується в оригінальних вузлах CLAAS (000212102.0), New Holland (81004584), Massey Ferguson (831134M1, LA340411277) та Capello (02.1032.00, PMS-000007).',
+                'meta_title_uk' => 'VELNOX 1726209-2RS1 VX — d45 мм, SKF 1726209-2RS1, NH 81004584, MF 831134M1',
+                'meta_desc_uk'  => 'Підшипник VELNOX 1726209-2RS1 VX: d=45 мм, D=85 мм, Cdyn 32.5 кН, 2RS1. Аналог SKF 1726209-2RS1. OEM: CLAAS 000212102.0, NH 81004584, MF 831134M1.',
+                'desc_en'       => 'Radial ball bearing of the 1726 series (type 209) with an extended inner ring (d₁ = 56.6 mm) for assemblies in harvesting and seeding machines with elevated radial loads. Bore diameter d = 45 mm, outer diameter D = 85 mm, inner ring width B = 19 mm; dynamic load rating — 32.5 kN, static — 20.4 kN. Double-sided rubber contact seal 2RS1 provides full closure of the raceway in soil-contaminated field conditions. Cross-reference for SKF 1726209-2RS1, INA 209 NPPB, TIMKEN 1726209 2RS, FBJ CS 209 2RS; used in OEM assemblies of CLAAS (000212102.0), New Holland (81004584), Massey Ferguson (831134M1, LA340411277) and Capello (02.1032.00, PMS-000007).',
+                'meta_title_en' => 'VELNOX 1726209-2RS1 VX — d45 mm, SKF 1726209-2RS1, NH 81004584, MF 831134M1',
+                'meta_desc_en'  => 'VELNOX 1726209-2RS1 VX bearing: d=45 mm, D=85 mm, Cdyn 32.5 kN, 2RS1. Replaces SKF 1726209-2RS1. OEM: CLAAS 000212102.0, NH 81004584, MF 831134M1.',
+                'desc_pl'       => 'Promieniowe łożysko kulkowe serii 1726 (typ 209) z poszerzonym pierścieniem wewnętrznym (d₁ = 56,6 mm) do węzłów maszyn żniwnych i siewnych z podwyższonym obciążeniem promieniowym. Średnica otworu d = 45 mm, zewnętrzna D = 85 mm, szerokość pierścienia wewnętrznego B = 19 mm; nośność dynamiczna — 32,5 kN, statyczna — 20,4 kN. Dwustronne gumowe uszczelnienie kontaktowe 2RS1 tworzy pełne uszczelnienie strefy tocznej w warunkach zanieczyszczenia glebowego. Zamiennik SKF 1726209-2RS1, INA 209 NPPB, TIMKEN 1726209 2RS, FBJ CS 209 2RS; stosowany w węzłach OEM CLAAS (000212102.0), New Holland (81004584), Massey Ferguson (831134M1, LA340411277) i Capello (02.1032.00, PMS-000007).',
+                'meta_title_pl' => 'VELNOX 1726209-2RS1 VX — d45 mm, SKF 1726209-2RS1, NH 81004584, MF 831134M1',
+                'meta_desc_pl'  => 'Łożysko VELNOX 1726209-2RS1 VX: d=45 mm, D=85 mm, Cdyn 32,5 kN, 2RS1. Zamiennik SKF 1726209-2RS1. OEM: CLAAS 000212102.0, NH 81004584, MF 831134M1.',
             ],
             [
                 'article'  => '1726210-2RS1 VX',
@@ -1802,6 +1838,15 @@ class DatabaseSeeder extends Seeder
                     ['brand'=>'Kuhn',    'value'=>'81005099',       'type'=>'application'],
                 ],
                 'name_uk'=>'1726210-2RS1 VX','name_en'=>'1726210-2RS1 VX','name_pl'=>'1726210-2RS1 VX',
+                'desc_uk'       => 'Радіальний кульковий підшипник серії 1726 (тип 210) з розширеним внутрішнім кільцем (d₁ = 62.5 мм) — найбільший у ряду 172x200, розрахований на значні радіальні навантаження в ґрунтообробних вузлах. Посадковий діаметр d = 50 мм, зовнішній D = 90 мм, ширина внутрішнього кільця B = 20 мм; динамічна вантажопідйомність — 35.1 кН, статична — 23.2 кН. Контактне ущільнення 2RS1 — двостороннє, симетричне — забезпечує повний захист від механічних домішок і вологи в польових умовах. Технічний аналог SKF 1726210-2RS1, INA 210 NPPB, TIMKEN 1726210 2RS, FBJ CS 210 2RS; входить до складу вузлів Dominoni (11330) та Kuhn (81005000, 81005099).',
+                'meta_title_uk' => 'VELNOX 1726210-2RS1 VX — d50 мм, SKF 1726210-2RS1, Dominoni 11330, Kuhn',
+                'meta_desc_uk'  => 'Підшипник VELNOX 1726210-2RS1 VX: d=50 мм, D=90 мм, Cdyn 35.1 кН, 2RS1. Аналог SKF 1726210-2RS1, INA 210 NPPB. OEM: Dominoni 11330, Kuhn 81005000.',
+                'desc_en'       => 'Radial ball bearing of the 1726 series (type 210) with an extended inner ring (d₁ = 62.5 mm) — the largest in the 172x200 range, designed for significant radial loads in tillage assemblies. Bore diameter d = 50 mm, outer diameter D = 90 mm, inner ring width B = 20 mm; dynamic load rating — 35.1 kN, static — 23.2 kN. Symmetric double-sided contact seal 2RS1 provides complete protection against mechanical contaminants and moisture under field conditions. Technical equivalent of SKF 1726210-2RS1, INA 210 NPPB, TIMKEN 1726210 2RS, FBJ CS 210 2RS; used in Dominoni (11330) and Kuhn (81005000, 81005099) assemblies.',
+                'meta_title_en' => 'VELNOX 1726210-2RS1 VX — d50 mm, SKF 1726210-2RS1, Dominoni 11330, Kuhn',
+                'meta_desc_en'  => 'VELNOX 1726210-2RS1 VX bearing: d=50 mm, D=90 mm, Cdyn 35.1 kN, 2RS1. Replaces SKF 1726210-2RS1, INA 210 NPPB. OEM: Dominoni 11330, Kuhn 81005000.',
+                'desc_pl'       => 'Promieniowe łożysko kulkowe serii 1726 (typ 210) z poszerzonym pierścieniem wewnętrznym (d₁ = 62,5 mm) — największy w serii 172x200, przeznaczony na znaczne obciążenia promieniowe w węzłach uprawowych. Średnica otworu d = 50 mm, zewnętrzna D = 90 mm, szerokość pierścienia wewnętrznego B = 20 mm; nośność dynamiczna — 35,1 kN, statyczna — 23,2 kN. Symetryczne dwustronne uszczelnienie kontaktowe 2RS1 zapewnia pełną ochronę przed zanieczyszczeniami mechanicznymi i wilgocią w warunkach polowych. Odpowiednik techniczny SKF 1726210-2RS1, INA 210 NPPB, TIMKEN 1726210 2RS, FBJ CS 210 2RS; stosowany w węzłach Dominoni (11330) i Kuhn (81005000, 81005099).',
+                'meta_title_pl' => 'VELNOX 1726210-2RS1 VX — d50 mm, SKF 1726210-2RS1, Dominoni 11330, Kuhn',
+                'meta_desc_pl'  => 'Łożysko VELNOX 1726210-2RS1 VX: d=50 mm, D=90 mm, Cdyn 35,1 kN, 2RS1. Zamiennik SKF 1726210-2RS1, INA 210 NPPB. OEM: Dominoni 11330, Kuhn 81005000.',
             ],
             [
                 'article'  => '1726306-2RS1 VX',
@@ -1820,6 +1865,15 @@ class DatabaseSeeder extends Seeder
                     ['brand'=>'',     'value'=>'580306 K7C17',   'type'=>'application'],
                 ],
                 'name_uk'=>'1726306-2RS1 VX','name_en'=>'1726306-2RS1 VX','name_pl'=>'1726306-2RS1 VX',
+                'desc_uk'       => 'Радіальний кульковий підшипник серії 1726 типу 306 з розширеним внутрішнім кільцем (d₁ = 44.6 мм) — збільшений зовнішній діаметр D = 72 мм при тому самому посадковому d = 30 мм забезпечує вищу вантажопідйомність порівняно з типом 1726206. Ширина внутрішнього кільця B = 19 мм; динамічна вантажопідйомність — 28.1 кН, статична — 16.0 кН. Двостороннє контактне ущільнення 2RS1 забезпечує герметизацію в умовах ґрунтової вологи та абразивного пилу. Аналог SKF 1726306-2RS1, FAG 76306-2RS, NTN CS306LLU, NSK CS306DDU, SNR 6306SEE, RHP 1726306-2RS; застосовується у вузлах із підвищеними радіальними навантаженнями (арт. 580306 K7C17).',
+                'meta_title_uk' => 'VELNOX 1726306-2RS1 VX — d30 D72 мм, SKF 1726306-2RS1, FAG 76306-2RS',
+                'meta_desc_uk'  => 'Підшипник VELNOX 1726306-2RS1 VX серії 306: d=30 мм, D=72 мм, Cdyn 28.1 кН, 2RS1. Аналог SKF 1726306-2RS1, FAG 76306-2RS, NTN CS306LLU.',
+                'desc_en'       => 'Radial ball bearing of the 1726 series type 306 with an extended inner ring (d₁ = 44.6 mm) — the larger outer diameter D = 72 mm at the same bore d = 30 mm delivers higher load capacity compared to type 1726206. Inner ring width B = 19 mm; dynamic load rating — 28.1 kN, static — 16.0 kN. Double-sided contact seal 2RS1 ensures sealing against soil moisture and abrasive dust. Interchangeable with SKF 1726306-2RS1, FAG 76306-2RS, NTN CS306LLU, NSK CS306DDU, SNR 6306SEE, RHP 1726306-2RS; used in high-radial-load agricultural assemblies (ref. 580306 K7C17).',
+                'meta_title_en' => 'VELNOX 1726306-2RS1 VX — d30 D72 mm, SKF 1726306-2RS1, FAG 76306-2RS',
+                'meta_desc_en'  => 'VELNOX 1726306-2RS1 VX bearing, series 306: d=30 mm, D=72 mm, Cdyn 28.1 kN, 2RS1. Replaces SKF 1726306-2RS1, FAG 76306-2RS, NTN CS306LLU.',
+                'desc_pl'       => 'Promieniowe łożysko kulkowe serii 1726 typ 306 z poszerzonym pierścieniem wewnętrznym (d₁ = 44,6 mm) — zwiększona średnica zewnętrzna D = 72 mm przy tej samej średnicy otworu d = 30 mm zapewnia wyższą nośność w porównaniu do typu 1726206. Szerokość pierścienia wewnętrznego B = 19 mm; nośność dynamiczna — 28,1 kN, statyczna — 16,0 kN. Dwustronne kontaktowe uszczelnienie 2RS1 zapewnia hermetyzację przed wilgocią glebową i pyłem ściernym. Zamiennik SKF 1726306-2RS1, FAG 76306-2RS, NTN CS306LLU, NSK CS306DDU, SNR 6306SEE, RHP 1726306-2RS; stosowany w węzłach z podwyższonymi obciążeniami promieniowymi (ref. 580306 K7C17).',
+                'meta_title_pl' => 'VELNOX 1726306-2RS1 VX — d30 D72 mm, SKF 1726306-2RS1, FAG 76306-2RS',
+                'meta_desc_pl'  => 'Łożysko VELNOX 1726306-2RS1 VX serii 306: d=30 mm, D=72 mm, Cdyn 28,1 kN, 2RS1. Zamiennik SKF 1726306-2RS1, FAG 76306-2RS, NTN CS306LLU.',
             ],
             [
                 'article'  => '1726309-2RS1 VX',
@@ -1845,6 +1899,15 @@ class DatabaseSeeder extends Seeder
                     ['brand'=>'ZARAMAK', 'value'=>'1726309 2RS1',  'type'=>'application'],
                 ],
                 'name_uk'=>'1726309-2RS1 VX','name_en'=>'1726309-2RS1 VX','name_pl'=>'1726309-2RS1 VX',
+                'desc_uk'       => 'Радіальний кульковий підшипник серії 1726 типу 309 з розширеним внутрішнім кільцем (d₁ = 62.1 мм) — збільшений зовнішній діаметр D = 100 мм при посадковому d = 45 мм забезпечує суттєво вищу вантажопідйомність порівняно з типом 1726209. Ширина внутрішнього кільця B = 25 мм; динамічна вантажопідйомність — 52.7 кН, статична — 31.5 кН. Захист від польових забруднень реалізовано двостороннім контактним ущільненням 2RS1. Прямий аналог SKF 1726309-2RS1, FAG 76309-2RS, NTN CS309LLU, NSK CS309DDU, TIMKEN 1726309 2RS; є основним замінником у сівалках Gaspardo (F04010225R, MG43400468, 23400434, 76100409) та агрегатах ZARAMAK (1726309 2RS1).',
+                'meta_title_uk' => 'VELNOX 1726309-2RS1 VX — d45 D100 мм, Cdyn 52.7 кН, SKF 1726309-2RS1, Gaspardo',
+                'meta_desc_uk'  => 'Підшипник VELNOX 1726309-2RS1 VX серії 309: d=45 мм, D=100 мм, Cdyn 52.7 кН. Аналог SKF 1726309-2RS1, FAG 76309-2RS. OEM: Gaspardo F04010225R.',
+                'desc_en'       => 'Radial ball bearing of the 1726 series type 309 with an extended inner ring (d₁ = 62.1 mm) — the larger outer diameter D = 100 mm at bore d = 45 mm delivers significantly higher load capacity compared to type 1726209. Inner ring width B = 25 mm; dynamic load rating — 52.7 kN, static — 31.5 kN. Double-sided contact seal 2RS1 provides field-condition protection against all types of contamination. Direct replacement for SKF 1726309-2RS1, FAG 76309-2RS, NTN CS309LLU, NSK CS309DDU, TIMKEN 1726309 2RS; primary OEM substitute in Gaspardo seeders (F04010225R, MG43400468, 23400434, 76100409) and ZARAMAK assemblies (1726309 2RS1).',
+                'meta_title_en' => 'VELNOX 1726309-2RS1 VX — d45 D100 mm, Cdyn 52.7 kN, SKF 1726309-2RS1, Gaspardo',
+                'meta_desc_en'  => 'VELNOX 1726309-2RS1 VX heavy series 309: d=45 mm, D=100 mm, Cdyn 52.7 kN. Replaces SKF 1726309-2RS1, FAG 76309-2RS. OEM: Gaspardo F04010225R.',
+                'desc_pl'       => 'Promieniowe łożysko kulkowe serii 1726 typ 309 z poszerzonym pierścieniem wewnętrznym (d₁ = 62,1 mm) — zwiększona średnica zewnętrzna D = 100 mm przy średnicy otworu d = 45 mm zapewnia znacznie wyższą nośność w porównaniu do typu 1726209. Szerokość pierścienia wewnętrznego B = 25 mm; nośność dynamiczna — 52,7 kN, statyczna — 31,5 kN. Dwustronne kontaktowe uszczelnienie 2RS1 zapewnia ochronę przed wszystkimi rodzajami zanieczyszczeń polowych. Bezpośredni zamiennik SKF 1726309-2RS1, FAG 76309-2RS, NTN CS309LLU, NSK CS309DDU, TIMKEN 1726309 2RS; główny zamiennik OEM w siewnikach Gaspardo (F04010225R, MG43400468, 23400434, 76100409) i węzłach ZARAMAK (1726309 2RS1).',
+                'meta_title_pl' => 'VELNOX 1726309-2RS1 VX — d45 D100 mm, Cdyn 52,7 kN, SKF 1726309-2RS1, Gaspardo',
+                'meta_desc_pl'  => 'Łożysko VELNOX 1726309-2RS1 VX serii 309: d=45 mm, D=100 mm, Cdyn 52,7 kN. Zamiennik SKF 1726309-2RS1, FAG 76309-2RS. OEM: Gaspardo F04010225R.',
             ],
         ];
 
@@ -1879,6 +1942,17 @@ class DatabaseSeeder extends Seeder
                     ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => 'name'],
                     ['value' => $p["name_{$locale}"]]
                 );
+            }
+            foreach (['uk', 'en', 'pl'] as $locale) {
+                foreach (['desc' => 'desc', 'meta_title' => 'meta_title', 'meta_desc' => 'meta_description'] as $suffix => $field) {
+                    $val = $p["{$suffix}_{$locale}"] ?? null;
+                    if ($val) {
+                        DB::table('translations')->updateOrInsert(
+                            ['entity_type' => 'product', 'entity_id' => $productId, 'locale' => $locale, 'field' => $field],
+                            ['value' => $val]
+                        );
+                    }
+                }
             }
 
             if (!empty($p['model_3d'])) {
