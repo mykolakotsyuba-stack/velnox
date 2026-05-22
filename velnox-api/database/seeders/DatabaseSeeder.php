@@ -1658,8 +1658,14 @@ class DatabaseSeeder extends Seeder
                 'slug'             => 'agro-t1',
                 'category_id'      => $catId('agro'),
                 'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','d1_mm','r_12_mm','cdyn_kn','co_kn','pu_kn','mass_kg']),
-                'highlight_config' => json_encode(new \stdClass()),
-                'schema_viewbox'   => null,
+                'highlight_config' => json_encode([
+                    'd_mm'    => [['label' => 'd',  'x' => 297,  'y' => 829]],
+                    'D_mm'    => [['label' => 'D',  'x' => 246,  'y' => 833]],
+                    'B_mm'    => [['label' => 'B',  'x' => 1256, 'y' => 422]],
+                    'd1_mm'   => [['label' => 'd1', 'x' => 1129, 'y' => 832]],
+                    'r_12_mm' => [['label' => 'r1', 'x' => 1368, 'y' => 613], ['label' => 'r2', 'x' => 1309, 'y' => 662]],
+                ]),
+                'schema_viewbox'   => '0 0 2480 3507.43',
                 'sort_order'       => 1,
             ]
         );
