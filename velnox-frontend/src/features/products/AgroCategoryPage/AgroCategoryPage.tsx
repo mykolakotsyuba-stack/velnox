@@ -571,17 +571,21 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
 
             {/* ── HERO ── */}
             <section className={styles.hero} ref={heroRef.ref as React.Ref<HTMLElement>}>
-                <div className={heroRef.inView
-                    ? `${styles.container} ${styles.heroContainer} ${styles.animIn}`
-                    : `${styles.container} ${styles.heroContainer}`}>
-                    <div className={styles.heroContent}>
+                <div className={styles.heroBgWrapper}>
+                    <Image src="/velnox/images/agro/agro_hero_collage.png" alt="VELNOX Agro Bearings" fill
+                        className={styles.heroBgImg} quality={90} priority />
+                    <div className={styles.heroBgOverlay} />
+                </div>
+
+                <div className={styles.heroInner}>
+                    <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
                         <div className={styles.heroEyebrow}>
                             <span className={styles.eyebrowLine} />
                             VELNOX AGRO BEARINGS
                         </div>
                         <h1 className={styles.heroTitle}>{t('agroPage.hero.title')}</h1>
-                        <p className={styles.heroSubtitle}>{t('agroPage.hero.subtitle')}</p>
-                        <p className={styles.heroDescription}>{t('agroPage.hero.desc')}</p>
+                        <p className={styles.heroLead}>{t('agroPage.hero.subtitle')}</p>
+                        <p className={styles.heroLead}>{t('agroPage.hero.desc')}</p>
                     </div>
                 </div>
             </section>
