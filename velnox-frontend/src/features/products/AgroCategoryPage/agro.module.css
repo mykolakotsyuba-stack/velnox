@@ -151,8 +151,8 @@
 .heroBgOverlay {
     position: absolute;
     inset: 0;
-    /* Lighter left edge for text readability, fading to transparent on the right */
-    background: linear-gradient(90deg, rgba(15, 14, 58, 0.85) 0%, rgba(15, 14, 58, 0.4) 50%, transparent 80%);
+    /* Lighter green-tinted left edge for text readability, fading to transparent on the right */
+    background: linear-gradient(90deg, rgba(12, 34, 22, 0.85) 0%, rgba(12, 34, 22, 0.45) 50%, transparent 85%);
 }
 
 .heroInner {
@@ -190,16 +190,25 @@
     font-weight: 700;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: 12px;
+    color: #4ade80; /* Brighter green for readability */
+    margin-bottom: 24px;
 }
 
 .eyebrowLine {
     display: inline-block;
     width: 28px;
     height: 2px;
-    background: var(--color-accent);
+    background: #4ade80;
     flex-shrink: 0;
+}
+
+.heroLogoWrapper {
+    margin-bottom: 8px;
+}
+
+.heroLogo {
+    max-width: 100%;
+    height: auto;
 }
 
 .heroTitle {

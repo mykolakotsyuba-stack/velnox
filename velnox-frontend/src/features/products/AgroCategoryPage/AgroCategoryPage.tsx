@@ -583,7 +583,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                             <span className={styles.eyebrowLine} />
                             VELNOX AGRO BEARINGS
                         </div>
-                        <h1 className={styles.heroTitle}>{t('agroPage.hero.title')}</h1>
+                        <div className={styles.heroLogoWrapper}>
+                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
+                        </div>
+                        <h1 className={styles.heroTitle}>Спеціальні агропідшипники</h1>
                         <p className={styles.heroLead}>{t('agroPage.hero.subtitle')}</p>
                         <p className={styles.heroLead}>{t('agroPage.hero.desc')}</p>
                     </div>
