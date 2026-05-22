@@ -1665,7 +1665,7 @@ class DatabaseSeeder extends Seeder
                     'd1_mm'   => [['label' => 'd1', 'x' => 1129, 'y' => 832]],
                     'r_12_mm' => [['label' => 'r1', 'x' => 1368, 'y' => 613], ['label' => 'r2', 'x' => 1309, 'y' => 662]],
                 ]),
-                'schema_viewbox'   => '0 0 2480 3507.43',
+                'schema_viewbox'   => '0 0 2480 1900',
                 'sort_order'       => 1,
             ]
         );
