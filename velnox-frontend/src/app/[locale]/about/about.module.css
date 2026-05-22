@@ -170,7 +170,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    transform: translateY(-80px);
+    transform: translateY(-130px);
 }
 
 .heroContent {
@@ -196,7 +196,7 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: #00FF66;
-    margin-bottom: 22px;
+    margin-bottom: 8px;
 }
 
 .eyebrowLine {
