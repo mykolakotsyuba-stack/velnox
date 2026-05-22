@@ -153,6 +153,11 @@
     z-index: 0;
 }
 
+.heroBgImg {
+    object-fit: cover;
+    object-position: center;
+}
+
 .heroBgOverlay {
     position: absolute;
     inset: 0;
@@ -209,6 +214,11 @@
 
 .heroLogoWrapper {
     margin-bottom: 24px;
+}
+
+.heroLogo {
+    max-width: 100%;
+    height: auto;
 }
 
 .heroTitle {
@@ -1059,6 +1069,16 @@
 
     .heroInner {
         padding: 56px 20px 40px;
+        transform: translateY(-40px);
+    }
+
+    .heroBgImg {
+        object-position: 75% center;
+    }
+
+    .heroCta {
+        width: 100%;
+        justify-content: center;
     }
 
     .statsGrid {
@@ -1083,7 +1103,8 @@
     }
 
     .audienceSectors {
-        gap: 14px;
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .audienceCta {
@@ -1095,6 +1116,10 @@
         padding: 32px 20px;
         border-radius: 20px;
         margin-top: 24px;
+    }
+
+    .qualityList {
+        grid-template-columns: 1fr;
     }
 
     .ctaButtonPrimary,

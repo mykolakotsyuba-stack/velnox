@@ -110,7 +110,7 @@ export function AboutPage({ locale }: { locale: string }) {
                 {/* Full bleed background image */}
                 <div className={styles.heroBgWrapper}>
                     <Image src="/velnox/images/about/hero_bearing_final.png" alt="VELNOX Engineering" fill
-                        style={{ objectFit: 'cover' }} quality={80} priority />
+                        className={styles.heroBgImg} quality={80} priority />
                     <div className={styles.heroBgOverlay} />
                 </div>
 
