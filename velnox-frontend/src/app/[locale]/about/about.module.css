@@ -147,6 +147,18 @@
     pointer-events: none;
 }
 
+.heroBgWrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.heroBgOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #D8E0E8 0%, rgba(216, 224, 232, 0.85) 40%, transparent 70%);
+}
+
 .heroInner {
     position: relative;
     z-index: 2;
@@ -154,10 +166,9 @@
     max-width: 1440px;
     margin: 0 auto;
     padding: 72px 64px 56px;
-    display: grid;
-    grid-template-columns: 45fr 55fr;
-    align-items: center;
-    gap: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .heroContent {
@@ -253,40 +264,40 @@
     box-shadow: 0 8px 28px rgba(0, 149, 62, 0.35);
 }
 
-/* ── Bearing card ── */
-.heroVisual {
-    position: relative;
-    width: 100%;
-    max-width: 1100px;
-    margin-right: -100px;
-    z-index: 1;
-    opacity: 0;
-    transform: translateX(32px);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+/* Scroll Hint */
+.scrollHint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #00953E;
+    opacity: 0.8;
+    animation: bounceScroll 2s infinite;
+    cursor: pointer;
+    z-index: 10;
+    transition: opacity 0.2s;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 149, 62, 0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.heroVisualVisible {
+.scrollHint:hover {
     opacity: 1;
-    transform: translateX(0);
+    background: rgba(255, 255, 255, 0.8);
 }
 
-.heroImageWrapper {
-    position: relative;
-    width: 110%;
-    aspect-ratio: 1 / 1;
-    overflow: visible;
-}
-
-.heroGeneratedImg {
-    object-fit: contain !important;
-    pointer-events: none;
-    filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.15));
-}
-
-.heroImageOverlay {
-    display: none;
+@keyframes bounceScroll {
+    0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+    40% { transform: translate(-50%, -8px); }
+    60% { transform: translate(-50%, -4px); }
 }
 
 /* ──────────────────────────────────────────────────

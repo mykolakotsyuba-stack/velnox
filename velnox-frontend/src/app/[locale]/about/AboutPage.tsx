@@ -107,9 +107,12 @@ export function AboutPage({ locale }: { locale: string }) {
 
             {/* ══ BLOCK A: HERO ══ */}
             <section className={styles.hero}>
-                <div className={styles.heroGrid} aria-hidden />
-                <div className={styles.heroOrb1} aria-hidden />
-                <div className={styles.heroOrb2} aria-hidden />
+                {/* Full bleed background image */}
+                <div className={styles.heroBgWrapper}>
+                    <Image src="/velnox/images/about/hero_bearing_final.png" alt="VELNOX Engineering" fill
+                        style={{ objectFit: 'cover' }} quality={80} priority />
+                    <div className={styles.heroBgOverlay} />
+                </div>
 
                 <div className={styles.heroInner}>
                     <div className={`${styles.heroContent} ${heroVisible ? styles.heroVisible : ''}`}>
@@ -126,19 +129,14 @@ export function AboutPage({ locale }: { locale: string }) {
                             </svg>
                         </a>
                     </div>
-
-                    {/* Hero visual — Agrihub 3D render */}
-                    <div className={`${styles.heroVisual} ${heroVisible ? styles.heroVisualVisible : ''}`}>
-                        <div className={styles.heroImageWrapper}>
-                            <Image src="/velnox/images/about/hero_bearing_final.png" alt="VELNOX Engineering" fill
-                                sizes="(max-width: 1024px) 100vw, 55vw"
-                                className={styles.heroGeneratedImg} priority />
-                            <div className={styles.heroImageOverlay} />
-                        </div>
-                    </div>
                 </div>
 
-                <div className={styles.scrollHint}><span /></div>
+                {/* Scroll Down Hint (Bouncing Arrow) */}
+                <div className={styles.scrollHint} onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24">
+                        <path d="M12 5v14M19 12l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </div>
             </section>
 
             {/* ══ BLOCK B: TECHNICAL DASHBOARD ══ */}
