@@ -132,9 +132,26 @@ function buildT1Cols(sl: SlMap, partLabel: string): ColDef[] {
 }
 
 function buildT2Cols(sl: SlMap, partLabel: string): ColDef[] {
-    // TODO: add spec columns when data is provided
     return [
-        { key: 'part_number', label: partLabel, width: '120px' },
+        { key: 'part_number',   label: partLabel,                                                   width: '130px' },
+        { key: 'bearing_part',  label: 'Позначення підшипника',                                     hasFilter: false },
+        { key: 'bearing_brand', label: 'Бренд',                                                     hasFilter: false },
+        { key: 'oem',           label: 'Перехресні аналоги',                                        hasFilter: false },
+        { key: 'd_inch',        label: sl['d_inch']   || 'Діаметр отвору d (дюйм)',                 hasFilter: true },
+        { key: 'd_mm',          label: sl['d_mm']     || 'Діаметр отвору d (мм)',                   hasFilter: true },
+        { key: 'B_mm',          label: sl['B_mm']     || 'B (мм)',                                  hasFilter: true },
+        { key: 'C_mm',          label: sl['C_mm']     || 'C (мм)',                                  hasFilter: true },
+        { key: 'Da_mm',         label: sl['Da_mm']    || 'Da (мм)',                                 hasFilter: true },
+        { key: 'L_mm',          label: sl['L_mm']     || 'L (мм)',                                  hasFilter: true },
+        { key: 'A_fl_mm',       label: sl['A_fl_mm']  || 'A (мм)',                                  hasFilter: true },
+        { key: 'A1_mm',         label: sl['A1_mm']    || 'A1 (мм)',                                 hasFilter: true },
+        { key: 'J_mm',          label: sl['J_mm']     || 'J (мм)',                                  hasFilter: true },
+        { key: 'N_mm',          label: sl['N_mm']     || 'N (мм)',                                  hasFilter: true },
+        { key: 'Fr_kn',         label: sl['Fr_kn']    || 'Fr (кН)',                                 hasFilter: true },
+        { key: 'Fa_kn',         label: sl['Fa_kn']    || 'Fa (кН)',                                 hasFilter: true },
+        { key: 'mass_kg',       label: sl['mass_kg']  || 'Маса (кг)',                               hasFilter: true },
+        { key: 'cdyn_kn',       label: sl['cdyn_kn']  || 'Cdyn (кН)',                               hasFilter: true },
+        { key: 'co_kn',         label: sl['co_kn']    || 'Co (кН)',                                 hasFilter: true },
     ];
 }
 
