@@ -78,6 +78,15 @@ class ProductController extends Controller
             ->select('spec_definitions.id as spec_def_id', 'spec_definitions.key', 'product_specs.value')
             ->get();
 
+        // Re-order specs by spec_columns from product_table (takes priority over global sort_order)
+        $specColumns = json_decode(
+            DB::table('product_tables')->where('id', $product->product_table_id)->value('spec_columns') ?? '[]',
+            true
+        );
+        if (!empty($specColumns)) {
+            $rawSpecs = $rawSpecs->sortBy(fn($s) => ($pos = array_search($s->key, $specColumns)) !== false ? $pos : 9999);
+        }
+
         $specDefIds = $rawSpecs->pluck('spec_def_id')->unique()->toArray();
 
         $specTrans = DB::table('translations')
@@ -130,7 +139,13 @@ class ProductController extends Controller
             $byType[$a->type][] = ['type' => $a->type, 'path' => $a->path, 'sort_order' => $a->sort_order];
         }
         foreach ($productAssets as $a) {
-            $byType[$a->type] = [['type' => $a->type, 'path' => $a->path, 'sort_order' => $a->sort_order]];
+            if ($a->type === 'gallery') {
+                // gallery: accumulate (multiple images per product)
+                $byType[$a->type][] = ['type' => $a->type, 'path' => $a->path, 'sort_order' => $a->sort_order];
+            } else {
+                // other types: product-level overrides table-level
+                $byType[$a->type] = [['type' => $a->type, 'path' => $a->path, 'sort_order' => $a->sort_order]];
+            }
         }
 
         $images = [];
