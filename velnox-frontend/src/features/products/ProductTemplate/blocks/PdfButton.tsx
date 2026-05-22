@@ -17,7 +17,13 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
     const t = useTranslations('product');
     const [isGenerating, setIsGenerating] = useState(false);
     const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+    const [pageUrl, setPageUrl] = useState('');
     const hiddenPdfRef = useRef<HTMLDivElement>(null);
+
+    // Must be set in useEffect to avoid server/client HTML mismatch (hydration error #418)
+    useEffect(() => {
+        setPageUrl(window.location.href);
+    }, []);
 
     const safeArticle = product.article.replace(/[^a-zA-Z0-9-_]/g, '_');
     const filename = `VELNOX_Catalog_${safeArticle}.pdf`;
@@ -178,7 +184,7 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
                     ref={hiddenPdfRef}
                     product={product}
                     locale={locale}
-                    pageUrl={typeof window !== 'undefined' ? window.location.href : ''}
+                    pageUrl={pageUrl}
                 />
             </div>
         </>
