@@ -50,7 +50,7 @@ export function ProductSlider({ locale }: { locale: string }) {
             link2: `/${locale}/contacts`,
         },
         {
-            bgImg: '/velnox/images/bg_hub_kit_macro.png',
+            bgImg: '/velnox/images/bg_bearing_207.png',
             tag: t('slide3.tag'),
             title: t('slide3.title'),
             body: t('slide3.body'),
