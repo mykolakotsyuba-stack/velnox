@@ -156,8 +156,8 @@
 .heroBgOverlay {
     position: absolute;
     inset: 0;
-    /* Rich dark green gradient matching Velnox brand */
-    background: linear-gradient(90deg, rgba(10, 35, 20, 0.95) 0%, rgba(10, 50, 25, 0.85) 45%, transparent 75%);
+    /* Lighter left edge, fading faster to transparent to keep it bright */
+    background: linear-gradient(90deg, rgba(10, 45, 20, 0.7) 0%, rgba(10, 50, 25, 0.3) 50%, transparent 80%);
 }
 
 .heroInner {
@@ -206,6 +206,10 @@
     flex-shrink: 0;
 }
 
+.heroLogoWrapper {
+    margin-bottom: 24px;
+}
+
 .heroTitle {
     font-size: clamp(34px, 4.8vw, 62px);
     font-weight: 900;
@@ -217,10 +221,11 @@
 }
 
 .heroLead {
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 500;
     line-height: 1.85;
-    color: rgba(255, 255, 255, 0.85);
-    max-width: 560px;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 580px;
     border-left: 3px solid #00FF66;
     padding-left: 20px;
     position: relative;
@@ -270,30 +275,26 @@
 /* Scroll Hint */
 .scrollHint {
     position: absolute;
-    bottom: 32px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    color: #00953E;
-    opacity: 0.8;
-    animation: bounceScroll 2s infinite;
-    cursor: pointer;
-    z-index: 10;
-    transition: opacity 0.2s;
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(0, 149, 62, 0.2);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    animation: scrollBounce 2s infinite ease-in-out;
 }
 
 .scrollHint:hover {
-    opacity: 1;
     background: rgba(255, 255, 255, 0.8);
 }
 

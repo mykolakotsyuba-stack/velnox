@@ -120,6 +120,9 @@ export function AboutPage({ locale }: { locale: string }) {
                             <span className={styles.eyebrowLine} />
                             {t('hero.eyebrow')}
                         </div>
+                        <div className={styles.heroLogoWrapper}>
+                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={240} height={42} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
+                        </div>
                         <h1 className={styles.heroTitle}>{t('hero.title')}</h1>
                         <p className={styles.heroLead}>{t('hero.lead')}</p>
                         <a href={`/${locale}/contacts`} className={styles.heroCta}>
