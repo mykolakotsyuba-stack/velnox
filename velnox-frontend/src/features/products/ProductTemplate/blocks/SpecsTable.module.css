@@ -12,6 +12,8 @@
     letter-spacing: 0.08em;
     color: #555;
     margin-bottom: 16px;
+    text-align: left;
+    caption-side: top;
 }
 
 .table {
@@ -22,16 +24,16 @@
 
 .table th,
 .table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #eee;
+    padding: 9px 12px;
+    border-bottom: 1px solid #f0f0f0;
     text-align: left;
-    word-break: break-word; /* Ensure wrapping */
+    word-break: break-word;
 }
 
 .table th {
     color: #888;
     font-weight: 500;
-    width: 45%; /* Reduced from 60% for better balance */
+    width: 50%;
     min-width: 100px;
 }
 
@@ -39,18 +41,39 @@
     color: #111;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
-    transition: color 0.2s ease;
-    word-break: break-all; /* For long model numbers */
+    word-break: break-all;
 }
 
 .table tr {
-    transition: background 0.2s ease;
+    transition: background 0.15s ease;
+    cursor: pointer;
 }
 
+/* ── Key specs highlighting ── */
+.keyRow th {
+    color: #333;
+    font-weight: 600;
+}
+
+.keyRow td {
+    color: #111;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+/* Divider after key specs block */
+.dividerRow th,
+.dividerRow td {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* ── Hover / active ── */
+.activeRow,
 .table tr:hover {
-    background: rgba(59, 130, 246, 0.05);
+    background: color-mix(in srgb, var(--color-accent, #00953E) 6%, transparent);
 }
 
+.activeRow td,
 .table tr:hover td {
     color: #000;
 }
@@ -60,7 +83,7 @@
     border-bottom: none;
 }
 
-/* ─── Modal (fullscreen) variant ──────────────────────────────────────── */
+/* ─── Modal (fullscreen) variant ──────────────────────────────── */
 .isModal {
     border: none;
     border-radius: 0;
@@ -102,4 +125,40 @@
     font-size: 13px;
     font-weight: 700;
     width: 38%;
+}
+
+/* ─── Mobile ──────────────────────────────── */
+@media (max-width: 768px) {
+    .section {
+        padding: 16px;
+    }
+
+    .table {
+        font-size: 13px;
+    }
+
+    .table th,
+    .table td {
+        padding: 8px 8px;
+    }
+
+    .keyRow td {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 12px;
+        border-radius: 10px;
+    }
+
+    .table {
+        font-size: 12.5px;
+    }
+
+    .table th,
+    .table td {
+        padding: 7px 6px;
+    }
 }

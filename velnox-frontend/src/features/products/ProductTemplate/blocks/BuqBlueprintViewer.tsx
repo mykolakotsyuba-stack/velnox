@@ -68,11 +68,11 @@ function DimensionOverlay({ specs, hoveredSpec, dimLabels, viewBox }: {
 
                 return (
                     <g key={`${dim.key}-${i}`} style={{ pointerEvents: 'none' }}>
-                        <circle cx={pt.x} cy={pt.y} r={R} fill="rgba(245,158,11,0.3)" stroke="#f59e0b" strokeWidth={SW} />
+                        <circle cx={pt.x} cy={pt.y} r={R} fill="rgba(0,149,62,0.18)" stroke="#00953E" strokeWidth={SW} />
                         {val != null && (
                             <g transform={`translate(${pt.x},${pt.y + BOX_OFFSET})`}>
-                                <rect x={-boxW / 2} y={-BOX_H / 2} width={boxW} height={BOX_H} rx={60} fill="#111" stroke="#f59e0b" strokeWidth={SW * 0.7} />
-                                <text x={0} y={0} fontSize={FS} fill="#f59e0b" fontWeight="bold" textAnchor="middle" dominantBaseline="middle">
+                                <rect x={-boxW / 2} y={-BOX_H / 2} width={boxW} height={BOX_H} rx={60} fill="#00953E" strokeWidth={0} />
+                                <text x={0} y={0} fontSize={FS} fill="#ffffff" fontWeight="700" textAnchor="middle" dominantBaseline="middle" letterSpacing="2">
                                     {strVal}
                                 </text>
                             </g>

@@ -9,18 +9,22 @@ interface ProductHeaderProps {
 }
 
 export function ProductHeader({ product, productName, locale }: ProductHeaderProps) {
+    /* h1 = повна назва товару (SEO + AI),
+       артикул — під h1 як мета-інфо */
+    const displayTitle = productName !== product.article
+        ? productName
+        : product.article;
+
     return (
         <header className={styles.header}>
             <div className={styles.headerTop}>
                 <div>
-                    <h1 className={styles.title}>{product.article}</h1>
-                    <div className={styles.subtitle}>{productName}</div>
+                    <h1 className={styles.title}>{displayTitle}</h1>
+                    {productName !== product.article && (
+                        <span className={styles.article}>{product.article}</span>
+                    )}
                 </div>
                 <PdfButton product={product} locale={locale} />
-            </div>
-
-            <div className={styles.meta}>
-                <span className={styles.badge}>ISO/DIN Standard</span>
             </div>
         </header>
     );

@@ -17,16 +17,16 @@
 .grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
 }
 
 .pill {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.2);
-    color: #3b82f6;
+    background: color-mix(in srgb, var(--color-accent, #00953E) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-accent, #00953E) 20%, transparent);
+    color: var(--color-accent, #00953E);
     padding: 6px 14px;
     border-radius: 12px;
     font-size: 14px;
@@ -50,12 +50,12 @@
 }
 
 .pill:hover {
-    background: rgba(59, 130, 246, 0.15);
-    border-color: rgba(59, 130, 246, 0.3);
+    background: color-mix(in srgb, var(--color-accent, #00953E) 14%, transparent);
+    border-color: color-mix(in srgb, var(--color-accent, #00953E) 35%, transparent);
 }
 
 .showAllBtn {
-    margin-top: 20px;
+    margin-top: 16px;
     background: transparent;
     border: 1px solid #d1d5db;
     color: #555;
@@ -70,4 +70,22 @@
 .showAllBtn:hover {
     background: #f3f4f6;
     border-color: #9ca3af;
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 16px;
+    }
+
+    .grid {
+        gap: 8px;
+    }
+
+    .pill {
+        padding: 5px 10px;
+    }
+
+    .value {
+        font-size: 12px;
+    }
 }

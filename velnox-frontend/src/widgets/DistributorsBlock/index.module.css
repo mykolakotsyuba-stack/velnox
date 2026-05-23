@@ -1,7 +1,5 @@
 .container {
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 0;
 }
 
 /* Animations */
@@ -18,8 +16,8 @@
 }
 
 @keyframes tagDotBlink {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
-    50% { opacity: 0.3; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2); }
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 transparent; }
+    50% { opacity: 0.3; box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent, #00953E) 20%, transparent); }
 }
 
 .header {
@@ -27,7 +25,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.7s ease, transform 0.7s ease;
@@ -43,7 +41,7 @@
     align-items: center;
     gap: 10px;
     font-size: 11px;
-    color: var(--primary-color, #3b82f6);
+    color: var(--color-accent, #00953E);
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 700;
@@ -61,7 +59,7 @@
 }
 
 .title {
-    font-size: 32px;
+    font-size: 28px;
     color: #111;
     margin: 0;
     font-weight: 800;
@@ -69,8 +67,8 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
 
 .card {
@@ -78,7 +76,7 @@
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-    padding: 24px 20px;
+    padding: 20px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,9 +98,9 @@
 
 .card:hover {
     background: #f8fafc;
-    border-color: rgba(59, 130, 246, 0.4);
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 12px 60px rgba(37, 99, 235, 0.13), inset 0 0 30px rgba(37, 99, 235, 0.04);
+    border-color: color-mix(in srgb, var(--color-accent, #00953E) 40%, transparent);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 8px 40px color-mix(in srgb, var(--color-accent, #00953E) 12%, transparent);
 }
 
 .card::before {
@@ -110,7 +108,7 @@
     position: absolute;
     inset: 0 0 auto 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+    background: linear-gradient(90deg, transparent, var(--color-accent, #00953E), transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -125,10 +123,10 @@
     inset: 8px;
     border-radius: 4px;
     box-shadow:
-        inset 12px 0 0 -10px rgba(59, 130, 246, 0.6),
-        inset 0 12px 0 -10px rgba(59, 130, 246, 0.6),
-        inset -12px 0 0 -10px rgba(59, 130, 246, 0.6),
-        inset 0 -12px 0 -10px rgba(59, 130, 246, 0.6);
+        inset 12px 0 0 -10px color-mix(in srgb, var(--color-accent, #00953E) 50%, transparent),
+        inset 0 12px 0 -10px color-mix(in srgb, var(--color-accent, #00953E) 50%, transparent),
+        inset -12px 0 0 -10px color-mix(in srgb, var(--color-accent, #00953E) 50%, transparent),
+        inset 0 -12px 0 -10px color-mix(in srgb, var(--color-accent, #00953E) 50%, transparent);
     pointer-events: none;
     animation: cornerReveal 0.3s ease both;
 }
@@ -138,7 +136,7 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.7) 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--color-accent, #00953E) 60%, transparent) 50%, transparent 100%);
     top: -1px;
     opacity: 0;
     pointer-events: none;
@@ -148,17 +146,17 @@
     animation: scanSweep 1.2s ease-in-out;
 }
 
-/* Logo — full color by default, subtle hover effect */
+/* Logo */
 .cardLogoWrap {
     width: 100%;
-    height: 120px;
+    height: 100px;
     background: rgba(255, 255, 255, 0.92);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
-    margin-bottom: 20px;
+    padding: 12px;
+    margin-bottom: 16px;
     position: relative;
     z-index: 2;
 }
@@ -180,7 +178,7 @@
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     flex: 1;
     position: relative;
     z-index: 2;
@@ -188,7 +186,7 @@
 
 .cardFlag {
     font-size: 16px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .cardName {
@@ -199,7 +197,7 @@
 }
 
 .card:hover .cardName {
-    color: #7a90a8;
+    color: #555;
 }
 
 .cardCountry {
@@ -210,16 +208,12 @@
     transition: color 0.3s;
 }
 
-.card:hover .cardCountry {
-    color: #2a3a4e;
-}
-
 .orderButton {
     width: 100%;
-    padding: 12px;
-    background: rgba(59, 130, 246, 0.1);
-    color: var(--primary-color, #3b82f6);
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    padding: 10px;
+    background: color-mix(in srgb, var(--color-accent, #00953E) 8%, transparent);
+    color: var(--color-accent, #00953E);
+    border: 1px solid color-mix(in srgb, var(--color-accent, #00953E) 20%, transparent);
     border-radius: 8px;
     font-size: 13px;
     font-weight: 700;
@@ -234,9 +228,9 @@
 }
 
 .card:hover .orderButton {
-    background: var(--primary-color, #3b82f6);
+    background: var(--color-accent, #00953E);
     color: white;
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--color-accent, #00953E) 35%, transparent);
 }
 
 /* ── Modal ── */
@@ -248,7 +242,7 @@
     height: 100vh;
     background: rgba(4, 6, 10, 0.85);
     backdrop-filter: blur(8px);
-    z-index: 9999;
+    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -257,7 +251,7 @@
 
 .modal {
     background: #ffffff;
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    border: 1px solid #e5e7eb;
     border-radius: 16px;
     width: 100%;
     max-width: 500px;
@@ -283,7 +277,7 @@
 
 .modalTag {
     font-size: 11px;
-    color: var(--primary-color, #3b82f6);
+    color: var(--color-accent, #00953E);
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 700;
@@ -325,8 +319,8 @@
 
 .formRow input:focus,
 .formFieldArea:focus {
-    border-color: var(--primary-color, #3b82f6);
-    background: rgba(59, 130, 246, 0.03);
+    border-color: var(--color-accent, #00953E);
+    background: color-mix(in srgb, var(--color-accent, #00953E) 4%, white);
 }
 
 .formFieldArea {
@@ -341,7 +335,7 @@
 }
 
 .formSubmit {
-    background: var(--primary-color, #3b82f6);
+    background: var(--color-accent, #00953E);
     color: white;
     border: none;
     padding: 16px;
@@ -357,7 +351,7 @@
 }
 
 .formSubmit:hover:not(:disabled) {
-    background: #2563eb;
+    background: color-mix(in srgb, var(--color-accent, #00953E) 85%, black);
 }
 
 .formSubmit:disabled {
@@ -403,10 +397,35 @@
 
 @media (max-width: 768px) {
     .grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .header {
+        margin-bottom: 24px;
     }
 
     .modal {
-        padding: 30px 20px;
+        padding: 24px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .card {
+        padding: 16px 12px;
+    }
+
+    .cardLogoWrap {
+        height: 80px;
+        padding: 10px;
     }
 }

@@ -23,10 +23,10 @@ Before editing any file in `src/features/products/`, read:
 
 **Critical rules (short version):**
 
-1. `SVG_VB` constant in `BuqBlueprintViewer.tsx` must match the `viewBox` in `bearings-schema.svg`
+1. `SVG_VB_DEFAULT` in `BuqBlueprintViewer.tsx` is only a fallback — actual `viewBox` comes from DB (`schema_viewbox` per table)
 2. No `padding` on `.panelImage` in CSS — it breaks overlay alignment
-3. `aspect-ratio` in CSS must equal `viewBox_width / viewBox_height`
-4. SVG served at `/velnox/images/schemes/` — the `/velnox` prefix is `basePath`, never omit it
+3. `aspect-ratio` is set dynamically via inline style `viewBoxAspect(effectiveViewBox)` — NOT in CSS
+4. Each table has its own SVG at `/velnox/images/products/<table-slug>/schema.svg` — the `/velnox` prefix is `basePath`, never omit it
 
 ---
 
@@ -39,8 +39,11 @@ src/
       ProductTemplate/blocks/BuqBlueprintViewer.tsx  ← SVG viewer with hover highlights
   entities/
     product/model/types.ts  ← ProductSpecs type
+  widgets/
+    CtaBlock/         ← CTA section with contact modal (onModalOpen/onModalClose props)
+    DistributorsBlock/ ← distributors grid with order modal
 public/
-  images/schemes/     ← SVG technical drawings
+  images/products/    ← per-table directories with SVG schemas, photos, drawings
 docs/
   svg-workflow.md     ← full SVG integration guide
 ```

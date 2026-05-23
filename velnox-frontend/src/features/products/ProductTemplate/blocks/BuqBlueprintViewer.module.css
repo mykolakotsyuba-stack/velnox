@@ -134,16 +134,16 @@
 
 /* Active/hovered highlight */
 .dimGroup.active .dimLine {
-    stroke: #f59e0b;
+    stroke: #00953E;
     stroke-width: 2.5;
 }
 
 .dimGroup.active .arrowHead {
-    fill: #f59e0b;
+    fill: #00953E;
 }
 
 .dimGroup.active .dimText {
-    fill: #f59e0b;
+    fill: #00953E;
 }
 
 /* ─── Expand button ─────────────────────────────────────────────────────── */
@@ -166,7 +166,7 @@
 }
 
 .expandButton:hover {
-    background: var(--primary-color, #3b82f6);
+    background: #00953E;
 }
 
 /* ─── Fullscreen modal ──────────────────────────────────────────────────── */
@@ -277,11 +277,11 @@
 }
 
 .specsToggle:hover {
-    background: rgba(59, 130, 246, 0.85);
+    background: rgba(0, 149, 62, 0.85);
 }
 
 .specsToggleActive {
-    background: rgba(59, 130, 246, 0.85);
+    background: rgba(0, 149, 62, 0.85);
 }
 
 @media (max-width: 1024px) {

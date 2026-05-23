@@ -10,7 +10,6 @@ import { CrossReferences } from './blocks/CrossReferences';
 import { Installations } from './blocks/Installations';
 import { CtaBlock } from '@/widgets/CtaBlock';
 import { PhotoGallery } from './blocks/PhotoGallery';
-import { ModelBlock3D } from './blocks/VisualPanel';
 import { DistributorsBlock } from '@/widgets/DistributorsBlock';
 import { ProductHeader } from './blocks/ProductHeader';
 import styles from './ProductTemplate.module.css';
@@ -38,6 +37,7 @@ function useInView(threshold = 0.1) {
 
 export function ProductTemplate({ product, locale }: ProductTemplateProps) {
     const [hoveredSpec, setHoveredSpec] = useState<string | null>(null);
+    const [isCtaModalOpen, setIsCtaModalOpen] = useState(false);
     const techSection = useInView(0.1);
 
     const productName = product.name;
@@ -61,7 +61,9 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
 
     const specsMap = Object.fromEntries(product.specs.map(s => [s.key, s.value]));
 
-    // Shared blueprint block (same in both layouts)
+    // Keys that have dim_labels on the blueprint (for specs ordering)
+    const schemaKeys = new Set(product.dim_labels?.map(dl => dl.key) ?? []);
+
     const blueprintBlock = activeBlueprintConfig ? (
         <BuqBlueprintViewer
             article={product.article}
@@ -83,23 +85,6 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
         />
     ) : null;
 
-    // Shared specs column content (same in both layouts)
-    const specsColumnContent = (
-        <>
-            <SpecsTable specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} />
-            {product.cross_refs.length > 0 && (
-                <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s' }}>
-                    <CrossReferences refs={product.cross_refs} />
-                </div>
-            )}
-            {product.installations.length > 0 && (
-                <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease-out 0.4s, transform 0.6s ease-out 0.4s' }}>
-                    <Installations items={product.installations} />
-                </div>
-            )}
-        </>
-    );
-
     return (
         <article className={styles.page}>
             <div className={styles.container}>
@@ -117,43 +102,53 @@ export function ProductTemplate({ product, locale }: ProductTemplateProps) {
 
                 <div className={styles.body}>
 
-                    {model3dSrc && (
-                        /* ── 3D hero — тільки для товарів з 3D моделлю ── */
-                        <ModelBlock3D src={model3dSrc} label={productName} hero />
-                    )}
-
-                    {/* ── Верхній блок: [галерея (sticky) | опис] — однаковий для обох layout'ів ── */}
+                    {/* ── Top: [gallery (sticky) | desc + CTA] ── */}
                     <div className={styles.topSection}>
                         <aside className={styles.visual}>
-                            <PhotoGallery images={galleryImages} altText={product.article} />
+                            <PhotoGallery
+                                images={galleryImages}
+                                altText={product.article}
+                                model3dSrc={model3dSrc}
+                            />
                         </aside>
                         <div className={styles.summary}>
                             {desc && (
                                 <p className={styles.productDesc}>{desc}</p>
                             )}
+                            <div className={styles.ctaInline}>
+                                <CtaBlock
+                                    product={product}
+                                    locale={locale}
+                                    onModalOpen={() => setIsCtaModalOpen(true)}
+                                    onModalClose={() => setIsCtaModalOpen(false)}
+                                />
+                            </div>
                         </div>
                     </div>
 
-                    {/* ── Технічна секція: [спеки | схема+CTA] — однакова для обох layout'ів ── */}
+                    {/* ── Technical: [specs | blueprint + cross-refs] ── */}
                     <div
                         className={`${styles.technicalSection} ${styles.animateOnScroll} ${techSection.inView ? styles.inView : ''}`}
                         ref={techSection.ref as React.RefObject<HTMLDivElement>}
                     >
                         <div className={styles.specsColumn}>
-                            {specsColumnContent}
+                            <SpecsTable specs={product.specs} hoveredSpec={hoveredSpec} onHoverSpec={setHoveredSpec} schemaKeys={schemaKeys} />
+                            {product.installations.length > 0 && (
+                                <Installations items={product.installations} />
+                            )}
                         </div>
-                        <div className={styles.drawingColumn}>
+                        <div
+                            className={styles.drawingColumn}
+                            style={{ visibility: isCtaModalOpen ? 'hidden' : 'visible' }}
+                        >
                             {blueprintBlock}
-                            <div style={{ opacity: techSection.inView ? 1 : 0, transform: techSection.inView ? 'none' : 'translateY(20px)', transition: 'opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s' }}>
-                                <CtaBlock product={product} locale={locale} />
-                            </div>
+                            {product.cross_refs.length > 0 && (
+                                <CrossReferences refs={product.cross_refs} />
+                            )}
                         </div>
                     </div>
 
-                    {/*
-            === ЩОБ ДОДАТИ НОВИЙ БЛОК НА ВСІ ТОВАРИ ===
-            Додайте компонент тут ↓
-          */}
+                    {/* ── Distributors (full-width, one row) ── */}
                     <div className="print-hide">
                         <DistributorsBlock />
                     </div>

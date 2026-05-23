@@ -202,6 +202,46 @@ img:      width:100%; height:100%; objectFit:contain; display:block
 
 Якщо додаєш CSS-анімацію (translateY) до будь-якого предка `BuqBlueprintViewer`, переконайся що settled-стан використовує `transform: none`, а не `translateY(0)`.
 
+### Пастка 3 — z-index не гарантує перекриття blueprint модалкою CTA
+
+`BuqBlueprintViewer.modalOverlay` має `z-index: 9999`. `CtaBlock.modalBackdrop` — `z-index: 99999`.
+Навіть з різницею в z-index, blueprint може «просвічуватися» крізь CTA модалку (залежить від stacking context предків).
+
+**Зафіксоване рішення** — state-based visibility:
+```
+ProductTemplate.tsx:
+  const [isCtaModalOpen, setIsCtaModalOpen] = useState(false);
+
+CtaBlock:
+  onModalOpen={() => setIsCtaModalOpen(true)}
+  onModalClose={() => setIsCtaModalOpen(false)}
+
+drawingColumn:
+  style={{ visibility: isCtaModalOpen ? 'hidden' : 'visible' }}
+```
+
+`visibility: hidden` зберігає layout (на відміну від `display: none`), blueprint зникає на час модалки і повертається після закриття.
+
+**Правило:** якщо додається нова модалка, яка може конфліктувати з blueprint — використовуй state-based visibility, а не z-index war.
+
+---
+
+## Кольорова палітра DimensionOverlay — ОБОВ'ЯЗКОВО дотримуватись
+
+Всі кольори overlay підсвічування повинні відповідати акцентному кольору сайту `#00953E`:
+
+| Елемент | Властивість | Значення |
+|---|---|---|
+| Кружечок підсвічування | fill | `rgba(0,149,62,0.18)` |
+| Кружечок підсвічування | stroke | `#00953E` |
+| Таблетка зі значенням | fill | `#00953E` |
+| Текст у таблетці | fill | `#ffffff` |
+| CSS `.dimGroup.active` | stroke/fill | `#00953E` |
+| Кнопка expand (hover) | background | `#00953E` |
+| Кнопка specsToggle (hover/active) | background | `rgba(0,149,62,0.85)` |
+
+**Ніколи не використовуй amber (`#f59e0b`) або blue (`#3b82f6`)** для overlay елементів — вони не відповідають палітрі сайту.
+
 ---
 
 ## Як оновити або додати product_table — спочатку визнач сценарій

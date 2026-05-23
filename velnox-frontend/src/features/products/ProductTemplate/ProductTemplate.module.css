@@ -1,35 +1,12 @@
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* opacity-only — для position:sticky елементів (transform конфліктує зі sticky) */
+/* ── Animations ── */
 @keyframes fadeIn {
     from { opacity: 0; }
     to   { opacity: 1; }
 }
 
-@keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
+/* ── Page ── */
 .page {
-    padding: 24px 0;
+    padding: 20px 0 0;
     width: 100%;
 }
 
@@ -39,110 +16,68 @@
     padding: 0 20px;
 }
 
-.header {
-    margin: 20px 0 32px;
-    animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.headerTop {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.title {
-    font-size: 32px;
-    font-weight: 800;
-    color: #111;
-    margin-bottom: 2px;
-}
-
-.subtitle {
-    font-size: 18px;
-    font-weight: 400;
-    color: #555;
-    margin-bottom: 16px;
-}
-
-.meta {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.badge {
-    display: inline-block;
-    padding: 4px 10px;
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    font-size: 12px;
-    font-family: monospace;
-    color: #555;
-    letter-spacing: 0.05em;
-}
-
+/* ── Body ── */
 .body {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
-/* Верхній блок (Gallery + Base Info) */
+/* ── Top section: Gallery + Summary (desc + CTA) ── */
 .topSection {
     display: grid;
-    grid-template-columns: 500px 1fr;
-    gap: 40px;
+    grid-template-columns: 460px 1fr;
+    gap: 32px;
+    align-items: start;
 }
 
 .visual {
     position: sticky;
-    top: 84px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    /* fadeIn (opacity only) — transform конфліктує з position:sticky і дає підгальмування */
+    top: 80px;
     animation: fadeIn 0.7s ease-out 0.2s both;
 }
 
+/* summary: opacity-only animation — НЕ transform!
+   transform (навіть translateX(0)) створює containing block
+   і ламає position:fixed модалки CtaBlock */
 .summary {
     display: flex;
     flex-direction: column;
-    gap: 32px;
-    will-change: transform, opacity;
-    animation: fadeInRight 0.7s ease-out 0.3s both;
-}
-
-.animateOnScroll {
-    opacity: 0;
-    transform: translateY(30px);
-    will-change: transform, opacity;
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.inView {
-    opacity: 1 !important;
-    transform: none !important;
-    will-change: auto;
+    gap: 20px;
+    animation: fadeIn 0.7s ease-out 0.3s both;
 }
 
 .productDesc {
     font-size: 15px;
-    line-height: 1.65;
+    line-height: 1.7;
     color: var(--color-text);
     margin: 0;
 }
 
-/* Нижній блок (Specs + Blueprint) */
+.ctaInline {
+    margin-top: auto;
+}
+
+/* ── Scroll animations ── */
+.animateOnScroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+/* transform: none (НЕ translateY(0)) — інакше fixed модалки зламаються */
+.inView {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* ── Technical section: Specs + Blueprint ── */
 .technicalSection {
     display: grid;
     grid-template-columns: 1fr 1.4fr;
-    gap: 40px;
-    margin-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 40px;
+    gap: 32px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 32px;
     align-items: start;
 }
 
@@ -150,13 +85,12 @@
 .drawingColumn {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 24px;
 }
 
-.blueprintSection {
-    width: 100%;
-    margin-top: 40px;
-}
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
 
 @media (max-width: 1024px) {
     .topSection {
@@ -169,5 +103,47 @@
 
     .visual {
         position: static;
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    .body {
+        gap: 24px;
+    }
+
+    .topSection {
+        gap: 20px;
+    }
+
+    .technicalSection {
+        gap: 24px;
+        padding-top: 24px;
+    }
+
+    .productDesc {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page {
+        padding: 12px 0 0;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+
+    .body {
+        gap: 20px;
+    }
+
+    .technicalSection {
+        padding-top: 20px;
     }
 }

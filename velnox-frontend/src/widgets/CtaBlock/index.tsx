@@ -9,6 +9,8 @@ import styles from './index.module.css';
 interface CtaBlockProps {
     product: ProductDTO;
     locale: Locale;
+    onModalOpen?: () => void;
+    onModalClose?: () => void;
 }
 
 const REQUEST_TYPES = [
@@ -122,9 +124,12 @@ function ContactModal({ article, onClose }: { article: string; onClose: () => vo
     );
 }
 
-export function CtaBlock({ product, locale }: CtaBlockProps) {
+export function CtaBlock({ product, locale, onModalOpen, onModalClose }: CtaBlockProps) {
     const t = useTranslations('product');
     const [modalOpen, setModalOpen] = useState(false);
+
+    const openModal = () => { setModalOpen(true); onModalOpen?.(); };
+    const closeModal = () => { setModalOpen(false); onModalClose?.(); };
 
     return (
         <>
@@ -133,7 +138,7 @@ export function CtaBlock({ product, locale }: CtaBlockProps) {
                     <h2 className={styles.title}>{t('cta_title')}</h2>
                     <p className={styles.desc}>{t('cta_desc')}</p>
                     <div className={styles.actions}>
-                        <button className={styles.btnPrimary} onClick={() => setModalOpen(true)}>
+                        <button className={styles.btnPrimary} onClick={openModal}>
                             {t('btn_contact')}
                         </button>
                         <a
@@ -153,7 +158,7 @@ export function CtaBlock({ product, locale }: CtaBlockProps) {
             </section>
 
             {modalOpen && (
-                <ContactModal article={product.article} onClose={() => setModalOpen(false)} />
+                <ContactModal article={product.article} onClose={closeModal} />
             )}
         </>
     );
