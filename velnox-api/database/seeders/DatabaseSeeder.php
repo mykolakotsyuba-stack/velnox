@@ -2197,7 +2197,7 @@ class DatabaseSeeder extends Seeder
         // schema assets
         DB::table('product_assets')->updateOrInsert(
             ['entity_type' => 'product_table', 'entity_id' => $at3, 'type' => 'schema_png'],
-            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx-schema.webp', 'sort_order' => 0]
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14-s209-vx-schema.webp', 'sort_order' => 0]
         );
         DB::table('product_assets')->updateOrInsert(
             ['entity_type' => 'product_table', 'entity_id' => $at3, 'type' => 'schema_svg'],
@@ -2227,10 +2227,10 @@ class DatabaseSeeder extends Seeder
 
         // product
         DB::table('products')->updateOrInsert(
-            ['slug' => 'dhu-1-14s209-vx'],
-            ['slug' => 'dhu-1-14s209-vx', 'article' => 'DHU 1 1/4 S209 VX', 'product_table_id' => $at3]
+            ['slug' => 'dhu-1-14-s209-vx'],
+            ['slug' => 'dhu-1-14-s209-vx', 'article' => 'DHU 1 1/4 S209 VX', 'product_table_id' => $at3]
         );
-        $pt3 = DB::table('products')->where('slug', 'dhu-1-14s209-vx')->value('id');
+        $pt3 = DB::table('products')->where('slug', 'dhu-1-14-s209-vx')->value('id');
 
         foreach ([
             'd_inch'  => '1.3976', 'd_mm'    => '35.5',  'B_mm'    => '42.85', 'C_mm'    => '22',
@@ -2303,10 +2303,10 @@ class DatabaseSeeder extends Seeder
             ['path' => '/velnox/models/DHU-1-14S209.glb', 'sort_order' => 0]
         );
         foreach ([
-            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx.webp',          'sort_order' => 0],
-            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx-drawing-1.webp', 'sort_order' => 1],
-            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx-drawing-2.webp', 'sort_order' => 2],
-            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx-drawing-3.webp', 'sort_order' => 3],
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14-s209-vx.webp',          'sort_order' => 0],
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14-s209-vx-drawing-1.webp', 'sort_order' => 1],
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14-s209-vx-drawing-2.webp', 'sort_order' => 2],
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14-s209-vx-drawing-3.webp', 'sort_order' => 3],
         ] as $asset) {
             $exists = DB::table('product_assets')
                 ->where('entity_type', 'product')->where('entity_id', $pt3)
