@@ -2459,5 +2459,130 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // =========================================================
+        // 23. PRODUCT TABLE: kit-t1 (203KRR2-R3 VX — D-bore bearing)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'kit-t1'],
+            [
+                'slug'             => 'kit-t1',
+                'category_id'      => $catId('kit'),
+                'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','C_mm','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'highlight_config' => json_encode([
+                    'd_mm' => [['label' => 'd', 'x' => 233,  'y' => 757]],
+                    'D_mm' => [['label' => 'D', 'x' => 176,  'y' => 759]],
+                    'B_mm' => [['label' => 'B', 'x' => 1012, 'y' => 1061]],
+                    'C_mm' => [['label' => 'C', 'x' => 1013, 'y' => 435]],
+                ]),
+                'schema_viewbox'   => '84 316 2193 1000',
+                'sort_order'       => 1,
+            ]
+        );
+
+        $kt1 = $tableId('kit-t1');
+
+        foreach (['uk' => 'Спеціальні підшипники з D-подібним отвором', 'en' => 'Special Bearings with D-Bore', 'pl' => 'Specjalne łożyska z otworem D'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt1, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        // Table-level assets (schema)
+        foreach ([
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/kit-t1/velnox-203krr2-r3-vx-schema.webp', 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/kit-t1/schema.svg',                        'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt1, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
+        // Product: 203KRR2-R3 VX
+        DB::table('products')->updateOrInsert(
+            ['slug' => '203krr2-r3-vx'],
+            ['slug' => '203krr2-r3-vx', 'article' => '203KRR2-R3 VX', 'product_table_id' => $kt1]
+        );
+        $pk1 = DB::table('products')->where('slug', '203krr2-r3-vx')->value('id');
+
+        // Specs
+        foreach ([
+            'd_mm'    => '16.26',
+            'D_mm'    => '40',
+            'B_mm'    => '18.29',
+            'C_mm'    => '12',
+            'mass_kg' => '0.07',
+            'cdyn_kn' => '9.5',
+            'co_kn'   => '4.75',
+            'pu_kn'   => '0.2',
+        ] as $key => $value) {
+            $sid = $specId($key);
+            if (!$sid) continue;
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pk1, 'spec_id' => $sid],
+                ['value' => $value]
+            );
+        }
+
+        // Cross-refs
+        DB::table('product_cross_refs')->where('product_id', $pk1)->delete();
+        foreach ([
+            ['value' => '203 KRR AH02',              'brand' => 'FKL',         'type' => 'bearing'],
+            ['value' => '203 KRR AH02',              'brand' => 'INA',         'type' => 'bearing'],
+            ['value' => '203 KRR2',                  'brand' => 'RBF',         'type' => 'bearing'],
+            ['value' => '203 KRR2',                  'brand' => 'CT-AGRI',     'type' => 'bearing'],
+            ['value' => '203 KRR2FD (PER.203RRY2)',  'brand' => 'PEER',        'type' => 'bearing'],
+            ['value' => '203 KRR2-R3',               'brand' => 'CT-AGRI',     'type' => 'bearing'],
+            ['value' => '203 RR2',                   'brand' => 'TIMKEN',      'type' => 'bearing'],
+            ['value' => 'BB203 RR2',                 'brand' => 'TIMKEN',      'type' => 'bearing'],
+            ['value' => 'BB203RR2FD',                'brand' => 'PEER',        'type' => 'bearing'],
+            ['value' => '144819C91',                 'brand' => 'CASE',        'type' => 'application'],
+            ['value' => '149261C91',                 'brand' => 'CASE',        'type' => 'application'],
+            ['value' => '23091',                     'brand' => 'Will rich',   'type' => 'application'],
+            ['value' => '3643380M1',                 'brand' => 'AGCO',        'type' => 'application'],
+            ['value' => '520117',                    'brand' => 'Gehl',        'type' => 'application'],
+            ['value' => '666624R91',                 'brand' => 'CASE',        'type' => 'application'],
+            ['value' => '822-095C',                  'brand' => 'Great Plains', 'type' => 'application'],
+            ['value' => 'AN100425',                  'brand' => 'JOHN DEERE',  'type' => 'application'],
+            ['value' => 'B96.00410',                 'brand' => 'Grimme',      'type' => 'application'],
+            ['value' => 'JD9214',                    'brand' => 'JOHN DEERE',  'type' => 'application'],
+        ] as $ref) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pk1, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
+        }
+
+        // Product-level assets (gallery + 3D)
+        foreach ([
+            ['type' => 'gallery',   'path' => '/velnox/images/products/kit-t1/velnox-203krr2-r3-vx.webp',           'sort_order' => 0],
+            ['type' => 'gallery',   'path' => '/velnox/images/products/kit-t1/velnox-203krr2-r3-vx-drawing-1.webp', 'sort_order' => 1],
+            ['type' => 'gallery',   'path' => '/velnox/images/products/kit-t1/velnox-203krr2-r3-vx-drawing-2.webp', 'sort_order' => 2],
+            ['type' => 'gallery',   'path' => '/velnox/images/products/kit-t1/velnox-203krr2-r3-vx-drawing-3.webp', 'sort_order' => 3],
+            ['type' => 'model_3d',  'path' => '/velnox/models/203-KRR2-R3.glb',                                      'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk1, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
+        // Translations: name + description (uk/en/pl)
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk1, 'locale' => $locale, 'field' => 'name'],
+                ['value' => '203KRR2-R3 VX']
+            );
+        }
+
+        foreach ([
+            'uk' => 'Підшипник 203KRR2-R3 VX — однорядний радіальний кульковий підшипник із D-подібним отвором діаметром d = 16,26 мм для монтажу на плоский вал без додаткових стопорних елементів. Двобічне гумове ущільнення захищає від вологи та забруднень в умовах польових робіт. Зовнішній діаметр D = 40 мм, ширина внутрішнього кільця B = 18,29 мм, ширина зовнішнього кільця C = 12 мм. Динамічна вантажопідйомність Cdyn = 9,5 кН, статична Co = 4,75 кН. Застосовується в техніці CASE, John Deere, AGCO, Gehl, Grimme та Great Plains.',
+            'en' => 'The 203KRR2-R3 VX is a single-row radial ball bearing with a D-shaped bore (d = 16.26 mm) designed for secure shaft retention without set screws in agricultural machinery. Double rubber seals protect against moisture and field contamination. Outer diameter D = 40 mm, inner ring width B = 18.29 mm, outer ring width C = 12 mm. Dynamic load capacity Cdyn = 9.5 kN, static Co = 4.75 kN. Compatible with CASE, John Deere, AGCO, Gehl, Grimme and Great Plains equipment.',
+            'pl' => 'Łożysko 203KRR2-R3 VX to jednorzędowe promieniowe łożysko kulkowe z otworem w kształcie litery D (d = 16,26 mm) do montażu na wałach z płaszczyzną bez dodatkowych śrub ustalających. Podwójne uszczelnienia gumowe chronią przed wilgocią i zanieczyszczeniami podczas prac polowych. Średnica zewnętrzna D = 40 mm, szerokość pierścienia wewnętrznego B = 18,29 mm, szerokość pierścienia zewnętrznego C = 12 mm. Nośność dynamiczna Cdyn = 9,5 kN, statyczna Co = 4,75 kN. Kompatybilne z maszynami CASE, John Deere, AGCO, Gehl, Grimme i Great Plains.',
+        ] as $locale => $desc) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk1, 'locale' => $locale, 'field' => 'description'],
+                ['value' => $desc]
+            );
+        }
+
     }
 }
