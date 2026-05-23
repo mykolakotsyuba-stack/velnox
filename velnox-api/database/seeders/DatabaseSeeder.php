@@ -68,6 +68,9 @@ class DatabaseSeeder extends Seeder
             ['key' => 'Fr_kn',           'svg_label' => null,   'sort_order' => 37],
             ['key' => 'Fa_kn',           'svg_label' => null,   'sort_order' => 38],
             ['key' => 'A_fl_mm',         'svg_label' => 'A',    'sort_order' => 39],
+            // agro-t3 (DHU S-series)
+            ['key' => 'a_mm',            'svg_label' => null,   'sort_order' => 40],
+            ['key' => 'M_mm',            'svg_label' => 'M',    'sort_order' => 41],
         ];
 
         foreach ($specs as $spec) {
@@ -126,6 +129,9 @@ class DatabaseSeeder extends Seeder
             'Fr_kn'   => ['uk' => ['label' => 'Радіальне навантаження Fr (кН)',                                         'unit' => 'кН'], 'en' => ['label' => 'Radial load Fr (kN)',                                             'unit' => 'kN'], 'pl' => ['label' => 'Obciążenie promieniowe Fr (kN)',                              'unit' => 'kN']],
             'Fa_kn'   => ['uk' => ['label' => 'Осьове навантаження Fa (кН)',                                            'unit' => 'кН'], 'en' => ['label' => 'Axial load Fa (kN)',                                              'unit' => 'kN'], 'pl' => ['label' => 'Obciążenie osiowe Fa (kN)',                                   'unit' => 'kN']],
             'A_fl_mm' => ['uk' => ['label' => 'Відстань від фланця корпусу до торця внутрішнього кільця A (мм)',        'unit' => 'мм'], 'en' => ['label' => 'Flange face to inner ring end face distance A (mm)',             'unit' => 'mm'], 'pl' => ['label' => 'Odległość od kołnierza obudowy do czoła pierścienia wewn. A (mm)', 'unit' => 'mm']],
+            // agro-t3 (DHU S-series)
+            'a_mm'    => ['uk' => ['label' => 'Розмір вала а (мм)',                   'unit' => 'мм'], 'en' => ['label' => 'Shaft dimension a (mm)',              'unit' => 'mm'], 'pl' => ['label' => 'Wymiar wału a (mm)',                   'unit' => 'mm']],
+            'M_mm'    => ['uk' => ['label' => 'Розмір прямокутного отвору M (мм)',    'unit' => 'мм'], 'en' => ['label' => 'Rectangular hole size M (mm)',        'unit' => 'mm'], 'pl' => ['label' => 'Wymiar prostokątnego otworu M (mm)',   'unit' => 'mm']],
         ];
 
         foreach ($specTranslations as $key => $locales) {
