@@ -2169,5 +2169,295 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // =========================================================
+        // 21. PRODUCT TABLE: agro-t3 (DHU S — square bore disc hub)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'agro-t3'],
+            [
+                'slug'         => 'agro-t3',
+                'category_id'  => $catId('agro'),
+                'spec_columns' => json_encode(['d_inch','d_mm','B_mm','C_mm','a_mm','Da_mm','L_mm','A_fl_mm','A1_mm','J_mm','N_mm','M_mm','Fr_kn','Fa_kn','cdyn_kn','co_kn','mass_kg','pu_kn']),
+                'sort_order'   => 3,
+            ]
+        );
+        $at3 = DB::table('product_tables')->where('slug', 'agro-t3')->value('id');
+
+        foreach ([
+            'uk' => 'Таблиця 3: Габаритні розміри підшипникового вузла з квадратним отвором для дискової борони KRAUSE',
+            'en' => 'Table 3: Dimensional specifications of square bore hub unit for KRAUSE disc harrow',
+            'pl' => 'Tabela 3: Wymiary gabarytowe węzła łożyskowego z kwadratowym otworem do brony talerzowej KRAUSE',
+        ] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $at3, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        // schema assets
+        DB::table('product_assets')->updateOrInsert(
+            ['entity_type' => 'product_table', 'entity_id' => $at3, 'type' => 'schema_png'],
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx-schema.webp', 'sort_order' => 0]
+        );
+        DB::table('product_assets')->updateOrInsert(
+            ['entity_type' => 'product_table', 'entity_id' => $at3, 'type' => 'schema_svg'],
+            ['path' => '/velnox/images/products/agro-t3/schema.svg', 'sort_order' => 0]
+        );
+
+        // highlight_config + schema_viewbox
+        DB::table('product_tables')->where('id', $at3)->update([
+            'schema_viewbox'   => '0 1700 2480 940',
+            'highlight_config' => json_encode([
+                'd_mm'    => [['label' => 'd',  'x' => 455,  'y' => 2151]],
+                'd_inch'  => [['label' => 'd',  'x' => 455,  'y' => 2151]],
+                'B_mm'    => [['label' => 'B',  'x' => 995,  'y' => 2524]],
+                'C_mm'    => [['label' => 'C',  'x' => 995,  'y' => 2482]],
+                'a_mm'    => [['label' => 'a',  'x' => 475,  'y' => 2465]],
+                'Da_mm'   => [['label' => 'Da', 'x' => 838,  'y' => 2149]],
+                'L_mm'    => [['label' => 'L',  'x' => 475,  'y' => 2513]],
+                'A_fl_mm' => [['label' => 'A',  'x' => 996,  'y' => 1804]],
+                'A1_mm'   => [['label' => 'A1', 'x' => 880,  'y' => 1829]],
+                'J_mm'    => [['label' => 'J',  'x' => 495,  'y' => 2123]],
+                'N_mm'    => [['label' => 'N',  'x' => 752,  'y' => 1886]],
+                'M_mm'    => [['label' => 'M',  'x' => 600,  'y' => 1924]],
+                'Fr_kn'   => [['label' => 'F',  'x' => 1132, 'y' => 1854]],
+                'Fa_kn'   => [['label' => 'F',  'x' => 1313, 'y' => 1856]],
+            ]),
+        ]);
+
+        // product
+        DB::table('products')->updateOrInsert(
+            ['slug' => 'dhu-1-14s209-vx'],
+            ['slug' => 'dhu-1-14s209-vx', 'article' => 'DHU 1 1/4 S209 VX', 'product_table_id' => $at3]
+        );
+        $pt3 = DB::table('products')->where('slug', 'dhu-1-14s209-vx')->value('id');
+
+        foreach ([
+            'd_inch'  => '1.3976', 'd_mm'    => '35.5',  'B_mm'    => '42.85', 'C_mm'    => '22',
+            'a_mm'    => '32.8',   'Da_mm'   => '97',    'L_mm'    => '127',   'A_fl_mm' => '39',
+            'A1_mm'   => '3.5',    'J_mm'    => '127',   'N_mm'    => '13.5',  'M_mm'    => '17.5',
+            'Fr_kn'   => '7.7',    'Fa_kn'   => '3.8',   'cdyn_kn' => '32.5',  'co_kn'   => '20.4',
+            'mass_kg' => '1.63',   'pu_kn'   => '0.857',
+        ] as $key => $val) {
+            $sid = DB::table('spec_definitions')->where('key', $key)->value('id');
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pt3, 'spec_id' => $sid],
+                ['value' => $val]
+            );
+        }
+
+        DB::table('product_cross_refs')->where('product_id', $pt3)->delete();
+        foreach ([
+            ['brand' => 'TIMKEN',       'value' => 'DHU 1 1/4 S209',                'type' => 'bearing'],
+            ['brand' => 'CT-AGRI',      'value' => 'DHU 1 1/4 S209 FD209RK',        'type' => 'bearing'],
+            ['brand' => 'NTE',          'value' => 'DHU 1 1/4 S209',                'type' => 'bearing'],
+            ['brand' => 'RBF',          'value' => 'FD 209-1 1/4 SQ',               'type' => 'bearing'],
+            ['brand' => 'PEER',         'value' => 'FD 209-1 1/4 SQ GFD209SPPB51', 'type' => 'bearing'],
+            ['brand' => 'PEER',         'value' => 'FD 209K51-1 1/4 SQ-A342',       'type' => 'bearing'],
+            ['brand' => 'FKL',          'value' => 'GWST 209 PPB29',                'type' => 'bearing'],
+            ['brand' => 'KRAUSE',       'value' => '40-128',                         'type' => 'application'],
+            ['brand' => 'Great Plains', 'value' => '822-209C',                       'type' => 'application'],
+            ['brand' => 'CASE',         'value' => '84151226',                       'type' => 'application'],
+            ['brand' => 'SUNFLOWER',    'value' => 'FK311007',                       'type' => 'application'],
+            ['brand' => 'KUHN',         'value' => 'Q4008320',                       'type' => 'application'],
+            ['brand' => 'KUHN',         'value' => 'Q4044290',                       'type' => 'application'],
+        ] as $r) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pt3] + $r);
+        }
+
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pt3, 'locale' => $locale, 'field' => 'name'],
+                ['value' => 'DHU 1 1/4 S209 VX']
+            );
+        }
+
+        foreach ([
+            'uk' => [
+                'desc'             => 'Дисковий фланцевий підшипниковий вузол типу DHU S з квадратним отвором (M = 17.5 мм) для посадки на квадратний вал розміром 1 1/4". Внутрішній діаметр підшипника d = 35.5 мм (1.3976"), кріпильна база J = 127 мм, діаметр кріпильних отворів N = 13.5 мм, загальна довжина корпусу L = 127 мм, Da = 97 мм, Cdyn = 32.5 кН, Co = 20.4 кН, маса 1.63 кг. Конструкція розрахована на радіальні та осьові навантаження (Fr = 7.7 кН, Fa = 3.8 кН) у вузлах дискових борін з ударним характером та контактом з абразивним середовищем. Пряма заміна TIMKEN DHU 1 1/4 S209, NTE DHU 1 1/4 S209, RBF FD 209-1 1/4 SQ, PEER FD 209-1 1/4 SQ GFD209SPPB51, FKL GWST 209 PPB29; застосовується у дискових боронах KRAUSE (40-128), Great Plains (822-209C), CASE (84151226), SUNFLOWER (FK311007), KUHN (Q4008320, Q4044290).',
+                'meta_title'       => 'VELNOX DHU 1 1/4 S209 VX — дисковий вузол квадрат, TIMKEN DHU 1 1/4 S209',
+                'meta_description' => 'Дисковий фланцевий вузол VELNOX DHU 1 1/4 S209 VX, d=35.5 мм, квадрат M=17.5 мм, Cdyn 32.5 кН. Пряма заміна TIMKEN DHU 1 1/4 S209, FKL GWST 209 PPB29. KRAUSE, KUHN, CASE.',
+            ],
+            'en' => [
+                'desc'             => 'Disc flange hub unit type DHU S with square bore (M = 17.5 mm) for 1 1/4" square shaft. Bearing bore d = 35.5 mm (1.3976"), bolt circle J = 127 mm, bolt hole diameter N = 13.5 mm, overall length L = 127 mm, Da = 97 mm, Cdyn = 32.5 kN, Co = 20.4 kN, weight 1.63 kg. Designed for radial and axial loads (Fr = 7.7 kN, Fa = 3.8 kN) in disc harrow hubs subject to impact loading and abrasive conditions. Direct replacement for TIMKEN DHU 1 1/4 S209, NTE DHU 1 1/4 S209, RBF FD 209-1 1/4 SQ, PEER FD 209-1 1/4 SQ GFD209SPPB51, FKL GWST 209 PPB29; fits KRAUSE (40-128), Great Plains (822-209C), CASE (84151226), SUNFLOWER (FK311007), KUHN (Q4008320, Q4044290).',
+                'meta_title'       => 'VELNOX DHU 1 1/4 S209 VX — disc hub unit square bore, TIMKEN DHU 1 1/4 S209',
+                'meta_description' => 'Disc flange hub unit VELNOX DHU 1 1/4 S209 VX, d=35.5 mm, square M=17.5 mm, Cdyn 32.5 kN. Replaces TIMKEN DHU 1 1/4 S209, FKL GWST 209 PPB29. KRAUSE, KUHN, CASE.',
+            ],
+            'pl' => [
+                'desc'             => 'Dyskowy kołnierzowy węzeł piasty typu DHU S z otworem kwadratowym (M = 17,5 mm) do wału kwadratowego 1 1/4". Średnica wewnętrzna łożyska d = 35,5 mm (1,3976"), rozstaw śrub J = 127 mm, średnica otworów mocujących N = 13,5 mm, długość całkowita L = 127 mm, Da = 97 mm, Cdyn = 32,5 kN, Co = 20,4 kN, masa 1,63 kg. Przeznaczony do obciążeń promieniowych i osiowych (Fr = 7,7 kN, Fa = 3,8 kN) w węzłach bron talerzowych pracujących w warunkach udarowych i ściernych. Bezpośredni zamiennik TIMKEN DHU 1 1/4 S209, NTE DHU 1 1/4 S209, RBF FD 209-1 1/4 SQ, PEER FD 209-1 1/4 SQ GFD209SPPB51, FKL GWST 209 PPB29; pasuje do KRAUSE (40-128), Great Plains (822-209C), CASE (84151226), SUNFLOWER (FK311007), KUHN (Q4008320, Q4044290).',
+                'meta_title'       => 'VELNOX DHU 1 1/4 S209 VX — dyskowy węzeł kwadrat, TIMKEN DHU 1 1/4 S209',
+                'meta_description' => 'Dyskowy węzeł piasty VELNOX DHU 1 1/4 S209 VX, d=35,5 mm, kwadrat M=17,5 mm, Cdyn 32,5 kN. Zamiennik TIMKEN DHU 1 1/4 S209, FKL GWST 209 PPB29. KRAUSE, KUHN, CASE.',
+            ],
+        ] as $locale => $fields) {
+            foreach ($fields as $field => $value) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $pt3, 'locale' => $locale, 'field' => $field],
+                    ['value' => $value]
+                );
+            }
+        }
+
+        // gallery + 3D model
+        DB::table('product_assets')->updateOrInsert(
+            ['entity_type' => 'product', 'entity_id' => $pt3, 'type' => 'model_3d'],
+            ['path' => '/velnox/models/DHU-1-14S209.glb', 'sort_order' => 0]
+        );
+        foreach ([
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx.webp',          'sort_order' => 0],
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx-drawing-1.webp', 'sort_order' => 1],
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx-drawing-2.webp', 'sort_order' => 2],
+            ['path' => '/velnox/images/products/agro-t3/velnox-dhu-1-14s209-vx-drawing-3.webp', 'sort_order' => 3],
+        ] as $asset) {
+            $exists = DB::table('product_assets')
+                ->where('entity_type', 'product')->where('entity_id', $pt3)
+                ->where('type', 'gallery')->where('path', $asset['path'])->exists();
+            if (!$exists) {
+                DB::table('product_assets')->insert([
+                    'entity_type' => 'product', 'entity_id' => $pt3,
+                    'type' => 'gallery', 'path' => $asset['path'], 'sort_order' => $asset['sort_order'],
+                ]);
+            }
+        }
+
+        // =========================================================
+        // 22. PRODUCT TABLE: agro-t4 (AA30941 — John Deere disc hub)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'agro-t4'],
+            [
+                'slug'         => 'agro-t4',
+                'category_id'  => $catId('agro'),
+                'spec_columns' => json_encode(['d_inch','d_mm','B_mm','L_mm','A1_mm','C_mm','Da_mm','D_mm','J_mm','N_mm','cdyn_kn','co_kn','mass_kg','pu_kn']),
+                'sort_order'   => 4,
+            ]
+        );
+        $at4 = DB::table('product_tables')->where('slug', 'agro-t4')->value('id');
+
+        foreach ([
+            'uk' => 'Таблиця 4: Габаритні розміри підшипникового вузла AA30941 для техніки John Deere',
+            'en' => 'Table 4: Dimensional specifications of AA30941 hub unit for John Deere machinery',
+            'pl' => 'Tabela 4: Wymiary gabarytowe węzła łożyskowego AA30941 do maszyn John Deere',
+        ] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $at4, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        // schema assets
+        DB::table('product_assets')->updateOrInsert(
+            ['entity_type' => 'product_table', 'entity_id' => $at4, 'type' => 'schema_png'],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-schema.webp', 'sort_order' => 0]
+        );
+        DB::table('product_assets')->updateOrInsert(
+            ['entity_type' => 'product_table', 'entity_id' => $at4, 'type' => 'schema_svg'],
+            ['path' => '/velnox/images/products/agro-t4/schema.svg', 'sort_order' => 0]
+        );
+
+        // highlight_config + schema_viewbox
+        DB::table('product_tables')->where('id', $at4)->update([
+            'schema_viewbox'   => '0 420 2480 1380',
+            'highlight_config' => json_encode([
+                'd_mm'   => [['label' => 'd',  'x' => 1259, 'y' => 940]],
+                'd_inch' => [['label' => 'd',  'x' => 1259, 'y' => 940]],
+                'A1_mm'  => [['label' => 'A1', 'x' => 1413, 'y' => 572]],
+                'Da_mm'  => [['label' => 'Da', 'x' => 1529, 'y' => 944]],
+                'D_mm'   => [['label' => 'D',  'x' => 1662, 'y' => 944]],
+                'J_mm'   => [['label' => 'J',  'x' => 371,  'y' => 880]],
+                'N_mm'   => [['label' => 'N',  'x' => 515,  'y' => 545]],
+                'C_mm'   => [['label' => 'C',  'x' => 1398, 'y' => 1281]],
+                'L_mm'   => [['label' => 'L',  'x' => 521,  'y' => 1295]],
+            ]),
+        ]);
+
+        // product
+        DB::table('products')->updateOrInsert(
+            ['slug' => 'aa30941-vx'],
+            ['slug' => 'aa30941-vx', 'article' => 'AA30941 VX', 'product_table_id' => $at4]
+        );
+        $pt4 = DB::table('products')->where('slug', 'aa30941-vx')->value('id');
+
+        foreach ([
+            'd_inch'  => '1.781', 'd_mm'    => '45.24', 'B_mm'    => '36.53', 'L_mm'    => '48.5',
+            'A1_mm'   => '3.5',   'C_mm'    => '30.1',  'Da_mm'   => '93',    'D_mm'    => '150',
+            'J_mm'    => '120.5', 'N_mm'    => '13.5',  'cdyn_kn' => '32.5',  'co_kn'   => '20.4',
+            'mass_kg' => '1.836', 'pu_kn'   => '0.857',
+        ] as $key => $val) {
+            $sid = DB::table('spec_definitions')->where('key', $key)->value('id');
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pt4, 'spec_id' => $sid],
+                ['value' => $val]
+            );
+        }
+
+        DB::table('product_cross_refs')->where('product_id', $pt4)->delete();
+        foreach ([
+            ['brand' => 'CT-AGRI', 'value' => 'AA30941',        'type' => 'bearing'],
+            ['brand' => 'FKL',     'value' => 'GWST 209 PPB13', 'type' => 'bearing'],
+            ['brand' => 'FKL',     'value' => 'GW209PPB13',     'type' => 'bearing'],
+            ['brand' => 'KABAT',   'value' => 'P30941',         'type' => 'bearing'],
+            ['brand' => 'RBF',     'value' => 'ST 209-1 3/4',   'type' => 'bearing'],
+            ['brand' => 'Gasket',      'value' => 'A33968',     'type' => 'application'],
+            ['brand' => 'Housing',     'value' => 'A34792',     'type' => 'application'],
+            ['brand' => 'Housing',     'value' => 'A34793',     'type' => 'application'],
+            ['brand' => 'Housing',     'value' => 'AA27172',    'type' => 'application'],
+            ['brand' => 'JD – Assembly', 'value' => 'AA30941',  'type' => 'application'],
+            ['brand' => 'Grease Nipple', 'value' => 'JD7806',   'type' => 'application'],
+            ['brand' => 'bearing',     'value' => 'GW209PPB13', 'type' => 'application'],
+        ] as $r) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pt4] + $r);
+        }
+
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pt4, 'locale' => $locale, 'field' => 'name'],
+                ['value' => 'AA30941 VX']
+            );
+        }
+
+        foreach ([
+            'uk' => [
+                'desc'             => 'Дисковий підшипниковий вузол AA30941 для дискових сівалок та ґрунтообробних агрегатів John Deere з посадковим діаметром d = 45.24 мм (1.781"). Зовнішній діаметр корпусу D = 150 мм, центрувальний діаметр Da = 93 мм, кріпильна база J = 120.5 мм, діаметр кріпильних отворів N = 13.5 мм, загальна довжина L = 48.5 мм, ширина C = 30.1 мм, маса 1.836 кг; Cdyn = 32.5 кН, Co = 20.4 кН, Pu = 0.857 кН. Корпус круглого перерізу з центруванням по діаметру Da — геометрія OEM-вузла John Deere. Пряма заміна CT-AGRI AA30941, FKL GWST 209 PPB13 / GW209PPB13, KABAT P30941, RBF ST 209-1 3/4; відповідає OEM-номерам John Deere A33968, A34792, A34793, AA27172, AA30941, JD7806.',
+                'meta_title'       => 'VELNOX AA30941 VX — дисковий вузол John Deere, CT-AGRI AA30941',
+                'meta_description' => 'Дисковий вузол VELNOX AA30941 VX для John Deere, d=45.24 мм, D=150 мм, Cdyn 32.5 кН. Заміна JD AA30941, CT-AGRI, FKL GW209PPB13. Для дискових посівних секцій.',
+            ],
+            'en' => [
+                'desc'             => 'Disc hub unit AA30941 for John Deere disc seeders and tillage equipment, bore d = 45.24 mm (1.781"). Housing outer diameter D = 150 mm, centering diameter Da = 93 mm, bolt circle J = 120.5 mm, bolt hole diameter N = 13.5 mm, overall length L = 48.5 mm, width C = 30.1 mm, weight 1.836 kg; Cdyn = 32.5 kN, Co = 20.4 kN, Pu = 0.857 kN. Round housing with centering on diameter Da — OEM geometry for John Deere disc sections. Direct replacement for CT-AGRI AA30941, FKL GWST 209 PPB13 / GW209PPB13, KABAT P30941, RBF ST 209-1 3/4; matches John Deere OEM references A33968, A34792, A34793, AA27172, AA30941, JD7806.',
+                'meta_title'       => 'VELNOX AA30941 VX — disc hub unit John Deere, CT-AGRI AA30941',
+                'meta_description' => 'Disc hub unit VELNOX AA30941 VX for John Deere, d=45.24 mm, D=150 mm, Cdyn 32.5 kN. Replaces JD AA30941, CT-AGRI, FKL GW209PPB13. For disc seeder sections.',
+            ],
+            'pl' => [
+                'desc'             => 'Dyskowy węzeł piasty AA30941 do siewników tarczowych i maszyn uprawowych John Deere, średnica wewnętrzna d = 45,24 mm (1,781"). Zewnętrzna średnica obudowy D = 150 mm, średnica centrująca Da = 93 mm, rozstaw śrub J = 120,5 mm, średnica otworów N = 13,5 mm, długość całkowita L = 48,5 mm, szerokość C = 30,1 mm, masa 1,836 kg; Cdyn = 32,5 kN, Co = 20,4 kN, Pu = 0,857 kN. Obudowa okrągła z centrowaniem na średnicy Da — geometria OEM John Deere. Bezpośredni zamiennik CT-AGRI AA30941, FKL GWST 209 PPB13 / GW209PPB13, KABAT P30941, RBF ST 209-1 3/4; odpowiada numerom OEM John Deere A33968, A34792, A34793, AA27172, AA30941, JD7806.',
+                'meta_title'       => 'VELNOX AA30941 VX — dyskowy węzeł John Deere, CT-AGRI AA30941',
+                'meta_description' => 'Dyskowy węzeł piasty VELNOX AA30941 VX do John Deere, d=45,24 mm, D=150 mm, Cdyn 32,5 kN. Zamiennik JD AA30941, CT-AGRI, FKL GW209PPB13. Do sekcji tarczowych.',
+            ],
+        ] as $locale => $fields) {
+            foreach ($fields as $field => $value) {
+                DB::table('translations')->updateOrInsert(
+                    ['entity_type' => 'product', 'entity_id' => $pt4, 'locale' => $locale, 'field' => $field],
+                    ['value' => $value]
+                );
+            }
+        }
+
+        // gallery
+        foreach ([
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx.webp',          'sort_order' => 0],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-1.webp', 'sort_order' => 1],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-2.webp', 'sort_order' => 2],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-3.webp', 'sort_order' => 3],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-4.webp', 'sort_order' => 4],
+        ] as $asset) {
+            $exists = DB::table('product_assets')
+                ->where('entity_type', 'product')->where('entity_id', $pt4)
+                ->where('type', 'gallery')->where('path', $asset['path'])->exists();
+            if (!$exists) {
+                DB::table('product_assets')->insert([
+                    'entity_type' => 'product', 'entity_id' => $pt4,
+                    'type' => 'gallery', 'path' => $asset['path'], 'sort_order' => $asset['sort_order'],
+                ]);
+            }
+        }
+
     }
 }
