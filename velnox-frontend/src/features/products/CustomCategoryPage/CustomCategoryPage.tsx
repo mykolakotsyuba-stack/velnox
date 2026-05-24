@@ -4,6 +4,7 @@ import React from 'react';
 import type { Locale } from '@/entities/product/model/types';
 import { CustomHero } from './CustomHero';
 import { CustomCapabilities } from './CustomCapabilities';
+import { CustomBanner } from './CustomBanner';
 import { CustomForm } from './CustomForm';
 import styles from './custom.module.css';
 
@@ -16,6 +17,7 @@ export function CustomCategoryPage({ locale }: CustomCategoryPageProps) {
         <main className={styles.page}>
             <CustomHero />
             <CustomCapabilities />
+            <CustomBanner />
             <CustomForm locale={locale} />
         </main>
     );

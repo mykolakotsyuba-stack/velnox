@@ -72,72 +72,175 @@
 }
 
 /* CAPABILITIES SECTION */
-.capabilities {
-  padding: 80px 0;
+.capabilitiesSection {
   background: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
 }
 
-.sectionTitle {
-  font-size: clamp(28px, 3vw, 42px);
-  font-weight: 900;
-  color: var(--color-text);
-  letter-spacing: -0.02em;
-  margin-bottom: 50px;
-  display: inline-block;
-  position: relative;
+.capabilitiesBanner {
+  background: #0d8a43; /* Green background */
+  padding: 24px 0;
+  text-align: center;
 }
 
-.sectionTitle::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -8px;
-  height: 2px;
-  width: 60px;
-  background: linear-gradient(90deg, var(--color-accent), transparent);
+.capabilitiesBannerTitle {
+  color: #fff;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-.grid {
+.capabilitiesGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  padding: 60px 0;
 }
 
-@media (max-width: 1024px) {
-  .grid {
+@media (max-width: 900px) {
+  .capabilitiesGrid {
     grid-template-columns: 1fr;
   }
 }
 
-.card {
+.capCard {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-top: 3px solid var(--color-accent);
-  padding: 40px 32px;
   border-radius: var(--radius-block);
-  position: relative;
-  transition: all 0.3s ease;
+  padding: 32px;
   box-shadow: var(--shadow-block);
+  transition: all 0.3s ease;
 }
 
-.card:hover {
+.capCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(13, 138, 67, 0.1);
+  border-color: rgba(13, 138, 67, 0.3);
 }
 
-.cardTitle {
-  font-size: 20px;
-  font-weight: 700;
+.capCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.capIcon {
+  color: #0d8a43;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capTitleWrapper {
+  background: #e2e8f0;
+  padding: 8px 24px;
+  border-radius: 4px;
+  position: relative;
+  clip-path: polygon(0 0, 95% 0, 100% 100%, 5% 100%);
+}
+
+:global([data-theme="dark"]) .capTitleWrapper {
+  background: #1e293b;
+}
+
+.capTitle {
+  font-size: 18px;
+  font-weight: 800;
   color: var(--color-text);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.capList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.capList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.capBullet {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  background: #0d8a43;
+  margin-top: 6px;
+  border-radius: 1px;
+}
+
+/* BOTTOM BANNER SECTION */
+.bottomBanner {
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.bottomBannerContent {
+  display: flex;
+  min-height: 400px;
+}
+
+@media (max-width: 900px) {
+  .bottomBannerContent {
+    flex-direction: column;
+  }
+}
+
+.bottomBannerImage {
+  flex: 1;
+  position: relative;
+  min-height: 300px;
+}
+
+.bottomBannerTextWrapper {
+  flex: 1.5;
+  background: #1e1b4b; /* Dark indigo */
+  display: flex;
+  align-items: center;
+  padding: 40px 60px;
+}
+
+.bottomBannerText {
+  max-width: 600px;
+}
+
+.bannerTextMain {
+  color: #fff;
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 800;
   margin-bottom: 16px;
   line-height: 1.3;
 }
 
-.cardDesc {
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--color-text-muted);
+.bannerTextSub {
+  color: #a5b4fc;
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.bottomBannerFooter {
+  background: #0d8a43;
+  padding: 24px 0;
+  text-align: center;
+  color: #fff;
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 /* FORM SECTION */

@@ -1,4 +1,68 @@
 {
+  "customPage": {
+    "hero": {
+      "title": "Większość producentów otwiera katalog i wybiera standardowe rozwiązanie. Ale standardowe rozwiązania to zawsze kompromis.",
+      "subtitle": "Jeśli Twoim celem jest zwiększenie żywotności węzła, zmniejszenie liczby przypadków gwarancyjnych i wzmocnienie pozycji konkurencyjnej, potrzebujesz niestandardowego rozwiązania."
+    },
+    "capabilities": {
+      "title": "VELNOX PROJEKTUJE ŁOŻYSKA POD TWOJE KONKRETNE ZADANIE",
+      "housing": {
+        "title": "OPRAWA",
+        "items": [
+          "dobór typu oprawy",
+          "wzmocnione wykonania",
+          "optymalizacja geometrii",
+          "dobór materiału (HT200, GGG50 i inne opcje)",
+          "specjalne powłoki"
+        ]
+      },
+      "lubrication": {
+        "title": "SMAROWANIE",
+        "items": [
+          "dobór smaru odpowiednio do warunków eksploatacji",
+          "wypełnienie do 90% objętości wewnętrznej węzła",
+          "specjalistyczne smary do środowisk rolniczych"
+        ]
+      },
+      "bearing": {
+        "title": "WĘZEŁ ŁOŻYSKOWY",
+        "items": [
+          "wzmocnione bieżnie",
+          "zwiększony luz wewnętrzny (C3, C4 — na życzenie)",
+          "indywidualna geometria styku"
+        ]
+      },
+      "oem": {
+        "title": "PODEJŚCIE OEM",
+        "items": [
+          "minimalne partie",
+          "adaptacja pod konkretną maszynę",
+          "znakowanie pod twoją markę lub projekt"
+        ]
+      },
+      "seals": {
+        "title": "SYSTEM USZCZELNIENIA",
+        "items": [
+          "wzmocnione wielowargowe uszczelnienia",
+          "rozwiązania labiryntowe",
+          "konstrukcje do pracy w środowiskach agresywnych"
+        ]
+      },
+      "quality": {
+        "title": "KONTROLA JAKOŚCI",
+        "items": [
+          "podwójna kontrola",
+          "badania laboratoryjne",
+          "weryfikacja przed każdą wysyłką"
+        ]
+      }
+    },
+    "banner": {
+      "text1": "Ty formułujesz zadanie — my opracowujemy rozwiązanie.",
+      "text2": "To nie tylko łożysko z katalogu, ale zasób, niezawodność i przewaga konkurencyjna dla twojej maszyny.",
+      "footer": "VELNOX — INŻYNIERYJNE PODEJŚCIE DO WĘZŁÓW ROLNICZYCH"
+    }
+  },
   "home": {
     "hero": {
       "eyebrow": "Inżynieria premium",

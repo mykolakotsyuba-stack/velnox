@@ -1,4 +1,68 @@
 {
+  "customPage": {
+    "hero": {
+      "title": "Most manufacturers open a catalog and choose a standard solution. But standard solutions are always a compromise.",
+      "subtitle": "If your goal is to increase component life, reduce warranty cases, and strengthen your competitive position, you need a customized solution."
+    },
+    "capabilities": {
+      "title": "VELNOX DEVELOPS BEARINGS FOR YOUR SPECIFIC TASK",
+      "housing": {
+        "title": "HOUSING",
+        "items": [
+          "housing type selection",
+          "reinforced designs",
+          "geometry optimization",
+          "material selection (HT200, GGG50, and other options)",
+          "special coatings"
+        ]
+      },
+      "lubrication": {
+        "title": "LUBRICATION",
+        "items": [
+          "lubricant selection according to operating conditions",
+          "filling up to 90% of the internal volume",
+          "specialized lubricants for agricultural environments"
+        ]
+      },
+      "bearing": {
+        "title": "BEARING UNIT",
+        "items": [
+          "reinforced raceways",
+          "increased internal clearance (C3, C4 — on request)",
+          "individual contact geometry"
+        ]
+      },
+      "oem": {
+        "title": "OEM APPROACH",
+        "items": [
+          "minimal batches",
+          "adaptation to specific machinery",
+          "marking with your brand or project"
+        ]
+      },
+      "seals": {
+        "title": "SEALING SYSTEM",
+        "items": [
+          "reinforced multi-lip seals",
+          "labyrinth solutions",
+          "designs for operation in aggressive environments"
+        ]
+      },
+      "quality": {
+        "title": "QUALITY CONTROL",
+        "items": [
+          "double control",
+          "laboratory testing",
+          "verification before each shipment"
+        ]
+      }
+    },
+    "banner": {
+      "text1": "You formulate the task — we develop the solution.",
+      "text2": "It's not just a bearing from a catalog, but a resource, reliability, and competitive advantage for your machinery.",
+      "footer": "VELNOX — AN ENGINEERING APPROACH TO AGRO UNITS"
+    }
+  },
   "home": {
     "hero": {
       "eyebrow": "Premium Engineering",
