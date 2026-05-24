@@ -487,6 +487,7 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
             {/* ── HERO ── */}
             <section className={styles.hero} ref={heroRef.ref as React.Ref<HTMLElement>}>
                 <div className={styles.heroBgWrapper}>
+                    <Image src="/velnox/images/products/kit/hero_bg.png" alt="Kit Background" fill priority quality={90} className={styles.heroBgImg} />
                     <div className={styles.heroBgOverlay} />
                 </div>
 
