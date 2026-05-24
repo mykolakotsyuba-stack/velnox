@@ -2584,5 +2584,619 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        // =========================================================
+        // 24. PRODUCT TABLE: kit-t2 (204PY3 VX — Round bore bearing)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'kit-t2'],
+            [
+                'slug'             => 'kit-t2',
+                'category_id'      => $catId('kit'),
+                'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','C_mm','mass_kg','cdyn_kn','co_kn']),
+                'highlight_config' => json_encode([
+                    'd_mm' => [['label' => 'd', 'x' => 293,  'y' => 2211]],
+                    'D_mm' => [['label' => 'D', 'x' => 236,  'y' => 2218]],
+                    'B_mm' => [['label' => 'B', 'x' => 1043, 'y' => 2493]],
+                    'C_mm' => [['label' => 'C', 'x' => 1043, 'y' => 1891]],
+                ]),
+                'schema_viewbox'   => '143 1767 2229 881',
+                'sort_order'       => 2,
+            ]
+        );
+
+        $kt2 = $tableId('kit-t2');
+
+        foreach (['uk' => 'Спеціальні підшипники з круглим отвором', 'en' => 'Special Bearings with Round Bore', 'pl' => 'Specjalne łożyska z okrągłym otworem'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt2, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        foreach ([
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/kit-t2/velnox-204py3-vx-schema.webp', 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/kit-t2/schema.svg',                    'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt2, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
+        DB::table('products')->updateOrInsert(
+            ['slug' => '204py3-vx'],
+            ['slug' => '204py3-vx', 'article' => '204PY3 VX', 'product_table_id' => $kt2]
+        );
+        $pk2 = DB::table('products')->where('slug', '204py3-vx')->value('id');
+
+        foreach ([
+            'd_mm'    => '16',
+            'D_mm'    => '45.2',
+            'B_mm'    => '18.67',
+            'C_mm'    => '15.4',
+            'mass_kg' => '0.13',
+            'cdyn_kn' => '12.84',
+            'co_kn'   => '6.65',
+        ] as $key => $value) {
+            $sid = $specId($key);
+            if (!$sid) continue;
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pk2, 'spec_id' => $sid],
+                ['value' => $value]
+            );
+        }
+
+        DB::table('product_cross_refs')->where('product_id', $pk2)->delete();
+        foreach ([
+            ['value' => '204 PF3 (PER.BB204RRP3-A)', 'brand' => 'PEER',    'type' => 'bearing'],
+            ['value' => '204 PY2',                    'brand' => 'TIMKEN',  'type' => 'bearing'],
+            ['value' => '204 PY3',                    'brand' => 'CT-AGRI', 'type' => 'bearing'],
+            ['value' => '204 PY3',                    'brand' => 'RBF',     'type' => 'bearing'],
+            ['value' => '204 PY3 (BB204RRY3)',        'brand' => 'TIMKEN',  'type' => 'bearing'],
+            ['value' => '204 PY3',                    'brand' => 'PEER',    'type' => 'bearing'],
+            ['value' => '06C04 2Z',                   'brand' => 'FKL',     'type' => 'bearing'],
+            ['value' => '00240199',    'brand' => 'HORSCH',    'type' => 'application'],
+            ['value' => '00310104',    'brand' => 'HORSCH',    'type' => 'application'],
+            ['value' => '1260817R91',  'brand' => 'CASE',      'type' => 'application'],
+            ['value' => '466635',      'brand' => 'Vaderstad',  'type' => 'application'],
+            ['value' => '820-003C',    'brand' => 'GP',         'type' => 'application'],
+            ['value' => '822-011C',    'brand' => 'GP',         'type' => 'application'],
+            ['value' => '822-067C',    'brand' => 'GP',         'type' => 'application'],
+            ['value' => 'AA21480',     'brand' => 'JD',         'type' => 'application'],
+            ['value' => 'CA139',       'brand' => 'AMAZONE',    'type' => 'application'],
+            ['value' => 'GA2014',      'brand' => 'KINZE',      'type' => 'application'],
+            ['value' => 'K3030210',    'brand' => 'KUHN',       'type' => 'application'],
+        ] as $ref) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pk2, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
+        }
+
+        foreach ([
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t2/velnox-204py3-vx.webp',           'sort_order' => 0],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t2/velnox-204py3-vx-drawing-1.webp', 'sort_order' => 1],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t2/velnox-204py3-vx-drawing-2.webp', 'sort_order' => 2],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t2/velnox-204py3-vx-drawing-3.webp', 'sort_order' => 3],
+            ['type' => 'model_3d', 'path' => '/velnox/models/204-PY3.glb',                                     'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk2, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk2, 'locale' => $locale, 'field' => 'name'],
+                ['value' => '204PY3 VX']
+            );
+        }
+
+        // =========================================================
+        // 25. PRODUCT TABLE: kit-t3 (5203KYY3 VX — Double-row ball bearing)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'kit-t3'],
+            [
+                'slug'             => 'kit-t3',
+                'category_id'      => $catId('kit'),
+                'spec_columns'     => json_encode(['d_mm','d1_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'highlight_config' => json_encode([
+                    'B_mm'      => [['label' => 'B', 'x' => 951, 'y' => 927]],
+                    'C_mm'      => [['label' => 'C', 'x' => 951, 'y' => 433]],
+                    'alpha_deg' => [['label' => "\u{03b1}", 'x' => 1025, 'y' => 661], ['label' => "\u{03b1}", 'x' => 873, 'y' => 661]],
+                ]),
+                'schema_viewbox'   => '120 280 2150 800',
+                'sort_order'       => 3,
+            ]
+        );
+
+        $kt3 = $tableId('kit-t3');
+
+        foreach (['uk' => 'Дворядні кулькові підшипники', 'en' => 'Double-Row Ball Bearings', 'pl' => 'Dwurzędowe łożyska kulkowe'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt3, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        foreach ([
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/kit-t3/velnox-5203kyy3-vx-schema.webp', 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/kit-t3/schema.svg',                      'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt3, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
+        DB::table('products')->updateOrInsert(
+            ['slug' => '5203kyy3-vx'],
+            ['slug' => '5203kyy3-vx', 'article' => '5203KYY3 VX', 'product_table_id' => $kt3]
+        );
+        $pk3 = DB::table('products')->where('slug', '5203kyy3-vx')->value('id');
+
+        foreach ([
+            'd_mm'      => '16.256',
+            'd1_mm'     => '23.5',
+            'D_mm'      => '40',
+            'B_mm'      => '44.12',
+            'C_mm'      => '39.12',
+            'alpha_deg' => '30',
+            'mass_kg'   => '0.218',
+            'cdyn_kn'   => '14.2',
+            'co_kn'     => '8.8',
+            'pu_kn'     => '0.37',
+        ] as $key => $value) {
+            $sid = $specId($key);
+            if (!$sid) continue;
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pk3, 'spec_id' => $sid],
+                ['value' => $value]
+            );
+        }
+
+        DB::table('product_cross_refs')->where('product_id', $pk3)->delete();
+        foreach ([
+            ['value' => '5203 KPP2 (PER.5203RPP2)',       'brand' => 'PEER',      'type' => 'bearing'],
+            ['value' => '5203 KPP2-A (PER.5203RPP2-A)',   'brand' => 'PEER',      'type' => 'bearing'],
+            ['value' => '5203 KYY2 (PER.5203RYY2)',        'brand' => 'PEER',      'type' => 'bearing'],
+            ['value' => '5203 KYY2',                       'brand' => 'RBF',       'type' => 'bearing'],
+            ['value' => '5203 KYY2',                       'brand' => 'RBK',       'type' => 'bearing'],
+            ['value' => '5203 KYY2',                       'brand' => 'TIMKEN',    'type' => 'bearing'],
+            ['value' => '5203 KYY2',                       'brand' => 'CT-AGRI',   'type' => 'bearing'],
+            ['value' => '5203 KYY2 (SL-5203 2T)',          'brand' => 'FKL',       'type' => 'bearing'],
+            ['value' => 'DAC 164044 2RS',                  'brand' => 'NSK-RHP',   'type' => 'bearing'],
+            ['value' => 'DAC 164044 2RS',                  'brand' => 'JTEKT',     'type' => 'bearing'],
+            ['value' => 'F04100150R',  'brand' => 'GASPARDO',     'type' => 'application'],
+            ['value' => '40-156',      'brand' => 'KRAUSE',       'type' => 'application'],
+            ['value' => 'GA6171',      'brand' => 'KINZE',        'type' => 'application'],
+            ['value' => '822-170C',    'brand' => 'GREAT PLAINS', 'type' => 'application'],
+            ['value' => 'Y00513900',   'brand' => 'AMAZONE',      'type' => 'application'],
+            ['value' => 'SN7218',      'brand' => 'SUNFLOWER',    'type' => 'application'],
+            ['value' => '7140A',       'brand' => 'MONOSEM',      'type' => 'application'],
+            ['value' => 'AN212132',    'brand' => 'JOHN DEERE',   'type' => 'application'],
+            ['value' => '81101640',    'brand' => 'KUHN',         'type' => 'application'],
+            ['value' => 'CA150',       'brand' => 'AMAZONE',      'type' => 'application'],
+            ['value' => '900125',      'brand' => 'MONOSEM',      'type' => 'application'],
+            ['value' => '310926',      'brand' => 'HORSCH',       'type' => 'application'],
+            ['value' => 'AC676096',    'brand' => 'KVERNELAND',   'type' => 'application'],
+            ['value' => '240216',      'brand' => 'HORSCH',       'type' => 'application'],
+            ['value' => 'GA5641',      'brand' => 'KINZE',        'type' => 'application'],
+        ] as $ref) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pk3, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
+        }
+
+        foreach ([
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t3/velnox-5203kyy3-vx.webp',           'sort_order' => 0],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t3/velnox-5203kyy3-vx-drawing-1.webp', 'sort_order' => 1],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t3/velnox-5203kyy3-vx-drawing-2.webp', 'sort_order' => 2],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t3/velnox-5203kyy3-vx-drawing-3.webp', 'sort_order' => 3],
+            ['type' => 'model_3d', 'path' => '/velnox/models/5203-KYY3.glb',                                     'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk3, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk3, 'locale' => $locale, 'field' => 'name'],
+                ['value' => '5203KYY3 VX']
+            );
+        }
+
+        // =========================================================
+        // 26. PRODUCT TABLE: kit-t4 (5206KPP3 VX — Double-row D-bore)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'kit-t4'],
+            [
+                'slug'             => 'kit-t4',
+                'category_id'      => $catId('kit'),
+                'spec_columns'     => json_encode(['cdyn_kn','co_kn','D_mm','d_mm','C_mm','mass_kg','B_mm','alpha_deg']),
+                'highlight_config' => json_encode((object)[]),
+                'schema_viewbox'   => '',
+                'sort_order'       => 4,
+            ]
+        );
+
+        $kt4 = $tableId('kit-t4');
+
+        foreach (['uk' => 'Дворядні підшипники з D-подібним отвором', 'en' => 'Double-Row Bearings with D-Bore', 'pl' => 'Dwurzędowe łożyska z otworem D'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt4, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        DB::table('products')->updateOrInsert(
+            ['slug' => '5206kpp3-vx'],
+            ['slug' => '5206kpp3-vx', 'article' => '5206KPP3 VX', 'product_table_id' => $kt4]
+        );
+        $pk4 = DB::table('products')->where('slug', '5206kpp3-vx')->value('id');
+
+        foreach ([
+            'd_mm'      => '30.15',
+            'D_mm'      => '62',
+            'B_mm'      => '50',
+            'C_mm'      => '37',
+            'alpha_deg' => '25',
+            'mass_kg'   => '0.5',
+            'cdyn_kn'   => '28.7',
+            'co_kn'     => '21.8',
+        ] as $key => $value) {
+            $sid = $specId($key);
+            if (!$sid) continue;
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pk4, 'spec_id' => $sid],
+                ['value' => $value]
+            );
+        }
+
+        DB::table('product_cross_refs')->where('product_id', $pk4)->delete();
+        foreach ([
+            ['value' => '5206 KPP3',                  'brand' => 'PFI',     'type' => 'bearing'],
+            ['value' => '5206 KPP3',                  'brand' => 'TIMKEN',  'type' => 'bearing'],
+            ['value' => '5206 KPP3',                  'brand' => 'RBF',     'type' => 'bearing'],
+            ['value' => '5206 KPP3',                  'brand' => 'CT-AGRI', 'type' => 'bearing'],
+            ['value' => '5206 KPP3',                  'brand' => 'FKL',     'type' => 'bearing'],
+            ['value' => '5206 KPP3 (PER.5206RPP3)',   'brand' => 'PEER',    'type' => 'bearing'],
+            ['value' => '822-215C',                    'brand' => 'GREAT PLAINS', 'type' => 'application'],
+            ['value' => '87283953',                    'brand' => 'CASE',         'type' => 'application'],
+            ['value' => 'AN261766/AN261637',           'brand' => 'JD',           'type' => 'application'],
+            ['value' => 'GA8603',                      'brand' => 'KINZE 3000',   'type' => 'application'],
+            ['value' => 'GA8641',                      'brand' => 'KINZE',        'type' => 'application'],
+        ] as $ref) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pk4, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
+        }
+
+        foreach ([
+            ['type' => 'model_3d', 'path' => '/velnox/models/5206-KPP3.glb', 'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk4, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk4, 'locale' => $locale, 'field' => 'name'],
+                ['value' => '5206KPP3 VX']
+            );
+        }
+
+        // =========================================================
+        // 27. PRODUCT TABLE: kit-t5 (885154B VX — Needle bearing)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'kit-t5'],
+            [
+                'slug'             => 'kit-t5',
+                'category_id'      => $catId('kit'),
+                'spec_columns'     => json_encode(['d_mm','d1_mm','D_mm','L_mm','C_mm','E_mm','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'highlight_config' => json_encode((object)[]),
+                'schema_viewbox'   => '',
+                'sort_order'       => 5,
+            ]
+        );
+
+        $kt5 = $tableId('kit-t5');
+
+        foreach (['uk' => 'Спеціальні голкові підшипники', 'en' => 'Special Needle Bearings', 'pl' => 'Specjalne łożyska igiełkowe'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt5, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        DB::table('products')->updateOrInsert(
+            ['slug' => '885154b-vx'],
+            ['slug' => '885154b-vx', 'article' => '885154B VX', 'product_table_id' => $kt5]
+        );
+        $pk5 = DB::table('products')->where('slug', '885154b-vx')->value('id');
+
+        foreach ([
+            'd_mm'    => '15.88',
+            'd1_mm'   => '12',
+            'D_mm'    => '30',
+            'L_mm'    => '69',
+            'C_mm'    => '38.8',
+            'E_mm'    => '5',
+            'mass_kg' => '0.183',
+            'cdyn_kn' => '5.15',
+            'co_kn'   => '2.94',
+            'pu_kn'   => '0.124',
+        ] as $key => $value) {
+            $sid = $specId($key);
+            if (!$sid) continue;
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pk5, 'spec_id' => $sid],
+                ['value' => $value]
+            );
+        }
+
+        DB::table('product_cross_refs')->where('product_id', $pk5)->delete();
+        foreach ([
+            ['value' => '885154B',                   'brand' => 'CT-AGRI',       'type' => 'bearing'],
+            ['value' => 'IB06930 SRS',               'brand' => 'RBF',           'type' => 'bearing'],
+            ['value' => 'IB06930 SRS',               'brand' => 'JTEKT (Koyo)',  'type' => 'bearing'],
+            ['value' => 'PN 00043',                  'brand' => 'RBF',           'type' => 'bearing'],
+            ['value' => 'WP5203-KRP2-N-A217',        'brand' => 'PEER',          'type' => 'bearing'],
+            ['value' => '00310131',    'brand' => 'Horsch',       'type' => 'application'],
+            ['value' => '201765C91',   'brand' => 'CASE',         'type' => 'application'],
+            ['value' => '227914R91',   'brand' => 'CASE',         'type' => 'application'],
+            ['value' => '822-023C',    'brand' => 'Great Plains', 'type' => 'application'],
+            ['value' => '885154B',     'brand' => 'JD',           'type' => 'application'],
+            ['value' => '96140018',    'brand' => 'HORSCH',       'type' => 'application'],
+            ['value' => 'AN131668',    'brand' => 'JD',           'type' => 'application'],
+            ['value' => 'AN131688',    'brand' => 'JD',           'type' => 'application'],
+        ] as $ref) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pk5, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
+        }
+
+        foreach ([
+            ['type' => 'model_3d', 'path' => '/velnox/models/885154B.glb', 'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk5, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk5, 'locale' => $locale, 'field' => 'name'],
+                ['value' => '885154B VX']
+            );
+        }
+
+        // =========================================================
+        // 28. PRODUCT TABLE: kit-t6 (AA205DD VX — D-bore Great Plains)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'kit-t6'],
+            [
+                'slug'             => 'kit-t6',
+                'category_id'      => $catId('kit'),
+                'spec_columns'     => json_encode(['d_mm','d1_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'highlight_config' => json_encode((object)[]),
+                'schema_viewbox'   => '',
+                'sort_order'       => 6,
+            ]
+        );
+
+        $kt6 = $tableId('kit-t6');
+
+        foreach (['uk' => 'Підшипники з D-подібним отвором (Great Plains)', 'en' => 'Bearings with D-Bore (Great Plains)', 'pl' => 'Łożyska z otworem D (Great Plains)'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt6, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        DB::table('products')->updateOrInsert(
+            ['slug' => 'aa205dd-vx'],
+            ['slug' => 'aa205dd-vx', 'article' => 'AA205DD VX', 'product_table_id' => $kt6]
+        );
+        $pk6 = DB::table('products')->where('slug', 'aa205dd-vx')->value('id');
+
+        foreach ([
+            'd_mm'      => '16',
+            'd1_mm'     => '33.74',
+            'D_mm'      => '53.086',
+            'B_mm'      => '19.4',
+            'C_mm'      => '18.288',
+            'alpha_deg' => '25',
+            'mass_kg'   => '0.21',
+            'cdyn_kn'   => '14.02',
+            'co_kn'     => '7.82',
+            'pu_kn'     => '0.328',
+        ] as $key => $value) {
+            $sid = $specId($key);
+            if (!$sid) continue;
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pk6, 'spec_id' => $sid],
+                ['value' => $value]
+            );
+        }
+
+        DB::table('product_cross_refs')->where('product_id', $pk6)->delete();
+        foreach ([
+            ['value' => '188-001V (AA 205 DD)',        'brand' => 'Great Plains', 'type' => 'bearing'],
+            ['value' => '205 GP',                      'brand' => 'Great Plains', 'type' => 'bearing'],
+            ['value' => '205 PP13',                    'brand' => 'RBF',          'type' => 'bearing'],
+            ['value' => 'PER.BB205RPP13',              'brand' => 'PEER',         'type' => 'bearing'],
+            ['value' => 'AA 205 DD',                   'brand' => 'RBK',          'type' => 'bearing'],
+            ['value' => 'AA 205 DD',                   'brand' => 'CT-AGRI',      'type' => 'bearing'],
+            ['value' => 'AA 205 DD (376905 EKL19)',    'brand' => 'HARP',         'type' => 'bearing'],
+            ['value' => 'AA 205 DD (SL5316-2T)',       'brand' => 'FKL',          'type' => 'bearing'],
+            ['value' => '100-001V',    'brand' => '',       'type' => 'application'],
+            ['value' => '188-001V',    'brand' => '',       'type' => 'application'],
+            ['value' => '205DDS5/8',   'brand' => '',       'type' => 'application'],
+            ['value' => '205GP',       'brand' => '',       'type' => 'application'],
+            ['value' => '205VVH1',     'brand' => '',       'type' => 'application'],
+            ['value' => '40-172',      'brand' => 'KRAUSE', 'type' => 'application'],
+            ['value' => '822-236C',    'brand' => 'GP',     'type' => 'application'],
+            ['value' => 'BB 205 RPP13','brand' => 'PEER',   'type' => 'application'],
+        ] as $ref) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pk6, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
+        }
+
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk6, 'locale' => $locale, 'field' => 'name'],
+                ['value' => 'AA205DD VX']
+            );
+        }
+
+        // =========================================================
+        // 29. PRODUCT TABLE: kit-t7 (AA59196 VX — Double-row round bore)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'kit-t7'],
+            [
+                'slug'             => 'kit-t7',
+                'category_id'      => $catId('kit'),
+                'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'highlight_config' => json_encode((object)[]),
+                'schema_viewbox'   => '',
+                'sort_order'       => 7,
+            ]
+        );
+
+        $kt7 = $tableId('kit-t7');
+
+        foreach (['uk' => 'Дворядні кулькові підшипники з круглим отвором', 'en' => 'Double-Row Ball Bearings with Round Bore', 'pl' => 'Dwurzędowe łożyska kulkowe z okrągłym otworem'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt7, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        DB::table('products')->updateOrInsert(
+            ['slug' => 'aa59196-vx'],
+            ['slug' => 'aa59196-vx', 'article' => 'AA59196 VX', 'product_table_id' => $kt7]
+        );
+        $pk7 = DB::table('products')->where('slug', 'aa59196-vx')->value('id');
+
+        foreach ([
+            'd_mm'      => '16.027',
+            'D_mm'      => '45.225',
+            'B_mm'      => '26',
+            'C_mm'      => '22.82',
+            'alpha_deg' => '20',
+            'mass_kg'   => '0.19',
+            'cdyn_kn'   => '16.3',
+            'co_kn'     => '10.9',
+            'pu_kn'     => '0.458',
+        ] as $key => $value) {
+            $sid = $specId($key);
+            if (!$sid) continue;
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pk7, 'spec_id' => $sid],
+                ['value' => $value]
+            );
+        }
+
+        DB::table('product_cross_refs')->where('product_id', $pk7)->delete();
+        foreach ([
+            ['value' => '5204 KRY2-R-A268 (PER.5204RRY2)', 'brand' => 'PEER',    'type' => 'bearing'],
+            ['value' => '5204 РУ3',                         'brand' => 'RBF',     'type' => 'bearing'],
+            ['value' => 'A59196',                            'brand' => 'CT-AGRI', 'type' => 'bearing'],
+            ['value' => 'P59196',                            'brand' => 'KABAT',   'type' => 'bearing'],
+            ['value' => '60021679', 'brand' => 'HORSCH', 'type' => 'application'],
+            ['value' => '60054734', 'brand' => 'HORSCH', 'type' => 'application'],
+            ['value' => 'AA104813', 'brand' => 'JD',     'type' => 'application'],
+            ['value' => 'AA59196',  'brand' => 'JD',     'type' => 'application'],
+            ['value' => 'GA26920',  'brand' => 'KINZE',  'type' => 'application'],
+        ] as $ref) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pk7, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
+        }
+
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk7, 'locale' => $locale, 'field' => 'name'],
+                ['value' => 'AA59196 VX']
+            );
+        }
+
+        // =========================================================
+        // 30. PRODUCT TABLE: kit-t8 (F-562024.02KLQ VX — Serviceable units)
+        // =========================================================
+        DB::table('product_tables')->updateOrInsert(
+            ['slug' => 'kit-t8'],
+            [
+                'slug'             => 'kit-t8',
+                'category_id'      => $catId('kit'),
+                'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'highlight_config' => json_encode((object)[]),
+                'schema_viewbox'   => '',
+                'sort_order'       => 8,
+            ]
+        );
+
+        $kt8 = $tableId('kit-t8');
+
+        foreach (['uk' => 'Підшипники для обслуговуваних вузлів', 'en' => 'Bearings for Serviceable Units', 'pl' => 'Łożyska do jednostek serwisowych'] as $locale => $name) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt8, 'locale' => $locale, 'field' => 'name'],
+                ['value' => $name]
+            );
+        }
+
+        DB::table('products')->updateOrInsert(
+            ['slug' => 'f-562024-02klq-vx'],
+            ['slug' => 'f-562024-02klq-vx', 'article' => 'F-562024.02KLQ VX', 'product_table_id' => $kt8]
+        );
+        $pk8 = DB::table('products')->where('slug', 'f-562024-02klq-vx')->value('id');
+
+        foreach ([
+            'd_mm'      => '16.027',
+            'D_mm'      => '60',
+            'B_mm'      => '22.5',
+            'C_mm'      => '22.9',
+            'alpha_deg' => '25',
+            'mass_kg'   => '0.31',
+            'cdyn_kn'   => '22',
+            'co_kn'     => '15.2',
+            'pu_kn'     => '0.64',
+        ] as $key => $value) {
+            $sid = $specId($key);
+            if (!$sid) continue;
+            DB::table('product_specs')->updateOrInsert(
+                ['product_id' => $pk8, 'spec_id' => $sid],
+                ['value' => $value]
+            );
+        }
+
+        DB::table('product_cross_refs')->where('product_id', $pk8)->delete();
+        foreach ([
+            ['value' => '23042700',        'brand' => 'CT-AGRI', 'type' => 'bearing'],
+            ['value' => 'F-562024.02.KLQ', 'brand' => 'INA',     'type' => 'bearing'],
+            ['value' => 'F-562024.02.KLQ', 'brand' => 'NTE',     'type' => 'bearing'],
+            ['value' => 'F-562024.02.KLQ', 'brand' => 'CT-AGRI', 'type' => 'bearing'],
+            ['value' => 'PN 008',          'brand' => 'RBF',     'type' => 'bearing'],
+            ['value' => 'IL20-71/6T-B16',  'brand' => 'FKL',     'type' => 'bearing'],
+        ] as $ref) {
+            DB::table('product_cross_refs')->insert(['product_id' => $pk8, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
+        }
+
+        foreach ([
+            ['type' => 'model_3d', 'path' => '/velnox/models/F-562024-02-KLQ.glb', 'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk8, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
+        foreach (['uk', 'en', 'pl'] as $locale) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk8, 'locale' => $locale, 'field' => 'name'],
+                ['value' => 'F-562024.02KLQ VX']
+            );
+        }
+
     }
 }
