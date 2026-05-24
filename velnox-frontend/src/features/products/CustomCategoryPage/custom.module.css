@@ -20,6 +20,12 @@
   background: var(--color-nav-bg);
 }
 
+@media (max-width: 768px) {
+  .hero {
+    padding: 60px 0;
+  }
+}
+
 .heroOverlay {
   position: absolute;
   top: 0;
@@ -54,21 +60,23 @@
   background: var(--color-accent);
 }
 
-.heroTitle {
-  font-size: clamp(36px, 4.5vw, 64px);
-  font-weight: 900;
-  color: var(--color-nav-text);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  margin-bottom: 24px;
+.heroEyebrowText {
+  font-size: clamp(14px, 1.5vw, 18px);
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.heroDesc {
-  font-size: clamp(16px, 1.2vw, 20px);
-  line-height: 1.6;
-  color: color-mix(in srgb, var(--color-nav-text) 80%, transparent);
-  max-width: 760px;
-  margin-bottom: 40px;
+.heroTitle {
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 900;
+  color: var(--color-nav-text);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
 }
 
 /* CAPABILITIES SECTION */
