@@ -22,6 +22,7 @@ export function CustomForm({ locale }: { locale: string }) {
     // Multi-select States
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<Product[]>([]);
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
@@ -32,14 +33,31 @@ export function CustomForm({ locale }: { locale: string }) {
     const [files, setFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Handle search fetch
+    // Fetch all products once (shown on open without query)
     useEffect(() => {
-        const fetchProducts = async () => {
-            if (searchQuery.length < 1) {
-                setSearchResults([]);
-                return;
-            }
-            setIsSearching(true);
+        const fetchAll = async () => {
+            try {
+                const params = new URLSearchParams({ per_page: '20', locale });
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/v1/products?${params}`,
+                    { headers: { Accept: 'application/json' } }
+                );
+                if (!res.ok) return;
+                const data = await res.json() as { data: Product[] };
+                setAllProducts(data.data || []);
+            } catch { /* silent */ }
+        };
+        fetchAll();
+    }, [locale]);
+
+    // Filtered search
+    useEffect(() => {
+        if (searchQuery.length < 1) {
+            setSearchResults([]);
+            return;
+        }
+        setIsSearching(true);
+        const timer = setTimeout(async () => {
             try {
                 const params = new URLSearchParams({ q: searchQuery, per_page: '12', locale });
                 const res = await fetch(
@@ -55,10 +73,9 @@ export function CustomForm({ locale }: { locale: string }) {
             } finally {
                 setIsSearching(false);
             }
-        };
-        const timer = setTimeout(fetchProducts, 300);
+        }, 300);
         return () => clearTimeout(timer);
-    }, [searchQuery]);
+    }, [searchQuery, locale]);
 
     // Click outside → close dropdown
     useEffect(() => {
@@ -77,14 +94,17 @@ export function CustomForm({ locale }: { locale: string }) {
         setSelectedProducts(prev =>
             isSelected(p) ? prev.filter(s => s.slug !== p.slug) : [...prev, p]
         );
-        // keep dropdown open, clear search so user can search again
-        setSearchQuery('');
+        // Keep dropdown open + keep query so user can keep picking
+        setShowResults(true);
         inputRef.current?.focus();
     };
 
     const removeChip = (slug: string) => {
         setSelectedProducts(prev => prev.filter(s => s.slug !== slug));
     };
+
+    // What to display: filtered results or all products
+    const displayList = searchQuery.length >= 1 ? searchResults : allProducts;
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -191,9 +211,7 @@ export function CustomForm({ locale }: { locale: string }) {
                                                     setSearchQuery(e.target.value);
                                                     setShowResults(true);
                                                 }}
-                                                onFocus={() => {
-                                                    if (searchQuery.length >= 1) setShowResults(true);
-                                                }}
+                                                onFocus={() => setShowResults(true)}
                                             />
                                             {isSearching && (
                                                 <span className={styles.multiSpinner} />
@@ -201,13 +219,13 @@ export function CustomForm({ locale }: { locale: string }) {
                                         </div>
                                     </div>
 
-                                    {/* Dropdown */}
-                                    {showResults && (searchQuery.length >= 1 || isSearching) && (
+                                    {/* Dropdown — always opens on focus */}
+                                    {showResults && (
                                         <div className={styles.comboboxResults}>
                                             {isSearching ? (
                                                 <div className={styles.comboboxLoading}>...</div>
-                                            ) : searchResults.length > 0 ? (
-                                                searchResults.map(p => {
+                                            ) : displayList.length > 0 ? (
+                                                displayList.map(p => {
                                                     const matched = findMatchedOem(p, searchQuery);
                                                     const selected = isSelected(p);
                                                     return (
@@ -221,11 +239,9 @@ export function CustomForm({ locale }: { locale: string }) {
                                                                 }
                                                             }}
                                                         >
-                                                            {/* Checkmark */}
                                                             <span className={styles.comboboxCheck}>
                                                                 {selected && <Check size={14} />}
                                                             </span>
-
                                                             <div className={styles.comboboxItemContent}>
                                                                 <span className={styles.comboboxItemTitle}>{p.article}</span>
                                                                 <span className={styles.comboboxItemSub}>{p.name}</span>
@@ -233,7 +249,6 @@ export function CustomForm({ locale }: { locale: string }) {
                                                                     <span className={styles.comboboxItemOem}>OEM: {matched}</span>
                                                                 )}
                                                             </div>
-
                                                             <button
                                                                 type="button"
                                                                 className={styles.viewProductBtn}
