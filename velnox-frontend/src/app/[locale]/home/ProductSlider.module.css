@@ -53,11 +53,11 @@
 .sliderInner {
     position: relative;
     z-index: 2;
-    max-width: 1400px;
+    max-width: 1600px; /* Maximize width */
     margin: 0 auto;
-    padding: 24px 80px 140px;
+    padding: 24px 40px 140px; /* Minimal side padding */
     display: grid;
-    grid-template-columns: 55fr 45fr;
+    grid-template-columns: 35fr 65fr; /* Force left column to be small (35%), giving 65% to the right side */
     align-items: center;
     gap: 80px;
     min-height: calc(100svh - 64px);

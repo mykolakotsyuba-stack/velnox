@@ -8,6 +8,7 @@ import styles from './ProductSlider.module.css';
 
 interface Slide {
     bgImg: string;
+    bgPos?: string;
     tag: string;
     title: string;
     body: string;
@@ -40,6 +41,7 @@ export function ProductSlider({ locale }: { locale: string }) {
         },
         {
             bgImg: '/velnox/images/bg_agro.png',
+            bgPos: 'right center',
             tag: t('slide2.tag'),
             title: t('slide2.title'),
             body: t('slide2.body'),
@@ -109,7 +111,7 @@ export function ProductSlider({ locale }: { locale: string }) {
             <div className={styles.sliderBg}>
                 {SLIDES.map((s, i) => (
                     <div key={i} className={`${styles.bgLayer} ${i === active ? styles.bgLayerActive : ''}`}>
-                        <Image src={s.bgImg} alt="" fill style={{ objectFit: 'cover' }} quality={60} priority={i === 0} />
+                        <Image src={s.bgImg} alt="" fill style={{ objectFit: 'cover', objectPosition: s.bgPos || 'center' }} quality={60} priority={i === 0} />
                     </div>
                 ))}
                 <div className={styles.bgOverlay} />

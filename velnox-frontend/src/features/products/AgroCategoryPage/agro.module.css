@@ -151,8 +151,8 @@
 .heroBgOverlay {
     position: absolute;
     inset: 0;
-    /* Lighter green-tinted left edge for text readability, fading to transparent on the right */
-    background: linear-gradient(90deg, rgba(12, 34, 22, 0.85) 0%, rgba(12, 34, 22, 0.45) 50%, transparent 85%);
+    /* Removed completely to keep the image clear */
+    background: transparent;
 }
 
 .heroInner {

@@ -138,21 +138,21 @@
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 1440px;
+    max-width: 1640px; /* Wider to push content further left */
     margin: 0 auto;
-    padding: 72px 64px 56px;
+    padding: 72px 40px 56px; /* Less side padding */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* Align text to the left */
     justify-content: center;
-    text-align: center;
-    transform: translateY(-80px);
+    text-align: left; /* Left align text */
+    transform: translateY(-160px); /* Move higher */
 }
 
 .heroContent {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* Align inner content to the left */
     gap: 0;
     opacity: 0;
     transform: translateX(-32px);
@@ -178,7 +178,7 @@
 .heroEyebrow {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Left align */
     gap: 12px;
     font-size: 11px;
     font-weight: 700;
@@ -205,10 +205,10 @@
 }
 
 .heroSubtitle {
-    font-size: clamp(16px, 1.2vw, 20px);
+    font-size: clamp(18px, 1.4vw, 24px); /* Increased size */
     line-height: 1.6;
     color: color-mix(in srgb, var(--color-nav-text) 80%, transparent);
-    max-width: 760px;
+    max-width: 640px; /* Slightly wider to accommodate larger text */
     margin-bottom: 40px;
 }
 
@@ -483,6 +483,307 @@
     margin-bottom: 24px;
 }
 
+/* ── Split table layout: crosses left + schema right, specs below ── */
+.tableCardHeader {
+    background: var(--color-accent);
+    color: #fff;
+    margin: -32px -32px 20px;
+    padding: 16px 32px;
+    border-radius: var(--radius-block) var(--radius-block) 0 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tableCardHeader h3 {
+    color: #fff !important;
+    margin: 0 !important;
+    font-size: 20px;
+}
+
+.desktopSplit {
+    display: block;
+}
+
+.mobileCombined {
+    display: none;
+}
+
+.tableSplitLayout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.crossesPanel {
+    flex: 0 0 480px;
+    width: 480px;
+}
+
+.crossNav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.crossNavBtn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    transition: all 0.15s;
+}
+
+.crossNavBtn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.crossSelector {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+}
+
+.crossSelectorBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 8px 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-text);
+    transition: border-color 0.2s;
+    text-align: left;
+}
+
+.crossSelectorBtn:hover {
+    border-color: var(--color-accent);
+}
+
+.crossSearchIcon {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+}
+
+.crossChevron {
+    flex-shrink: 0;
+    margin-left: auto;
+    color: var(--color-text-muted);
+    transition: transform 0.2s;
+}
+
+.crossChevronOpen {
+    transform: rotate(180deg);
+}
+
+.crossDropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    z-index: 100;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+}
+
+.crossDropdownSearch {
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 13px;
+    background: transparent;
+    color: var(--color-text);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.crossDropdownList {
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.crossDropdownItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 6px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: left;
+    transition: background 0.12s;
+}
+
+.crossDropdownItem:hover {
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+}
+
+.crossDropdownItemActive {
+    color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+}
+
+.crossDropdownEmpty {
+    padding: 12px;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 12px;
+}
+
+.crossFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.crossFilterCheck {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    user-select: none;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.crossFilterCheck input[type="checkbox"] {
+    accent-color: var(--color-accent);
+    cursor: pointer;
+}
+
+.crossDetailBtn {
+    padding: 6px 14px;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+    display: inline-flex;
+    align-items: center;
+}
+
+.crossDetailBtn:hover {
+    opacity: 0.85;
+    color: #fff;
+}
+
+.crossShowAllBtn {
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px dashed var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.crossShowAllBtn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.crossAllName {
+    font-weight: 700;
+    vertical-align: top;
+    border-right: 1px solid var(--color-border);
+}
+
+.crossTable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.crossTable thead th {
+    background: var(--color-accent);
+    color: #fff;
+    padding: 10px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.crossTable td {
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--color-text-muted);
+    border-bottom: 1px solid var(--color-border);
+    line-height: 1.5;
+}
+
+.crossTable tr:last-child td {
+    border-bottom: none;
+}
+
+.crossTable tr:hover td {
+    background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+}
+
+.schemaPanel {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.schemaPanel > div {
+    margin-bottom: 0;
+}
+
+.specsPanel {
+    margin-top: 0;
+}
+
+.specsPanel table thead th {
+    background: var(--color-accent);
+    color: #fff;
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.specsPanel table thead th button {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.specsPanel table thead th button:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.15);
+}
+
 /* Diagram styling */
 .tableDiagramContainer {
     margin-bottom: 32px;
@@ -662,6 +963,30 @@
     .reqBtn {
         width: 100%;
         padding: 12px;
+    }
+
+    .desktopSplit {
+        display: none;
+    }
+
+    .mobileCombined {
+        display: block;
+    }
+
+    .tableCardHeader {
+        margin: -20px -20px 16px;
+        padding: 14px 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .tableCardHeader {
+        margin: -16px -16px 14px;
+        padding: 12px 16px;
+    }
+
+    .tableCardHeader h3 {
+        font-size: 16px !important;
     }
 }
 
@@ -2909,7 +3234,7 @@
 .heroBgOverlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(12, 34, 22, 0.85) 0%, rgba(12, 34, 22, 0.45) 50%, transparent 85%);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.1) 45%, transparent 100%);
 }
 
 /* ── Scroll Hint ── */

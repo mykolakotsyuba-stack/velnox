@@ -572,7 +572,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             {/* ── HERO ── */}
             <section className={styles.hero} ref={heroRef.ref as React.Ref<HTMLElement>}>
                 <div className={styles.heroBgWrapper}>
-                    <Image src="/velnox/images/agro/agro_hero_collage.png" alt="VELNOX Agro Bearings" fill
+                    <Image src="/velnox/images/products/agro/hero_bg.jpg" alt="VELNOX Agro Bearings" fill
                         className={styles.heroBgImg} quality={90} priority />
                     <div className={styles.heroBgOverlay} />
                 </div>
@@ -590,6 +590,13 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         <p className={styles.heroLead}>{t('agroPage.hero.subtitle')}</p>
                         <p className={styles.heroLead}>{t('agroPage.hero.desc')}</p>
                     </div>
+                </div>
+
+                {/* Scroll Down Hint */}
+                <div className={styles.scrollHint} onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24">
+                        <path d="M12 5v14M19 12l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                 </div>
             </section>
 

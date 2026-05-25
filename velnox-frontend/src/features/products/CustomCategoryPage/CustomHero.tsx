@@ -19,8 +19,7 @@ export function CustomHero() {
             <div className={styles.heroOverlay} />
             <div className={styles.container}>
                 <div className={styles.heroContent}>
-                    <p className={styles.heroEyebrowText}>{t('title')}</p>
-                    <h1 className={styles.heroTitle}>{t('subtitle')}</h1>
+                    <h1 className={styles.heroTitle}>{t('title')}</h1>
                 </div>
             </div>
         </section>

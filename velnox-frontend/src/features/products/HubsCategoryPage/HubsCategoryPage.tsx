@@ -106,78 +106,234 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
     );
 }
 
-/* ─────────────────────────────────────────────────────
-   Column structure — keys only, labels come from API spec_labels + t()
-   Rule: NEVER hardcode label strings here.
-   - spec keys (hub_J_mm, mass_kg …) → sl['hub_J_mm'] from API
-   - non-spec keys (part_number, oem) → t('hubsPage.cols.*') from messages
-────────────────────────────────────────────────────── */
+/* ─── Dynamic column builder from API spec_labels ─── */
 type SlMap = Record<string, string>;
+const CROSS_REF_KEYS = new Set(['bearing_part', 'bearing_brand', 'oem']);
 
-function buildT1Cols(sl: SlMap, partLabel: string, oemLabel: string): ColDef[] {
-    return [
-        { key: 'part_number',    label: partLabel,                   width: '110px' },
-        { key: 'oem',            label: oemLabel,                    width: '120px' },
-        { key: 'hub_J_mm',       label: sl['hub_J_mm']       || 'J (mm)',   hasFilter: true },
-        { key: 'hub_D_mm',       label: sl['hub_D_mm']       || 'D (mm)',   hasFilter: true },
-        { key: 'hub_D1_mm',      label: sl['hub_D1_mm']      || 'D1 (mm)',  hasFilter: true },
-        { key: 'hub_d_mm',       label: sl['hub_d_mm']       || 'd (mm)',   hasFilter: true },
-        { key: 'hub_C_mm',       label: sl['hub_C_mm']       || 'C (mm)',   hasFilter: true },
-        { key: 'hub_hole_thread',label: sl['hub_hole_thread'] || 'H/T',     hasFilter: true },
-        { key: 'hub_G',          label: sl['hub_G']          || 'G',        hasFilter: true },
-        { key: 'hub_L_mm',       label: sl['hub_L_mm']       || 'L (mm)',   hasFilter: true },
-        { key: 'hub_L1_mm',      label: sl['hub_L1_mm']      || 'L1 (mm)', hasFilter: true },
-        { key: 'hub_F_mm',       label: sl['hub_F_mm']       || 'F (mm)',   hasFilter: true },
-        { key: 'mass_kg',        label: sl['mass_kg']        || 'Mass (kg)',hasFilter: true },
-        { key: 'cdyn_kn',        label: sl['cdyn_kn']        || 'Cdyn (kN)',hasFilter: true },
-        { key: 'co_kn',          label: sl['co_kn']          || 'Co (kN)',  hasFilter: true },
-        { key: 'pu_kn',          label: sl['pu_kn']          || 'Pu (kN)', hasFilter: true },
+type CrossRefMode = 'none' | 'oem-only' | 'full';
+
+function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: string, oemLabel: string, mode: CrossRefMode): ColDef[] {
+    const base: ColDef[] = [
+        { key: 'part_number', label: partLabel, width: '110px' },
     ];
+    if (mode === 'oem-only') {
+        base.push({ key: 'oem', label: oemLabel, width: '120px', hasFilter: false });
+    } else if (mode === 'full') {
+        base.push(
+            { key: 'bearing_part',  label: 'Позначення підшипника', hasFilter: false },
+            { key: 'bearing_brand', label: 'Бренд',                 hasFilter: false },
+            { key: 'oem',           label: 'OEM',                   hasFilter: false },
+        );
+    }
+    const specKeys = specColumns?.length ? specColumns : Object.keys(sl);
+    const specCols: ColDef[] = specKeys.map(key => ({
+        key,
+        label: sl[key] || key,
+        hasFilter: true,
+    }));
+    return [...base, ...specCols];
 }
 
-function buildT2Cols(sl: SlMap, partLabel: string): ColDef[] {
-    return [
-        { key: 'part_number',    label: partLabel,                   width: '110px' },
-        { key: 'hub_J_mm',       label: sl['hub_J_mm']       || 'J (mm)',   hasFilter: true },
-        { key: 'hub_D_mm',       label: sl['hub_D_mm']       || 'D (mm)',   hasFilter: true },
-        { key: 'hub_hole_thread',label: sl['hub_hole_thread'] || 'H/T',     hasFilter: true },
-        { key: 'hub_D1_mm',      label: sl['hub_D1_mm']      || 'D1 (mm)',  hasFilter: true },
-        { key: 'hub_C_mm',       label: sl['hub_C_mm']       || 'C (mm)',   hasFilter: true },
-        { key: 'hub_M_thread',   label: sl['hub_M_thread']   || 'M',        hasFilter: true },
-        { key: 'hub_L_mm',       label: sl['hub_L_mm']       || 'L (mm)',   hasFilter: true },
-        { key: 'hub_L1_mm',      label: sl['hub_L1_mm']      || 'L1 (mm)', hasFilter: true },
-        { key: 'hub_E_mm',       label: sl['hub_E_mm']       || 'E (mm)',   hasFilter: true },
-        { key: 'hub_F_mm',       label: sl['hub_F_mm']       || 'F (mm)',   hasFilter: true },
-        { key: 'mass_kg',        label: sl['mass_kg']        || 'Mass (kg)',hasFilter: true },
-        { key: 'cdyn_kn',        label: sl['cdyn_kn']        || 'Cdyn (kN)',hasFilter: true },
-        { key: 'co_kn',          label: sl['co_kn']          || 'Co (kN)',  hasFilter: true },
-        { key: 'pu_kn',          label: sl['pu_kn']          || 'Pu (kN)', hasFilter: true },
-    ];
+/* ─── CrossRefPanel — searchable selector + cross-ref table ─── */
+function CrossRefPanel({
+    rows,
+    selectedIdx,
+    onSelect,
+    filterSpecs,
+    onFilterChange,
+    locale,
+    categorySlug,
+}: {
+    rows: Record<string, any>[];
+    selectedIdx: number;
+    onSelect: (idx: number) => void;
+    filterSpecs: boolean;
+    onFilterChange: (v: boolean) => void;
+    locale: Locale;
+    categorySlug: string;
+}) {
+    const [open, setOpen] = useState(false);
+    const [query, setQuery] = useState('');
+    const [showAll, setShowAll] = useState(false);
+    const wrapRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!open) return;
+        const close = (e: MouseEvent) => {
+            if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
+        };
+        document.addEventListener('mousedown', close);
+        return () => document.removeEventListener('mousedown', close);
+    }, [open]);
+
+    if (!rows.length) return null;
+    const idx = Math.min(selectedIdx, rows.length - 1);
+    const selectedRow = rows[idx];
+
+    if (showAll) {
+        return (
+            <div className={styles.crossesPanel}>
+                <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(false)}>
+                    ← Обрати один
+                </button>
+                <table className={styles.crossTable}>
+                    <thead>
+                        <tr>
+                            <th>Velnox</th>
+                            <th>Підшипник</th>
+                            <th>Бренд</th>
+                            <th>Аналоги</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows.flatMap((row, ri) => {
+                            const p = (row.bearing_part || '').split('\n').filter(Boolean);
+                            const b = (row.bearing_brand || '').split('\n').filter(Boolean);
+                            const o = (row.oem || '').split('\n').filter(Boolean);
+                            const len = Math.max(p.length, o.length, 1);
+                            return Array.from({ length: len }, (_, i) => (
+                                <tr key={`${ri}-${i}`}>
+                                    {i === 0 && (
+                                        <td rowSpan={len} className={styles.crossAllName}>
+                                            <Link href={`/${locale}/products/${categorySlug}/${articleToSlug(row.part_number)}`} className={ptStyles.designationLink}>
+                                                {row.part_number}
+                                            </Link>
+                                            {row.has_model_3d && <span className={styles.badge3d}>3D</span>}
+                                        </td>
+                                    )}
+                                    <td>{p[i] || ''}</td>
+                                    <td>{b[i] || ''}</td>
+                                    <td>{o[i] || ''}</td>
+                                </tr>
+                            ));
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+
+    const parts  = (selectedRow.bearing_part  || '').split('\n').filter(Boolean);
+    const brands = (selectedRow.bearing_brand || '').split('\n').filter(Boolean);
+    const oems   = (selectedRow.oem           || '').split('\n').filter(Boolean);
+    const maxLen = Math.max(parts.length, oems.length, 1);
+
+    const q = query.toLowerCase();
+    const matchingRows = query
+        ? rows.filter(r => (r.part_number || '').toLowerCase().includes(q))
+        : rows;
+
+    return (
+        <div className={styles.crossesPanel}>
+            <div className={styles.crossNav}>
+                <button type="button" className={styles.crossNavBtn}
+                    onClick={() => onSelect(idx > 0 ? idx - 1 : rows.length - 1)} title="Попередній">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                </button>
+
+                <div className={styles.crossSelector} ref={wrapRef}>
+                    <button type="button" className={styles.crossSelectorBtn} onClick={() => setOpen(v => !v)}>
+                        <svg className={styles.crossSearchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                            <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <span>{selectedRow.part_number}</span>
+                        {selectedRow.has_model_3d && <span className={styles.badge3d}>3D</span>}
+                        <svg className={`${styles.crossChevron}${open ? ` ${styles.crossChevronOpen}` : ''}`}
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </button>
+                    {open && (
+                        <div className={styles.crossDropdown}>
+                            <input type="text" className={styles.crossDropdownSearch} placeholder="Пошук..."
+                                value={query} onChange={e => setQuery(e.target.value)} autoFocus />
+                            <div className={styles.crossDropdownList}>
+                                {matchingRows.map(row => {
+                                    const origIdx = rows.indexOf(row);
+                                    return (
+                                        <button key={origIdx} type="button"
+                                            className={`${styles.crossDropdownItem}${idx === origIdx ? ` ${styles.crossDropdownItemActive}` : ''}`}
+                                            onClick={() => { onSelect(origIdx); setOpen(false); setQuery(''); }}>
+                                            {row.part_number}
+                                            {row.has_model_3d && <span className={styles.badge3d}>3D</span>}
+                                        </button>
+                                    );
+                                })}
+                                {matchingRows.length === 0 && (
+                                    <div className={styles.crossDropdownEmpty}>Не знайдено</div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <button type="button" className={styles.crossNavBtn}
+                    onClick={() => onSelect(idx < rows.length - 1 ? idx + 1 : 0)} title="Наступний">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14">
+                        <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                </button>
+            </div>
+
+            <table className={styles.crossTable}>
+                <thead>
+                    <tr>
+                        <th>Позначення підшипника</th>
+                        <th>Бренд</th>
+                        <th>Перехресні аналоги</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Array.from({ length: maxLen }, (_, i) => (
+                        <tr key={i}>
+                            <td>{parts[i] || ''}</td>
+                            <td>{brands[i] || ''}</td>
+                            <td>{oems[i] || ''}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            <div className={styles.crossFooter}>
+                <label className={styles.crossFilterCheck}>
+                    <input type="checkbox" checked={filterSpecs}
+                        onChange={e => onFilterChange(e.target.checked)} />
+                    Показати тільки обраний
+                </label>
+                <Link
+                    href={`/${locale}/products/${categorySlug}/${articleToSlug(selectedRow.part_number)}`}
+                    className={styles.crossDetailBtn}
+                >
+                    Показати детальніше
+                </Link>
+                <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(true)}>
+                    Показати всі
+                </button>
+            </div>
+        </div>
+    );
 }
 
-function buildT3Cols(sl: SlMap, partLabel: string): ColDef[] {
-    return [
-        { key: 'part_number',    label: partLabel,                              width: '110px' },
-        { key: 'bearing_part',   label: 'Позначення підшипника',                hasFilter: false },
-        { key: 'bearing_brand',  label: 'Бренд',                                hasFilter: false },
-        { key: 'oem',            label: 'OEM',                                  hasFilter: false },
-        { key: 'hub_J_mm',       label: sl['hub_J_mm']       || 'J (mm)',       hasFilter: true },
-        { key: 'hub_D_mm',       label: sl['hub_D_mm']       || 'D (mm)',   hasFilter: true },
-        { key: 'hub_D1_mm',      label: sl['hub_D1_mm']      || 'D1 (mm)',  hasFilter: true },
-        { key: 'hub_d_mm',       label: sl['hub_d_mm']       || 'd (mm)',   hasFilter: true },
-        { key: 'hub_hole_thread',label: sl['hub_hole_thread'] || 'H/T',     hasFilter: true },
-        { key: 'hub_L_mm',       label: sl['hub_L_mm']       || 'L (mm)',   hasFilter: true },
-        { key: 'hub_B_mm',       label: sl['hub_B_mm']       || 'B (mm)',   hasFilter: true },
-        { key: 'mass_kg',        label: sl['mass_kg']        || 'Mass (kg)',hasFilter: true },
-        { key: 'cdyn_kn',        label: sl['cdyn_kn']        || 'Cdyn (kN)',hasFilter: true },
-        { key: 'co_kn',          label: sl['co_kn']          || 'Co (kN)',  hasFilter: true },
-        { key: 'pu_kn',          label: sl['pu_kn']          || 'Pu (kN)', hasFilter: true },
-    ];
+/* ─── Table state ─── */
+interface TableState {
+    data: Record<string, any>[];
+    specLabels: SlMap;
+    specColumns: string[] | undefined;
+    schema: string | null;
+    name: string;
+    selectedIdx: number;
+    syncFilter: boolean;
 }
 
-/* ─────────────────────────────────────────────────────
-   Main Page Component
-────────────────────────────────────────────────────── */
+const TABLE_IDS = [1, 2, 3] as const;
+
+function emptyTableState(): TableState {
+    return { data: [], specLabels: {}, specColumns: undefined, schema: null, name: '', selectedIdx: 0, syncFilter: false };
+}
+
+/* ─── Main Page Component ─── */
 export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
     const t = useTranslations();
     const heroRef = useInView(0.12);
@@ -190,19 +346,11 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
     const [modalProduct, setModalProduct] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
 
-    const [table1Data, setTable1Data] = useState<any[]>([]);
-    const [table2Data, setTable2Data] = useState<any[]>([]);
-    const [table3Data, setTable3Data] = useState<any[]>([]);
-
-    /* spec_labels from API — keys are spec_definitions.key, values are localized strings */
-    const [sl1, setSl1] = useState<SlMap>({});
-    const [sl2, setSl2] = useState<SlMap>({});
-    const [sl3, setSl3] = useState<SlMap>({});
-
-    /* schema image URLs from product_assets in DB */
-    const [schema1, setSchema1] = useState<string | null>(null);
-    const [schema2, setSchema2] = useState<string | null>(null);
-    const [schema3, setSchema3] = useState<string | null>(null);
+    const [tables, setTables] = useState<Record<number, TableState>>(() => {
+        const init: Record<number, TableState> = {};
+        TABLE_IDS.forEach(id => { init[id] = emptyTableState(); });
+        return init;
+    });
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
 
@@ -210,11 +358,9 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         const handleScroll = () => {
             if (!searchHeaderRef.current) return;
             const elementOffsetTop = searchHeaderRef.current.offsetTop;
-            if (window.scrollY > elementOffsetTop - 100) {
-                searchHeaderRef.current.classList.add(styles.isSticky);
-            } else {
-                searchHeaderRef.current.classList.remove(styles.isSticky);
-            }
+            searchHeaderRef.current.classList.toggle(
+                styles.isSticky, window.scrollY > elementOffsetTop - 100
+            );
         };
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
@@ -225,25 +371,15 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         const fetchTables = async () => {
             try {
                 const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-                const [res1, res2, res3] = await Promise.all([
-                    fetch(`${base}/v1/product-tables/hubs-t1?locale=${locale}`),
-                    fetch(`${base}/v1/product-tables/hubs-t2?locale=${locale}`),
-                    fetch(`${base}/v1/product-tables/hubs-t3?locale=${locale}`),
-                ]);
-                const safeJson = async (res: Response) => res.ok ? res.json() : { products: [], table: {} };
-                const [data1, data2, data3] = await Promise.all([safeJson(res1), safeJson(res2), safeJson(res3)]);
+                const responses = await Promise.all(
+                    TABLE_IDS.map(n =>
+                        fetch(`${base}/v1/product-tables/hubs-t${n}?locale=${locale}`)
+                    )
+                );
+                const safeJson = async (res: Response) =>
+                    res.ok ? res.json() : { products: [], table: {} };
+                const allData = await Promise.all(responses.map(safeJson));
 
-                /* spec_labels: key = spec_definitions.key, value = localized label from DB */
-                if (data1.table?.spec_labels) setSl1(data1.table.spec_labels);
-                if (data2.table?.spec_labels) setSl2(data2.table.spec_labels);
-                if (data3.table?.spec_labels) setSl3(data3.table.spec_labels);
-
-                /* schema image from product_assets (type=schema_png) in DB */
-                if (data1.table?.schema_src) setSchema1(data1.table.schema_src);
-                if (data2.table?.schema_src) setSchema2(data2.table.schema_src);
-                if (data3.table?.schema_src) setSchema3(data3.table.schema_src);
-
-                /* Row keys = spec_definitions.key — matches buildTxCols above */
                 const mapRow = (p: any) => {
                     const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing');
                     const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
@@ -257,9 +393,20 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                     };
                 };
 
-                setTable1Data(Array.isArray(data1?.products) ? data1.products.map(mapRow).filter((r: any) => r.part_number) : []);
-                setTable2Data(Array.isArray(data2?.products) ? data2.products.map(mapRow) : []);
-                setTable3Data(Array.isArray(data3?.products) ? data3.products.map(mapRow) : []);
+                const newTables: Record<number, TableState> = {};
+                TABLE_IDS.forEach((id, i) => {
+                    const d = allData[i];
+                    newTables[id] = {
+                        data:        Array.isArray(d?.products) ? d.products.map(mapRow) : [],
+                        specLabels:  d?.table?.spec_labels ?? {},
+                        specColumns: d?.table?.spec_columns,
+                        schema:      d?.table?.schema_src ?? null,
+                        name:        d?.table?.name ?? '',
+                        selectedIdx: 0,
+                        syncFilter:  false,
+                    };
+                });
+                setTables(newTables);
             } catch (err) {
                 console.error('Error fetching hub tables:', err);
             }
@@ -267,34 +414,47 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         fetchTables();
     }, [locale]);
 
-    /* Global search pre-filter (ProductTable handles column filters internally) */
-    const search = (rows: any[]) => {
+    const search = useCallback((rows: any[]) => {
         if (!searchQuery) return rows;
         const q = searchQuery.toLowerCase();
-        return rows.filter(row => Object.values(row).some(v => v && String(v).toLowerCase().includes(q)));
-    };
+        return rows.filter(row =>
+            Object.values(row).some(v => v && String(v).toLowerCase().includes(q))
+        );
+    }, [searchQuery]);
 
-    const searchedT1 = useMemo(() => search(table1Data), [table1Data, searchQuery]);
-    const searchedT2 = useMemo(() => search(table2Data), [table2Data, searchQuery]);
-    const searchedT3 = useMemo(() => search(table3Data), [table3Data, searchQuery]);
-
-    /* Non-spec column labels from messages (locale-aware) */
     const partLabel = t('hubsPage.cols.part_number');
     const oemLabel  = t('hubsPage.cols.oem');
 
-    /* Column definitions built from API spec_labels — no hardcoded strings */
-    const colsT1 = useMemo(() => buildT1Cols(sl1, partLabel, oemLabel), [sl1, partLabel, oemLabel]);
-    const colsT2 = useMemo(() => buildT2Cols(sl2, partLabel), [sl2, partLabel]);
-    const colsT3 = useMemo(() => buildT3Cols(sl3, partLabel), [sl3, partLabel]);
+    const CROSS_REF_MODES: Record<number, CrossRefMode> = { 1: 'full', 2: 'full', 3: 'full' };
 
-    /* Shared cell renderer — handles part_number link and oem multi-line */
+    const tableConfigs = useMemo(() => {
+        return TABLE_IDS.map(id => {
+            const tbl = tables[id];
+            const mode = CROSS_REF_MODES[id] ?? 'none';
+            const searched = search(tbl.data);
+            const cols = buildCols(tbl.specLabels, tbl.specColumns, partLabel, oemLabel, mode);
+            const specCols = cols.filter(c => !CROSS_REF_KEYS.has(c.key));
+            const clampIdx = Math.min(tbl.selectedIdx, Math.max(0, searched.length - 1));
+            const specsRows = tbl.syncFilter && searched.length ? [searched[clampIdx]] : searched;
+            return { id, tbl, searched, cols, specCols, specsRows, mode };
+        });
+    }, [tables, search, partLabel, oemLabel]);
+
+    const setSelection = useCallback((id: number, idx: number) => {
+        setTables(prev => ({ ...prev, [id]: { ...prev[id], selectedIdx: idx } }));
+    }, []);
+
+    const setSyncFilter = useCallback((id: number, v: boolean) => {
+        setTables(prev => ({ ...prev, [id]: { ...prev[id], syncFilter: v } }));
+    }, []);
+
     const renderCell = useCallback((col: string, row: any) => {
         if (col === 'part_number') {
             const slug = articleToSlug(row.part_number || '');
             return (
                 <Link href={`/${locale}/products/hubs/${slug}`} className={ptStyles.designationLink}>
                     {row.part_number}
-                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
+                    {row.has_model_3d && <span className={styles.badge3d}>3D</span>}
                 </Link>
             );
         }
@@ -309,6 +469,55 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
         </button>
     ), [t]);
 
+    const renderTableSection = (config: typeof tableConfigs[number]) => {
+        const { id, tbl, searched, cols, specCols, specsRows, mode } = config;
+        if (tbl.data.length === 0 && !tbl.name) return null;
+
+        return (
+            <section key={id} className={styles.tablesSection}>
+                <div className={styles.tableSectionContainer}>
+                    <div className={styles.tableBlock}>
+                        <div className={styles.tableCardHeader}>
+                            <h3>{tbl.name || t(`hubsPage.block2.table${id}.title`)}</h3>
+                        </div>
+
+                        <div className={styles.desktopSplit}>
+                            <div className={styles.tableSplitLayout}>
+                                <CrossRefPanel
+                                    rows={searched}
+                                    selectedIdx={tbl.selectedIdx}
+                                    onSelect={(idx) => setSelection(id, idx)}
+                                    filterSpecs={tbl.syncFilter}
+                                    onFilterChange={(v) => setSyncFilter(id, v)}
+                                    locale={locale}
+                                    categorySlug="hubs"
+                                />
+                                <div className={styles.schemaPanel}>
+                                    {tbl.schema && (
+                                        <ProductSchema src={tbl.schema} alt={`Hubs table ${id} — технічна схема`} />
+                                    )}
+                                </div>
+                            </div>
+                            <div className={styles.specsPanel}>
+                                <ProductTable columns={specCols} rows={specsRows} renderCell={renderCell} actionCell={reqBtn} />
+                            </div>
+                        </div>
+                        <div className={styles.mobileCombined}>
+                            {tbl.schema && (
+                                <ProductSchema src={tbl.schema} alt={`Hubs table ${id} — технічна схема`} />
+                            )}
+                            <ProductTable columns={cols} rows={searched} renderCell={renderCell} actionCell={reqBtn} />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    };
+
+    const t1Config = tableConfigs.find(c => c.id === 1)!;
+    const t2Config = tableConfigs.find(c => c.id === 2)!;
+    const t3Config = tableConfigs.find(c => c.id === 3)!;
+
     return (
         <main className={styles.main}>
             {modalProduct !== null && (
@@ -316,30 +525,32 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             )}
 
             {/* HERO */}
-            <section
-                className={`${styles.hero} ${heroRef.inView ? styles.heroVisible : ''}`}
-                ref={heroRef.ref as React.Ref<HTMLElement>}
-            >
-                <div className={styles.heroContainer}>
-                    <div className={styles.heroContent}>
+            <section className={styles.hero} ref={heroRef.ref as React.Ref<HTMLElement>}>
+                <div className={styles.heroBgWrapper}>
+                    <Image src="/velnox/images/products/hubs/hero_bg.jpg" alt="VELNOX Bearing Hubs" fill
+                        className={styles.heroBgImg} quality={90} priority />
+                    <div className={styles.heroBgOverlay} />
+                </div>
+
+                <div className={styles.heroInner}>
+                    <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
                         <div className={styles.heroEyebrow}>
                             <span className={styles.eyebrowLine}></span>
                             VELNOX BEARING HUBS
+                        </div>
+                        <div className={styles.heroLogoWrapper}>
+                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
                         </div>
                         <h1 className={styles.heroTitle}>{t('hubsPage.hero.title')}</h1>
                         <p className={styles.heroSubtitle}>{t('hubsPage.hero.subtitle')}</p>
                         <p className={styles.heroDescription}>{t('hubsPage.hero.desc')}</p>
                     </div>
-                    <div className={styles.heroImageWrap}>
-                        <Image
-                            src="/images/hubs/hero-hub.png"
-                            alt="VELNOX Bearing Hub"
-                            width={520}
-                            height={520}
-                            priority
-                            className={styles.heroImage}
-                        />
-                    </div>
+                </div>
+
+                <div className={styles.scrollHint} onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24">
+                        <path d="M12 5v14M19 12l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                 </div>
             </section>
 
@@ -367,7 +578,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
             {/* APP BLOCK 1 — DISK HARROWS */}
             <section ref={app1Ref.ref} className={`${styles.blueprintBlock} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
-                <Image src="/images/hubs/horsch-field.png" alt="" fill priority style={{ objectFit: 'cover', objectPosition: '45% 62%' }} />
+                <Image src="/velnox/images/hubs/horsch-field.png" alt="" fill priority style={{ objectFit: 'cover', objectPosition: '45% 62%' }} />
                 <div className={styles.blueprintDarkOverlay} />
                 <div className={styles.blueprintLayout}>
                     <div className={styles.blueprintText}>
@@ -414,28 +625,12 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 </div>
             </div>
 
-            {/* ── TABLE 1 — 28071300 VX (Disk Harrows / HORSCH) ── */}
-            <section className={styles.tablesSection}>
-                <div className={styles.tableSectionContainer}>
-                    <div className={styles.tableBlock}>
-                        <h3>{t('hubsPage.block2.table1.title')}</h3>
-                        <p className={styles.tableDesc}>{t('hubsPage.block2.table1.desc')}</p>
-                        {schema1 && (
-                            <ProductSchema src={schema1} alt="28071300 VX — технічна схема" />
-                        )}
-                        <ProductTable
-                            columns={colsT1}
-                            rows={searchedT1}
-                            renderCell={renderCell}
-                            actionCell={reqBtn}
-                        />
-                    </div>
-                </div>
-            </section>
+            {/* TABLE 1 — 28071300 VX (Disk Harrows / HORSCH) */}
+            {renderTableSection(t1Config)}
 
             {/* APP BLOCK 2 — CUTTING NODES */}
             <section ref={app2Ref.ref} className={`${styles.blueprintBlock} ${app2Ref.inView ? styles.blueprintVisible : ''}`}>
-                <Image src="/images/hubs/bednar-field.png" alt="" fill priority={false} style={{ objectFit: 'cover', objectPosition: '30% 50%' }} />
+                <Image src="/velnox/images/hubs/bednar-field.png" alt="" fill priority={false} style={{ objectFit: 'cover', objectPosition: '30% 50%' }} />
                 <div className={styles.blueprintDarkOverlayRight} />
                 <div className={`${styles.blueprintLayout} ${styles.blueprintLayoutRight}`}>
                     <div className={styles.blueprintSpacer} />
@@ -460,28 +655,12 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── TABLE 2 — BAA-0004 VX (Cutting Nodes) ── */}
-            <section className={styles.tablesSection}>
-                <div className={styles.tableSectionContainer}>
-                    <div className={styles.tableBlock}>
-                        <h3>{t('hubsPage.block2.table2.title')}</h3>
-                        <p className={styles.tableDesc}>{t('hubsPage.block2.table2.desc')}</p>
-                        {schema2 && (
-                            <ProductSchema src={schema2} alt="BAA-0004 VX — технічна схема" />
-                        )}
-                        <ProductTable
-                            columns={colsT2}
-                            rows={searchedT2}
-                            renderCell={renderCell}
-                            actionCell={reqBtn}
-                        />
-                    </div>
-                </div>
-            </section>
+            {/* TABLE 2 — BAA-0004 VX (Cutting Nodes) */}
+            {renderTableSection(t2Config)}
 
             {/* APP BLOCK 3 — SEEDERS */}
             <section ref={app3Ref.ref} className={`${styles.blueprintBlock} ${app3Ref.inView ? styles.blueprintVisible : ''}`}>
-                <Image src="/images/hubs/seeder-field.png" alt="" fill priority={false} style={{ objectFit: 'cover', objectPosition: 'center 60%' }} />
+                <Image src="/velnox/images/hubs/seeder-field.png" alt="" fill priority={false} style={{ objectFit: 'cover', objectPosition: 'center 60%' }} />
                 <div className={styles.blueprintDarkOverlay} />
                 <div className={styles.blueprintLayout}>
                     <div className={styles.blueprintText}>
@@ -502,24 +681,8 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
                 </div>
             </section>
 
-            {/* ── TABLE 3 — PL-140 VX (Seeders) ── */}
-            <section className={styles.tablesSection}>
-                <div className={styles.tableSectionContainer}>
-                    <div className={styles.tableBlock}>
-                        <h3>{t('hubsPage.block2.table3.title')}</h3>
-                        <p className={styles.tableDesc}>{t('hubsPage.block2.table3.desc')}</p>
-                        {schema3 && (
-                            <ProductSchema src={schema3} alt="PL-140 VX — технічна схема" />
-                        )}
-                        <ProductTable
-                            columns={colsT3}
-                            rows={searchedT3}
-                            renderCell={renderCell}
-                            actionCell={reqBtn}
-                        />
-                    </div>
-                </div>
-            </section>
+            {/* TABLE 3 — PL-140 VX (Seeders) */}
+            {renderTableSection(t3Config)}
 
             {/* CTA */}
             <section className={styles.cta} ref={ctaRef.ref}>

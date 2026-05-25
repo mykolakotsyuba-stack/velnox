@@ -2815,7 +2815,7 @@ class DatabaseSeeder extends Seeder
                 'category_id'      => $catId('kit'),
                 'spec_columns'     => json_encode(['cdyn_kn','co_kn','D_mm','d_mm','C_mm','mass_kg','B_mm','alpha_deg']),
                 'highlight_config' => json_encode((object)[]),
-                'schema_viewbox'   => '',
+                'schema_viewbox'   => '-10 -10 2262 2574',
                 'sort_order'       => 4,
             ]
         );
@@ -2826,6 +2826,16 @@ class DatabaseSeeder extends Seeder
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product_table', 'entity_id' => $kt4, 'locale' => $locale, 'field' => 'name'],
                 ['value' => $name]
+            );
+        }
+
+        foreach ([
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/kit-t4/velnox-5206kpp3-vx-schema.webp', 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/kit-t4/schema.svg',                      'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt4, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
             );
         }
 
@@ -2871,7 +2881,12 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ([
-            ['type' => 'model_3d', 'path' => '/velnox/models/5206-KPP3.glb', 'sort_order' => 0],
+            ['type' => 'model_3d', 'path' => '/velnox/models/5206-KPP3.glb',                                 'sort_order' => 0],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t4/velnox-5206kpp3-vx.webp',           'sort_order' => 0],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t4/velnox-5206kpp3-vx-photo-1.webp',   'sort_order' => 1],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t4/velnox-5206kpp3-vx-drawing-1.webp', 'sort_order' => 2],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t4/velnox-5206kpp3-vx-drawing-2.webp', 'sort_order' => 3],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t4/velnox-5206kpp3-vx-drawing-3.webp', 'sort_order' => 4],
         ] as $asset) {
             DB::table('product_assets')->updateOrInsert(
                 ['entity_type' => 'product', 'entity_id' => $pk4, 'type' => $asset['type'], 'path' => $asset['path']],
@@ -2907,6 +2922,15 @@ class DatabaseSeeder extends Seeder
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product_table', 'entity_id' => $kt5, 'locale' => $locale, 'field' => 'name'],
                 ['value' => $name]
+            );
+        }
+
+        foreach ([
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/kit-t5/velnox-885154b-vx-schema.webp', 'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt5, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
             );
         }
 
@@ -2956,7 +2980,14 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ([
-            ['type' => 'model_3d', 'path' => '/velnox/models/885154B.glb', 'sort_order' => 0],
+            ['type' => 'model_3d', 'path' => '/velnox/models/885154B.glb',                                    'sort_order' => 0],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t5/velnox-885154b-vx.webp',           'sort_order' => 0],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t5/velnox-885154b-vx-photo-1.webp',   'sort_order' => 1],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t5/velnox-885154b-vx-photo-2.webp',   'sort_order' => 2],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t5/velnox-885154b-vx-photo-3.webp',   'sort_order' => 3],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t5/velnox-885154b-vx-photo-4.webp',   'sort_order' => 4],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t5/velnox-885154b-vx-drawing-1.webp', 'sort_order' => 5],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t5/velnox-885154b-vx-drawing-2.webp', 'sort_order' => 6],
         ] as $asset) {
             DB::table('product_assets')->updateOrInsert(
                 ['entity_type' => 'product', 'entity_id' => $pk5, 'type' => $asset['type'], 'path' => $asset['path']],
@@ -2981,7 +3012,7 @@ class DatabaseSeeder extends Seeder
                 'category_id'      => $catId('kit'),
                 'spec_columns'     => json_encode(['d_mm','d1_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
                 'highlight_config' => json_encode((object)[]),
-                'schema_viewbox'   => '',
+                'schema_viewbox'   => '-10 -10 2269 2572',
                 'sort_order'       => 6,
             ]
         );
@@ -2992,6 +3023,16 @@ class DatabaseSeeder extends Seeder
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product_table', 'entity_id' => $kt6, 'locale' => $locale, 'field' => 'name'],
                 ['value' => $name]
+            );
+        }
+
+        foreach ([
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/kit-t6/velnox-aa205dd-vx-schema.webp', 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/kit-t6/schema.svg',                     'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt6, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
             );
         }
 
@@ -3043,6 +3084,18 @@ class DatabaseSeeder extends Seeder
             DB::table('product_cross_refs')->insert(['product_id' => $pk6, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
         }
 
+        foreach ([
+            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t6/velnox-aa205dd-vx.webp',           'sort_order' => 0],
+            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t6/velnox-aa205dd-vx-drawing-1.webp', 'sort_order' => 1],
+            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t6/velnox-aa205dd-vx-drawing-2.webp', 'sort_order' => 2],
+            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t6/velnox-aa205dd-vx-drawing-3.webp', 'sort_order' => 3],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk6, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
         foreach (['uk', 'en', 'pl'] as $locale) {
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product', 'entity_id' => $pk6, 'locale' => $locale, 'field' => 'name'],
@@ -3060,7 +3113,7 @@ class DatabaseSeeder extends Seeder
                 'category_id'      => $catId('kit'),
                 'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
                 'highlight_config' => json_encode((object)[]),
-                'schema_viewbox'   => '',
+                'schema_viewbox'   => '-10 -10 2297 1054',
                 'sort_order'       => 7,
             ]
         );
@@ -3071,6 +3124,16 @@ class DatabaseSeeder extends Seeder
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product_table', 'entity_id' => $kt7, 'locale' => $locale, 'field' => 'name'],
                 ['value' => $name]
+            );
+        }
+
+        foreach ([
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-schema.webp', 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/kit-t7/schema.svg',                     'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt7, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
             );
         }
 
@@ -3114,6 +3177,18 @@ class DatabaseSeeder extends Seeder
             DB::table('product_cross_refs')->insert(['product_id' => $pk7, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
         }
 
+        foreach ([
+            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx.webp',           'sort_order' => 0],
+            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-drawing-1.webp', 'sort_order' => 1],
+            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-drawing-2.webp', 'sort_order' => 2],
+            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-drawing-3.webp', 'sort_order' => 3],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk7, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
+            );
+        }
+
         foreach (['uk', 'en', 'pl'] as $locale) {
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product', 'entity_id' => $pk7, 'locale' => $locale, 'field' => 'name'],
@@ -3131,7 +3206,7 @@ class DatabaseSeeder extends Seeder
                 'category_id'      => $catId('kit'),
                 'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
                 'highlight_config' => json_encode((object)[]),
-                'schema_viewbox'   => '',
+                'schema_viewbox'   => '-10 -10 2235 2174',
                 'sort_order'       => 8,
             ]
         );
@@ -3142,6 +3217,16 @@ class DatabaseSeeder extends Seeder
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product_table', 'entity_id' => $kt8, 'locale' => $locale, 'field' => 'name'],
                 ['value' => $name]
+            );
+        }
+
+        foreach ([
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/kit-t8/velnox-f-562024-02klq-vx-schema.webp', 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/kit-t8/schema.svg',                            'sort_order' => 0],
+        ] as $asset) {
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $kt8, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['sort_order' => $asset['sort_order']]
             );
         }
 
@@ -3183,7 +3268,11 @@ class DatabaseSeeder extends Seeder
         }
 
         foreach ([
-            ['type' => 'model_3d', 'path' => '/velnox/models/F-562024-02-KLQ.glb', 'sort_order' => 0],
+            ['type' => 'model_3d', 'path' => '/velnox/models/F-562024-02-KLQ.glb',                                    'sort_order' => 0],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t8/velnox-f-562024-02klq-vx.webp',           'sort_order' => 0],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t8/velnox-f-562024-02klq-vx-drawing-1.webp', 'sort_order' => 1],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t8/velnox-f-562024-02klq-vx-drawing-2.webp', 'sort_order' => 2],
+            ['type' => 'gallery',  'path' => '/velnox/images/products/kit-t8/velnox-f-562024-02klq-vx-drawing-3.webp', 'sort_order' => 3],
         ] as $asset) {
             DB::table('product_assets')->updateOrInsert(
                 ['entity_type' => 'product', 'entity_id' => $pk8, 'type' => $asset['type'], 'path' => $asset['path']],

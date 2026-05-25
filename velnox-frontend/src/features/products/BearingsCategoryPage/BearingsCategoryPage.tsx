@@ -1,14 +1,17 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
-import Image from 'next/image';
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import styles from './bearings.module.css';
 import type { Locale, ProductListItem } from '@/entities/product/model/types';
+import { ProductTable, type ColDef } from '@/features/products/shared/ProductTable/ProductTable';
+import { ProductSchema } from '@/features/products/shared/ProductSchema/ProductSchema';
+import ptStyles from '@/features/products/shared/ProductTable/productTable.module.css';
 
-/* ─── Shared Hooks ─── */
-function useInView(threshold = 0.12) {
+/* ─── helpers ─── */
+function useInView(threshold = 0.1) {
     const ref = useRef<HTMLElement>(null);
     const [inView, setInView] = useState(false);
     useEffect(() => {
@@ -24,17 +27,30 @@ function useInView(threshold = 0.12) {
     return { ref, inView };
 }
 
-/* ─── Lead form Modal ─── */
-function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void, defaultDesignation?: string }) {
+function articleToSlug(article: string): string {
+    return article.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+}
+
+function renderTightCell(val: string | null | undefined) {
+    if (!val || val === '-') return <span>—</span>;
+    const items = val.split(/\n|;/).map(s => s.trim()).filter(Boolean);
+    if (items.length <= 1) return <span>{val}</span>;
+    return (
+        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
+            {items.map((item, i) => <li key={i} style={{ marginBottom: '2px' }}>{item}</li>)}
+        </ul>
+    );
+}
+
+/* ─── Lead Modal ─── */
+function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; defaultDesignation?: string }) {
     const t = useTranslations('distributors');
     const [sent, setSent] = useState(false);
-    const [form, setForm] = useState({ company: '', name: '', phone: '', email: '', country: '', message: defaultDesignation ? `Запит на: ${defaultDesignation}` : '' });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        setSent(true);
-    };
-
+    const [form, setForm] = useState({
+        company: '', name: '', phone: '', email: '', country: '',
+        message: defaultDesignation ? `Запит на: ${defaultDesignation}` : ''
+    });
+    const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSent(true); };
     return (
         <div className={styles.modalBackdrop} onClick={onClose}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
@@ -75,228 +91,13 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void, 
                             <textarea className={styles.formField4} rows={4} placeholder={t('form.message_ph')}
                                 value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
                             <div className={styles.modalBottom}>
-                                <button type="submit" className={styles.formSubmit}>
-                                    {t('form.submit')}
-                                </button>
+                                <button type="submit" className={styles.formSubmit}>{t('form.submit')}</button>
                             </div>
                         </form>
                     </>
                 )}
             </div>
         </div>
-    );
-}
-
-/* ─── Sortable Table ─── */
-type SortDir = 'asc' | 'desc' | null;
-
-function SortIcon({ dir }: { dir: SortDir }) {
-    return (
-        <span className={styles.sortIcon} aria-hidden>
-            {dir === 'asc' ? '↑' : dir === 'desc' ? '↓' : '↕'}
-        </span>
-    );
-}
-
-/* ─── Render structured list for tight cells ─── */
-function renderTightCell(val: string | null | undefined) {
-    if (!val || val === '-') return <span>—</span>;
-    const items = val
-        .split(/\n|;/)
-        .map(s => s.trim())
-        .filter(Boolean);
-    if (items.length <= 1) return <span>{val}</span>;
-    return (
-        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
-            {items.map((item, i) => (
-                <li key={i} style={{ marginBottom: '2px' }}>
-                    {item}
-                </li>
-            ))}
-        </ul>
-    );
-}
-
-/* ─── Brand cell: each brand on its own line ─── */
-function renderBrandCell(val: string | null | undefined) {
-    if (!val || val === '-') return <span>—</span>;
-    const brands = val.split(/\n|\//).map(s => s.trim()).filter(Boolean);
-    if (brands.length <= 1) return <span>{val}</span>;
-    return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-            {brands.map((brand, i) => <span key={i}>{brand}</span>)}
-        </div>
-    );
-}
-
-/* ─── Designation cell: список + перенос після ). Розбиває по \n і " / " (НЕ по "/" у дробах типу 1/4) ─── */
-function renderDesignationCell(val: string | null | undefined) {
-    if (!val || val === '-') return <span>—</span>;
-    const items: string[] = [];
-    val.split(/\n/).map(s => s.trim()).filter(Boolean)
-        .forEach(line => line.split(' / ').forEach(p => { const t = p.trim(); if (t) items.push(t); }));
-
-    const renderWithParenBreaks = (text: string) => {
-        const parts = text.split(') ');
-        if (parts.length <= 1) return <>{text}</>;
-        return <>
-            {parts.map((part, j) => (
-                <span key={j}>
-                    {j < parts.length - 1 ? part + ')' : part}
-                    {j < parts.length - 1 && <br />}
-                </span>
-            ))}
-        </>;
-    };
-
-    if (items.length <= 1) return <span>{renderWithParenBreaks(items[0] ?? val)}</span>;
-    return (
-        <ul className="analogues-list" style={{ paddingLeft: '14px', margin: 0 }}>
-            {items.map((item, i) => (
-                <li key={i} style={{ marginBottom: '2px' }}>{renderWithParenBreaks(item)}</li>
-            ))}
-        </ul>
-    );
-}
-
-function useSortableTable(data: any[]) {
-    const [sortCol, setSortCol] = useState<string | null>(null);
-    const [sortDir, setSortDir] = useState<SortDir>(null);
-
-    const toggle = useCallback((col: string) => {
-        setSortCol(prev => {
-            if (prev !== col) { setSortDir('asc'); return col; }
-            setSortDir(d => d === 'asc' ? 'desc' : d === 'desc' ? null : 'asc');
-            return col;
-        });
-    }, []);
-
-    const sorted = useMemo(() => {
-        if (!sortCol || !sortDir) return data;
-        return [...data].sort((a, b) => {
-            const av = a[sortCol] ?? '';
-            const bv = b[sortCol] ?? '';
-            const an = parseFloat(String(av));
-            const bn = parseFloat(String(bv));
-            const cmp = !isNaN(an) && !isNaN(bn) ? an - bn : String(av).localeCompare(String(bv));
-            return sortDir === 'asc' ? cmp : -cmp;
-        });
-    }, [data, sortCol, sortDir]);
-
-    return { sorted, sortCol, sortDir, toggle };
-}
-
-/* ─── Intro Block 2: Performance Specs ─── */
-function PerformanceIntro() {
-    const { ref, inView } = useInView(0.1);
-    return (
-        <section className={`${styles.introBlock} ${styles.introBlockPerformance} ${inView ? styles.animIn : ''}`} ref={ref as React.Ref<HTMLElement>}>
-            <div className={styles.container}>
-                <div className={styles.introBanner}>
-                    <div className={styles.introText}>
-                        <div className={styles.introTag}>PERFORMANCE DATA</div>
-                        <h2 className={styles.introTitle}>
-                            Ресурс та навантаження вузлів
-                        </h2>
-                        <p className={styles.introCopy}>
-                            Для OEM-виробників критично точно оцінювати ресурс і навантаження вузлів.<br />
-                            VELNOX надає параметри:<br />
-                            динамічної (C) та статичної (C₀) вантажопідйомності,<br />
-                            а також допустимі експлуатаційні навантаження.<br /><br />
-                            <strong>Це дозволяє:</strong>
-                            <ul className={styles.introList}>
-                                <li>коректно розрахувати ресурс</li>
-                                <li>закласти запас міцності</li>
-                                <li>інтегрувати вузол без ризиків</li>
-                            </ul>
-                        </p>
-                    </div>
-                    <div className={styles.introGraphic}>
-                        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.forceDiagram}>
-                            <circle cx="100" cy="100" r="55" stroke="rgba(59,130,246,0.3)" strokeWidth="1.5" />
-                            <circle cx="100" cy="100" r="35" stroke="rgba(59,130,246,0.5)" strokeWidth="1.5" />
-                            <circle cx="100" cy="100" r="18" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.6)" strokeWidth="1.5" />
-                            <line x1="100" y1="40" x2="100" y2="75" stroke="#3b82f6" strokeWidth="2" strokeDasharray="4 2" className={styles.forceLine} />
-                            <polygon points="100,80 95,68 105,68" fill="#3b82f6" />
-                            <text x="107" y="55" fill="rgba(59,130,246,0.9)" fontSize="11" fontFamily="monospace">Fr</text>
-                            <line x1="160" y1="100" x2="127" y2="100" stroke="#22c55e" strokeWidth="2" strokeDasharray="4 2" className={styles.forceLine} />
-                            <polygon points="122,100 134,95 134,105" fill="#22c55e" />
-                            <text x="164" y="104" fill="rgba(34,197,94,0.9)" fontSize="11" fontFamily="monospace">Fa</text>
-                            <path d="M 100 62 A 38 38 0 0 1 138 100" stroke="rgba(255,255,255,0.2)" strokeWidth="1" fill="none" strokeDasharray="3 3" />
-                            <polygon points="140,95 136,107 144,107" fill="rgba(255,255,255,0.2)" transform="rotate(45 140 101)" />
-                            <text x="60" y="150" fill="rgba(59,130,246,0.7)" fontSize="10" fontFamily="monospace">Cdyn</text>
-                            <text x="112" y="150" fill="rgba(34,197,94,0.7)" fontSize="10" fontFamily="monospace">Co</text>
-                            <line x1="57" y1="153" x2="195" y2="153" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
-
-/* ─── Intro Block 3: Cross-References Banner ─── */
-function CrossRefIntro() {
-    const { ref, inView } = useInView(0.1);
-    const brands = ['HORSCH', 'LEMKEN', 'JOHN DEERE', 'SKF', 'INA', 'KINZE', 'CASE IH', 'NEW HOLLAND', 'AMAZONE', 'FAG', 'NSK'];
-    return (
-        <section className={`${styles.introBlock} ${styles.introBlockCrossRef} ${inView ? styles.animIn : ''}`} ref={ref as React.Ref<HTMLElement>}>
-            <div className={styles.crossRefBannerContent}>
-                <div className={styles.crossRefTag}>CROSS-REFERENCES & INSTALLATIONS</div>
-                <h2 className={styles.crossRefTitle}>Безшовна інтеграція<br />без змін у конструкції техніки</h2>
-                <p className={styles.crossRefCopy}>
-                    Використання підшипникових вузлів VELNOX не потребує змін у кресленнях або посадкових місцях. Наші рішення є геометричними та функціональними аналогами вузлів провідних європейських брендів та оригінальних OEM-компонентів, тому можуть інтегруватися у техніку без додаткових доопрацювань.
-                </p>
-            </div>
-            {/* Infinite marquee */}
-            <div className={styles.marqueeWrapper}>
-                <div className={styles.marqueeTrack}>
-                    {[...brands, ...brands].map((brand, i) => (
-                        <div key={i} className={styles.marqueeBrand}>{brand}</div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-}
-
-/* ─── Intro Block 4: Sealing Systems ─── */
-function SealingIntro() {
-    const { ref, inView } = useInView(0.05);
-    return (
-        <section className={`${styles.introBlock} ${styles.introBlockSealing} ${inView ? styles.animIn : ''}`} ref={ref as React.Ref<HTMLElement>}>
-            <div className={styles.container}>
-                <div className={styles.sealingSplit}>
-                    <div className={styles.sealingText}>
-                        <div className={styles.introTag} style={{ color: '#f59e0b', borderColor: 'rgba(245,158,11,0.3)' }}>SEALING SYSTEMS</div>
-                        <h2 className={styles.introTitle}>Інженерія захисту:<br />Адаптація під ваше середовище</h2>
-                        <p className={styles.introCopy}>
-                            Ми не пропонуємо підбирати деталі просто за розміром. Філософія VELNOX
-                            полягає у підборі <strong>багатокромкової системи ущільнень</strong> строго під реальні умови
-                            експлуатації вашої машини. Від базових контактних рішень для нейтральних середовищ до
-                            екстремальних систем <strong>(Dirtblock + Forged cover plate)</strong>, розроблених для важких дискових борін.
-                            Ви визначаєте агресивність середовища — ми гарантуємо, що абразив, пил та волога
-                            ніколи не досягнуть тіла кочення.
-                        </p>
-                    </div>
-                    <div className={styles.sealingDiagram}>
-                        {/* Exploded view diagram */}
-                        <div className={`${styles.sealLayer} ${styles.layer1} ${inView ? styles.exploded : ''}`}>
-                            <div className={styles.sealLayerLabel}>Forged Cover Plate</div>
-                        </div>
-                        <div className={`${styles.sealLayer} ${styles.layer2} ${inView ? styles.exploded : ''}`}>
-                            <div className={styles.sealLayerLabel}>Dirtblock Seal</div>
-                        </div>
-                        <div className={`${styles.sealLayer} ${styles.layer3} ${inView ? styles.exploded : ''}`}>
-                            <div className={styles.sealLayerLabel}>T Seal (3-Lip)</div>
-                        </div>
-                        <div className={`${styles.sealLayer} ${styles.layer4} ${inView ? styles.exploded : ''}`}>
-                            <div className={styles.sealLayerLabel}>Inner Ring Body</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     );
 }
 
@@ -323,12 +124,11 @@ function HighlightedText({ text }: { text: string }) {
     );
 }
 
-/* ─── Intro Block 5: Packer Roller Application ─── */
+/* ─── Packer Roller Application ─── */
 function PackerRollerIntro() {
     const t = useTranslations('bearingsPage.packer_roller');
     const { ref, inView } = useInView(0.05);
     const paragraphs = t('content').split('\n\n');
-
     return (
         <section
             className={`${styles.applicationsSection} ${inView ? styles.appSectionVisible : ''}`}
@@ -356,26 +156,242 @@ function PackerRollerIntro() {
     );
 }
 
-/* ─── Helpers ─── */
-function articleToSlug(article: string): string {
-    return article.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+/* ─── Dynamic column builder from API spec_labels ─── */
+type SlMap = Record<string, string>;
+const CROSS_REF_KEYS = new Set(['bearing_part', 'bearing_brand', 'oem']);
+
+function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: string): ColDef[] {
+    const base: ColDef[] = [
+        { key: 'part_number',   label: partLabel,                width: '130px' },
+        { key: 'bearing_part',  label: 'Позначення підшипника',  hasFilter: false },
+        { key: 'bearing_brand', label: 'Бренд',                  hasFilter: false },
+        { key: 'oem',           label: 'Перехресні аналоги',     hasFilter: false },
+    ];
+    const specKeys = specColumns?.length ? specColumns : Object.keys(sl);
+    const specCols: ColDef[] = specKeys.map(key => ({
+        key,
+        label: sl[key] || key,
+        hasFilter: true,
+    }));
+    return [...base, ...specCols];
+}
+
+/* ─── CrossRefPanel — searchable selector + cross-ref table ─── */
+function CrossRefPanel({
+    rows,
+    selectedIdx,
+    onSelect,
+    filterSpecs,
+    onFilterChange,
+    locale,
+    categorySlug,
+}: {
+    rows: Record<string, any>[];
+    selectedIdx: number;
+    onSelect: (idx: number) => void;
+    filterSpecs: boolean;
+    onFilterChange: (v: boolean) => void;
+    locale: Locale;
+    categorySlug: string;
+}) {
+    const [open, setOpen] = useState(false);
+    const [query, setQuery] = useState('');
+    const [showAll, setShowAll] = useState(false);
+    const wrapRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!open) return;
+        const close = (e: MouseEvent) => {
+            if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false);
+        };
+        document.addEventListener('mousedown', close);
+        return () => document.removeEventListener('mousedown', close);
+    }, [open]);
+
+    if (!rows.length) return null;
+    const idx = Math.min(selectedIdx, rows.length - 1);
+    const selectedRow = rows[idx];
+
+    if (showAll) {
+        return (
+            <div className={styles.crossesPanel}>
+                <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(false)}>
+                    ← Обрати один
+                </button>
+                <table className={styles.crossTable}>
+                    <thead>
+                        <tr>
+                            <th>Velnox</th>
+                            <th>Підшипник</th>
+                            <th>Бренд</th>
+                            <th>Аналоги</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows.flatMap((row, ri) => {
+                            const p = (row.bearing_part || '').split('\n').filter(Boolean);
+                            const b = (row.bearing_brand || '').split('\n').filter(Boolean);
+                            const o = (row.oem || '').split('\n').filter(Boolean);
+                            const len = Math.max(p.length, o.length, 1);
+                            return Array.from({ length: len }, (_, i) => (
+                                <tr key={`${ri}-${i}`}>
+                                    {i === 0 && (
+                                        <td rowSpan={len} className={styles.crossAllName}>
+                                            <Link href={`/${locale}/products/${categorySlug}/${articleToSlug(row.part_number)}`} className={ptStyles.designationLink}>
+                                                {row.part_number}
+                                            </Link>
+                                            {row.has_model_3d && <span className={styles.badge3d}>3D</span>}
+                                        </td>
+                                    )}
+                                    <td>{p[i] || ''}</td>
+                                    <td>{b[i] || ''}</td>
+                                    <td>{o[i] || ''}</td>
+                                </tr>
+                            ));
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+
+    const parts  = (selectedRow.bearing_part  || '').split('\n').filter(Boolean);
+    const brands = (selectedRow.bearing_brand || '').split('\n').filter(Boolean);
+    const oems   = (selectedRow.oem           || '').split('\n').filter(Boolean);
+    const maxLen = Math.max(parts.length, oems.length, 1);
+
+    const q = query.toLowerCase();
+    const matchingRows = query
+        ? rows.filter(r => (r.part_number || '').toLowerCase().includes(q))
+        : rows;
+
+    return (
+        <div className={styles.crossesPanel}>
+            <div className={styles.crossNav}>
+                <button type="button" className={styles.crossNavBtn}
+                    onClick={() => onSelect(idx > 0 ? idx - 1 : rows.length - 1)} title="Попередній">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                </button>
+
+                <div className={styles.crossSelector} ref={wrapRef}>
+                    <button type="button" className={styles.crossSelectorBtn} onClick={() => setOpen(v => !v)}>
+                        <svg className={styles.crossSearchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                            <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <span>{selectedRow.part_number}</span>
+                        {selectedRow.has_model_3d && <span className={styles.badge3d}>3D</span>}
+                        <svg className={`${styles.crossChevron}${open ? ` ${styles.crossChevronOpen}` : ''}`}
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </button>
+                    {open && (
+                        <div className={styles.crossDropdown}>
+                            <input type="text" className={styles.crossDropdownSearch} placeholder="Пошук..."
+                                value={query} onChange={e => setQuery(e.target.value)} autoFocus />
+                            <div className={styles.crossDropdownList}>
+                                {matchingRows.map(row => {
+                                    const origIdx = rows.indexOf(row);
+                                    return (
+                                        <button key={origIdx} type="button"
+                                            className={`${styles.crossDropdownItem}${idx === origIdx ? ` ${styles.crossDropdownItemActive}` : ''}`}
+                                            onClick={() => { onSelect(origIdx); setOpen(false); setQuery(''); }}>
+                                            {row.part_number}
+                                            {row.has_model_3d && <span className={styles.badge3d}>3D</span>}
+                                        </button>
+                                    );
+                                })}
+                                {matchingRows.length === 0 && (
+                                    <div className={styles.crossDropdownEmpty}>Не знайдено</div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <button type="button" className={styles.crossNavBtn}
+                    onClick={() => onSelect(idx < rows.length - 1 ? idx + 1 : 0)} title="Наступний">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14">
+                        <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                </button>
+            </div>
+
+            <table className={styles.crossTable}>
+                <thead>
+                    <tr>
+                        <th>Позначення підшипника</th>
+                        <th>Бренд</th>
+                        <th>Перехресні аналоги</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Array.from({ length: maxLen }, (_, i) => (
+                        <tr key={i}>
+                            <td>{parts[i] || ''}</td>
+                            <td>{brands[i] || ''}</td>
+                            <td>{oems[i] || ''}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            <div className={styles.crossFooter}>
+                <label className={styles.crossFilterCheck}>
+                    <input type="checkbox" checked={filterSpecs}
+                        onChange={e => onFilterChange(e.target.checked)} />
+                    Показати тільки обраний
+                </label>
+                <Link
+                    href={`/${locale}/products/${categorySlug}/${articleToSlug(selectedRow.part_number)}`}
+                    className={styles.crossDetailBtn}
+                >
+                    Показати детальніше
+                </Link>
+                <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(true)}>
+                    Показати всі
+                </button>
+            </div>
+        </div>
+    );
+}
+
+/* ─── Table state ─── */
+interface TableState {
+    data: Record<string, any>[];
+    specLabels: SlMap;
+    specColumns: string[] | undefined;
+    schema: string | null;
+    name: string;
+    selectedIdx: number;
+    syncFilter: boolean;
+}
+
+const TABLE_IDS = [1, 2, 3, 4, 5] as const;
+
+function emptyTableState(): TableState {
+    return { data: [], specLabels: {}, specColumns: undefined, schema: null, name: '', selectedIdx: 0, syncFilter: false };
 }
 
 /* ─── Main Page Component ─── */
-
-export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale, products?: ProductListItem[] }) {
-    const t = useTranslations('bearingsPage');
-    const heroRef = useInView();
-    const approachRef = useInView();
-    const tablesRef = useInView();
+export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale; products?: ProductListItem[] }) {
+    const t = useTranslations();
+    const heroRef = useInView(0.12);
     const ctaRef = useInView();
+
+    const [modalProduct, setModalProduct] = useState<string | null>(null);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const [tables, setTables] = useState<Record<number, TableState>>(() => {
+        const init: Record<number, TableState> = {};
+        TABLE_IDS.forEach(id => { init[id] = emptyTableState(); });
+        return init;
+    });
 
     const searchHeaderRef = useRef<HTMLDivElement>(null);
 
-    // Sticky header: IntersectionObserver без rootMargin
-    // Observer стріляє коли sentinel перетинає верхній край viewport.
-    // top < 0  → sentinel прокручено вгору → вмикаємо sticky
-    // top >= 0 → sentinel видимий або нижче viewport → вимикаємо sticky
     useEffect(() => {
         const sentinel = document.getElementById('sticky-sentinel');
         if (!sentinel || !searchHeaderRef.current) return;
@@ -394,355 +410,103 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
         return () => obs.disconnect();
     }, []);
 
-    const [modalProduct, setModalProduct] = useState<string | null>(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [filters, setFilters] = useState<Record<string, string[]>>({});
-    const [openFilterCol, setOpenFilterCol] = useState<string | null>(null);
-
-    // Mapping: internal col key → spec_definitions.key (for API spec_labels lookup)
-    const T1_COL_TO_SPEC: Record<string, string> = {
-        d_mm: 'd_mm', d_inch: 'd_inch',
-        A1: 'A1_mm', A2: 'A2_mm', J: 'J_mm', L: 'L_mm', N: 'N_mm', A: 'A_mm',
-        mass_kg: 'mass_kg', Cdyn: 'cdyn_kn', Co: 'co_kn', Pu: 'pu_kn',
-    };
-
-    // Table data states
-    const [tableSchemas, setTableSchemas] = useState<Record<string, string | null>>({});
-    const [table1SpecLabels, setTable1SpecLabels] = useState<Record<string, string>>({});
-    const [table5SpecLabels, setTable5SpecLabels] = useState<Record<string, string>>({});
-    const [table1Data, setTable1Data] = useState<any[]>([]);
-    const [table2Data, setTable2Data] = useState<any[]>([]);
-    const [table3Data, setTable3Data] = useState<any[]>([]);
-    const [table4Data, setTable4Data] = useState<any[]>([]);
-    const [table5Data, setTable5Data] = useState<any[]>([]);
-    const [loadingTables, setLoadingTables] = useState(true);
-
-    function Th({ 
-        col, label, toggle, sortCol, sortDir, 
-        hasFilter, filterOptions, selectedFilters, onFilterChange 
-    }: { 
-        col: string; label: string; 
-        toggle: (c: string) => void; 
-        sortCol: string | null; sortDir: SortDir;
-        hasFilter?: boolean; filterOptions?: string[]; 
-        selectedFilters?: string[]; onFilterChange?: (col: string, val: string) => void;
-    }) {
-        const isFilterOpen = openFilterCol === col;
-        
-        return (
-            <th className={styles.sortableTh} style={{ position: 'relative' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => toggle(col)}>
-                        {label} <SortIcon dir={sortCol === col ? sortDir : null} />
-                    </div>
-                    {hasFilter && (
-                        <div style={{ position: 'relative' }}>
-                            <button 
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setOpenFilterCol(isFilterOpen ? null : col);
-                                }}
-                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: selectedFilters?.length ? 'var(--color-accent)' : 'inherit' }}
-                            >
-                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                                </svg>
-                            </button>
-                            {isFilterOpen && (
-                                <div style={{
-                                    position: 'absolute', top: '100%', left: 0, marginTop: '8px',
-                                    background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-                                    borderRadius: '6px', padding: '12px', zIndex: 100,
-                                    width: '180px', maxHeight: '250px', overflowY: 'auto',
-                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                                }} onClick={e => e.stopPropagation()}>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                        {filterOptions?.map(opt => (
-                                            <label key={opt} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', cursor: 'pointer' }}>
-                                                <input 
-                                                    type="checkbox" 
-                                                    checked={selectedFilters?.includes(opt) || false}
-                                                    onChange={() => onFilterChange?.(col, opt)}
-                                                />
-                                                {opt}
-                                            </label>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </div>
-            </th>
-        );
-    }
-
-    // Fetch table data from API
     useEffect(() => {
-        const fetchTableData = async () => {
+        const fetchTables = async () => {
             try {
-                const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-                const [res1, res2, res3, res4, res5] = await Promise.all([
-                    fetch(`${apiBase}/v1/product-tables/bearings-t1?locale=${locale}`),
-                    fetch(`${apiBase}/v1/product-tables/bearings-t2?locale=${locale}`),
-                    fetch(`${apiBase}/v1/product-tables/bearings-t3?locale=${locale}`),
-                    fetch(`${apiBase}/v1/product-tables/bearings-t4?locale=${locale}`),
-                    fetch(`${apiBase}/v1/product-tables/bearings-t5?locale=${locale}`),
-                ]);
+                const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+                const responses = await Promise.all(
+                    TABLE_IDS.map(n =>
+                        fetch(`${base}/v1/product-tables/bearings-t${n}?locale=${locale}`)
+                    )
+                );
+                const safeJson = async (res: Response) =>
+                    res.ok ? res.json() : { products: [], table: {} };
+                const allData = await Promise.all(responses.map(safeJson));
 
-                if (res1.ok) {
-                    const data = await res1.json();
-                    if (data.table?.spec_labels) setTable1SpecLabels(data.table.spec_labels);
-                    if (data.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t1': data.table.schema_src }));
-                    setTable1Data(data.products.map((p: any) => ({
-                        slug:     p.slug,
-                        article:  p.article,
-                        brand:    p.cross_refs.map((r: any) => r.brand).join(' / '),
-                        cross_ref: p.cross_refs.map((r: any) => r.value).join('\n'),
-                        d_mm:     p.specs.d_mm    ?? null,
-                        d_inch:   p.specs.d_inch   ?? null,
-                        A1:       p.specs.A1_mm    ?? null,
-                        A2:       p.specs.A2_mm    ?? null,
-                        J:        p.specs.J_mm     ?? null,
-                        L:        p.specs.L_mm     ?? null,
-                        N:        p.specs.N_mm     ?? null,
-                        A:        p.specs.A_mm     ?? null,
-                        mass_kg:  p.specs.mass_kg  ?? null,
-                        Cdyn:     p.specs.cdyn_kn  ?? null,
-                        Co:       p.specs.co_kn    ?? null,
-                        Pu:       p.specs.pu_kn    ?? null,
-                    })));
-                }
-                if (res2.ok) {
-                    const data2 = await res2.json();
-                    if (data2.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t2': data2.table.schema_src }));
-                    setTable2Data((data2.products ?? []).map((p: any) => {
-                        const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
-                        const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
-                        return {
-                            part_number:                    p.article,
-                            has_model_3d:                   p.has_model_3d ?? false,
-                            bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
-                            brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
-                            cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
-                            bore_diameter_d_mm:             p.specs.d_mm    ?? null,
-                            total_housing_width_a1_mm:      p.specs.A1_mm   ?? null,
-                            housing_flange_thickness_a2_mm: p.specs.A2_mm   ?? null,
-                            distance_between_holes_j_mm:    p.specs.J_mm    ?? null,
-                            total_length_l_mm:              p.specs.L_mm    ?? null,
-                            hole_thread_ht:                 p.specs.H_T     ?? null,
-                            overall_width_a_mm:             p.specs.A_mm    ?? null,
-                            mass_kg:                        p.specs.mass_kg ?? null,
-                            dynamic_load_rating_cdyn_kn:    p.specs.cdyn_kn ?? null,
-                            static_load_rating_co_kn:       p.specs.co_kn   ?? null,
-                            fatigue_load_limit_pu_kn:       p.specs.pu_kn   ?? null,
-                        };
-                    }));
-                }
-                if (res3.ok) {
-                    const data3 = await res3.json();
-                    if (data3.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t3': data3.table.schema_src }));
-                    setTable3Data((data3.products ?? []).map((p: any) => {
-                        const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
-                        const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
-                        return {
-                            part_number:                    p.article,
-                            has_model_3d:                   p.has_model_3d ?? false,
-                            bearing_designation:            bearingRefs.map((r: any) => r.value).join('\n'),
-                            brand_name:                     bearingRefs.map((r: any) => r.brand).join('\n'),
-                            cross_reference:                appRefs.map((r: any) => r.value).join('\n'),
-                            bore_diameter_d_mm:             p.specs.d_mm    ?? null,
-                            distance_between_holes_j_mm:    p.specs.J_mm    ?? null,
-                            total_length_l_mm:              p.specs.L_mm    ?? null,
-                            hole_thread_ht_mm:              p.specs.H_T     ?? null,
-                            overall_width_a_mm:             p.specs.A_mm    ?? null,
-                            total_housing_width_a1_mm:      p.specs.A1_mm   ?? null,
-                            housing_flange_thickness_a2_mm: p.specs.A2_mm   ?? null,
-                            width_inner_ring_b_mm:          p.specs.B_mm    ?? null,
-                            static_load_rating_co_kn:       p.specs.co_kn   ?? null,
-                            dynamic_load_rating_cdyn_kn:    p.specs.cdyn_kn ?? null,
-                            fatigue_load_limit_pu_kn:       p.specs.pu_kn   ?? null,
-                        };
-                    }));
-                }
-                if (res4.ok) {
-                    const data4 = await res4.json();
-                    setTable4Data((data4.products ?? []).map((p: any) => {
-                        const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
-                        const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
-                        return {
-                            part_number:                        p.article,
-                            has_model_3d:                       p.has_model_3d ?? false,
-                            bearing_designation:                bearingRefs.map((r: any) => r.value).join('\n'),
-                            brand_name:                         bearingRefs.map((r: any) => r.brand).join('\n'),
-                            cross_reference:                    appRefs.map((r: any) => r.value).join('\n'),
-                            bore_diameter_d_mm:                 p.specs.d_mm    ?? null,
-                            centering_diameter_d1_mm:           p.specs.d1_mm   ?? null,
-                            housing_overall_width_l1_mm:        p.specs.L1_mm   ?? null,
-                            distance_between_holes_j1_mm:       p.specs.J1_mm   ?? null,
-                            housing_overall_width_l2_mm:        p.specs.L2_mm   ?? null,
-                            distance_between_holes_j2_mm:       p.specs.J2_mm   ?? null,
-                            overall_width_a_mm:                 p.specs.A_mm    ?? null,
-                            flange_width_a1_mm:                 p.specs.A1_mm   ?? null,
-                            flange_width_a2_mm:                 p.specs.A2_mm   ?? null,
-                            centering_diameter_height_a3_mm:    p.specs.A3_mm   ?? null,
-                            threaded_hole_size_t:               p.specs.T_size  ?? null,
-                            hole_diameter_h_mm:                 p.specs.H_mm    ?? null,
-                            mass_kg:                            p.specs.mass_kg ?? null,
-                        };
-                    }));
-                }
-                if (res5.ok) {
-                    const data5 = await res5.json();
-                    if (data5.table?.schema_src) setTableSchemas(prev => ({ ...prev, 'bearings-t5': data5.table.schema_src }));
-                    if (data5.table?.spec_labels) setTable5SpecLabels(data5.table.spec_labels);
-                    setTable5Data((data5.products ?? []).map((p: any) => {
-                        const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || r.type == null);
-                        const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
-                        return {
-                            part_number:                        p.article,
-                            has_model_3d:                       p.has_model_3d ?? false,
-                            bearing_designation:                bearingRefs.map((r: any) => r.value).join('\n'),
-                            brand_name:                         bearingRefs.map((r: any) => r.brand).join('\n'),
-                            cross_reference:                    appRefs.map((r: any) => r.value).join('\n'),
-                            bore_diameter_d_mm:                 p.specs.d_mm    ?? null,
-                            outside_diameter_d_mm:              p.specs.D_mm    ?? null,
-                            pitch_circle_diameter_j_mm:         p.specs.J_mm    ?? null,
-                            hole_thread_ht:                     p.specs.H_T     ?? null,
-                            overall_width_a_mm:                 p.specs.A_mm    ?? null,
-                            housing_flange_thickness_a2_mm:     p.specs.A2_mm   ?? null,
-                            width_inner_ring_b_mm:              p.specs.B_mm    ?? null,
-                            mass_kg:                            p.specs.mass_kg ?? null,
-                            static_load_rating_co_kn:           p.specs.co_kn   ?? null,
-                            dynamic_load_rating_cdyn_kn:        p.specs.cdyn_kn ?? null,
-                            fatigue_load_limit_pu_kn:           p.specs.pu_kn   ?? null,
-                        };
-                    }));
-                }
+                const mapRow = (p: any) => {
+                    const bearingRefs = (p.cross_refs ?? []).filter((r: any) => r.type === 'bearing' || !r.type);
+                    const appRefs     = (p.cross_refs ?? []).filter((r: any) => r.type === 'application');
+                    return {
+                        part_number:   p.article,
+                        has_model_3d:  p.has_model_3d ?? false,
+                        bearing_part:  bearingRefs.map((r: any) => r.value).join('\n'),
+                        bearing_brand: bearingRefs.map((r: any) => r.brand).filter(Boolean).join('\n'),
+                        oem:           appRefs.map((r: any) => r.brand ? `${r.value} ${r.brand}` : r.value).join('\n'),
+                        ...p.specs,
+                    };
+                };
+
+                const newTables: Record<number, TableState> = {};
+                TABLE_IDS.forEach((id, i) => {
+                    const d = allData[i];
+                    newTables[id] = {
+                        data:        Array.isArray(d?.products) ? d.products.map(mapRow) : [],
+                        specLabels:  d?.table?.spec_labels ?? {},
+                        specColumns: d?.table?.spec_columns,
+                        schema:      d?.table?.schema_src ?? null,
+                        name:        d?.table?.name ?? '',
+                        selectedIdx: 0,
+                        syncFilter:  false,
+                    };
+                });
+                setTables(newTables);
             } catch (err) {
-                console.error('Error fetching table data:', err);
-            } finally {
-                setLoadingTables(false);
+                console.error('Error fetching bearings tables:', err);
             }
         };
-
-        fetchTableData();
+        fetchTables();
     }, [locale]);
 
-        const handleFilterChange = useCallback((col: string, val: string) => {
-        setFilters(prev => {
-            const colFilters = prev[col] || [];
-            const newFilters = colFilters.includes(val)
-                ? colFilters.filter(x => x !== val)
-                : [...colFilters, val];
-            return { ...prev, [col]: newFilters };
+    const search = useCallback((rows: any[]) => {
+        if (!searchQuery) return rows;
+        const q = searchQuery.toLowerCase();
+        return rows.filter(row =>
+            Object.values(row).some(v => v && String(v).toLowerCase().includes(q))
+        );
+    }, [searchQuery]);
+
+    const partLabel = t('bearingsPage.cols.part_number');
+
+    const tableConfigs = useMemo(() => {
+        return TABLE_IDS.map(id => {
+            const tbl = tables[id];
+            const searched = search(tbl.data);
+            const cols = buildCols(tbl.specLabels, tbl.specColumns, partLabel);
+            const specCols = cols.filter(c => !CROSS_REF_KEYS.has(c.key));
+            const clampIdx = Math.min(tbl.selectedIdx, Math.max(0, searched.length - 1));
+            const specsRows = tbl.syncFilter && searched.length ? [searched[clampIdx]] : searched;
+            return { id, tbl, searched, cols, specCols, specsRows };
         });
+    }, [tables, search, partLabel]);
+
+    const setSelection = useCallback((id: number, idx: number) => {
+        setTables(prev => ({ ...prev, [id]: { ...prev[id], selectedIdx: idx } }));
     }, []);
 
-    // Table 1: BUQ Dimensional Specs
-    const filteredT1 = useMemo(() => {
-        let rows = table1Data as any[];
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
+    const setSyncFilter = useCallback((id: number, v: boolean) => {
+        setTables(prev => ({ ...prev, [id]: { ...prev[id], syncFilter: v } }));
+    }, []);
+
+    const renderCell = useCallback((col: string, row: any) => {
+        if (col === 'part_number') {
+            const slug = articleToSlug(row.part_number || '');
+            return (
+                <Link href={`/${locale}/products/bearings/${slug}`} className={ptStyles.designationLink}>
+                    {row.part_number}
+                    {row.has_model_3d && <span className={styles.badge3d}>3D</span>}
+                </Link>
+            );
         }
-        Object.entries(filters).forEach(([col, activeVals]) => {
-            if (activeVals.length > 0) {
-                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
-            }
-        });
-        return rows;
-    }, [searchQuery, filters, table1Data]);
+        if (col === 'oem' || col === 'bearing_part' || col === 'bearing_brand')
+            return <span className={ptStyles.analoguesCell}>{renderTightCell(row[col])}</span>;
+        return row[col] ?? '—';
+    }, [locale]);
 
-    // Table 2: Performance data — from API
-    const filteredT2 = useMemo(() => {
-        let rows = table2Data;
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-        }
-        Object.entries(filters).forEach(([col, activeVals]) => {
-            if (activeVals.length > 0) {
-                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
-            }
-        });
-        return rows;
-    }, [searchQuery, filters, table2Data]);
-
-    // Table 3: Cross-references & applications — from API
-    const filteredT3 = useMemo(() => {
-        let rows = table3Data;
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-        }
-        Object.entries(filters).forEach(([col, activeVals]) => {
-            if (activeVals.length > 0) {
-                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
-            }
-        });
-        return rows;
-    }, [searchQuery, filters, table3Data]);
-
-    // Table 4: Additional specs — from API
-    const filteredT4 = useMemo(() => {
-        let rows = table4Data;
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-        }
-        Object.entries(filters).forEach(([col, activeVals]) => {
-            if (activeVals.length > 0) {
-                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
-            }
-        });
-        return rows;
-    }, [searchQuery, filters, table4Data]);
-
-    // Table 5: Additional specs — from API
-    const filteredT5 = useMemo(() => {
-        let rows = table5Data;
-        if (searchQuery) {
-            const q = searchQuery.toLowerCase();
-            rows = rows.filter(row => Object.values(row).some(val => val && String(val).toLowerCase().includes(q)));
-        }
-        Object.entries(filters).forEach(([col, activeVals]) => {
-            if (activeVals.length > 0) {
-                rows = rows.filter(row => activeVals.includes(String(row[col] ?? '')));
-            }
-        });
-        return rows;
-    }, [searchQuery, filters, table5Data]);
-
-    // Unique bore diameter values across all tables
-    const allOptions = useMemo(() => {
-        const all: Record<string, Set<string>> = {};
-        [...table1Data, ...table2Data, ...table3Data, ...table4Data, ...table5Data].forEach(r => {
-            Object.keys(r).forEach(k => {
-                const v = r[k];
-                if (v != null && String(v).trim() !== '' && String(v).trim() !== '-') {
-                    if (!all[k]) all[k] = new Set();
-                    all[k].add(String(v));
-                }
-            });
-        });
-        const result: Record<string, string[]> = {};
-        Object.keys(all).forEach(k => {
-            result[k] = [...all[k]].sort((a, b) => {
-                const numA = parseFloat(a);
-                const numB = parseFloat(b);
-                if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
-                return a.localeCompare(b);
-            });
-        });
-        return result;
-    }, [table2Data, table3Data, table4Data, table5Data]);
-
-    const { sorted: sortedT1, sortCol: sc1, sortDir: sd1, toggle: tog1 } = useSortableTable(filteredT1);
-    const { sorted: sortedT2, sortCol: sc2, sortDir: sd2, toggle: tog2 } = useSortableTable(filteredT2);
-    const { sorted: sortedT3, sortCol: sc3, sortDir: sd3, toggle: tog3 } = useSortableTable(filteredT3);
-    const { sorted: sortedT4, sortCol: sc4, sortDir: sd4, toggle: tog4 } = useSortableTable(filteredT4);
-    const { sorted: sortedT5, sortCol: sc5, sortDir: sd5, toggle: tog5 } = useSortableTable(filteredT5);
+    const reqBtn = useCallback((row: any) => (
+        <button className={ptStyles.reqBtn} onClick={() => setModalProduct(row.part_number || '')}>
+            {t('bearingsPage.block2.btn_request')}
+        </button>
+    ), [t]);
 
     return (
         <main className={styles.page}>
@@ -750,465 +514,128 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                 <LeadModal onClose={() => setModalProduct(null)} defaultDesignation={modalProduct} />
             )}
 
-            {/* 1. HERO SECTION */}
-            <section className={styles.hero} ref={heroRef.ref}>
-                <div className={`${styles.container} ${styles.heroContainer} ${heroRef.inView ? styles.animIn : ''}`}>
-                    <div className={styles.heroContent}>
+            {/* HERO */}
+            <section className={styles.hero} ref={heroRef.ref as React.Ref<HTMLElement>}>
+                <div className={styles.heroBgWrapper}>
+                    <Image src="/velnox/images/bearings/hero_bg.png" alt="VELNOX Bearings" fill
+                        className={styles.heroBgImg} quality={90} priority />
+                    <div className={styles.heroBgOverlay} />
+                </div>
+
+                <div className={styles.heroInner}>
+                    <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
                         <div className={styles.heroEyebrow}>
-                            <span className={styles.eyebrowLine}></span>
+                            <span className={styles.eyebrowLine} />
                             VELNOX BEARING UNITS
                         </div>
-                        <h1 className={styles.heroTitle}>{t('hero.title')}</h1>
-                        <p className={styles.heroSubtitle}>{t('hero.subtitle')}</p>
+                        <div className={styles.heroLogoWrapper}>
+                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
+                        </div>
+                        <h1 className={styles.heroTitle}>{t('bearingsPage.hero.title')}</h1>
+                        <p className={styles.heroLead}>{t('bearingsPage.hero.subtitle')}</p>
                     </div>
-                    <div className={styles.heroImageWrap}>
-                        <Image
-                            src="/velnox/images/bearings/hero-bearing.png"
-                            alt="VELNOX Bearing Unit Cross Section"
-                            width={520}
-                            height={520}
-                            priority
-                            className={styles.heroImage}
-                        />
-                    </div>
+                </div>
+
+                {/* Scroll Down Hint */}
+                <div className={styles.scrollHint} onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24">
+                        <path d="M12 5v14M19 12l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                 </div>
             </section>
 
-
-
-            {/* ─── Application: Packer Roller ─── */}
             <PackerRollerIntro />
 
-            {/* 3. TECHNICAL TABLES */}
-            <section className={styles.tablesSection} ref={tablesRef.ref}>
-                <div className={`${styles.tableSectionContainer} ${tablesRef.inView ? styles.animIn : ''}`}>
+            {/* STICKY SEARCH */}
+            <div id="sticky-sentinel" style={{ height: 1, marginTop: -1 }} />
 
-                    {/* Sentinel element — коли він зникає з viewport, header стає sticky */}
-                    <div id="sticky-sentinel" style={{ height: 1, marginTop: -1 }} />
-
-                    <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
-                        <div className={styles.stickyContainer}>
-                            <div className={styles.container}>
-                                <div className={styles.tablesHeader}>
-                                    <div className={styles.headerTitles}>
-                                        <h2 className={styles.sectionTitle}>{t('block2.title')}</h2>
-                                        <p className={styles.tablesIntro}>{t('block2.intro')}</p>
-                                    </div>
-                                    <div className={styles.searchWrap}>
-                                        <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <circle cx="11" cy="11" r="8"></circle>
-                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                        </svg>
-                                        <input
-                                            type="text"
-                                            className={styles.searchInput}
-                                            placeholder={t('block2.search_placeholder')}
-                                            value={searchQuery}
-                                            onChange={e => setSearchQuery(e.target.value)}
-                                        />
-                                    </div>
-                                </div>
+            <div className={styles.tablesHeaderWrap} ref={searchHeaderRef}>
+                <div className={styles.stickyContainer}>
+                    <div className={styles.container}>
+                        <div className={styles.tablesHeader}>
+                            <div className={styles.headerTitles}>
+                                <h2 className={styles.sectionTitle}>{t('bearingsPage.block2.title')}</h2>
+                                <p className={styles.tablesIntro}>{t('bearingsPage.block2.intro')}</p>
+                            </div>
+                            <div className={styles.searchWrap}>
+                                <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                </svg>
+                                <input
+                                    type="text"
+                                    className={styles.searchInput}
+                                    placeholder={t('bearingsPage.block2.search_placeholder')}
+                                    value={searchQuery}
+                                    onChange={e => setSearchQuery(e.target.value)}
+                                />
                             </div>
                         </div>
                     </div>
-
-                    {/* ─── BUQ Technical Schema (above Table 1) ─── */}
-                    <div className={styles.buqDrawingBlock}>
-                        <div className={styles.buqDrawingTitle}>ТЕХНІЧНЕ КРЕСЛЕННЯ — BUQ SERIES</div>
-                        <div className={styles.buqDrawingCompositeSingle}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src={tableSchemas['bearings-t1'] ?? '/velnox/images/products/bearings-t1/schema.png'}
-                                alt="BUQ Series Technical Drawing"
-                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
-                            />
-                        </div>
-                    </div>
-
-                    {/* ─── Table 1: BUQ Dimensional & Load Specs ─── */}
-                    <div className={styles.tableBlock}>
-                        <h3>{t('block2.table1.title')}</h3>
-                        <p className={styles.tableDesc}>{t('block2.table1.desc')}</p>
-                        <div className={styles.tableScroll}>
-                            <table className={`${styles.techTable} ${styles.techTableCompact}`}>
-                                <thead>
-                                    <tr>
-                                        <Th col="article" label={t('block2.table1.col_article')} toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="cross_ref" label={t('block2.table1.col_cross_ref')} toggle={tog1} sortCol={sc1} sortDir={sd1} />
-                                        <Th col="brand" label={t('block2.table1.col_brand')} toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['brand'] || []} selectedFilters={filters['brand'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="d_mm"    label={table1SpecLabels[T1_COL_TO_SPEC['d_mm']]    || 'Діаметр отвору d (мм)'}           toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['d_mm'] || []} selectedFilters={filters['d_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="d_inch"  label={table1SpecLabels[T1_COL_TO_SPEC['d_inch']]  || 'Діаметр отвору d (дюйм)'}          toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['d_inch'] || []} selectedFilters={filters['d_inch'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="A1"      label={table1SpecLabels[T1_COL_TO_SPEC['A1']]      || 'Загальна ширина корпусу A1 (мм)'}   toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A1'] || []} selectedFilters={filters['A1'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="A2"      label={table1SpecLabels[T1_COL_TO_SPEC['A2']]      || 'Товщина фланця корпусу A2 (мм)'}    toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A2'] || []} selectedFilters={filters['A2'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="J"       label={table1SpecLabels[T1_COL_TO_SPEC['J']]       || 'Відстань між отворами J (мм)'}       toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['J'] || []} selectedFilters={filters['J'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="L"       label={table1SpecLabels[T1_COL_TO_SPEC['L']]       || 'Загальна довжина L (мм)'}            toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['L'] || []} selectedFilters={filters['L'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="N"       label={table1SpecLabels[T1_COL_TO_SPEC['N']]       || 'Діаметр отвору N (мм)'}              toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['N'] || []} selectedFilters={filters['N'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="A"       label={table1SpecLabels[T1_COL_TO_SPEC['A']]       || 'Загальна ширина A (мм)'}             toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['A'] || []} selectedFilters={filters['A'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="mass_kg" label={table1SpecLabels[T1_COL_TO_SPEC['mass_kg']] || 'Маса (кг)'}                          toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Cdyn"    label={table1SpecLabels[T1_COL_TO_SPEC['Cdyn']]    || 'Динамічна вантажопідйомність Cdyn (кН)'} toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Cdyn'] || []} selectedFilters={filters['Cdyn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Co"      label={table1SpecLabels[T1_COL_TO_SPEC['Co']]      || 'Статична вантажопідйомність Co (кН)'}    toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Co'] || []} selectedFilters={filters['Co'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="Pu"      label={table1SpecLabels[T1_COL_TO_SPEC['Pu']]      || 'Гранична втомна міцність Pu (кН)'}        toggle={tog1} sortCol={sc1} sortDir={sd1} hasFilter filterOptions={allOptions['Pu'] || []} selectedFilters={filters['Pu'] || []} onFilterChange={handleFilterChange} />
-                                        <th className={styles.actionCol}></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedT1.map((row, i) => (
-                                        <tr key={row.slug || i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
-                                                <Link href={`/${locale}/products/bearings/${row.slug}`} className={styles.designationLink}>
-                                                    {row.article}
-                                                    {row.has_model_3d && <span className={styles.badge3d}>3D</span>}
-                                                </Link>
-                                            </td>
-                                            <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row.cross_ref)}</td>
-                                            <td data-label="Бренд">{renderBrandCell(row.brand)}</td>
-                                            <td data-label="Діаметр отвору d (мм)">{row.d_mm}</td>
-                                            <td data-label="Діаметр отвору d (дюйм)">{row.d_inch ?? '—'}</td>
-                                            <td data-label="Загальна ширина корпусу A1 (мм)">{row.A1}</td>
-                                            <td data-label="Товщина фланця корпусу A2 (мм)">{row.A2}</td>
-                                            <td data-label="Відстань між отворами J (мм)">{row.J}</td>
-                                            <td data-label="Загальна довжина L (мм)">{row.L}</td>
-                                            <td data-label="Діаметр отвору N (мм)">{row.N}</td>
-                                            <td data-label="Загальна ширина A (мм)">{row.A}</td>
-                                            <td data-label="Маса (кг)">{row.mass_kg}</td>
-                                            <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row.Cdyn}</td>
-                                            <td data-label="Статична вантажо-підйомність Co (кН)">{row.Co}</td>
-                                            <td data-label="Гранична втомна міцність Pu (кН)">{row.Pu}</td>
-                                            <td className={styles.actionCol}>
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row.article)}>
-                                                    {t('block2.btn_request')}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    {filteredT1.length === 0 && (
-                                        <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    {/* ─── Section: Table 2: Performance Data ─── */}
-                    <div className={styles.tableBlock}>
-                        <h3>{t('block2.table2.title')}</h3>
-                        <p className={styles.tableDesc}></p>
-
-                        {/* Diagram for Table 2 — same file as product card */}
-                        <div className={styles.tableDiagramContainer}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src={tableSchemas['bearings-t2'] ?? '/velnox/images/products/bearings-t2/schema.png'}
-                                alt="BUQ 308-2T3H-DS Technical Drawing"
-                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
-                                loading="lazy"
-                            />
-                        </div>
-
-                        <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
-                                <thead>
-                                    <tr>
-                                        <Th col="part_number" label="Позначення Velnox" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="bearing_designation" label="Позначення підшипника" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="brand_name" label="Бренд" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="cross_reference" label="Перехресні аналоги" toggle={tog2} sortCol={sc2} sortDir={sd2} />
-                                        <Th col="bore_diameter_d_mm" label="Діаметр отвору d (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['bore_diameter_d_mm'] || []} selectedFilters={filters['bore_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="total_housing_width_a1_mm" label="Загальна ширина корпусу A1 (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['total_housing_width_a1_mm'] || []} selectedFilters={filters['total_housing_width_a1_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="housing_flange_thickness_a2_mm" label="Товщина фланця корпусу A2 (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['housing_flange_thickness_a2_mm'] || []} selectedFilters={filters['housing_flange_thickness_a2_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="distance_between_holes_j_mm" label="Відстань між отворами J (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['distance_between_holes_j_mm'] || []} selectedFilters={filters['distance_between_holes_j_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="total_length_l_mm" label="Загальна довжина L (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['total_length_l_mm'] || []} selectedFilters={filters['total_length_l_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="hole_thread_ht" label="Отвір / Різьба H/T" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['hole_thread_ht'] || []} selectedFilters={filters['hole_thread_ht'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="overall_width_a_mm" label="Загальна ширина A (мм)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['overall_width_a_mm'] || []} selectedFilters={filters['overall_width_a_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="mass_kg" label="Маса (кг)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="dynamic_load_rating_cdyn_kn" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['dynamic_load_rating_cdyn_kn'] || []} selectedFilters={filters['dynamic_load_rating_cdyn_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="static_load_rating_co_kn" label="Статична вантажо-підйомність Co (кН)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['static_load_rating_co_kn'] || []} selectedFilters={filters['static_load_rating_co_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="fatigue_load_limit_pu_kn" label="Граничне навантаження втомної міцності Pu (кН)" toggle={tog2} sortCol={sc2} sortDir={sd2} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <th className={styles.actionCol}></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedT2.map((row, i) => {
-                                        const slug2 = articleToSlug(row['part_number'] || '');
-                                        return (
-                                        <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
-                                                <Link href={`/${locale}/products/bearings/${slug2}`} className={styles.designationLink}>
-                                                    {row['part_number'] || '-'}
-                                                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
-                                                </Link>
-                                            </td>
-                                            <td data-label="Позначення підшипника">{renderTightCell(row['bearing_designation'])}</td>
-                                            <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
-                                            <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
-                                            <td data-label="Діаметр отвору d (мм)">{row['bore_diameter_d_mm'] || '-'}</td>
-                                            <td data-label="Загальна ширина корпусу A1 (мм)">{row['total_housing_width_a1_mm'] || '-'}</td>
-                                            <td data-label="Товщина фланця корпусу A2 (мм)">{row['housing_flange_thickness_a2_mm'] || '-'}</td>
-                                            <td data-label="Відстань між отворами J (мм)">{row['distance_between_holes_j_mm'] || '-'}</td>
-                                            <td data-label="Загальна довжина L (мм)">{row['total_length_l_mm'] || '-'}</td>
-                                            <td data-label="Отвір / Різьба H/T">{row['hole_thread_ht'] || '-'}</td>
-                                            <td data-label="Загальна ширина A (мм)">{row['overall_width_a_mm'] || '-'}</td>
-                                            <td data-label="Маса (кг)">{row['mass_kg'] || '-'}</td>
-                                            <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row['dynamic_load_rating_cdyn_kn'] || '-'}</td>
-                                            <td data-label="Статична вантажо-підйомність Co (кН)">{row['static_load_rating_co_kn'] || '-'}</td>
-                                            <td data-label="Граничне навантаження втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
-                                            <td className={styles.actionCol}>
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || '')}>
-                                                    {t('block2.btn_request')}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        );
-                                    })}
-                                    {filteredT2.length === 0 && (
-                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    {/* ─── Section: Table 3: Cross-References & Applications ─── */}
-                    <div className={styles.tableBlock}>
-                        <h3>{t('block2.table3.title')}</h3>
-                        <p className={styles.tableDesc}>{t('block2.table3.desc')}</p>
-
-                        {/* Diagram for Table 3 — same file as product card */}
-                        <div className={styles.tableDiagramContainer}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src={tableSchemas['bearings-t3'] ?? '/velnox/images/products/bearings-t3/schema.png'}
-                                alt="BUQ 309-2T3H Technical Drawing"
-                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
-                                loading="lazy"
-                            />
-                        </div>
-
-                        <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
-                                <thead>
-                                    <tr>
-                                        <Th col="part_number" label="Позначення Velnox" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="bearing_designation" label="Позначення підшипника" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="brand_name" label="Бренд" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="cross_reference" label="Перехресні аналоги" toggle={tog3} sortCol={sc3} sortDir={sd3} />
-                                        <Th col="bore_diameter_d_mm" label="Діаметр отвору d (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['bore_diameter_d_mm'] || []} selectedFilters={filters['bore_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="total_length_l_mm" label="Загальна довжина L (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['total_length_l_mm'] || []} selectedFilters={filters['total_length_l_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="distance_between_holes_j_mm" label="Відстань між отворами J (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['distance_between_holes_j_mm'] || []} selectedFilters={filters['distance_between_holes_j_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="hole_thread_ht_mm" label="Отвір / Різьба H/T" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['hole_thread_ht_mm'] || []} selectedFilters={filters['hole_thread_ht_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="overall_width_a_mm" label="Загальна ширина A (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['overall_width_a_mm'] || []} selectedFilters={filters['overall_width_a_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="total_housing_width_a1_mm" label="Загальна ширина корпусу A1 (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['total_housing_width_a1_mm'] || []} selectedFilters={filters['total_housing_width_a1_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="housing_flange_thickness_a2_mm" label="Товщина фланця корпусу A2 (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['housing_flange_thickness_a2_mm'] || []} selectedFilters={filters['housing_flange_thickness_a2_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="width_inner_ring_b_mm" label="Ширина внутрішнього кільця B (мм)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['width_inner_ring_b_mm'] || []} selectedFilters={filters['width_inner_ring_b_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="static_load_rating_co_kn" label="Статична вантажо-підйомність Co (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['static_load_rating_co_kn'] || []} selectedFilters={filters['static_load_rating_co_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="dynamic_load_rating_cdyn_kn" label="Динамічна вантажо-підйомність Cdyn (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['dynamic_load_rating_cdyn_kn'] || []} selectedFilters={filters['dynamic_load_rating_cdyn_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="fatigue_load_limit_pu_kn" label="Гранична навантаженість втомної міцності Pu (кН)" toggle={tog3} sortCol={sc3} sortDir={sd3} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <th className={styles.actionCol}></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedT3.map((row, i) => {
-                                        const slug3 = articleToSlug(row['part_number'] || '');
-                                        return (
-                                        <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
-                                                <Link href={`/${locale}/products/bearings/${slug3}`} className={styles.designationLink}>
-                                                    {row['part_number'] || '-'}
-                                                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
-                                                </Link>
-                                            </td>
-                                            <td data-label="Позначення підшипника">{renderTightCell(row['bearing_designation'])}</td>
-                                            <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
-                                            <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
-                                            <td data-label="Діаметр отвору d (мм)">{row['bore_diameter_d_mm'] || '-'}</td>
-                                            <td data-label="Загальна довжина L (мм)">{row['total_length_l_mm'] || '-'}</td>
-                                            <td data-label="Відстань між отворами J (мм)">{row['distance_between_holes_j_mm'] || '-'}</td>
-                                            <td data-label="Отвір / Різьба H/T">{row['hole_thread_ht_mm'] || '-'}</td>
-                                            <td data-label="Загальна ширина A (мм)">{row['overall_width_a_mm'] || '-'}</td>
-                                            <td data-label="Загальна ширина корпусу A1 (мм)">{row['total_housing_width_a1_mm'] || '-'}</td>
-                                            <td data-label="Товщина фланця корпусу A2 (мм)">{row['housing_flange_thickness_a2_mm'] || '-'}</td>
-                                            <td data-label="Ширина внутрішнього кільця B (мм)">{row['width_inner_ring_b_mm'] || '-'}</td>
-                                            <td data-label="Статична вантажо-підйомність Co (кН)">{row['static_load_rating_co_kn'] || '-'}</td>
-                                            <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row['dynamic_load_rating_cdyn_kn'] || '-'}</td>
-                                            <td data-label="Гранична навантаженість втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
-                                            <td className={styles.actionCol}>
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || '')}>
-                                                    {t('block2.btn_request')}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        );
-                                    })}
-                                    {filteredT3.length === 0 && (
-                                        <tr><td colSpan={15} className={styles.emptyState}>Нічого не знайдено</td></tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    {/* ─── Grouped Technical Tables Section (Tables 4 & 5) ─── */}
-                    <div className={styles.tableBlock}>
-                        <h3>{t('block2.table4.title')}</h3>
-                        <div className={styles.tableScroll}>
-                            <table className={`${styles.techTable} ${styles.techTableWide}`}>
-                                <thead>
-                                    <tr>
-                                        <Th col="part_number" label="Позначення Velnox" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="bearing_designation" label="Позначення підшипника" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="brand_name" label="Бренд" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="cross_reference" label="Перехресні аналоги" toggle={tog4} sortCol={sc4} sortDir={sd4} />
-                                        <Th col="bore_diameter_d_mm" label="Діаметр отвору d (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['bore_diameter_d_mm'] || []} selectedFilters={filters['bore_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="centering_diameter_d1_mm" label="Центруючий діаметр d1 (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['centering_diameter_d1_mm'] || []} selectedFilters={filters['centering_diameter_d1_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="housing_overall_width_l1_mm" label="Загальна ширина корпусу L1 (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['housing_overall_width_l1_mm'] || []} selectedFilters={filters['housing_overall_width_l1_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="distance_between_holes_j1_mm" label="Відстань між отворами J1 (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['distance_between_holes_j1_mm'] || []} selectedFilters={filters['distance_between_holes_j1_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="housing_overall_width_l2_mm" label="Загальна ширина корпусу L2 (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['housing_overall_width_l2_mm'] || []} selectedFilters={filters['housing_overall_width_l2_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="distance_between_holes_j2_mm" label="Відстань між отворами J2 (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['distance_between_holes_j2_mm'] || []} selectedFilters={filters['distance_between_holes_j2_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="overall_width_a_mm" label="Загальна ширина A (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['overall_width_a_mm'] || []} selectedFilters={filters['overall_width_a_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="flange_width_a1_mm" label="Ширина фланця A1 (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['flange_width_a1_mm'] || []} selectedFilters={filters['flange_width_a1_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="flange_width_a2_mm" label="Ширина фланця A2 (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['flange_width_a2_mm'] || []} selectedFilters={filters['flange_width_a2_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="centering_diameter_height_a3_mm" label="Висота центруючого діаметра A3 (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['centering_diameter_height_a3_mm'] || []} selectedFilters={filters['centering_diameter_height_a3_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="threaded_hole_size_t" label="Різьбовий отвір T" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['threaded_hole_size_t'] || []} selectedFilters={filters['threaded_hole_size_t'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="hole_diameter_h_mm" label="Діаметр отвору H (мм)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['hole_diameter_h_mm'] || []} selectedFilters={filters['hole_diameter_h_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="mass_kg" label="Маса (кг)" toggle={tog4} sortCol={sc4} sortDir={sd4} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
-                                        <th className={styles.actionCol}></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedT4.map((row, i) => {
-                                        const slug4 = articleToSlug(row['part_number'] || '');
-                                        return (
-                                        <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
-                                                <Link href={`/${locale}/products/bearings/${slug4}`} className={styles.designationLink}>
-                                                    {row['part_number'] || '-'}
-                                                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
-                                                </Link>
-                                            </td>
-                                            <td data-label="Позначення підшипника">{renderDesignationCell(row['bearing_designation'])}</td>
-                                            <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
-                                            <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
-                                            <td data-label="Діаметр отвору d (мм)">{row['bore_diameter_d_mm'] || '-'}</td>
-                                            <td data-label="Центруючий діаметр d1 (мм)">{row['centering_diameter_d1_mm'] || '-'}</td>
-                                            <td data-label="Загальна ширина корпусу L1 (мм)">{row['housing_overall_width_l1_mm'] || '-'}</td>
-                                            <td data-label="Відстань між отворами J1 (мм)">{row['distance_between_holes_j1_mm'] || '-'}</td>
-                                            <td data-label="Загальна ширина корпусу L2 (мм)">{row['housing_overall_width_l2_mm'] || '-'}</td>
-                                            <td data-label="Відстань між отворами J2 (мм)">{row['distance_between_holes_j2_mm'] || '-'}</td>
-                                            <td data-label="Загальна ширина A (мм)">{row['overall_width_a_mm'] || '-'}</td>
-                                            <td data-label="Ширина фланця A1 (мм)">{row['flange_width_a1_mm'] || '-'}</td>
-                                            <td data-label="Ширина фланця A2 (мм)">{row['flange_width_a2_mm'] || '-'}</td>
-                                            <td data-label="Висота центруючого діаметра A3 (мм)">{row['centering_diameter_height_a3_mm'] || '-'}</td>
-                                            <td data-label="Різьбовий отвір T">{row['threaded_hole_size_t'] || '-'}</td>
-                                            <td data-label="Діаметр отвору H (мм)">{row['hole_diameter_h_mm'] || '-'}</td>
-                                            <td data-label="Маса (кг)">{row['mass_kg'] || '-'}</td>
-                                            <td className={styles.actionCol}>
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || row['bearing_designation'] || '')}>
-                                                    {t('block2.btn_request')}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    );
-                                    })}
-                                    {filteredT4.length === 0 && (
-                                        <tr><td colSpan={18} className={styles.emptyState}>Нічого не знайдено</td></tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    {/* ─── Section: Table 5: Additional Bearing Specifications ─── */}
-
-                    <div className={styles.tableBlock}>
-                        <h3>{t('block2.table5.title')}</h3>
-                        <div className={styles.tableDiagramContainer}>
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                                src={tableSchemas['bearings-t5'] ?? '/velnox/images/products/bearings-t5/schema.png'}
-                                alt="BUP 207-X3L Technical Drawing"
-                                style={{ maxWidth: '100%', maxHeight: '280px', width: 'auto', height: 'auto', display: 'block' }}
-                                loading="lazy"
-                            />
-                        </div>
-                        <div className={styles.tableScroll}>
-                            <table className={styles.techTable}>
-                                <thead>
-                                    <tr>
-                                        <th className={styles.partNumCol}>{t('cols.part_number')}</th>
-                                        <Th col="bearing_designation" label={t('cols.bearing_designation')} toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="brand_name" label={t('cols.brand')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['brand_name'] || []} selectedFilters={filters['brand_name'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="cross_reference" label={t('cols.cross_ref')} toggle={tog5} sortCol={sc5} sortDir={sd5} />
-                                        <Th col="bore_diameter_d_mm" label={table5SpecLabels['d_mm'] || t('cols.d_mm')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['bore_diameter_d_mm'] || []} selectedFilters={filters['bore_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="outside_diameter_d_mm" label={table5SpecLabels['D_mm'] || t('cols.out_d')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['outside_diameter_d_mm'] || []} selectedFilters={filters['outside_diameter_d_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="pitch_circle_diameter_j_mm" label={table5SpecLabels['J_mm'] || t('cols.pitch_j')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['pitch_circle_diameter_j_mm'] || []} selectedFilters={filters['pitch_circle_diameter_j_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="hole_thread_ht" label={table5SpecLabels['H_T'] || t('cols.ht')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['hole_thread_ht'] || []} selectedFilters={filters['hole_thread_ht'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="overall_width_a_mm" label={table5SpecLabels['A_mm'] || t('cols.a')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['overall_width_a_mm'] || []} selectedFilters={filters['overall_width_a_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="housing_flange_thickness_a2_mm" label={table5SpecLabels['A2_mm'] || t('cols.a2')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['housing_flange_thickness_a2_mm'] || []} selectedFilters={filters['housing_flange_thickness_a2_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="width_inner_ring_b_mm" label={table5SpecLabels['B_mm'] || t('cols.b')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['width_inner_ring_b_mm'] || []} selectedFilters={filters['width_inner_ring_b_mm'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="mass_kg" label={table5SpecLabels['mass_kg'] || t('cols.mass')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['mass_kg'] || []} selectedFilters={filters['mass_kg'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="static_load_rating_co_kn" label={table5SpecLabels['co_kn'] || t('cols.co')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['static_load_rating_co_kn'] || []} selectedFilters={filters['static_load_rating_co_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="dynamic_load_rating_cdyn_kn" label={table5SpecLabels['cdyn_kn'] || t('cols.cdyn')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['dynamic_load_rating_cdyn_kn'] || []} selectedFilters={filters['dynamic_load_rating_cdyn_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <Th col="fatigue_load_limit_pu_kn" label={table5SpecLabels['pu_kn'] || t('cols.pu')} toggle={tog5} sortCol={sc5} sortDir={sd5} hasFilter filterOptions={allOptions['fatigue_load_limit_pu_kn'] || []} selectedFilters={filters['fatigue_load_limit_pu_kn'] || []} onFilterChange={handleFilterChange} />
-                                        <th className={styles.actionCol}></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedT5.map((row, i) => {
-                                        const slug5 = articleToSlug(row['part_number'] || '');
-                                        return (
-                                        <tr key={i}>
-                                            <td data-label="Позначення Velnox" className={styles.partNumCell}>
-                                                <Link href={`/${locale}/products/bearings/${slug5}`} className={styles.designationLink}>
-                                                    {row['part_number'] || '-'}
-                                                    {row['has_model_3d'] && <span className={styles.badge3d}>3D</span>}
-                                                </Link>
-                                            </td>
-                                            <td data-label="Позначення підшипника">{renderDesignationCell(row['bearing_designation'])}</td>
-                                            <td data-label="Бренд">{renderBrandCell(row['brand_name'])}</td>
-                                            <td data-label="Перехресні аналоги" className={styles.analoguesCell}>{renderTightCell(row['cross_reference'])}</td>
-                                            <td data-label="Діаметр отвору d (мм)">{row['bore_diameter_d_mm'] || '-'}</td>
-                                            <td data-label="Зовнішній діаметр D (мм)">{row['outside_diameter_d_mm'] || '-'}</td>
-                                            <td data-label="Діаметр кола отворів J (мм)">{row['pitch_circle_diameter_j_mm'] || '-'}</td>
-                                            <td data-label="Отвір / Різьба H/T">{row['hole_thread_ht'] || '-'}</td>
-                                            <td data-label="Загальна ширина A (мм)">{row['overall_width_a_mm'] || '-'}</td>
-                                            <td data-label="Товщина фланця корпусу A2 (мм)">{row['housing_flange_thickness_a2_mm'] || '-'}</td>
-                                            <td data-label="Ширина внутрішнього кільця B (мм)">{row['width_inner_ring_b_mm'] || '-'}</td>
-                                            <td data-label="Маса (кг)">{row['mass_kg'] || '-'}</td>
-                                            <td data-label="Статична вантажо-підйомність Co (кН)">{row['static_load_rating_co_kn'] || '-'}</td>
-                                            <td data-label="Динамічна вантажо-підйомність Cdyn (кН)">{row['dynamic_load_rating_cdyn_kn'] || '-'}</td>
-                                            <td data-label="Граничне навантаження втомної міцності Pu (кН)">{row['fatigue_load_limit_pu_kn'] || '-'}</td>
-                                            <td className={styles.actionCol}>
-                                                <button className={styles.reqBtn} onClick={() => setModalProduct(row['part_number'] || row['bearing_designation'] || '')}>
-                                                    {t('block2.btn_request')}
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    );
-                                    })}
-                                    {filteredT5.length === 0 && (
-                                        <tr><td colSpan={16} className={styles.emptyState}>Нічого не знайдено</td></tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
-            </section>
+            </div>
 
-            {/* 4. CTA SECTION */}
+            {/* 5 TABLES */}
+            {tableConfigs.map(({ id, tbl, searched, cols, specCols, specsRows }) => {
+                if (tbl.data.length === 0 && !tbl.name) return null;
+                return (
+                    <section key={id} className={styles.tablesSection}>
+                        <div className={styles.tableSectionContainer}>
+                            <div className={styles.tableBlock}>
+                                <div className={styles.tableCardHeader}>
+                                    <h3>{tbl.name || t(`bearingsPage.block2.table${id}.title`)}</h3>
+                                </div>
+
+                                <div className={styles.desktopSplit}>
+                                    <div className={styles.tableSplitLayout}>
+                                        <CrossRefPanel
+                                            rows={searched}
+                                            selectedIdx={tbl.selectedIdx}
+                                            onSelect={(idx) => setSelection(id, idx)}
+                                            filterSpecs={tbl.syncFilter}
+                                            onFilterChange={(v) => setSyncFilter(id, v)}
+                                            locale={locale}
+                                            categorySlug="bearings"
+                                        />
+                                        <div className={styles.schemaPanel}>
+                                            {tbl.schema && (
+                                                <ProductSchema src={tbl.schema} alt={`Bearings table ${id} — технічна схема`} />
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className={styles.specsPanel}>
+                                        <ProductTable columns={specCols} rows={specsRows} renderCell={renderCell} actionCell={reqBtn} />
+                                    </div>
+                                </div>
+
+                                <div className={styles.mobileCombined}>
+                                    {tbl.schema && (
+                                        <ProductSchema src={tbl.schema} alt={`Bearings table ${id} — технічна схема`} />
+                                    )}
+                                    <ProductTable columns={cols} rows={searched} renderCell={renderCell} actionCell={reqBtn} />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                );
+            })}
+
+            {/* CTA */}
             <section className={styles.cta} ref={ctaRef.ref}>
                 <div className={`${styles.container} ${ctaRef.inView ? styles.animIn : ''}`}>
-                    <h2 className={styles.ctaTitle}>{t('block3.title')}</h2>
-                    <p className={styles.ctaText}>{t('block3.text')}</p>
+                    <h2 className={styles.ctaTitle}>{t('bearingsPage.block3.title')}</h2>
+                    <p className={styles.ctaText}>{t('bearingsPage.block3.text')}</p>
                     <div className={styles.ctaButtons}>
                         <button className={styles.btnPrimary} onClick={() => setModalProduct('General Engineering Support')}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                             </svg>
-                            {t('block3.btn_contact')}
+                            {t('bearingsPage.block3.btn_contact')}
                         </button>
                         <button className={styles.btnSecondary}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
                             </svg>
-                            {t('block3.btn_pdf')}
+                            {t('bearingsPage.block3.btn_pdf')}
                         </button>
                         <button className={styles.btnSecondary}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
@@ -1216,7 +643,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                 <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
                                 <line x1="12" y1="22.08" x2="12" y2="12" />
                             </svg>
-                            {t('block3.btn_cad')}
+                            {t('bearingsPage.block3.btn_cad')}
                         </button>
                     </div>
                 </div>

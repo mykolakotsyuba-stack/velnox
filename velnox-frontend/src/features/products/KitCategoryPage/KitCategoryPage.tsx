@@ -504,6 +504,13 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
                         <p className={styles.heroLead}>{t('kitPage.hero.subtitle')}</p>
                     </div>
                 </div>
+
+                {/* Scroll Down Hint */}
+                <div className={styles.scrollHint} onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24">
+                        <path d="M12 5v14M19 12l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </div>
             </section>
 
             {/* ── STICKY SEARCH ── */}
