@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './custom.module.css';
 import Image from 'next/image';
-import { Search, Upload, X as CloseIcon, FileText, ExternalLink } from 'lucide-react';
+import { Search, Upload, X as CloseIcon, FileText, ExternalLink, Check } from 'lucide-react';
 
 interface Product {
     article: string;
@@ -18,14 +18,15 @@ interface Product {
 export function CustomForm({ locale }: { locale: string }) {
     const t = useTranslations('oemPage.form');
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
-    
-    // Searchable Select States
+
+    // Multi-select States
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<Product[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const [showResults, setShowResults] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
     const searchRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     // File Upload States
     const [files, setFiles] = useState<File[]>([]);
@@ -38,7 +39,6 @@ export function CustomForm({ locale }: { locale: string }) {
                 setSearchResults([]);
                 return;
             }
-
             setIsSearching(true);
             try {
                 const params = new URLSearchParams({ q: searchQuery, per_page: '12', locale });
@@ -56,21 +56,35 @@ export function CustomForm({ locale }: { locale: string }) {
                 setIsSearching(false);
             }
         };
-
         const timer = setTimeout(fetchProducts, 300);
         return () => clearTimeout(timer);
     }, [searchQuery]);
 
-    // Click outside search
+    // Click outside → close dropdown
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
                 setShowResults(false);
             }
         }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
+
+    const isSelected = (p: Product) => selectedProducts.some(s => s.slug === p.slug);
+
+    const toggleProduct = (p: Product) => {
+        setSelectedProducts(prev =>
+            isSelected(p) ? prev.filter(s => s.slug !== p.slug) : [...prev, p]
+        );
+        // keep dropdown open, clear search so user can search again
+        setSearchQuery('');
+        inputRef.current?.focus();
+    };
+
+    const removeChip = (slug: string) => {
+        setSelectedProducts(prev => prev.filter(s => s.slug !== slug));
+    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -139,82 +153,98 @@ export function CustomForm({ locale }: { locale: string }) {
                         
                         <div className={styles.formGroup}>
                             <h3 className={styles.groupTitle}>{t('section_contacts')}</h3>
-                            
-                            {/* NEW: Base Product Selector */}
+
+                            {/* Multi-select Product Picker */}
                             <div className={styles.inputField} style={{ marginBottom: '24px' }}>
                                 <span className={styles.label}>{t('base_product')}</span>
                                 <div className={styles.comboboxWrapper} ref={searchRef}>
-                                    <div style={{ position: 'relative' }}>
-                                        <input 
-                                            type="text" 
-                                            className={styles.input} 
-                                            placeholder={t('base_product_ph')}
-                                            value={selectedProduct ? selectedProduct.article : searchQuery}
-                                            onChange={(e) => {
-                                                if (selectedProduct) setSelectedProduct(null);
-                                                setSearchQuery(e.target.value);
-                                                setShowResults(true);
-                                            }}
-                                            onFocus={() => {
-                                                if (searchQuery.length >= 1) {
+
+                                    {/* Input box with chips inside */}
+                                    <div
+                                        className={styles.multiInputBox}
+                                        onClick={() => inputRef.current?.focus()}
+                                    >
+                                        {/* Selected chips */}
+                                        {selectedProducts.map(p => (
+                                            <span key={p.slug} className={styles.chip}>
+                                                <span className={styles.chipLabel}>{p.article}</span>
+                                                <button
+                                                    type="button"
+                                                    className={styles.chipRemove}
+                                                    onMouseDown={e => { e.preventDefault(); removeChip(p.slug); }}
+                                                >
+                                                    <CloseIcon size={11} />
+                                                </button>
+                                            </span>
+                                        ))}
+
+                                        {/* Search input */}
+                                        <div className={styles.multiInputInner}>
+                                            <Search size={15} className={styles.multiSearchIcon} />
+                                            <input
+                                                ref={inputRef}
+                                                type="text"
+                                                className={styles.multiInput}
+                                                placeholder={selectedProducts.length === 0 ? t('base_product_ph') : ''}
+                                                value={searchQuery}
+                                                onChange={e => {
+                                                    setSearchQuery(e.target.value);
                                                     setShowResults(true);
-                                                }
-                                            }}
-                                            style={{ paddingLeft: '40px' }}
-                                        />
-                                        <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }} />
-                                        {selectedProduct && (
-                                            <button 
-                                                type="button"
-                                                onClick={() => { setSelectedProduct(null); setSearchQuery(''); }}
-                                                style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer' }}
-                                            >
-                                                <CloseIcon size={16} />
-                                            </button>
-                                        )}
-                                        {isSearching && (
-                                            <div className={styles.spinner} style={{ position: 'absolute', right: selectedProduct ? '40px' : '14px', top: '50%', transform: 'translateY(-50%)' }}>
-                                                ...
-                                            </div>
-                                        )}
+                                                }}
+                                                onFocus={() => {
+                                                    if (searchQuery.length >= 1) setShowResults(true);
+                                                }}
+                                            />
+                                            {isSearching && (
+                                                <span className={styles.multiSpinner} />
+                                            )}
+                                        </div>
                                     </div>
 
+                                    {/* Dropdown */}
                                     {showResults && (searchQuery.length >= 1 || isSearching) && (
                                         <div className={styles.comboboxResults}>
                                             {isSearching ? (
                                                 <div className={styles.comboboxLoading}>...</div>
                                             ) : searchResults.length > 0 ? (
-                                                searchResults.map((p) => {
-                                                    const matchedOem = findMatchedOem(p, searchQuery);
+                                                searchResults.map(p => {
+                                                    const matched = findMatchedOem(p, searchQuery);
+                                                    const selected = isSelected(p);
                                                     return (
-                                                        <div 
-                                                            key={p.slug} 
-                                                            className={styles.comboboxItem}
-                                                            onClick={(e) => {
-                                                                // Only select if the click wasn't on the external link icon
+                                                        <div
+                                                            key={p.slug}
+                                                            className={`${styles.comboboxItem} ${selected ? styles.comboboxItemSelected : ''}`}
+                                                            onMouseDown={e => {
+                                                                e.preventDefault();
                                                                 if (!(e.target as HTMLElement).closest(`.${styles.viewProductBtn}`)) {
-                                                                    setSelectedProduct(p);
-                                                                    setShowResults(false);
+                                                                    toggleProduct(p);
                                                                 }
                                                             }}
                                                         >
+                                                            {/* Checkmark */}
+                                                            <span className={styles.comboboxCheck}>
+                                                                {selected && <Check size={14} />}
+                                                            </span>
+
                                                             <div className={styles.comboboxItemContent}>
                                                                 <span className={styles.comboboxItemTitle}>{p.article}</span>
                                                                 <span className={styles.comboboxItemSub}>{p.name}</span>
-                                                                {matchedOem && (
-                                                                    <span className={styles.comboboxItemOem}>OEM: {matchedOem}</span>
+                                                                {matched && (
+                                                                    <span className={styles.comboboxItemOem}>OEM: {matched}</span>
                                                                 )}
                                                             </div>
-                                                            <button 
+
+                                                            <button
                                                                 type="button"
                                                                 className={styles.viewProductBtn}
                                                                 title="View Product"
-                                                                onClick={(e) => {
+                                                                onMouseDown={e => {
+                                                                    e.preventDefault();
                                                                     e.stopPropagation();
                                                                     window.open(`/velnox/${locale}/products/${p.category}/${p.slug}`, '_blank');
                                                                 }}
                                                             >
-                                                                <ExternalLink size={16} />
+                                                                <ExternalLink size={15} />
                                                             </button>
                                                         </div>
                                                     );
