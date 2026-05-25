@@ -2579,7 +2579,7 @@ class DatabaseSeeder extends Seeder
             'pl' => 'Łożysko 203KRR2-R3 VX to jednorzędowe promieniowe łożysko kulkowe z otworem w kształcie litery D (d = 16,26 mm) do montażu na wałach z płaszczyzną bez dodatkowych śrub ustalających. Podwójne uszczelnienia gumowe chronią przed wilgocią i zanieczyszczeniami podczas prac polowych. Średnica zewnętrzna D = 40 mm, szerokość pierścienia wewnętrznego B = 18,29 mm, szerokość pierścienia zewnętrznego C = 12 mm. Nośność dynamiczna Cdyn = 9,5 kN, statyczna Co = 4,75 kN. Kompatybilne z maszynami CASE, John Deere, AGCO, Gehl, Grimme i Great Plains.',
         ] as $locale => $desc) {
             DB::table('translations')->updateOrInsert(
-                ['entity_type' => 'product', 'entity_id' => $pk1, 'locale' => $locale, 'field' => 'description'],
+                ['entity_type' => 'product', 'entity_id' => $pk1, 'locale' => $locale, 'field' => 'desc'],
                 ['value' => $desc]
             );
         }
@@ -2696,7 +2696,7 @@ class DatabaseSeeder extends Seeder
             'pl' => 'Łożysko 204PY3 VX to jednorzędowe promieniowe łożysko kulkowe z okrągłym otworem (d = 16 mm) do precyzyjnego montażu w sekcjach siewnych i uprawowych. Podwójne uszczelnienia gumowe chronią przed kurzem i wilgocią. Średnica zewnętrzna D = 45,2 mm, szerokość pierścienia wewnętrznego B = 18,67 mm, szerokość pierścienia zewnętrznego C = 15,4 mm, masa 0,13 kg. Nośność dynamiczna Cdyn = 12,84 kN, statyczna Co = 6,65 kN. Bezpośredni zamiennik TIMKEN 204 PY2 / BB204RRY3, PEER 204 PF3, FKL 06C04 2Z. Kompatybilne z maszynami HORSCH, CASE, Vaderstad, Great Plains, John Deere, AMAZONE, KINZE i KUHN.',
         ] as $locale => $desc) {
             DB::table('translations')->updateOrInsert(
-                ['entity_type' => 'product', 'entity_id' => $pk2, 'locale' => $locale, 'field' => 'description'],
+                ['entity_type' => 'product', 'entity_id' => $pk2, 'locale' => $locale, 'field' => 'desc'],
                 ['value' => $desc]
             );
         }
@@ -2822,7 +2822,7 @@ class DatabaseSeeder extends Seeder
             'pl' => 'Łożysko 5203KYY3 VX to dwurzędowe skośne łożysko kulkowe z okrągłym otworem (d = 16,256 mm) i kątem kontaktu α = 30°. Przeznaczone do pracy przy kombinowanych obciążeniach promieniowych i osiowych w sekcjach siewnych i maszynach talerzowych. Średnica zewnętrzna D = 40 mm, szerokość pierścienia wewnętrznego B = 44,12 mm, szerokość pierścienia zewnętrznego C = 39,12 mm, średnica kołnierza d1 = 23,5 mm, masa 0,218 kg. Nośność dynamiczna Cdyn = 14,2 kN, statyczna Co = 8,8 kN, Pu = 0,37 kN. Bezpośredni zamiennik TIMKEN/RBF/CT-AGRI 5203 KYY2, FKL SL-5203 2T, NSK-RHP DAC 164044 2RS. Kompatybilne z maszynami GASPARDO, KRAUSE, KINZE, Great Plains, AMAZONE, SUNFLOWER, MONOSEM, John Deere, KUHN, HORSCH i KVERNELAND.',
         ] as $locale => $desc) {
             DB::table('translations')->updateOrInsert(
-                ['entity_type' => 'product', 'entity_id' => $pk3, 'locale' => $locale, 'field' => 'description'],
+                ['entity_type' => 'product', 'entity_id' => $pk3, 'locale' => $locale, 'field' => 'desc'],
                 ['value' => $desc]
             );
         }
@@ -2935,7 +2935,7 @@ class DatabaseSeeder extends Seeder
             'pl' => 'Łożysko 5206KPP3 VX to dwurzędowe skośne łożysko kulkowe z otworem w kształcie litery D (d = 30,15 mm) i kątem kontaktu α = 25°. Konstrukcja D-bore zapewnia pewne mocowanie na wale bez dodatkowych elementów blokujących. Średnica zewnętrzna D = 62 mm, szerokość pierścienia wewnętrznego B = 50 mm, szerokość pierścienia zewnętrznego C = 37 mm, masa 0,5 kg. Nośność dynamiczna Cdyn = 28,7 kN, statyczna Co = 21,8 kN. Bezpośredni zamiennik PFI/TIMKEN/RBF/CT-AGRI/FKL 5206 KPP3, PEER 5206RPP3. Kompatybilne z maszynami Great Plains (822-215C), CASE (87283953), John Deere (AN261766/AN261637) i KINZE (GA8603, GA8641).',
         ] as $locale => $desc) {
             DB::table('translations')->updateOrInsert(
-                ['entity_type' => 'product', 'entity_id' => $pk4, 'locale' => $locale, 'field' => 'description'],
+                ['entity_type' => 'product', 'entity_id' => $pk4, 'locale' => $locale, 'field' => 'desc'],
                 ['value' => $desc]
             );
         }
@@ -3047,7 +3047,7 @@ class DatabaseSeeder extends Seeder
             'pl' => 'Łożysko 885154B VX to specjalne łożysko igiełkowe o średnicy otworu d = 15,88 mm i średnicy wewnętrznej bieżni d1 = 12 mm. Średnica zewnętrzna D = 30 mm, długość L = 69 mm, szerokość pierścienia zewnętrznego C = 38,8 mm, odległość do kołnierza E = 5 mm, masa 0,183 kg. Nośność dynamiczna Cdyn = 5,15 kN, statyczna Co = 2,94 kN, Pu = 0,124 kN. Konstrukcja igiełkowa zapewnia wysoką nośność promieniową przy minimalnym przekroju poprzecznym. Bezpośredni zamiennik CT-AGRI 885154B, RBF/JTEKT (Koyo) IB06930 SRS, RBF PN 00043, PEER WP5203-KRP2-N-A217. Kompatybilne z maszynami Horsch (00310131, 96140018), CASE (201765C91, 227914R91), Great Plains (822-023C) i John Deere (885154B, AN131668, AN131688).',
         ] as $locale => $desc) {
             DB::table('translations')->updateOrInsert(
-                ['entity_type' => 'product', 'entity_id' => $pk5, 'locale' => $locale, 'field' => 'description'],
+                ['entity_type' => 'product', 'entity_id' => $pk5, 'locale' => $locale, 'field' => 'desc'],
                 ['value' => $desc]
             );
         }
@@ -3166,7 +3166,7 @@ class DatabaseSeeder extends Seeder
             'pl' => 'Łożysko AA205DD VX to promieniowe łożysko kulkowe z otworem w kształcie litery D (d = 16 mm) i kątem kontaktu α = 25° do sekcji siewnych Great Plains. Średnica kołnierza d1 = 33,74 mm, średnica zewnętrzna D = 53,086 mm, szerokość pierścienia wewnętrznego B = 19,4 mm, szerokość pierścienia zewnętrznego C = 18,288 mm, masa 0,21 kg. Nośność dynamiczna Cdyn = 14,02 kN, statyczna Co = 7,82 kN, Pu = 0,328 kN. Bezpośredni zamiennik Great Plains 188-001V / 205 GP, RBF 205 PP13, PEER BB205RPP13, HARP 376905 EKL19, FKL SL5316-2T. Kompatybilne z siewnikami Great Plains (822-236C) i maszynami KRAUSE (40-172).',
         ] as $locale => $desc) {
             DB::table('translations')->updateOrInsert(
-                ['entity_type' => 'product', 'entity_id' => $pk6, 'locale' => $locale, 'field' => 'description'],
+                ['entity_type' => 'product', 'entity_id' => $pk6, 'locale' => $locale, 'field' => 'desc'],
                 ['value' => $desc]
             );
         }
@@ -3276,7 +3276,7 @@ class DatabaseSeeder extends Seeder
             'pl' => 'Łożysko AA59196 VX to dwurzędowe skośne łożysko kulkowe z okrągłym otworem (d = 16,027 mm) i kątem kontaktu α = 20°. Dwurzędowa konstrukcja zapewnia zwiększoną sztywność osiową w sekcjach siewnych i zespołach rolek dogniatających. Średnica zewnętrzna D = 45,225 mm, szerokość pierścienia wewnętrznego B = 26 mm, szerokość pierścienia zewnętrznego C = 22,82 mm, masa 0,19 kg. Nośność dynamiczna Cdyn = 16,3 kN, statyczna Co = 10,9 kN, Pu = 0,458 kN. Bezpośredni zamiennik PEER 5204 KRY2-R-A268, RBF 5204 РУ3, CT-AGRI A59196, KABAT P59196. Kompatybilne z maszynami HORSCH (60021679, 60054734), John Deere (AA104813, AA59196) i KINZE (GA26920).',
         ] as $locale => $desc) {
             DB::table('translations')->updateOrInsert(
-                ['entity_type' => 'product', 'entity_id' => $pk7, 'locale' => $locale, 'field' => 'description'],
+                ['entity_type' => 'product', 'entity_id' => $pk7, 'locale' => $locale, 'field' => 'desc'],
                 ['value' => $desc]
             );
         }
@@ -3384,7 +3384,7 @@ class DatabaseSeeder extends Seeder
             'pl' => 'Łożysko F-562024.02KLQ VX to dwurzędowe skośne łożysko kulkowe z okrągłym otworem (d = 16,027 mm) i kątem kontaktu α = 25° do serwisowanych węzłów maszyn rolniczych. Średnica zewnętrzna D = 60 mm, szerokość pierścienia wewnętrznego B = 22,5 mm, szerokość pierścienia zewnętrznego C = 22,9 mm, masa 0,31 kg. Nośność dynamiczna Cdyn = 22 kN, statyczna Co = 15,2 kN, Pu = 0,64 kN. Powiększona średnica zewnętrzna zapewnia zwiększoną nośność przy kompaktowych wymiarach. Bezpośredni zamiennik INA/NTE F-562024.02.KLQ, CT-AGRI 23042700, RBF PN 008, FKL IL20-71/6T-B16.',
         ] as $locale => $desc) {
             DB::table('translations')->updateOrInsert(
-                ['entity_type' => 'product', 'entity_id' => $pk8, 'locale' => $locale, 'field' => 'description'],
+                ['entity_type' => 'product', 'entity_id' => $pk8, 'locale' => $locale, 'field' => 'desc'],
                 ['value' => $desc]
             );
         }
