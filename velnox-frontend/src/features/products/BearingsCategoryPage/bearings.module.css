@@ -1017,13 +1017,15 @@
     }
 
     .tablesHeaderWrap.isSticky .stickyContainer {
-        padding: 16px 20px;
+        top: 72px;
+        padding: 10px 20px;
     }
 
     .tablesHeaderWrap.isSticky .tablesHeader {
         flex-direction: row;
         align-items: center;
-        gap: 16px;
+        gap: 12px;
+        flex-wrap: nowrap;
     }
 
     .tablesHeaderWrap.isSticky .tablesIntro {
@@ -1107,6 +1109,22 @@
 
     .tableScroll {
         overflow-x: visible; /* Cards don't need scroll */
+    }
+    /* Sticky header — mobile */
+    .tablesHeaderWrap.isSticky .stickyContainer {
+        top: 58px;
+        padding: 8px 16px;
+    }
+    .tablesHeaderWrap.isSticky .tablesHeader {
+        gap: 0;
+        padding: 0;
+    }
+    .tablesHeaderWrap.isSticky .headerTitles {
+        display: none;
+    }
+    .tablesHeaderWrap.isSticky .searchWrap {
+        max-width: 100%;
+        width: 100%;
     }
 
     .techTable {
