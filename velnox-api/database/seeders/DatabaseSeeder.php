@@ -2821,7 +2821,7 @@ class DatabaseSeeder extends Seeder
                     'C_mm'      => [['label' => 'C', 'x' => 933, 'y' => 1920]],
                     'alpha_deg' => [['label' => 'α', 'x' => 837, 'y' => 2153], ['label' => 'α', 'x' => 1020, 'y' => 2150]],
                 ]),
-                'schema_viewbox'   => '-10 -10 2262 2574',
+                'schema_viewbox'   => '143 1847 2129 737',
                 'sort_order'       => 4,
             ]
         );
@@ -3025,7 +3025,7 @@ class DatabaseSeeder extends Seeder
                     'C_mm'      => [['label' => 'C', 'x' => 963, 'y' => 1938]],
                     'alpha_deg' => [['label' => 'α', 'x' => 997, 'y' => 2194]],
                 ]),
-                'schema_viewbox'   => '-10 -10 2269 2572',
+                'schema_viewbox'   => '174 1788 2105 793',
                 'sort_order'       => 6,
             ]
         );
@@ -3132,7 +3132,7 @@ class DatabaseSeeder extends Seeder
                     'C_mm'      => [['label' => 'C', 'x' => 873, 'y' => 442]],
                     'alpha_deg' => [['label' => 'α', 'x' => 802, 'y' => 649], ['label' => 'α', 'x' => 929, 'y' => 648]],
                 ]),
-                'schema_viewbox'   => '-10 -10 2297 1054',
+                'schema_viewbox'   => '142 337 2165 727',
                 'sort_order'       => 7,
             ]
         );
@@ -3231,7 +3231,7 @@ class DatabaseSeeder extends Seeder
                     'C_mm'      => [['label' => 'C', 'x' => 895, 'y' => 1593]],
                     'alpha_deg' => [['label' => 'α', 'x' => 839, 'y' => 1830]],
                 ]),
-                'schema_viewbox'   => '-10 -10 2235 2174',
+                'schema_viewbox'   => '166 1465 2079 719',
                 'sort_order'       => 8,
             ]
         );
