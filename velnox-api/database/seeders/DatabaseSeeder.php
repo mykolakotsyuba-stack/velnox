@@ -2814,7 +2814,13 @@ class DatabaseSeeder extends Seeder
                 'slug'             => 'kit-t4',
                 'category_id'      => $catId('kit'),
                 'spec_columns'     => json_encode(['cdyn_kn','co_kn','D_mm','d_mm','C_mm','mass_kg','B_mm','alpha_deg']),
-                'highlight_config' => json_encode((object)[]),
+                'highlight_config' => json_encode([
+                    'd_mm'      => [['label' => 'd', 'x' => 232, 'y' => 2195], ['label' => 'd', 'x' => 1122, 'y' => 2196]],
+                    'D_mm'      => [['label' => 'D', 'x' => 177, 'y' => 2197]],
+                    'B_mm'      => [['label' => 'B', 'x' => 928, 'y' => 2448]],
+                    'C_mm'      => [['label' => 'C', 'x' => 933, 'y' => 1920]],
+                    'alpha_deg' => [['label' => 'α', 'x' => 837, 'y' => 2153], ['label' => 'α', 'x' => 1020, 'y' => 2150]],
+                ]),
                 'schema_viewbox'   => '-10 -10 2262 2574',
                 'sort_order'       => 4,
             ]
@@ -3011,7 +3017,14 @@ class DatabaseSeeder extends Seeder
                 'slug'             => 'kit-t6',
                 'category_id'      => $catId('kit'),
                 'spec_columns'     => json_encode(['d_mm','d1_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
-                'highlight_config' => json_encode((object)[]),
+                'highlight_config' => json_encode([
+                    'd_mm'      => [['label' => 'd', 'x' => 251, 'y' => 2248]],
+                    'd1_mm'     => [['label' => 'd1', 'x' => 1076, 'y' => 2245]],
+                    'D_mm'      => [['label' => 'D', 'x' => 208, 'y' => 2250]],
+                    'B_mm'      => [['label' => 'B', 'x' => 966, 'y' => 2516]],
+                    'C_mm'      => [['label' => 'C', 'x' => 963, 'y' => 1938]],
+                    'alpha_deg' => [['label' => 'α', 'x' => 997, 'y' => 2194]],
+                ]),
                 'schema_viewbox'   => '-10 -10 2269 2572',
                 'sort_order'       => 6,
             ]
@@ -3112,7 +3125,13 @@ class DatabaseSeeder extends Seeder
                 'slug'             => 'kit-t7',
                 'category_id'      => $catId('kit'),
                 'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
-                'highlight_config' => json_encode((object)[]),
+                'highlight_config' => json_encode([
+                    'd_mm'      => [['label' => 'd', 'x' => 224, 'y' => 708]],
+                    'D_mm'      => [['label' => 'D', 'x' => 176, 'y' => 707]],
+                    'B_mm'      => [['label' => 'B', 'x' => 883, 'y' => 942]],
+                    'C_mm'      => [['label' => 'C', 'x' => 873, 'y' => 442]],
+                    'alpha_deg' => [['label' => 'α', 'x' => 802, 'y' => 649], ['label' => 'α', 'x' => 929, 'y' => 648]],
+                ]),
                 'schema_viewbox'   => '-10 -10 2297 1054',
                 'sort_order'       => 7,
             ]
@@ -3205,7 +3224,13 @@ class DatabaseSeeder extends Seeder
                 'slug'             => 'kit-t8',
                 'category_id'      => $catId('kit'),
                 'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
-                'highlight_config' => json_encode((object)[]),
+                'highlight_config' => json_encode([
+                    'd_mm'      => [['label' => 'd', 'x' => 248, 'y' => 1877]],
+                    'D_mm'      => [['label' => 'D', 'x' => 200, 'y' => 1878]],
+                    'B_mm'      => [['label' => 'B', 'x' => 898, 'y' => 2123]],
+                    'C_mm'      => [['label' => 'C', 'x' => 895, 'y' => 1593]],
+                    'alpha_deg' => [['label' => 'α', 'x' => 839, 'y' => 1830]],
+                ]),
                 'schema_viewbox'   => '-10 -10 2235 2174',
                 'sort_order'       => 8,
             ]
