@@ -33,7 +33,7 @@ function useInView(threshold = 0.1) {
 }
 
 function articleToSlug(article: string): string {
-    return article.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    return article.toLowerCase().replace(/[\s.]+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
 function renderTightCell(val: string | null | undefined) {
