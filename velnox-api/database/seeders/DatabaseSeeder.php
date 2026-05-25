@@ -2690,6 +2690,17 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        foreach ([
+            'uk' => 'Підшипник 204PY3 VX — однорядний радіальний кульковий підшипник із круглим отвором діаметром d = 16 мм для прецизійного монтажу в посівних і ґрунтообробних секціях. Двобічне гумове ущільнення забезпечує захист від пилу та вологи. Зовнішній діаметр D = 45,2 мм, ширина внутрішнього кільця B = 18,67 мм, ширина зовнішнього кільця C = 15,4 мм, маса 0,13 кг. Динамічна вантажопідйомність Cdyn = 12,84 кН, статична Co = 6,65 кН. Пряма заміна TIMKEN 204 PY2 / BB204RRY3, PEER 204 PF3, FKL 06C04 2Z. Застосовується в техніці HORSCH, CASE, Vaderstad, Great Plains, John Deere, AMAZONE, KINZE та KUHN.',
+            'en' => 'The 204PY3 VX is a single-row radial ball bearing with a round bore (d = 16 mm) for precision mounting in seeding and tillage sections. Double rubber seals protect against dust and moisture. Outer diameter D = 45.2 mm, inner ring width B = 18.67 mm, outer ring width C = 15.4 mm, weight 0.13 kg. Dynamic load capacity Cdyn = 12.84 kN, static Co = 6.65 kN. Direct replacement for TIMKEN 204 PY2 / BB204RRY3, PEER 204 PF3, FKL 06C04 2Z. Compatible with HORSCH, CASE, Vaderstad, Great Plains, John Deere, AMAZONE, KINZE and KUHN equipment.',
+            'pl' => 'Łożysko 204PY3 VX to jednorzędowe promieniowe łożysko kulkowe z okrągłym otworem (d = 16 mm) do precyzyjnego montażu w sekcjach siewnych i uprawowych. Podwójne uszczelnienia gumowe chronią przed kurzem i wilgocią. Średnica zewnętrzna D = 45,2 mm, szerokość pierścienia wewnętrznego B = 18,67 mm, szerokość pierścienia zewnętrznego C = 15,4 mm, masa 0,13 kg. Nośność dynamiczna Cdyn = 12,84 kN, statyczna Co = 6,65 kN. Bezpośredni zamiennik TIMKEN 204 PY2 / BB204RRY3, PEER 204 PF3, FKL 06C04 2Z. Kompatybilne z maszynami HORSCH, CASE, Vaderstad, Great Plains, John Deere, AMAZONE, KINZE i KUHN.',
+        ] as $locale => $desc) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk2, 'locale' => $locale, 'field' => 'description'],
+                ['value' => $desc]
+            );
+        }
+
         // =========================================================
         // 25. PRODUCT TABLE: kit-t3 (5203KYY3 VX — Double-row ball bearing)
         // =========================================================
@@ -2805,6 +2816,17 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        foreach ([
+            'uk' => 'Підшипник 5203KYY3 VX — дворядний радіально-упорний кульковий підшипник із круглим отвором діаметром d = 16,256 мм та кутом контакту α = 30°. Призначений для роботи в умовах комбінованих радіальних та осьових навантажень у посівних секціях та дискових агрегатах. Зовнішній діаметр D = 40 мм, ширина внутрішнього кільця B = 44,12 мм, ширина зовнішнього кільця C = 39,12 мм, діаметр бурту d1 = 23,5 мм, маса 0,218 кг. Динамічна вантажопідйомність Cdyn = 14,2 кН, статична Co = 8,8 кН, Pu = 0,37 кН. Пряма заміна TIMKEN/RBF/CT-AGRI 5203 KYY2, FKL SL-5203 2T, NSK-RHP DAC 164044 2RS. Застосовується в техніці GASPARDO, KRAUSE, KINZE, Great Plains, AMAZONE, SUNFLOWER, MONOSEM, John Deere, KUHN, HORSCH та KVERNELAND.',
+            'en' => 'The 5203KYY3 VX is a double-row angular contact ball bearing with a round bore (d = 16.256 mm) and contact angle α = 30°. Designed for combined radial and axial loads in seeding sections and disc tillage equipment. Outer diameter D = 40 mm, inner ring width B = 44.12 mm, outer ring width C = 39.12 mm, shoulder diameter d1 = 23.5 mm, weight 0.218 kg. Dynamic load capacity Cdyn = 14.2 kN, static Co = 8.8 kN, Pu = 0.37 kN. Direct replacement for TIMKEN/RBF/CT-AGRI 5203 KYY2, FKL SL-5203 2T, NSK-RHP DAC 164044 2RS. Compatible with GASPARDO, KRAUSE, KINZE, Great Plains, AMAZONE, SUNFLOWER, MONOSEM, John Deere, KUHN, HORSCH and KVERNELAND equipment.',
+            'pl' => 'Łożysko 5203KYY3 VX to dwurzędowe skośne łożysko kulkowe z okrągłym otworem (d = 16,256 mm) i kątem kontaktu α = 30°. Przeznaczone do pracy przy kombinowanych obciążeniach promieniowych i osiowych w sekcjach siewnych i maszynach talerzowych. Średnica zewnętrzna D = 40 mm, szerokość pierścienia wewnętrznego B = 44,12 mm, szerokość pierścienia zewnętrznego C = 39,12 mm, średnica kołnierza d1 = 23,5 mm, masa 0,218 kg. Nośność dynamiczna Cdyn = 14,2 kN, statyczna Co = 8,8 kN, Pu = 0,37 kN. Bezpośredni zamiennik TIMKEN/RBF/CT-AGRI 5203 KYY2, FKL SL-5203 2T, NSK-RHP DAC 164044 2RS. Kompatybilne z maszynami GASPARDO, KRAUSE, KINZE, Great Plains, AMAZONE, SUNFLOWER, MONOSEM, John Deere, KUHN, HORSCH i KVERNELAND.',
+        ] as $locale => $desc) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk3, 'locale' => $locale, 'field' => 'description'],
+                ['value' => $desc]
+            );
+        }
+
         // =========================================================
         // 26. PRODUCT TABLE: kit-t4 (5206KPP3 VX — Double-row D-bore)
         // =========================================================
@@ -2907,6 +2929,17 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        foreach ([
+            'uk' => 'Підшипник 5206KPP3 VX — дворядний радіально-упорний кульковий підшипник із D-подібним отвором діаметром d = 30,15 мм та кутом контакту α = 25°. Конструкція D-bore забезпечує надійне фіксування на валу без стопорних елементів. Зовнішній діаметр D = 62 мм, ширина внутрішнього кільця B = 50 мм, ширина зовнішнього кільця C = 37 мм, маса 0,5 кг. Динамічна вантажопідйомність Cdyn = 28,7 кН, статична Co = 21,8 кН. Пряма заміна PFI/TIMKEN/RBF/CT-AGRI/FKL 5206 KPP3, PEER 5206RPP3. Застосовується в техніці Great Plains (822-215C), CASE (87283953), John Deere (AN261766/AN261637) та KINZE (GA8603, GA8641).',
+            'en' => 'The 5206KPP3 VX is a double-row angular contact ball bearing with a D-shaped bore (d = 30.15 mm) and contact angle α = 25°. The D-bore design ensures secure shaft retention without additional locking elements. Outer diameter D = 62 mm, inner ring width B = 50 mm, outer ring width C = 37 mm, weight 0.5 kg. Dynamic load capacity Cdyn = 28.7 kN, static Co = 21.8 kN. Direct replacement for PFI/TIMKEN/RBF/CT-AGRI/FKL 5206 KPP3, PEER 5206RPP3. Compatible with Great Plains (822-215C), CASE (87283953), John Deere (AN261766/AN261637) and KINZE (GA8603, GA8641) equipment.',
+            'pl' => 'Łożysko 5206KPP3 VX to dwurzędowe skośne łożysko kulkowe z otworem w kształcie litery D (d = 30,15 mm) i kątem kontaktu α = 25°. Konstrukcja D-bore zapewnia pewne mocowanie na wale bez dodatkowych elementów blokujących. Średnica zewnętrzna D = 62 mm, szerokość pierścienia wewnętrznego B = 50 mm, szerokość pierścienia zewnętrznego C = 37 mm, masa 0,5 kg. Nośność dynamiczna Cdyn = 28,7 kN, statyczna Co = 21,8 kN. Bezpośredni zamiennik PFI/TIMKEN/RBF/CT-AGRI/FKL 5206 KPP3, PEER 5206RPP3. Kompatybilne z maszynami Great Plains (822-215C), CASE (87283953), John Deere (AN261766/AN261637) i KINZE (GA8603, GA8641).',
+        ] as $locale => $desc) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk4, 'locale' => $locale, 'field' => 'description'],
+                ['value' => $desc]
+            );
+        }
+
         // =========================================================
         // 27. PRODUCT TABLE: kit-t5 (885154B VX — Needle bearing)
         // =========================================================
@@ -3005,6 +3038,17 @@ class DatabaseSeeder extends Seeder
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product', 'entity_id' => $pk5, 'locale' => $locale, 'field' => 'name'],
                 ['value' => '885154B VX']
+            );
+        }
+
+        foreach ([
+            'uk' => 'Підшипник 885154B VX — спеціальний голковий підшипник із посадковим діаметром d = 15,88 мм та внутрішнім діаметром обойми d1 = 12 мм. Зовнішній діаметр D = 30 мм, довжина L = 69 мм, ширина зовнішнього кільця C = 38,8 мм, відстань до буртика E = 5 мм, маса 0,183 кг. Динамічна вантажопідйомність Cdyn = 5,15 кН, статична Co = 2,94 кН, Pu = 0,124 кН. Голкова конструкція забезпечує високу радіальну вантажопідйомність при мінімальному радіальному перерізі. Пряма заміна CT-AGRI 885154B, RBF/JTEKT (Koyo) IB06930 SRS, RBF PN 00043, PEER WP5203-KRP2-N-A217. Застосовується в техніці Horsch (00310131, 96140018), CASE (201765C91, 227914R91), Great Plains (822-023C) та John Deere (885154B, AN131668, AN131688).',
+            'en' => 'The 885154B VX is a special needle bearing with bore diameter d = 15.88 mm and inner race diameter d1 = 12 mm. Outer diameter D = 30 mm, length L = 69 mm, outer ring width C = 38.8 mm, shoulder distance E = 5 mm, weight 0.183 kg. Dynamic load capacity Cdyn = 5.15 kN, static Co = 2.94 kN, Pu = 0.124 kN. The needle roller design provides high radial load capacity with minimal radial cross-section. Direct replacement for CT-AGRI 885154B, RBF/JTEKT (Koyo) IB06930 SRS, RBF PN 00043, PEER WP5203-KRP2-N-A217. Compatible with Horsch (00310131, 96140018), CASE (201765C91, 227914R91), Great Plains (822-023C) and John Deere (885154B, AN131668, AN131688) equipment.',
+            'pl' => 'Łożysko 885154B VX to specjalne łożysko igiełkowe o średnicy otworu d = 15,88 mm i średnicy wewnętrznej bieżni d1 = 12 mm. Średnica zewnętrzna D = 30 mm, długość L = 69 mm, szerokość pierścienia zewnętrznego C = 38,8 mm, odległość do kołnierza E = 5 mm, masa 0,183 kg. Nośność dynamiczna Cdyn = 5,15 kN, statyczna Co = 2,94 kN, Pu = 0,124 kN. Konstrukcja igiełkowa zapewnia wysoką nośność promieniową przy minimalnym przekroju poprzecznym. Bezpośredni zamiennik CT-AGRI 885154B, RBF/JTEKT (Koyo) IB06930 SRS, RBF PN 00043, PEER WP5203-KRP2-N-A217. Kompatybilne z maszynami Horsch (00310131, 96140018), CASE (201765C91, 227914R91), Great Plains (822-023C) i John Deere (885154B, AN131668, AN131688).',
+        ] as $locale => $desc) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk5, 'locale' => $locale, 'field' => 'description'],
+                ['value' => $desc]
             );
         }
 
@@ -3116,6 +3160,17 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        foreach ([
+            'uk' => 'Підшипник AA205DD VX — радіальний кульковий підшипник із D-подібним отвором діаметром d = 16 мм та кутом контакту α = 25° для посівних секцій Great Plains. Діаметр бурту d1 = 33,74 мм, зовнішній діаметр D = 53,086 мм, ширина внутрішнього кільця B = 19,4 мм, ширина зовнішнього кільця C = 18,288 мм, маса 0,21 кг. Динамічна вантажопідйомність Cdyn = 14,02 кН, статична Co = 7,82 кН, Pu = 0,328 кН. Пряма заміна Great Plains 188-001V / 205 GP, RBF 205 PP13, PEER BB205RPP13, HARP 376905 EKL19, FKL SL5316-2T. Застосовується в сівалках Great Plains (822-236C) та техніці KRAUSE (40-172).',
+            'en' => 'The AA205DD VX is a radial ball bearing with a D-shaped bore (d = 16 mm) and contact angle α = 25° for Great Plains seeding sections. Shoulder diameter d1 = 33.74 mm, outer diameter D = 53.086 mm, inner ring width B = 19.4 mm, outer ring width C = 18.288 mm, weight 0.21 kg. Dynamic load capacity Cdyn = 14.02 kN, static Co = 7.82 kN, Pu = 0.328 kN. Direct replacement for Great Plains 188-001V / 205 GP, RBF 205 PP13, PEER BB205RPP13, HARP 376905 EKL19, FKL SL5316-2T. Compatible with Great Plains seeders (822-236C) and KRAUSE (40-172) equipment.',
+            'pl' => 'Łożysko AA205DD VX to promieniowe łożysko kulkowe z otworem w kształcie litery D (d = 16 mm) i kątem kontaktu α = 25° do sekcji siewnych Great Plains. Średnica kołnierza d1 = 33,74 mm, średnica zewnętrzna D = 53,086 mm, szerokość pierścienia wewnętrznego B = 19,4 mm, szerokość pierścienia zewnętrznego C = 18,288 mm, masa 0,21 kg. Nośność dynamiczna Cdyn = 14,02 kN, statyczna Co = 7,82 kN, Pu = 0,328 kN. Bezpośredni zamiennik Great Plains 188-001V / 205 GP, RBF 205 PP13, PEER BB205RPP13, HARP 376905 EKL19, FKL SL5316-2T. Kompatybilne z siewnikami Great Plains (822-236C) i maszynami KRAUSE (40-172).',
+        ] as $locale => $desc) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk6, 'locale' => $locale, 'field' => 'description'],
+                ['value' => $desc]
+            );
+        }
+
         // =========================================================
         // 29. PRODUCT TABLE: kit-t7 (AA59196 VX — Double-row round bore)
         // =========================================================
@@ -3215,6 +3270,17 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        foreach ([
+            'uk' => 'Підшипник AA59196 VX — дворядний радіально-упорний кульковий підшипник із круглим отвором діаметром d = 16,027 мм та кутом контакту α = 20°. Дворядна конструкція забезпечує підвищену осьову жорсткість в посівних секціях та прикочувальних вузлах. Зовнішній діаметр D = 45,225 мм, ширина внутрішнього кільця B = 26 мм, ширина зовнішнього кільця C = 22,82 мм, маса 0,19 кг. Динамічна вантажопідйомність Cdyn = 16,3 кН, статична Co = 10,9 кН, Pu = 0,458 кН. Пряма заміна PEER 5204 KRY2-R-A268, RBF 5204 РУ3, CT-AGRI A59196, KABAT P59196. Застосовується в техніці HORSCH (60021679, 60054734), John Deere (AA104813, AA59196) та KINZE (GA26920).',
+            'en' => 'The AA59196 VX is a double-row angular contact ball bearing with a round bore (d = 16.027 mm) and contact angle α = 20°. The double-row design provides increased axial rigidity in seeding sections and press wheel assemblies. Outer diameter D = 45.225 mm, inner ring width B = 26 mm, outer ring width C = 22.82 mm, weight 0.19 kg. Dynamic load capacity Cdyn = 16.3 kN, static Co = 10.9 kN, Pu = 0.458 kN. Direct replacement for PEER 5204 KRY2-R-A268, RBF 5204 РУ3, CT-AGRI A59196, KABAT P59196. Compatible with HORSCH (60021679, 60054734), John Deere (AA104813, AA59196) and KINZE (GA26920) equipment.',
+            'pl' => 'Łożysko AA59196 VX to dwurzędowe skośne łożysko kulkowe z okrągłym otworem (d = 16,027 mm) i kątem kontaktu α = 20°. Dwurzędowa konstrukcja zapewnia zwiększoną sztywność osiową w sekcjach siewnych i zespołach rolek dogniatających. Średnica zewnętrzna D = 45,225 mm, szerokość pierścienia wewnętrznego B = 26 mm, szerokość pierścienia zewnętrznego C = 22,82 mm, masa 0,19 kg. Nośność dynamiczna Cdyn = 16,3 kN, statyczna Co = 10,9 kN, Pu = 0,458 kN. Bezpośredni zamiennik PEER 5204 KRY2-R-A268, RBF 5204 РУ3, CT-AGRI A59196, KABAT P59196. Kompatybilne z maszynami HORSCH (60021679, 60054734), John Deere (AA104813, AA59196) i KINZE (GA26920).',
+        ] as $locale => $desc) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk7, 'locale' => $locale, 'field' => 'description'],
+                ['value' => $desc]
+            );
+        }
+
         // =========================================================
         // 30. PRODUCT TABLE: kit-t8 (F-562024.02KLQ VX — Serviceable units)
         // =========================================================
@@ -3309,6 +3375,17 @@ class DatabaseSeeder extends Seeder
             DB::table('translations')->updateOrInsert(
                 ['entity_type' => 'product', 'entity_id' => $pk8, 'locale' => $locale, 'field' => 'name'],
                 ['value' => 'F-562024.02KLQ VX']
+            );
+        }
+
+        foreach ([
+            'uk' => 'Підшипник F-562024.02KLQ VX — дворядний радіально-упорний кульковий підшипник із круглим отвором діаметром d = 16,027 мм та кутом контакту α = 25° для обслуговуваних вузлів сільськогосподарської техніки. Зовнішній діаметр D = 60 мм, ширина внутрішнього кільця B = 22,5 мм, ширина зовнішнього кільця C = 22,9 мм, маса 0,31 кг. Динамічна вантажопідйомність Cdyn = 22 кН, статична Co = 15,2 кН, Pu = 0,64 кН. Збільшений зовнішній діаметр забезпечує підвищену несучу здатність при компактних габаритах. Пряма заміна INA/NTE F-562024.02.KLQ, CT-AGRI 23042700, RBF PN 008, FKL IL20-71/6T-B16.',
+            'en' => 'The F-562024.02KLQ VX is a double-row angular contact ball bearing with a round bore (d = 16.027 mm) and contact angle α = 25° for serviceable agricultural machinery units. Outer diameter D = 60 mm, inner ring width B = 22.5 mm, outer ring width C = 22.9 mm, weight 0.31 kg. Dynamic load capacity Cdyn = 22 kN, static Co = 15.2 kN, Pu = 0.64 kN. The enlarged outer diameter provides increased load capacity in a compact design. Direct replacement for INA/NTE F-562024.02.KLQ, CT-AGRI 23042700, RBF PN 008, FKL IL20-71/6T-B16.',
+            'pl' => 'Łożysko F-562024.02KLQ VX to dwurzędowe skośne łożysko kulkowe z okrągłym otworem (d = 16,027 mm) i kątem kontaktu α = 25° do serwisowanych węzłów maszyn rolniczych. Średnica zewnętrzna D = 60 mm, szerokość pierścienia wewnętrznego B = 22,5 mm, szerokość pierścienia zewnętrznego C = 22,9 mm, masa 0,31 kg. Nośność dynamiczna Cdyn = 22 kN, statyczna Co = 15,2 kN, Pu = 0,64 kN. Powiększona średnica zewnętrzna zapewnia zwiększoną nośność przy kompaktowych wymiarach. Bezpośredni zamiennik INA/NTE F-562024.02.KLQ, CT-AGRI 23042700, RBF PN 008, FKL IL20-71/6T-B16.',
+        ] as $locale => $desc) {
+            DB::table('translations')->updateOrInsert(
+                ['entity_type' => 'product', 'entity_id' => $pk8, 'locale' => $locale, 'field' => 'description'],
+                ['value' => $desc]
             );
         }
 
