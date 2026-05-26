@@ -127,7 +127,8 @@
 .hero {
     position: relative;
     width: 100%;
-    min-height: 88vh;
+    height: 100svh;
+    min-height: 100svh;
     background: #0f0e3a;
     display: flex;
     flex-direction: column;
@@ -1291,9 +1292,6 @@
 
 /* Responsive */
 @media (max-width: 900px) {
-    .hero {
-        padding: 80px 0;
-    }
 
     .heroInner {
         padding: 56px 32px 40px;
@@ -1372,9 +1370,6 @@
 }
 
 @media (max-width: 600px) {
-    .hero {
-        padding: 60px 0;
-    }
 
     .heroInner {
         padding: 48px 20px 32px;

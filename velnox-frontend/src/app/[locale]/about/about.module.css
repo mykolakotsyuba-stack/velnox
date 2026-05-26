@@ -96,7 +96,8 @@
 .hero {
     position: relative;
     width: 100%;
-    min-height: 88vh;
+    height: 100svh;
+    min-height: 100svh;
     background: #0f0e3a;
     display: flex;
     flex-direction: column;
@@ -1019,9 +1020,6 @@
    RESPONSIVE
 ──────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
-    .hero {
-        min-height: 70vh;
-    }
 
     .heroInner {
         grid-template-columns: 1fr;
@@ -1073,10 +1071,6 @@
 
     .sectionInnerWide {
         padding: 32px 20px;
-    }
-
-    .hero {
-        min-height: 60vh;
     }
 
     .heroInner {
