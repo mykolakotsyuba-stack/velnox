@@ -481,11 +481,16 @@
 
 /* ≤1023px — single column, full-width card over background image */
 @media (max-width: 1023px) {
+    .bgLayer img {
+        object-position: center 70% !important;
+    }
+
     .sliderInner {
         grid-template-columns: 1fr;
-        padding: 32px 24px 120px;
+        padding: 16px 24px 120px;
         gap: 0;
-        align-items: end; /* Card sits towards bottom, more bg visible above */
+        align-items: start;
+        padding-top: calc(8vh);
     }
 
     .slideContent {
@@ -522,14 +527,14 @@
         left: 50%;
         right: auto;
         transform: translateX(-50%);
-        bottom: 68px;
+        bottom: 48px;
     }
 }
 
 /* ≤600px — smaller fonts, tighter spacing */
 @media (max-width: 600px) {
     .sliderInner {
-        padding: 20px 16px 110px;
+        padding: 16px 16px 100px;
     }
 
     .slideContent {
@@ -577,7 +582,7 @@
     }
 
     .controls {
-        bottom: 64px;
+        bottom: 44px;
     }
 }
 
