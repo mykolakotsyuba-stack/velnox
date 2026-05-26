@@ -53,7 +53,7 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
     const [sent, setSent] = useState(false);
     const [form, setForm] = useState({
         company: '', name: '', phone: '', email: '', country: '',
-        message: defaultDesignation ? `Запит на: ${defaultDesignation}` : ''
+        message: defaultDesignation ? `${t('crosses.request_for')}${defaultDesignation}` : ''
     });
     const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSent(true); };
     return (
@@ -113,12 +113,12 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
 ──────────────────────────────────────────────────────────────────── */
 type SlMap = Record<string, string>;
 
-function buildT1Cols(sl: SlMap, partLabel: string): ColDef[] {
+function buildT1Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
     return [
         { key: 'part_number',   label: partLabel,                                   width: '130px' },
-        { key: 'bearing_part',  label: 'Позначення підшипника',                     hasFilter: false },
-        { key: 'bearing_brand', label: 'Бренд',                                     hasFilter: false },
-        { key: 'oem',           label: 'Перехресні аналоги',                        hasFilter: false },
+        { key: 'bearing_part',  label: t('crosses.bearing_designation'),                     hasFilter: false },
+        { key: 'bearing_brand', label: t('crosses.brand'),                                     hasFilter: false },
+        { key: 'oem',           label: t('crosses.cross_analogues'),                        hasFilter: false },
         { key: 'd_mm',          label: sl['d_mm']    || 'Діаметр отвору d (мм)',    hasFilter: true },
         { key: 'D_mm',          label: sl['D_mm']    || 'Зовнішній діаметр D (мм)', hasFilter: true },
         { key: 'B_mm',          label: sl['B_mm']    || 'Ширина B (мм)',            hasFilter: true },
@@ -131,12 +131,12 @@ function buildT1Cols(sl: SlMap, partLabel: string): ColDef[] {
     ];
 }
 
-function buildT2Cols(sl: SlMap, partLabel: string): ColDef[] {
+function buildT2Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
     return [
         { key: 'part_number',   label: partLabel,                                                   width: '130px' },
-        { key: 'bearing_part',  label: 'Позначення підшипника',                                     hasFilter: false },
-        { key: 'bearing_brand', label: 'Бренд',                                                     hasFilter: false },
-        { key: 'oem',           label: 'Перехресні аналоги',                                        hasFilter: false },
+        { key: 'bearing_part',  label: t('crosses.bearing_designation'),                                     hasFilter: false },
+        { key: 'bearing_brand', label: t('crosses.brand'),                                                     hasFilter: false },
+        { key: 'oem',           label: t('crosses.cross_analogues'),                                        hasFilter: false },
         { key: 'd_inch',        label: sl['d_inch']   || 'Діаметр отвору d (дюйм)',                 hasFilter: true },
         { key: 'd_mm',          label: sl['d_mm']     || 'Діаметр отвору d (мм)',                   hasFilter: true },
         { key: 'B_mm',          label: sl['B_mm']     || 'B (мм)',                                  hasFilter: true },
@@ -155,12 +155,12 @@ function buildT2Cols(sl: SlMap, partLabel: string): ColDef[] {
     ];
 }
 
-function buildT3Cols(sl: SlMap, partLabel: string): ColDef[] {
+function buildT3Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
     return [
         { key: 'part_number',   label: partLabel,                                    width: '130px' },
-        { key: 'bearing_part',  label: 'Позначення підшипника',  hasFilter: false },
-        { key: 'bearing_brand', label: 'Бренд',                  hasFilter: false },
-        { key: 'oem',           label: 'Перехресні аналоги',     hasFilter: false },
+        { key: 'bearing_part',  label: t('crosses.bearing_designation'),  hasFilter: false },
+        { key: 'bearing_brand', label: t('crosses.brand'),                  hasFilter: false },
+        { key: 'oem',           label: t('crosses.cross_analogues'),     hasFilter: false },
         { key: 'd_inch',        label: sl['d_inch']   || 'Діаметр отвору d (дюйм)', hasFilter: true },
         { key: 'd_mm',          label: sl['d_mm']     || 'Діаметр отвору d (мм)',   hasFilter: true },
         { key: 'B_mm',          label: sl['B_mm']     || 'B (мм)',                  hasFilter: true },
@@ -182,12 +182,12 @@ function buildT3Cols(sl: SlMap, partLabel: string): ColDef[] {
     ];
 }
 
-function buildT4Cols(sl: SlMap, partLabel: string): ColDef[] {
+function buildT4Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
     return [
         { key: 'part_number',   label: partLabel,                                    width: '120px' },
-        { key: 'bearing_part',  label: 'Позначення підшипника',  hasFilter: false },
-        { key: 'bearing_brand', label: 'Бренд',                  hasFilter: false },
-        { key: 'oem',           label: 'Перехресні аналоги',     hasFilter: false },
+        { key: 'bearing_part',  label: t('crosses.bearing_designation'),  hasFilter: false },
+        { key: 'bearing_brand', label: t('crosses.brand'),                  hasFilter: false },
+        { key: 'oem',           label: t('crosses.cross_analogues'),     hasFilter: false },
         { key: 'd_inch',        label: sl['d_inch']  || 'Діаметр отвору d (дюйм)', hasFilter: true },
         { key: 'd_mm',          label: sl['d_mm']    || 'Діаметр отвору d (мм)',   hasFilter: true },
         { key: 'B_mm',          label: sl['B_mm']    || 'B (мм)',                  hasFilter: true },
@@ -221,8 +221,8 @@ function CrossRefPanel({
     onSelect: (idx: number) => void;
     filterSpecs: boolean;
     onFilterChange: (v: boolean) => void;
-    locale: Locale;
 }) {
+    const t = useTranslations();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState('');
     const [showAll, setShowAll] = useState(false);
@@ -245,15 +245,15 @@ function CrossRefPanel({
         return (
             <div className={styles.crossesPanel}>
                 <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(false)}>
-                    ← Обрати один
+                    ← {t('crosses.select_one')}
                 </button>
                 <table className={styles.crossTable}>
                     <thead>
                         <tr>
-                            <th>Velnox</th>
-                            <th>Підшипник</th>
-                            <th>Бренд</th>
-                            <th>Аналоги</th>
+                            <th>{t('crosses.velnox')}</th>
+                            <th>{t('crosses.bearing')}</th>
+                            <th>{t('crosses.brand')}</th>
+                            <th>{t('crosses.analogues')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -318,7 +318,7 @@ function CrossRefPanel({
                     </button>
                     {open && (
                         <div className={styles.crossDropdown}>
-                            <input type="text" className={styles.crossDropdownSearch} placeholder="Пошук..."
+                            <input type="text" className={styles.crossDropdownSearch} placeholder={t('crosses.search')}
                                 value={query} onChange={e => setQuery(e.target.value)} autoFocus />
                             <div className={styles.crossDropdownList}>
                                 {matchingRows.map(row => {
@@ -333,7 +333,7 @@ function CrossRefPanel({
                                     );
                                 })}
                                 {matchingRows.length === 0 && (
-                                    <div className={styles.crossDropdownEmpty}>Не знайдено</div>
+                                    <div className={styles.crossDropdownEmpty}>{t('crosses.not_found')}</div>
                                 )}
                             </div>
                         </div>
@@ -351,9 +351,9 @@ function CrossRefPanel({
             <table className={styles.crossTable}>
                 <thead>
                     <tr>
-                        <th>Позначення підшипника</th>
-                        <th>Бренд</th>
-                        <th>Перехресні аналоги</th>
+                        <th>{t('crosses.bearing_designation')}</th>
+                        <th>{t('crosses.brand')}</th>
+                        <th>{t('crosses.cross_analogues')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -371,16 +371,16 @@ function CrossRefPanel({
                 <label className={styles.crossFilterCheck}>
                     <input type="checkbox" checked={filterSpecs}
                         onChange={e => onFilterChange(e.target.checked)} />
-                    Показати тільки обраний
+                    {t('crosses.show_only_selected')}
                 </label>
                 <Link
                     href={`/${locale}/products/agro/${articleToSlug(selectedRow.part_number)}`}
                     className={styles.crossDetailBtn}
                 >
-                    Показати детальніше
+                    {t('crosses.show_details')}
                 </Link>
                 <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(true)}>
-                    Показати всі
+                    {t('crosses.show_all')}
                 </button>
             </div>
         </div>
@@ -517,10 +517,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     const searchedT4 = useMemo(() => search(table4Data), [table4Data, searchQuery]);
 
     const partLabel = t('agroPage.cols.part_number');
-    const colsT1 = useMemo(() => buildT1Cols(sl1, partLabel), [sl1, partLabel]);
-    const colsT2 = useMemo(() => buildT2Cols(sl2, partLabel), [sl2, partLabel]);
-    const colsT3 = useMemo(() => buildT3Cols(sl3, partLabel), [sl3, partLabel]);
-    const colsT4 = useMemo(() => buildT4Cols(sl4, partLabel), [sl4, partLabel]);
+    const colsT1 = useMemo(() => buildT1Cols(sl1, partLabel, t), [sl1, partLabel, t]);
+    const colsT2 = useMemo(() => buildT2Cols(sl2, partLabel, t), [sl2, partLabel, t]);
+    const colsT3 = useMemo(() => buildT3Cols(sl3, partLabel, t), [sl3, partLabel, t]);
+    const colsT4 = useMemo(() => buildT4Cols(sl4, partLabel, t), [sl4, partLabel, t]);
 
     const specColsT1  = useMemo(() => colsT1.filter(c => !CROSS_REF_KEYS.has(c.key)), [colsT1]);
     const specColsT2  = useMemo(() => colsT2.filter(c => !CROSS_REF_KEYS.has(c.key)), [colsT2]);
@@ -579,12 +579,12 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
 
                 <div className={styles.heroInner}>
                     <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
-                        <div className={styles.heroLogoWrapper}>
-                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
-                        </div>
                         <div className={styles.heroEyebrow}>
                             <span className={styles.eyebrowLine} />
                             {t('agroPage.hero.eyebrow')}
+                        </div>
+                        <div className={styles.heroLogoWrapper}>
+                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
                         </div>
                         <h1 className={styles.heroTitle}>{t('agroPage.hero.title')}</h1>
                     </div>

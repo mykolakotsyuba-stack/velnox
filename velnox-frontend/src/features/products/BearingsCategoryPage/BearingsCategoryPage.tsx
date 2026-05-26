@@ -524,12 +524,12 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
                 <div className={styles.heroInner}>
                     <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
-                        <div className={styles.heroLogoWrapper}>
-                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
-                        </div>
                         <div className={styles.heroEyebrow}>
                             <span className={styles.eyebrowLine} />
                             {t('bearingsPage.hero.eyebrow')}
+                        </div>
+                        <div className={styles.heroLogoWrapper}>
+                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
                         </div>
                         <h1 className={styles.heroTitle}>{t('bearingsPage.hero.title')}</h1>
                     </div>

@@ -874,5 +874,22 @@
       "submit": "WYŚLIJ DO OBLICZEŃ",
       "success": "Zapytanie wysłane. Skontaktujemy się wkrótce."
     }
+  },
+  "crosses": {
+    "select_one": "Wybierz jeden",
+    "velnox": "Velnox",
+    "bearing": "Łożysko",
+    "brand": "Marka",
+    "analogues": "Analogi",
+    "bearing_designation": "Oznaczenie łożyska",
+    "cross_analogues": "Analogi skrzyżowane",
+    "prev": "Poprzedni",
+    "next": "Następny",
+    "not_found": "Nie znaleziono",
+    "search": "Szukaj...",
+    "show_only_selected": "Pokaż tylko wybrany",
+    "show_details": "Pokaż szczegóły",
+    "show_all": "Pokaż wszystkie",
+    "request_for": "Zapytanie o: "
   }
 }

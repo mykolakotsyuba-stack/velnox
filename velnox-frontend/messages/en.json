@@ -891,5 +891,22 @@
       "success": "Your request has been sent. Our engineering department will process it shortly.",
       "success_email": "An automatic confirmation has been sent to your email."
     }
+  },
+  "crosses": {
+    "select_one": "Select one",
+    "velnox": "Velnox",
+    "bearing": "Bearing",
+    "brand": "Brand",
+    "analogues": "Analogues",
+    "bearing_designation": "Bearing Designation",
+    "cross_analogues": "Cross analogues",
+    "prev": "Previous",
+    "next": "Next",
+    "not_found": "Not found",
+    "search": "Search...",
+    "show_only_selected": "Show only selected",
+    "show_details": "Show details",
+    "show_all": "Show all",
+    "request_for": "Request for: "
   }
 }

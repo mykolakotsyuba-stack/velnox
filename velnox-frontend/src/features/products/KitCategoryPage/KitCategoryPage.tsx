@@ -53,7 +53,7 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
     const [sent, setSent] = useState(false);
     const [form, setForm] = useState({
         company: '', name: '', phone: '', email: '', country: '',
-        message: defaultDesignation ? `Запит на: ${defaultDesignation}` : ''
+        message: defaultDesignation ? `${t('crosses.request_for')}${defaultDesignation}` : ''
     });
     const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSent(true); };
     return (
@@ -114,12 +114,12 @@ type SlMap = Record<string, string>;
 
 const CROSS_REF_KEYS = new Set(['bearing_part', 'bearing_brand', 'oem']);
 
-function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: string): ColDef[] {
+function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: string, t: any): ColDef[] {
     const base: ColDef[] = [
         { key: 'part_number',   label: partLabel,              width: '130px' },
-        { key: 'bearing_part',  label: 'Позначення підшипника', hasFilter: false },
-        { key: 'bearing_brand', label: 'Бренд',                hasFilter: false },
-        { key: 'oem',           label: 'Перехресні аналоги',   hasFilter: false },
+        { key: 'bearing_part',  label: t('crosses.bearing_designation'), hasFilter: false },
+        { key: 'bearing_brand', label: t('crosses.brand'),                hasFilter: false },
+        { key: 'oem',           label: t('crosses.cross_analogues'),   hasFilter: false },
     ];
 
     // If API provides spec_columns order — use it; otherwise use spec_labels keys
@@ -150,8 +150,8 @@ function CrossRefPanel({
     onSelect: (idx: number) => void;
     filterSpecs: boolean;
     onFilterChange: (v: boolean) => void;
-    locale: Locale;
 }) {
+    const t = useTranslations();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState('');
     const [showAll, setShowAll] = useState(false);
@@ -174,15 +174,15 @@ function CrossRefPanel({
         return (
             <div className={styles.crossesPanel}>
                 <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(false)}>
-                    ← Обрати один
+                    ← {t('crosses.select_one')}
                 </button>
                 <table className={styles.crossTable}>
                     <thead>
                         <tr>
-                            <th>Velnox</th>
-                            <th>Підшипник</th>
-                            <th>Бренд</th>
-                            <th>Аналоги</th>
+                            <th>{t('crosses.velnox')}</th>
+                            <th>{t('crosses.bearing')}</th>
+                            <th>{t('crosses.brand')}</th>
+                            <th>{t('crosses.analogues')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -247,7 +247,7 @@ function CrossRefPanel({
                     </button>
                     {open && (
                         <div className={styles.crossDropdown}>
-                            <input type="text" className={styles.crossDropdownSearch} placeholder="Пошук..."
+                            <input type="text" className={styles.crossDropdownSearch} placeholder={t('crosses.search')}
                                 value={query} onChange={e => setQuery(e.target.value)} autoFocus />
                             <div className={styles.crossDropdownList}>
                                 {matchingRows.map(row => {
@@ -262,7 +262,7 @@ function CrossRefPanel({
                                     );
                                 })}
                                 {matchingRows.length === 0 && (
-                                    <div className={styles.crossDropdownEmpty}>Не знайдено</div>
+                                    <div className={styles.crossDropdownEmpty}>{t('crosses.not_found')}</div>
                                 )}
                             </div>
                         </div>
@@ -280,9 +280,9 @@ function CrossRefPanel({
             <table className={styles.crossTable}>
                 <thead>
                     <tr>
-                        <th>Позначення підшипника</th>
-                        <th>Бренд</th>
-                        <th>Перехресні аналоги</th>
+                        <th>{t('crosses.bearing_designation')}</th>
+                        <th>{t('crosses.brand')}</th>
+                        <th>{t('crosses.cross_analogues')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -300,16 +300,16 @@ function CrossRefPanel({
                 <label className={styles.crossFilterCheck}>
                     <input type="checkbox" checked={filterSpecs}
                         onChange={e => onFilterChange(e.target.checked)} />
-                    Показати тільки обраний
+                    {t('crosses.show_only_selected')}
                 </label>
                 <Link
                     href={`/${locale}/products/kit/${articleToSlug(selectedRow.part_number)}`}
                     className={styles.crossDetailBtn}
                 >
-                    Показати детальніше
+                    {t('crosses.show_details')}
                 </Link>
                 <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(true)}>
-                    Показати всі
+                    {t('crosses.show_all')}
                 </button>
             </div>
         </div>
@@ -428,13 +428,13 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
 
     /* Per-table memoized data */
     const partLabel = t('kitPage.block2.btn_request') ? t('kitPage.block2.btn_request').replace('Запит', 'Позначення') : 'Позначення';
-    const partLabelFinal = 'Позначення';
+    const partLabelFinal = t('crosses.bearing_designation');
 
     const tableConfigs = useMemo(() => {
         return TABLE_IDS.map(id => {
             const tbl = tables[id];
             const searched = search(tbl.data);
-            const cols = buildCols(tbl.specLabels, tbl.specColumns, partLabelFinal);
+            const cols = buildCols(tbl.specLabels, tbl.specColumns, partLabelFinal, t);
             const specCols = cols.filter(c => !CROSS_REF_KEYS.has(c.key));
             const clampIdx = Math.min(tbl.selectedIdx, Math.max(0, searched.length - 1));
             const specsRows = tbl.syncFilter && searched.length ? [searched[clampIdx]] : searched;
@@ -493,12 +493,12 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
 
                 <div className={styles.heroInner}>
                     <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
-                        <div className={styles.heroLogoWrapper}>
-                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
-                        </div>
                         <div className={styles.heroEyebrow}>
                             <span className={styles.eyebrowLine} />
                             {t('kitPage.hero.eyebrow')}
+                        </div>
+                        <div className={styles.heroLogoWrapper}>
+                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
                         </div>
                         <h1 className={styles.heroTitle}>{t('kitPage.hero.title')}</h1>
                     </div>

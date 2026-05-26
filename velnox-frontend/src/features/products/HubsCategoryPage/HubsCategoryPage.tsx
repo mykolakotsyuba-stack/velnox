@@ -53,7 +53,7 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
     const [sent, setSent] = useState(false);
     const [form, setForm] = useState({
         company: '', name: '', phone: '', email: '', country: '',
-        message: defaultDesignation ? `Запит на: ${defaultDesignation}` : ''
+        message: defaultDesignation ? `${t('crosses.request_for')}${defaultDesignation}` : ''
     });
     const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSent(true); };
     return (
@@ -112,7 +112,7 @@ const CROSS_REF_KEYS = new Set(['bearing_part', 'bearing_brand', 'oem']);
 
 type CrossRefMode = 'none' | 'oem-only' | 'full';
 
-function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: string, oemLabel: string, mode: CrossRefMode): ColDef[] {
+function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: string, oemLabel: string, mode: CrossRefMode, t: any): ColDef[] {
     const base: ColDef[] = [
         { key: 'part_number', label: partLabel, width: '110px' },
     ];
@@ -120,8 +120,8 @@ function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: stri
         base.push({ key: 'oem', label: oemLabel, width: '120px', hasFilter: false });
     } else if (mode === 'full') {
         base.push(
-            { key: 'bearing_part',  label: 'Позначення підшипника', hasFilter: false },
-            { key: 'bearing_brand', label: 'Бренд',                 hasFilter: false },
+            { key: 'bearing_part',  label: t('crosses.bearing_designation'), hasFilter: false },
+            { key: 'bearing_brand', label: t('crosses.brand'),                 hasFilter: false },
             { key: 'oem',           label: 'OEM',                   hasFilter: false },
         );
     }
@@ -150,8 +150,8 @@ function CrossRefPanel({
     filterSpecs: boolean;
     onFilterChange: (v: boolean) => void;
     locale: Locale;
-    categorySlug: string;
 }) {
+    const t = useTranslations();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState('');
     const [showAll, setShowAll] = useState(false);
@@ -174,15 +174,15 @@ function CrossRefPanel({
         return (
             <div className={styles.crossesPanel}>
                 <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(false)}>
-                    ← Обрати один
+                    ← {t('crosses.select_one')}
                 </button>
                 <table className={styles.crossTable}>
                     <thead>
                         <tr>
-                            <th>Velnox</th>
-                            <th>Підшипник</th>
-                            <th>Бренд</th>
-                            <th>Аналоги</th>
+                            <th>{t('crosses.velnox')}</th>
+                            <th>{t('crosses.bearing')}</th>
+                            <th>{t('crosses.brand')}</th>
+                            <th>{t('crosses.analogues')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -247,7 +247,7 @@ function CrossRefPanel({
                     </button>
                     {open && (
                         <div className={styles.crossDropdown}>
-                            <input type="text" className={styles.crossDropdownSearch} placeholder="Пошук..."
+                            <input type="text" className={styles.crossDropdownSearch} placeholder={t('crosses.search')}
                                 value={query} onChange={e => setQuery(e.target.value)} autoFocus />
                             <div className={styles.crossDropdownList}>
                                 {matchingRows.map(row => {
@@ -262,7 +262,7 @@ function CrossRefPanel({
                                     );
                                 })}
                                 {matchingRows.length === 0 && (
-                                    <div className={styles.crossDropdownEmpty}>Не знайдено</div>
+                                    <div className={styles.crossDropdownEmpty}>{t('crosses.not_found')}</div>
                                 )}
                             </div>
                         </div>
@@ -280,9 +280,9 @@ function CrossRefPanel({
             <table className={styles.crossTable}>
                 <thead>
                     <tr>
-                        <th>Позначення підшипника</th>
-                        <th>Бренд</th>
-                        <th>Перехресні аналоги</th>
+                        <th>{t('crosses.bearing_designation')}</th>
+                        <th>{t('crosses.brand')}</th>
+                        <th>{t('crosses.cross_analogues')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -300,16 +300,16 @@ function CrossRefPanel({
                 <label className={styles.crossFilterCheck}>
                     <input type="checkbox" checked={filterSpecs}
                         onChange={e => onFilterChange(e.target.checked)} />
-                    Показати тільки обраний
+                    {t('crosses.show_only_selected')}
                 </label>
                 <Link
                     href={`/${locale}/products/${categorySlug}/${articleToSlug(selectedRow.part_number)}`}
                     className={styles.crossDetailBtn}
                 >
-                    Показати детальніше
+                    {t('crosses.show_details')}
                 </Link>
                 <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(true)}>
-                    Показати всі
+                    {t('crosses.show_all')}
                 </button>
             </div>
         </div>
@@ -432,7 +432,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             const tbl = tables[id];
             const mode = CROSS_REF_MODES[id] ?? 'none';
             const searched = search(tbl.data);
-            const cols = buildCols(tbl.specLabels, tbl.specColumns, partLabel, oemLabel, mode);
+            const cols = buildCols(tbl.specLabels, tbl.specColumns, partLabel, oemLabel, mode, t);
             const specCols = cols.filter(c => !CROSS_REF_KEYS.has(c.key));
             const clampIdx = Math.min(tbl.selectedIdx, Math.max(0, searched.length - 1));
             const specsRows = tbl.syncFilter && searched.length ? [searched[clampIdx]] : searched;
@@ -534,12 +534,12 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
                 <div className={styles.heroInner}>
                     <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
-                        <div className={styles.heroLogoWrapper}>
-                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
-                        </div>
                         <div className={styles.heroEyebrow}>
                             <span className={styles.eyebrowLine}></span>
                             {t('hubsPage.hero.eyebrow')}
+                        </div>
+                        <div className={styles.heroLogoWrapper}>
+                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
                         </div>
                         <h1 className={styles.heroTitle}>{t('hubsPage.hero.title')}</h1>
                     </div>
