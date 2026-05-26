@@ -13,7 +13,7 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
-  height: 100px;
+  height: 88px;
   /* Increased from 80px */
   display: flex;
   align-items: center;
@@ -334,7 +334,7 @@
 
   .container {
     gap: 0;
-    height: 76px;
+    height: 74px;
     padding: 0 16px;
     justify-content: space-between;
   }
@@ -344,13 +344,13 @@
   }
 
   .mobileMenu {
-    top: 76px;
+    top: 74px;
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    height: 70px;
+    height: 66px;
     padding: 0 12px;
   }
 
@@ -359,6 +359,6 @@
   }
 
   .mobileMenu {
-    top: 70px;
+    top: 66px;
   }
 }
