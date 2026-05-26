@@ -1383,7 +1383,12 @@
     }
 
     .ctaTitle {
-        font-size: 32px;
+        font-size: clamp(26px, 7.5vw, 36px);
+    }
+
+    .ctaDesc {
+        font-size: 16px;
+        margin-bottom: 28px;
     }
 
     .ctaFormCard {
@@ -1397,5 +1402,81 @@
 
     .fullWidth {
         grid-column: auto;
+    }
+
+    .oemHeader h2 {
+        font-size: clamp(26px, 7vw, 40px);
+    }
+
+    .oemHeader p {
+        font-size: 16px;
+    }
+
+    .oemStep h3 {
+        font-size: 20px;
+        margin-bottom: 14px;
+    }
+
+    .oemStep p {
+        font-size: 15px;
+    }
+
+    .oemIcon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 20px;
+    }
+
+    .sectionTitle {
+        font-size: clamp(24px, 7vw, 36px);
+    }
+
+    .sectionDesc {
+        font-size: 15px;
+    }
+
+    .heroTitle {
+        font-size: clamp(28px, 8vw, 42px);
+    }
+
+    .heroSubtitle {
+        font-size: 15px;
+    }
+
+    .metricCard {
+        padding: 32px 24px;
+    }
+
+    .metricLabel {
+        font-size: 16px;
+    }
+
+    /* On touch devices, show hover overlay state by default on industry cards */
+    .industryCard .cardHoverOverlay {
+        opacity: 0.75;
+    }
+
+    .industryCard .cardHoverBody {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .industryCard .cardIcon {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 400px) {
+    .sectionInner,
+    .heroInner,
+    .ctaInner,
+    .oemInner {
+        padding: 48px 16px;
+        gap: 32px;
+    }
+
+    .ctaFormCard {
+        padding: 28px 16px;
     }
 }

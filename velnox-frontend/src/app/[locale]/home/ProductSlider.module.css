@@ -486,7 +486,7 @@
 @media (max-width: 820px) {
     .sliderInner {
         grid-template-columns: 1fr;
-        padding: 24px 32px 100px;
+        padding: 24px 32px 110px;
         gap: 36px;
     }
 
@@ -509,28 +509,100 @@
 
     .slideBody {
         max-width: 100%;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .slideTitle {
+        font-size: clamp(26px, 4vw, 42px);
+        margin-bottom: 16px;
+    }
+
+    .slideTag {
+        margin-bottom: 16px;
+    }
+
+    .slideSpec {
+        font-size: 14px;
+        margin-bottom: 28px;
     }
 }
 
 @media (max-width: 600px) {
     .sliderInner {
-        padding: 24px 20px 140px;
+        padding: 20px 16px 120px;
     }
 
     .slideContent {
-        padding: 24px;
+        padding: 20px 18px;
         border-radius: 16px;
+    }
+
+    .slideTitle {
+        font-size: clamp(20px, 6.5vw, 28px);
+        margin-bottom: 12px;
+        letter-spacing: -0.02em;
+    }
+
+    .slideBody {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 14px;
+    }
+
+    .slideTag {
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        margin-bottom: 12px;
+    }
+
+    .slideSpec {
+        font-size: 13px;
+        margin-bottom: 20px;
     }
 
     .slideActions {
         flex-direction: column;
         align-items: flex-start;
+        gap: 10px;
+    }
+
+    .slideBtn {
+        padding: 13px 24px;
+        font-size: 13px;
+    }
+
+    .slideBtnGhost {
+        padding: 11px 14px;
+        font-size: 13px;
     }
 
     .controls {
         left: 50%;
         right: auto;
         transform: translateX(-50%);
-        bottom: 90px; /* Above the scroll hint */
+        bottom: 72px;
+    }
+}
+
+@media (max-width: 400px) {
+    .sliderInner {
+        padding: 16px 12px 110px;
+    }
+
+    .slideContent {
+        padding: 18px 14px;
+    }
+
+    .slideTitle {
+        font-size: clamp(18px, 7vw, 24px);
+    }
+
+    .slideBody {
+        font-size: 13px;
+    }
+
+    .slideSpec {
+        font-size: 12px;
     }
 }
