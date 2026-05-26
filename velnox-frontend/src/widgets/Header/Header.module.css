@@ -321,7 +321,7 @@
 }
 
 /* ── Responsive breakpoints ── */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
 
   .nav,
   .langToggle {
@@ -338,6 +338,6 @@
   }
 
   .logo img {
-    height: 58px; /* Increased from 48px */
+    height: 58px;
   }
 }
