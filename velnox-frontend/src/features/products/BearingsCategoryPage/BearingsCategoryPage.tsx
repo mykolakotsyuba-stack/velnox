@@ -134,10 +134,10 @@ function PackerRollerIntro() {
             className={`${styles.applicationsSection} ${inView ? styles.appSectionVisible : ''}`}
             ref={ref as React.Ref<HTMLElement>}
         >
-            <div className={styles.appWatermark} aria-hidden>Applications</div>
+            <div className={styles.appWatermark} aria-hidden>{t('watermark')}</div>
             <div className={styles.appInner}>
                 <div className={styles.appHeader}>
-                    <span className={styles.appTag}>Applications</span>
+                    <span className={styles.appTag}>{t('tag')}</span>
                     <h2 className={styles.appTitle}>{t('title')}</h2>
                 </div>
                 <div className={styles.appBody}>
@@ -524,15 +524,14 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
                 <div className={styles.heroInner}>
                     <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
-                        <div className={styles.heroEyebrow}>
-                            <span className={styles.eyebrowLine} />
-                            VELNOX BEARING UNITS
-                        </div>
                         <div className={styles.heroLogoWrapper}>
                             <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
                         </div>
+                        <div className={styles.heroEyebrow}>
+                            <span className={styles.eyebrowLine} />
+                            {t('bearingsPage.hero.eyebrow')}
+                        </div>
                         <h1 className={styles.heroTitle}>{t('bearingsPage.hero.title')}</h1>
-                        <p className={styles.heroLead}>{t('bearingsPage.hero.subtitle')}</p>
                     </div>
                 </div>
 

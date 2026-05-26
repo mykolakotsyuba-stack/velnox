@@ -117,15 +117,14 @@ export function AboutPage({ locale }: { locale: string }) {
 
                 <div className={styles.heroInner}>
                     <div className={`${styles.heroContent} ${heroVisible ? styles.heroVisible : ''}`}>
+                        <div className={styles.heroLogoWrapper}>
+                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
+                        </div>
                         <div className={styles.heroEyebrow}>
                             <span className={styles.eyebrowLine} />
                             {t('hero.eyebrow')}
                         </div>
-                        <div className={styles.heroLogoWrapper}>
-                            <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
-                        </div>
                         <h1 className={styles.heroTitle}>{t('hero.title')}</h1>
-                        <p className={styles.heroLead}>{t('hero.lead')}</p>
                         <Link href={`/${locale}/contacts`} className={styles.heroCta}>
                             {t('hero.cta')}
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">

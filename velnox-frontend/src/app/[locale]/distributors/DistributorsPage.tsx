@@ -144,6 +144,12 @@ export function DistributorsPage() {
                 <div className={styles.orb2} aria-hidden />
                 <div className={styles.orb3} aria-hidden />
 
+                {/* Europe map background */}
+                <div className={styles.heroMapWrap} aria-hidden>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/velnox/images/about/geo_map.png" alt="" className={styles.heroMapImg} />
+                </div>
+
                 <div className={styles.heroInner}>
                     <div className={styles.heroContent}>
                         <p className={`${styles.heroEyebrow} ${heroRef.inView ? styles.animIn : ''}`}

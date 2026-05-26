@@ -435,7 +435,8 @@
   "bearingsPage": {
     "hero": {
       "title": "Zespoły łożyskowe VELNOX. Bezkompromisowa niezawodność dla produkcji seryjnej.",
-      "subtitle": "Kompleksowe rozwiązania inżynieryjne zaprojektowane dla ekstremalnych obciążeń promieniowych i osiowych. Od standardowych opraw po niestandardowe projekty OEM."
+      "subtitle": "Kompleksowe rozwiązania inżynieryjne zaprojektowane dla ekstremalnych obciążeń promieniowych i osiowych. Od standardowych opraw po niestandardowe projekty OEM.",
+      "eyebrow": "Zespoły łożyskowe"
     },
     "block1": {
       "title": "Dlaczego producenci OEM wybierają zespoły VELNOX?",
@@ -512,6 +513,8 @@
     },
     "packer_roller": {
       "title": "Łożyska do walców doprawiających",
+      "tag": "ZASTOSOWANIA",
+      "watermark": "Zastosowania",
       "sealing_title": "Połączony system uszczelnień",
       "content": "Łożyska do walców doprawiających pracują w stałym kontakcie z glebą, wilgocią i cząstkami ściernymi, co generuje wysokie obciążenia promieniowe i warunki intensywnego zanieczyszczenia. Zespoły łożyskowe do takich zastosowań muszą zapewniać stabilną pracę przy niskich prędkościach obrotowych, wysokich obciążeniach statycznych i uderzeniach.\n\nRozwiązania VELNOX dla walców doprawiających zostały opracowane z uwzględnieniem rzeczywistych warunków eksploatacji: wzmocnione obudowy, skuteczne systemy uszczelnień i zoptymalizowane luzy wewnętrzne zapewniają niezawodną pracę jednostek w trudnych warunkach polowych. Konstrukcja jest zorientowana na zmniejszenie wpływu zanieczyszczeń i wydłużenie żywotności przy minimalnej konserwacji.\n\nZespoły łożyskowe VELNOX są stosowane w walcach doprawiających maszyn rolniczych, zapewniając stabilną pracę agregatów i redukcję przestojów w całym sezonie."
     },
@@ -555,7 +558,8 @@
     "hero": {
       "title": "Rolnicze węzły piasty",
       "subtitle": "Piasty VELNOX zostały zaprojektowane jako zamienniki oryginalnych jednostek wiodących europejskich i amerykańskich producentów maszyn rolniczych. Główny nacisk położono na wielopoziomowy system uszczelnień i stabilną pracę pod wysokim obciążeniem.",
-      "desc": ""
+      "desc": "",
+      "eyebrow": "Węzły piasty"
     },
     "block1": {
       "title": "Dlaczego producenci OEM wybierają piasty VELNOX?",
@@ -614,7 +618,8 @@
     "hero": {
       "title": "Specjalne łożyska agro VELNOX",
       "subtitle": "Specjalne łożyska do ciężkich maszyn rolniczych",
-      "desc": "Seria 17262 i inne — łożyska rolnicze o zwiększonych tolerancjach pierścienia wewnętrznego, zaprojektowane do pracy w siewnikach, hederach i agregatach talerzowych w warunkach pyłu ściernego i wilgoci."
+      "desc": "Seria 17262 i inne — łożyska rolnicze o zwiększonych tolerancjach pierścienia wewnętrznego, zaprojektowane do pracy w siewnikach, hederach i agregatach talerzowych w warunkach pyłu ściernego i wilgoci.",
+      "eyebrow": "Łożyska rolnicze"
     },
     "block2": {
       "title": "Specyfikacje techniczne i parametry łożysk",
@@ -689,7 +694,8 @@
     "hero": {
       "title": "Łożyska do siewników i aparatów wysiewających VELNOX",
       "subtitle": "Kompleksowa oferta łożysk do techniki siewnej. Bezpośredni zamiennik węzłów OEM John Deere, KUHN, Monosem, Gaspardo, Kinze.",
-      "desc": ""
+      "desc": "",
+      "eyebrow": "Łożyska KIT"
     },
     "block1": {
       "title": "Łożyska VELNOX do siewników — kluczowe zalety",

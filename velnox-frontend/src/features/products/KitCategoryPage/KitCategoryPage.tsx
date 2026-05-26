@@ -493,15 +493,14 @@ export function KitCategoryPage({ locale, products }: KitCategoryPageProps) {
 
                 <div className={styles.heroInner}>
                     <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
-                        <div className={styles.heroEyebrow}>
-                            <span className={styles.eyebrowLine} />
-                            KIT BEARINGS
-                        </div>
                         <div className={styles.heroLogoWrapper}>
                             <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
                         </div>
+                        <div className={styles.heroEyebrow}>
+                            <span className={styles.eyebrowLine} />
+                            {t('kitPage.hero.eyebrow')}
+                        </div>
                         <h1 className={styles.heroTitle}>{t('kitPage.hero.title')}</h1>
-                        <p className={styles.heroLead}>{t('kitPage.hero.subtitle')}</p>
                     </div>
                 </div>
 

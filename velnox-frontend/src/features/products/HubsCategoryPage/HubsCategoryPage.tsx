@@ -534,16 +534,14 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
                 <div className={styles.heroInner}>
                     <div className={`${styles.heroContent} ${heroRef.inView ? styles.heroVisible : ''}`}>
-                        <div className={styles.heroEyebrow}>
-                            <span className={styles.eyebrowLine}></span>
-                            VELNOX BEARING HUBS
-                        </div>
                         <div className={styles.heroLogoWrapper}>
                             <Image src="/velnox/images/velnox_logo_white.png" alt="VELNOX" width={320} height={70} style={{ objectFit: 'contain' }} className={styles.heroLogo} />
                         </div>
+                        <div className={styles.heroEyebrow}>
+                            <span className={styles.eyebrowLine}></span>
+                            {t('hubsPage.hero.eyebrow')}
+                        </div>
                         <h1 className={styles.heroTitle}>{t('hubsPage.hero.title')}</h1>
-                        <p className={styles.heroSubtitle}>{t('hubsPage.hero.subtitle')}</p>
-                        <p className={styles.heroDescription}>{t('hubsPage.hero.desc')}</p>
                     </div>
                 </div>
 

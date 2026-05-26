@@ -180,6 +180,10 @@
     opacity: 0;
     transform: translateY(32px);
     transition: opacity 0.7s ease, transform 0.7s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .fadeUp {
@@ -344,6 +348,32 @@
     animation: orbFloat3 22s ease-in-out infinite;
 }
 
+/* Europe map background */
+.heroMapWrap {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 58%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 25%, black 60%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 25%, black 60%);
+}
+
+.heroMapImg {
+    position: absolute;
+    right: -5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 110%;
+    height: auto;
+    opacity: 0.13;
+    filter: saturate(0.4) brightness(1.8);
+    object-fit: cover;
+}
+
 /* Make heroInner above orbs */
 .heroInner {
     position: relative;
@@ -469,8 +499,10 @@
 
 .distributorGrid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
     border-top: 1px solid var(--color-border);
     border-left: 1px solid var(--color-border);
 }
@@ -480,11 +512,11 @@
     background: var(--color-surface);
     border-right: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
-    padding: 40px 28px;
+    padding: 52px 36px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
     cursor: default;
     opacity: 0;
     transform: translateY(24px) scale(0.98);
@@ -552,21 +584,21 @@
 .sectionTitle::after {
     content: '';
     position: absolute;
-    left: 0;
+    left: 50%;
     bottom: -8px;
     width: 60px;
     height: 2px;
     background: linear-gradient(90deg, #3b82f6, #818cf8);
     box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
     border-radius: 2px;
-    transform: scaleX(0);
-    transform-origin: left;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
     transition: transform 0.7s 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fadeUp .sectionTitle::after,
 .sectionHead.fadeUp .sectionTitle::after {
-    transform: scaleX(1);
+    transform: translateX(-50%) scaleX(1);
 }
 
 .distCard:hover,
@@ -602,22 +634,21 @@
 /* Logo area */
 .cardLogoWrap {
     width: 100%;
-    height: 90px;
+    height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px 20px;
+    padding: 20px 24px;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.92);
 }
 
 .cardLogo {
     max-width: 100%;
-    max-height: 62px;
+    max-height: 84px;
     width: auto;
     height: auto;
     object-fit: contain;
-    /* Removed grayscale, logos are now colored by default */
     opacity: 0.9;
     transition: transform 0.4s ease, opacity 0.4s ease;
 }
@@ -637,11 +668,11 @@
 }
 
 .cardFlag {
-    font-size: 18px;
+    font-size: 28px;
 }
 
 .cardName {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--color-text-muted);
     text-align: center;
@@ -654,9 +685,9 @@
 }
 
 .cardCountry {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-text);
     transition: color 0.3s;
@@ -1178,7 +1209,6 @@
    RESPONSIVE
 ══════════════════════════════ */
 @media (max-width: 1200px) {
-
     .sectionInner,
     .heroInner {
         padding-left: 48px;
@@ -1190,7 +1220,18 @@
     }
 
     .distributorGrid {
-        grid-template-columns: repeat(3, 1fr);
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .distributorGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .heroMapWrap {
+        width: 65%;
+        opacity: 0.8;
     }
 }
 
@@ -1203,36 +1244,102 @@
         padding: 80px 32px;
     }
 
+    .sectionHead {
+        margin-bottom: 48px;
+    }
+
     .ctaInner {
         grid-template-columns: 1fr;
         gap: 48px;
         padding: 80px 32px;
     }
 
-    .distributorGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     .heroStats {
         gap: 0;
         flex-wrap: wrap;
     }
+
+    .heroMapWrap {
+        width: 100%;
+        mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 40%, black 70%);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 40%, black 70%);
+    }
+
+    .heroMapImg {
+        top: auto;
+        bottom: 0;
+        right: 0;
+        transform: none;
+        width: 100%;
+        opacity: 0.09;
+    }
+}
+
+@media (max-width: 768px) {
+    .distCard {
+        padding: 36px 24px;
+        gap: 18px;
+    }
+
+    .cardLogoWrap {
+        height: 100px;
+        padding: 16px 20px;
+    }
+
+    .cardLogo {
+        max-height: 70px;
+    }
+
+    .cardFlag {
+        font-size: 22px;
+    }
+
+    .cardName {
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 600px) {
+    .heroInner {
+        padding: 80px 20px 56px;
+    }
 
-    .heroInner,
     .sectionInner {
-        padding-left: 20px;
-        padding-right: 20px;
+        padding: 56px 16px;
     }
 
     .ctaInner {
-        padding: 64px 20px;
+        padding: 56px 16px;
     }
 
     .distributorGrid {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .distCard {
+        padding: 28px 16px;
+        gap: 14px;
+    }
+
+    .cardLogoWrap {
+        height: 90px;
+        padding: 14px 16px;
+    }
+
+    .cardLogo {
+        max-height: 62px;
+    }
+
+    .cardFlag {
+        font-size: 20px;
+    }
+
+    .cardName {
+        font-size: 12px;
+    }
+
+    .cardCountry {
+        font-size: 10px;
     }
 
     .criteriaGrid {
@@ -1249,11 +1356,46 @@
 
     .heroStats {
         flex-direction: column;
-        gap: 24px;
+        gap: 20px;
         align-items: flex-start;
     }
 
     .statDivider {
         display: none;
+    }
+
+    .heroTitle {
+        font-size: clamp(26px, 7vw, 40px);
+    }
+
+    .heroDesc {
+        font-size: 14px;
+        margin-bottom: 32px;
+    }
+
+    .statNum {
+        font-size: 28px;
+    }
+
+    .sectionHead {
+        margin-bottom: 32px;
+    }
+}
+
+@media (max-width: 420px) {
+    .distributorGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .distCard {
+        padding: 24px 16px;
+    }
+
+    .cardLogoWrap {
+        height: 80px;
+    }
+
+    .heroInner {
+        padding: 72px 16px 48px;
     }
 }

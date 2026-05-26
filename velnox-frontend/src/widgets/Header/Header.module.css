@@ -225,7 +225,7 @@
   display: none;
   position: fixed;
   top: 100px;
-  /* Adjusted for taller header */
+  /* Desktop header height — overridden in mobile media query below */
   left: 0;
   right: 0;
   bottom: 0;
@@ -334,10 +334,31 @@
 
   .container {
     gap: 0;
+    height: 76px;
+    padding: 0 16px;
     justify-content: space-between;
   }
 
   .logo img {
-    height: 58px;
+    height: 68px;
+  }
+
+  .mobileMenu {
+    top: 76px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    height: 70px;
+    padding: 0 12px;
+  }
+
+  .logo img {
+    height: 62px;
+  }
+
+  .mobileMenu {
+    top: 70px;
   }
 }

@@ -97,11 +97,12 @@
     position: relative;
     width: 100%;
     min-height: 88vh;
-    background: #D8E0E8;
+    background: #0f0e3a;
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
+    border-bottom: 2px solid var(--color-accent);
 }
 
 .heroGrid {
@@ -161,8 +162,7 @@
 .heroBgOverlay {
     position: absolute;
     inset: 0;
-    /* Lighter left edge, fading faster to transparent to keep it bright */
-    background: linear-gradient(90deg, rgba(10, 45, 20, 0.7) 0%, rgba(10, 50, 25, 0.3) 50%, transparent 80%);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.1) 45%, transparent 100%);
 }
 
 .heroInner {
@@ -200,20 +200,20 @@
     font-weight: 700;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: #00FF66;
-    margin-bottom: 8px;
+    color: #4ade80;
+    margin-bottom: 24px;
 }
 
 .eyebrowLine {
     display: inline-block;
     width: 28px;
     height: 2px;
-    background: #00FF66;
+    background: #4ade80;
     flex-shrink: 0;
 }
 
 .heroLogoWrapper {
-    margin-bottom: 24px;
+    margin-bottom: 0;
 }
 
 .heroLogo {
@@ -236,11 +236,11 @@
     font-weight: 500;
     line-height: 1.85;
     color: rgba(255, 255, 255, 0.95);
-    max-width: 580px;
-    border-left: 3px solid #00FF66;
+    max-width: 600px;
+    border-left: 3px solid #4ade80;
     padding-left: 20px;
     position: relative;
-    margin-bottom: 36px;
+    margin-bottom: 16px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
@@ -251,7 +251,7 @@
     top: 0;
     width: 3px;
     height: 0;
-    background: #00953E;
+    background: #4ade80;
     animation: borderGrow 1.2s ease 0.7s forwards;
 }
 
@@ -286,27 +286,30 @@
 /* Scroll Hint */
 .scrollHint {
     position: absolute;
-    bottom: 30px;
+    bottom: 32px;
     left: 50%;
     transform: translateX(-50%);
+    color: #fff;
+    opacity: 0.8;
+    animation: bounceScroll 2s infinite;
+    cursor: pointer;
+    z-index: 10;
+    transition: opacity 0.2s;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-    animation: scrollBounce 2s infinite ease-in-out;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .scrollHint:hover {
-    background: rgba(255, 255, 255, 0.8);
+    opacity: 1;
 }
 
 @keyframes bounceScroll {
@@ -1016,10 +1019,15 @@
    RESPONSIVE
 ──────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
+    .hero {
+        min-height: 70vh;
+    }
+
     .heroInner {
         grid-template-columns: 1fr;
         gap: 48px;
         padding: 80px 40px;
+        transform: translateY(-60px);
     }
 
     .heroVisual {
@@ -1067,9 +1075,29 @@
         padding: 32px 20px;
     }
 
+    .hero {
+        min-height: 60vh;
+    }
+
     .heroInner {
-        padding: 56px 20px 40px;
-        transform: translateY(-40px);
+        padding: 48px 20px 32px;
+        transform: translateY(-20px);
+    }
+
+    .heroTitle {
+        font-size: clamp(24px, 6.5vw, 36px);
+        margin-bottom: 16px;
+    }
+
+    .heroLead {
+        font-size: 15px;
+        line-height: 1.7;
+        padding-left: 14px;
+    }
+
+    .heroEyebrow {
+        font-size: 10px;
+        margin-bottom: 16px;
     }
 
     .heroBgImg {
@@ -1248,4 +1276,19 @@
 /* ── Responsive adjustments ── */
 @media (max-width: 1024px) {
     .qualityLayout { padding: 40px 32px; margin-top: 32px; }
+}
+
+@media (max-width: 400px) {
+    .heroInner {
+        padding: 40px 16px 28px;
+        transform: none;
+    }
+
+    .heroTitle {
+        font-size: clamp(22px, 6vw, 32px);
+    }
+
+    .heroLead {
+        font-size: 14px;
+    }
 }

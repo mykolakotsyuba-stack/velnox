@@ -1,0 +1,34 @@
+#!/usr/bin/expect -f
+set timeout 60
+set password "12345678"
+
+# Write tinker script to server
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@mail.irbis.ua
+expect "password:"
+send "$password\r"
+expect "$ "
+
+send "cat > /tmp/fix_b.php << 'PHPEOF'\r"
+expect ">"
+send {$t = \DB::table('product_tables')->where('slug','bearings-t3')->first();}
+send "\r"
+expect ">"
+send {$cfg = json_decode($t->highlight_config, true);}
+send "\r"
+expect ">"
+send {$cfg['B_mm'] = [['label'=>'B','x'=>913,'y'=>2362]];}
+send "\r"
+expect ">"
+send {\DB::table('product_tables')->where('slug','bearings-t3')->update(['highlight_config'=>json_encode($cfg)]);}
+send "\r"
+expect ">"
+send "echo 'B_MM_OK';\r"
+expect ">"
+send "PHPEOF\r"
+expect "$ "
+
+send "cd /srv/projects/velnox/api && php artisan tinker < /tmp/fix_b.php\r"
+expect "$ "
+
+send "exit\r"
+expect eof
