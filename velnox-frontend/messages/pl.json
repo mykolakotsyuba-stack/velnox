@@ -687,7 +687,8 @@
       "title": "Dobierz łożysko agro do swojego zastosowania",
       "text": "Bezpłatna konsultacja techniczna. Specyfikacje, modele 3D i dobór zamienników do Twojej maszyny.",
       "btn_contact": "Skontaktuj się z inżynierem",
-      "btn_pdf": "Pobierz katalog PDF"
+      "btn_pdf": "Pobierz katalog PDF",
+      "btn_cad": "Modele CAD"
     }
   },
   "kitPage": {
@@ -773,6 +774,13 @@
       "desc": "Gotowe do montażu rozwiązania z zintegrowanymi kołnierzami lub korpusami. Idealne do pracy polowej.",
       "applications": "Koła dociskowe, koła podporowe",
       "oem_focus": "Zastosowanie uniwersalne"
+    },
+    "block3": {
+      "title": "Znajdź idealne łożysko do siewnika",
+      "text": "Potrzebujesz konsultacji inżynieryjnej? Zapewniamy rysunki techniczne, modele CAD oraz dobór zamienników dla Twoich maszyn.",
+      "btn_contact": "Skontaktuj się z inżynierem",
+      "btn_pdf": "Pobierz PDF",
+      "btn_cad": "Modele CAD"
     }
   },
   "oemPage": {
@@ -798,10 +806,11 @@
     },
     "form": {
       "title": "Inżynieryjny formularz zapytania",
-      "desc": "Podaj parametry techniczne zgodnie ze schematem identyfikacji VELNOX PL-127-G.",
+      "desc": "Podaj parametry techniczne i wybierz produkt bazowy do modyfikacji.",
       "section_contacts": "Informacje kontaktowe",
-      "section_tech": "Parametry techniczne (PL-127-G)",
+      "section_tech": "Parametry techniczne",
       "section_ops": "Warunki pracy",
+      "section_schema": "Schemat produktu bazowego",
       "name": "Imię i Nazwisko",
       "company": "Nazwa firmy / Producent OEM",
       "position": "Stanowisko (Inżynier konstruktor, Kierownik działu itp.)",
@@ -809,6 +818,9 @@
       "phone": "Numer telefonu",
       "base_product": "Produkt bazowy (do modyfikacji)",
       "base_product_ph": "Zacznij wpisywać artykuł lub nazwę...",
+      "no_results": "Brak wyników",
+      "additional_info": "Informacje dodatkowe",
+      "success_message": "Wysłano. Skontaktujemy się z Tobą wkrótce.",
       "files_label": "Pliki techniczne / Rysunki",
       "files_desc": "Wybierz kilka plików",
       "remove": "Usuń",
@@ -818,7 +830,8 @@
       "J": "Rozstaw otworów montażowych (J, mm)",
       "GHT": "Rozmiar i typ gwintu (G / H / T)",
       "L": "Całkowita długość zespołu (L, mm)",
-      "loads": "Obciążenia dynamiczne (C dyn) i statyczne (Co) (kN)",
+      "c_dyn": "Obciążenie dynamiczne C dyn (kN)",
+      "co": "Obciążenie statyczne Co (kN)",
       "rpm": "Prędkość obrotowa (RPM)",
       "environment": "Środowisko (pył, nawóz, obciążenia udarowe)",
       "resource": "Oczekiwany okres eksploatacji (godziny)",

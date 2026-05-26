@@ -655,3 +655,86 @@
 .fileRemove:hover {
   background: color-mix(in srgb, #ff4d4f 10%, transparent);
 }
+
+/* SCHEMA BLOCK */
+.schemaBlock {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.schemaTabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.schemaTab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.schemaTab:hover {
+  color: var(--color-text);
+}
+
+.schemaTabActive {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.schemaImageWrapper {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.schemaImage {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .schemaTabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .schemaTab {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .schemaImageWrapper {
+    padding: 8px;
+  }
+
+  .schemaImage {
+    max-height: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formContainer {
+    padding: 24px 16px;
+  }
+
+  .inputRow {
+    gap: 16px;
+  }
+}

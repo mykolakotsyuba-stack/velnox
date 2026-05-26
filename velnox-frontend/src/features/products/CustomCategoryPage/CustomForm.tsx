@@ -15,11 +15,16 @@ interface Product {
     specs?: Record<string, string>;
 }
 
+interface ProductSchema {
+    slug: string;
+    article: string;
+    images: { type: string; path: string }[];
+}
+
 export function CustomForm({ locale }: { locale: string }) {
     const t = useTranslations('oemPage.form');
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
-    // Multi-select States
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<Product[]>([]);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
@@ -29,11 +34,12 @@ export function CustomForm({ locale }: { locale: string }) {
     const searchRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    // File Upload States
     const [files, setFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // Fetch all products once (shown on open without query)
+    const [productSchemas, setProductSchemas] = useState<Record<string, ProductSchema>>({});
+    const [activeSchemaTab, setActiveSchemaTab] = useState<string>('');
+
     useEffect(() => {
         const fetchAll = async () => {
             try {
@@ -50,7 +56,6 @@ export function CustomForm({ locale }: { locale: string }) {
         fetchAll();
     }, [locale]);
 
-    // Filtered search
     useEffect(() => {
         if (searchQuery.length < 1) {
             setSearchResults([]);
@@ -77,7 +82,6 @@ export function CustomForm({ locale }: { locale: string }) {
         return () => clearTimeout(timer);
     }, [searchQuery, locale]);
 
-    // Click outside → close dropdown
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -88,22 +92,63 @@ export function CustomForm({ locale }: { locale: string }) {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    useEffect(() => {
+        selectedProducts.forEach(p => {
+            if (productSchemas[p.slug]) return;
+            fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/v1/products/${p.slug}?locale=${locale}`,
+                { headers: { Accept: 'application/json' } }
+            )
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (!data) return;
+                    setProductSchemas(prev => ({
+                        ...prev,
+                        [p.slug]: {
+                            slug: data.slug,
+                            article: data.article,
+                            images: data.images || [],
+                        },
+                    }));
+                })
+                .catch(() => {});
+        });
+        if (selectedProducts.length > 0 && !activeSchemaTab) {
+            setActiveSchemaTab(selectedProducts[0].slug);
+        }
+        if (selectedProducts.length === 0) {
+            setActiveSchemaTab('');
+        }
+    }, [selectedProducts, locale, productSchemas, activeSchemaTab]);
+
     const isSelected = (p: Product) => selectedProducts.some(s => s.slug === p.slug);
 
     const toggleProduct = (p: Product) => {
-        setSelectedProducts(prev =>
-            isSelected(p) ? prev.filter(s => s.slug !== p.slug) : [...prev, p]
-        );
-        // Keep dropdown open + keep query so user can keep picking
+        setSelectedProducts(prev => {
+            const next = isSelected(p) ? prev.filter(s => s.slug !== p.slug) : [...prev, p];
+            if (!isSelected(p)) {
+                setActiveSchemaTab(p.slug);
+            } else if (activeSchemaTab === p.slug && next.length > 0) {
+                setActiveSchemaTab(next[0].slug);
+            }
+            return next;
+        });
         setShowResults(true);
         inputRef.current?.focus();
     };
 
     const removeChip = (slug: string) => {
-        setSelectedProducts(prev => prev.filter(s => s.slug !== slug));
+        setSelectedProducts(prev => {
+            const next = prev.filter(s => s.slug !== slug);
+            if (activeSchemaTab === slug && next.length > 0) {
+                setActiveSchemaTab(next[0].slug);
+            } else if (next.length === 0) {
+                setActiveSchemaTab('');
+            }
+            return next;
+        });
     };
 
-    // What to display: filtered results or all products
     const displayList = searchQuery.length >= 1 ? searchResults : allProducts;
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,26 +165,33 @@ export function CustomForm({ locale }: { locale: string }) {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setStatus('submitting');
-        // Mock process
         setTimeout(() => setStatus('success'), 1200);
     };
 
     const findMatchedOem = (product: Product, query: string): string | null => {
         if (!query || query.length < 1) return null;
         const q = query.toLowerCase();
-        // Search oem_cross array
         const fromOem = product.oem_cross?.find(oem => oem.toLowerCase().includes(q));
         if (fromOem) return fromOem;
-        // Search specs Cross-Reference (KIT products)
         const crossRef = product.specs?.['Cross-Reference'] ?? '';
         const matchedLine = crossRef.split('\n').find(line => line.toLowerCase().includes(q));
         if (matchedLine) return matchedLine.trim();
-        // Search specs Bearing designation
         const bearing = product.specs?.['Bearing designation'] ?? '';
         const matchedBearing = bearing.split('\n').find(line => line.toLowerCase().includes(q));
         if (matchedBearing) return matchedBearing.trim();
         return null;
     };
+
+    const getSchemaImages = (slug: string): string[] => {
+        const schema = productSchemas[slug];
+        if (!schema) return [];
+        return schema.images
+            .filter(img => img.type === 'schema_png')
+            .map(img => img.path);
+    };
+
+    const schemasToShow = selectedProducts
+        .filter(p => getSchemaImages(p.slug).length > 0);
 
     if (status === 'success') {
         return (
@@ -149,7 +201,7 @@ export function CustomForm({ locale }: { locale: string }) {
                         <h2 className={styles.formTitle}>{t('success')}</h2>
                         <p className={styles.formDesc}>{t('success_email')}</p>
                         <div className={styles.successMessage}>
-                            Відправлено. Ми зв'яжемося з вами найближчим часом.
+                            {t('success_message')}
                         </div>
                     </div>
                 </div>
@@ -170,21 +222,43 @@ export function CustomForm({ locale }: { locale: string }) {
                     <h2 className={styles.formTitle}>{t('title')}</h2>
                     <p className={styles.formDesc}>{t('desc')}</p>
                     <form onSubmit={handleSubmit}>
-                        
+
+                        {/* Contacts */}
                         <div className={styles.formGroup}>
                             <h3 className={styles.groupTitle}>{t('section_contacts')}</h3>
+                            <div className={styles.inputRow}>
+                                <div className={styles.inputField}>
+                                    <span className={styles.label}>{t('company')} *</span>
+                                    <input required type="text" className={styles.input} />
+                                </div>
+                                <div className={styles.inputField}>
+                                    <span className={styles.label}>{t('name')} *</span>
+                                    <input required type="text" className={styles.input} />
+                                </div>
+                            </div>
+                            <div className={styles.inputRow}>
+                                <div className={styles.inputField}>
+                                    <span className={styles.label}>{t('email')} *</span>
+                                    <input required type="email" className={styles.input} />
+                                </div>
+                                <div className={styles.inputField}>
+                                    <span className={styles.label}>{t('phone')}</span>
+                                    <input type="tel" className={styles.input} />
+                                </div>
+                            </div>
+                        </div>
 
-                            {/* Multi-select Product Picker */}
+                        {/* Tech params — includes base product picker */}
+                        <div className={styles.formGroup}>
+                            <h3 className={styles.groupTitle}>{t('section_tech')}</h3>
+
                             <div className={styles.inputField} style={{ marginBottom: '24px' }}>
                                 <span className={styles.label}>{t('base_product')}</span>
                                 <div className={styles.comboboxWrapper} ref={searchRef}>
-
-                                    {/* Input box with chips inside */}
                                     <div
                                         className={styles.multiInputBox}
                                         onClick={() => inputRef.current?.focus()}
                                     >
-                                        {/* Selected chips */}
                                         {selectedProducts.map(p => (
                                             <span key={p.slug} className={styles.chip}>
                                                 <span className={styles.chipLabel}>{p.article}</span>
@@ -197,8 +271,6 @@ export function CustomForm({ locale }: { locale: string }) {
                                                 </button>
                                             </span>
                                         ))}
-
-                                        {/* Search input */}
                                         <div className={styles.multiInputInner}>
                                             <Search size={15} className={styles.multiSearchIcon} />
                                             <input
@@ -219,7 +291,6 @@ export function CustomForm({ locale }: { locale: string }) {
                                         </div>
                                     </div>
 
-                                    {/* Dropdown — always opens on focus */}
                                     {showResults && (
                                         <div className={styles.comboboxResults}>
                                             {isSearching ? (
@@ -265,37 +336,47 @@ export function CustomForm({ locale }: { locale: string }) {
                                                     );
                                                 })
                                             ) : (
-                                                <div className={styles.comboboxEmpty}>Нічого не знайдено</div>
+                                                <div className={styles.comboboxEmpty}>{t('no_results')}</div>
                                             )}
                                         </div>
                                     )}
                                 </div>
                             </div>
 
-                            <div className={styles.inputRow}>
-                                <div className={styles.inputField}>
-                                    <span className={styles.label}>{t('company')} *</span>
-                                    <input required type="text" className={styles.input} />
+                            {/* Schema block — tabs for selected products */}
+                            {schemasToShow.length > 0 && (
+                                <div className={styles.schemaBlock}>
+                                    <span className={styles.label}>{t('section_schema')}</span>
+                                    {schemasToShow.length > 1 && (
+                                        <div className={styles.schemaTabs}>
+                                            {schemasToShow.map(p => (
+                                                <button
+                                                    key={p.slug}
+                                                    type="button"
+                                                    className={`${styles.schemaTab} ${activeSchemaTab === p.slug ? styles.schemaTabActive : ''}`}
+                                                    onClick={() => setActiveSchemaTab(p.slug)}
+                                                >
+                                                    {p.article}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                    <div className={styles.schemaImageWrapper}>
+                                        {getSchemaImages(activeSchemaTab).map((imgPath, idx) => (
+                                            <Image
+                                                key={idx}
+                                                src={imgPath}
+                                                alt={`Schema ${activeSchemaTab}`}
+                                                width={700}
+                                                height={400}
+                                                className={styles.schemaImage}
+                                                unoptimized
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className={styles.inputField}>
-                                    <span className={styles.label}>{t('name')} *</span>
-                                    <input required type="text" className={styles.input} />
-                                </div>
-                            </div>
-                            <div className={styles.inputRow}>
-                                <div className={styles.inputField}>
-                                    <span className={styles.label}>{t('email')} *</span>
-                                    <input required type="email" className={styles.input} />
-                                </div>
-                                <div className={styles.inputField}>
-                                    <span className={styles.label}>{t('phone')}</span>
-                                    <input type="tel" className={styles.input} />
-                                </div>
-                            </div>
-                        </div>
+                            )}
 
-                        <div className={styles.formGroup}>
-                            <h3 className={styles.groupTitle}>{t('section_tech')}</h3>
                             <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('d')}</span>
@@ -328,9 +409,15 @@ export function CustomForm({ locale }: { locale: string }) {
                             </div>
                             <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
-                                    <span className={styles.label}>{t('loads')}</span>
+                                    <span className={styles.label}>{t('c_dyn')}</span>
                                     <input type="text" className={styles.input} />
                                 </div>
+                                <div className={styles.inputField}>
+                                    <span className={styles.label}>{t('co')}</span>
+                                    <input type="text" className={styles.input} />
+                                </div>
+                            </div>
+                            <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('rpm')}</span>
                                     <input type="text" className={styles.input} />
@@ -338,25 +425,25 @@ export function CustomForm({ locale }: { locale: string }) {
                             </div>
                         </div>
 
+                        {/* Operating conditions */}
                         <div className={styles.formGroup}>
                             <h3 className={styles.groupTitle}>{t('section_ops')}</h3>
-                            
-                            {/* NEW: Multi-file Upload */}
+
                             <div className={styles.inputField} style={{ marginBottom: '24px' }}>
                                 <span className={styles.label}>{t('files_label')}</span>
                                 <div className={styles.fileUploadArea}>
                                     <label className={styles.fileInputLabel}>
                                         <Upload size={18} />
                                         {t('files_desc')}
-                                        <input 
-                                            type="file" 
-                                            multiple 
-                                            style={{ display: 'none' }} 
+                                        <input
+                                            type="file"
+                                            multiple
+                                            style={{ display: 'none' }}
                                             onChange={handleFileChange}
                                             ref={fileInputRef}
                                         />
                                     </label>
-                                    
+
                                     {files.length > 0 && (
                                         <div className={styles.fileList}>
                                             {files.map((file, idx) => (
@@ -365,8 +452,8 @@ export function CustomForm({ locale }: { locale: string }) {
                                                         <FileText size={14} color="var(--color-accent)" />
                                                         <span className={styles.fileName}>{file.name}</span>
                                                     </div>
-                                                    <button 
-                                                        type="button" 
+                                                    <button
+                                                        type="button"
                                                         className={styles.fileRemove}
                                                         onClick={() => removeFile(idx)}
                                                     >
@@ -388,7 +475,7 @@ export function CustomForm({ locale }: { locale: string }) {
                                 <input type="text" className={styles.input} />
                             </div>
                             <div className={styles.inputField}>
-                                <span className={styles.label}>Додаткова інформація</span>
+                                <span className={styles.label}>{t('additional_info')}</span>
                                 <textarea className={`${styles.input} ${styles.textarea}`}></textarea>
                             </div>
                         </div>

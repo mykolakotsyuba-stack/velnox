@@ -752,7 +752,8 @@
       "title": "Find the right agro bearing for your application",
       "text": "Free engineering consultation. Technical specs, 3D models, and cross-reference selection for your machine.",
       "btn_contact": "Talk to an engineer",
-      "btn_pdf": "Download PDF catalogue"
+      "btn_pdf": "Download PDF catalogue",
+      "btn_cad": "CAD Models"
     }
   },
   "kitPage": {
@@ -838,6 +839,13 @@
       "desc": "Ready-to-install solutions with integrated flanges or housings. Ideal for reliable field operation.",
       "applications": "Press wheels, support wheels",
       "oem_focus": "Universal application"
+    },
+    "block3": {
+      "title": "Find the Perfect Seeder Bearing",
+      "text": "Need an engineering consultation? We provide technical drawings, CAD models, and cross-reference selection for your machinery.",
+      "btn_contact": "Talk to an engineer",
+      "btn_pdf": "Download PDF",
+      "btn_cad": "CAD Models"
     }
   },
   "oemPage": {
@@ -863,10 +871,11 @@
     },
     "form": {
       "title": "Engineering Request Form",
-      "desc": "Specify technical parameters according to the VELNOX PL-127-G identification scheme.",
+      "desc": "Specify technical parameters and select a base product for customization.",
       "section_contacts": "Contact Information",
-      "section_tech": "Technical Parameters (PL-127-G)",
+      "section_tech": "Technical Parameters",
       "section_ops": "Operating Conditions",
+      "section_schema": "Base Product Schema",
       "name": "Full Name",
       "company": "Company Name / OEM Manufacturer",
       "position": "Position (Design Engineer, Head of Department, etc.)",
@@ -874,6 +883,9 @@
       "phone": "Phone Number",
       "base_product": "Base Product (to customize from)",
       "base_product_ph": "Start typing article or name...",
+      "no_results": "No results found",
+      "additional_info": "Additional Information",
+      "success_message": "Sent. We will contact you shortly.",
       "files_label": "Technical Files / Drawings",
       "files_desc": "Select several files",
       "remove": "Remove",
@@ -883,7 +895,8 @@
       "J": "Mounting holes pitch circle (J, mm)",
       "GHT": "Thread size and type (G / H / T)",
       "L": "Total assembly length (L, mm)",
-      "loads": "Dynamic (C dyn) and Static (Co) loads (kN)",
+      "c_dyn": "Dynamic load C dyn (kN)",
+      "co": "Static load Co (kN)",
       "rpm": "Rotational speed (RPM)",
       "environment": "Environment (dust, fertilizer, shock loads)",
       "resource": "Expected life (hours)",
