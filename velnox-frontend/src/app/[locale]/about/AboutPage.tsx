@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './about.module.css';
 
 /* ─── InView Hook ─────────────────────────────────────────── */
@@ -125,12 +126,12 @@ export function AboutPage({ locale }: { locale: string }) {
                         </div>
                         <h1 className={styles.heroTitle}>{t('hero.title')}</h1>
                         <p className={styles.heroLead}>{t('hero.lead')}</p>
-                        <a href={`/${locale}/contacts`} className={styles.heroCta}>
+                        <Link href={`/${locale}/contacts`} className={styles.heroCta}>
                             {t('hero.cta')}
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
@@ -460,15 +461,15 @@ export function AboutPage({ locale }: { locale: string }) {
 
                     {/* Footer CTA */}
                     <div className={`${styles.audienceCta} ${audienceSection.inView ? styles.audienceCtaVisible : ''}`}>
-                        <a href={`/${locale}/contacts`} className={styles.ctaButtonPrimary}>
+                        <Link href={`/${locale}/contacts`} className={styles.ctaButtonPrimary}>
                             {t('audience.cta')}
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                        </a>
-                        <a href={`/${locale}/contacts`} className={styles.ctaButtonSecondary}>
+                        </Link>
+                        <Link href={`/${locale}/contacts`} className={styles.ctaButtonSecondary}>
                             {t('audience.cta2')}
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </section>
