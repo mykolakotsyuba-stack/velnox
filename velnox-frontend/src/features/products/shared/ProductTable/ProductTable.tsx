@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 import styles from './productTable.module.css';
 
 export interface ColDef {
@@ -37,6 +38,7 @@ function ColMenu({
     selectedFilters: string[];
     onFilterChange: (val: string) => void;
 }) {
+    const t = useTranslations('table');
     const [open, setOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
     const isActive = sortCol === col || selectedFilters.length > 0;
@@ -57,7 +59,7 @@ function ColMenu({
             <button
                 className={`${styles.colMenuBtn}${isActive ? ' ' + styles.colMenuBtnActive : ''}`}
                 onClick={e => { e.stopPropagation(); setOpen(v => !v); }}
-                title="Сортування / Фільтр"
+                title={t('table.sort_filter')}
             >
                 <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor">
                     <circle cx="4" cy="5" r="1.5" />
@@ -75,13 +77,13 @@ function ColMenu({
                             className={`${styles.sortOption}${currentDir === 'asc' ? ' ' + styles.sortOptionActive : ''}`}
                             onClick={() => { onSort(currentDir === 'asc' ? null : 'asc'); setOpen(false); }}
                         >
-                            <span>↑</span> За зростанням
+                            <span>↑</span> {t('sort_asc')}
                         </button>
                         <button
                             className={`${styles.sortOption}${currentDir === 'desc' ? ' ' + styles.sortOptionActive : ''}`}
                             onClick={() => { onSort(currentDir === 'desc' ? null : 'desc'); setOpen(false); }}
                         >
-                            <span>↓</span> За спаданням
+                            <span>↓</span> {t('sort_desc')}
                         </button>
                     </div>
 
@@ -111,6 +113,8 @@ function ColMenu({
 
 /* ─── Main Table ─── */
 export function ProductTable({ columns, rows, renderCell, actionCell }: ProductTableProps) {
+    const t = useTranslations('table');
+    const locale = useLocale();
     const [sortCol, setSortCol] = useState<string | null>(null);
     const [sortDir, setSortDir] = useState<SortDir>(null);
     const [filters, setFilters] = useState<Record<string, string[]>>({});
@@ -169,7 +173,7 @@ export function ProductTable({ columns, rows, renderCell, actionCell }: ProductT
 
     return (
         <div className={styles.tableScroll}>
-            <table className={styles.techTable} lang="uk">
+            <table className={styles.techTable} lang={locale}>
                 <thead>
                     <tr>
                         {columns.map(col => (
@@ -195,7 +199,7 @@ export function ProductTable({ columns, rows, renderCell, actionCell }: ProductT
                     {filtered.length === 0 ? (
                         <tr>
                             <td colSpan={colCount} className={styles.emptyState}>
-                                Нічого не знайдено
+                                {t('empty')}
                             </td>
                         </tr>
                     ) : filtered.map((row, i) => (

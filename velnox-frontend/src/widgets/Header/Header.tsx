@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { Globe, ChevronDown, Menu, X } from 'lucide-react';
+import { Globe, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import styles from './Header.module.css';
 import { useTheme } from '@/shared/context/ThemeContext';
@@ -27,12 +27,6 @@ const PRODUCT_CATEGORIES = [
     { slug: 'custom', key: 'custom' },
 ] as const;
 
-const NEWS_CATEGORIES = [
-    { slug: 'cost-efficiency', key: 'cost_efficiency' },
-    { slug: 'quality-control', key: 'quality_control' },
-    { slug: 'oem-solutions', key: 'oem_solutions' },
-] as const;
-
 function useClickOutside(ref: React.RefObject<HTMLElement>, onClose: () => void) {
     useEffect(() => {
         function handle(e: MouseEvent) {
@@ -47,20 +41,16 @@ export function Header({ locale }: HeaderProps) {
     const { logoPath } = useTheme();
     const t = useTranslations('nav');
     const tCat = useTranslations('categories');
-    const tNews = useTranslations('news.categories');
     const pathname = usePathname();
 
     const [productsOpen, setProductsOpen] = useState(false);
-    const [newsOpen, setNewsOpen] = useState(false);
     const [langOpen, setLangOpen] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const productsRef = useRef<HTMLDivElement>(null);
-    const newsRef = useRef<HTMLDivElement>(null);
     const langRef = useRef<HTMLDivElement>(null);
 
     useClickOutside(productsRef, () => setProductsOpen(false));
-    useClickOutside(newsRef, () => setNewsOpen(false));
     useClickOutside(langRef, () => setLangOpen(false));
 
     const switchLocale = (newLocale: string) =>
@@ -70,7 +60,6 @@ export function Header({ locale }: HeaderProps) {
 
     const closeAll = () => {
         setProductsOpen(false);
-        setNewsOpen(false);
         setMobileOpen(false);
     };
 
@@ -79,7 +68,6 @@ export function Header({ locale }: HeaderProps) {
             <header className={styles.header}>
                 <div className={styles.container}>
 
-                    {/* Лого */}
                     <Link href={`/${locale}`} className={styles.logo} onClick={closeAll}>
                         <Image src={logoPath} alt="Velnox Logo" width={280} height={75} priority />
                     </Link>
@@ -91,7 +79,7 @@ export function Header({ locale }: HeaderProps) {
                             {t('about')}
                         </Link>
 
-                        {/* Продукти — dropdown (hover + click) */}
+                        {/* Продукти — dropdown */}
                         <div
                             className={styles.dropdown}
                             ref={productsRef}
@@ -128,38 +116,9 @@ export function Header({ locale }: HeaderProps) {
                             {t('distributors')}
                         </Link>
 
-                        {/* Новини — dropdown (hover + click) */}
-                        <div
-                            className={styles.dropdown}
-                            ref={newsRef}
-                            onMouseEnter={() => setNewsOpen(true)}
-                            onMouseLeave={() => setNewsOpen(false)}
-                        >
-                            <button
-                                className={styles.navLink}
-                                onClick={() => setNewsOpen((o) => !o)}
-                                aria-haspopup="true"
-                                aria-expanded={newsOpen}
-                            >
-                                {t('news')}
-                                <ChevronDown size={14} style={{ transition: 'transform .2s', transform: newsOpen ? 'rotate(180deg)' : 'none' }} />
-                            </button>
-
-                            {newsOpen && (
-                                <div className={styles.dropdownMenu}>
-                                    {NEWS_CATEGORIES.map(({ slug, key }) => (
-                                        <Link
-                                            key={slug}
-                                            href={`/${locale}/news?category=${slug}`}
-                                            className={styles.dropdownItem}
-                                            onClick={closeAll}
-                                        >
-                                            {tNews(key)}
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+                        <Link href={`/${locale}/news`} className={styles.navLink} onClick={closeAll}>
+                            {t('news')}
+                        </Link>
 
                         <Link href={`/${locale}/contacts`} className={styles.navLink}>
                             {t('contacts')}
@@ -214,6 +173,7 @@ export function Header({ locale }: HeaderProps) {
 
                 <Link href={`/${locale}/about`} className={styles.mobileNavLink} onClick={closeAll}>{t('about')}</Link>
                 <Link href={`/${locale}/distributors`} className={styles.mobileNavLink} onClick={closeAll}>{t('distributors')}</Link>
+                <Link href={`/${locale}/news`} className={styles.mobileNavLink} onClick={closeAll}>{t('news')}</Link>
                 <Link href={`/${locale}/contacts`} className={styles.mobileNavLink} onClick={closeAll}>{t('contacts')}</Link>
 
                 {/* Продукти */}
@@ -221,14 +181,6 @@ export function Header({ locale }: HeaderProps) {
                 {PRODUCT_CATEGORIES.map(({ slug, key }) => (
                     <Link key={slug} href={`/${locale}/products/${slug}`} className={styles.mobileSubLink} onClick={closeAll}>
                         {tCat(key)}
-                    </Link>
-                ))}
-
-                {/* Новини */}
-                <p className={styles.mobileSection}>{t('news')}</p>
-                {NEWS_CATEGORIES.map(({ slug, key }) => (
-                    <Link key={slug} href={`/${locale}/news?category=${slug}`} className={styles.mobileSubLink} onClick={closeAll}>
-                        {tNews(key)}
                     </Link>
                 ))}
 

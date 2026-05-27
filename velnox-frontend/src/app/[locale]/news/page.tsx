@@ -1,42 +1,33 @@
-import { apiFetch } from '@/shared/lib/api';
-import Link from 'next/link';
+import type { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
+import { NewsListPage } from '@/features/news/NewsListPage';
 import type { Locale } from '@/entities/product/model/types';
 
-interface NewsArticle {
-    slug: string;
-    category: string;
-    title: string;
-    excerpt: string;
-    published_at: string;
-    cover_image?: string;
-}
-
-interface NewsPageProps {
+interface Props {
     params: { locale: Locale };
-    searchParams: { category?: string };
 }
 
-export default async function NewsPage({ params: { locale }, searchParams }: NewsPageProps) {
-    const { data: articles } = await apiFetch<{ data: NewsArticle[] }>(
-        '/news',
-        { params: { locale, category: searchParams.category } }
-    );
+const meta: Record<string, { title: string; description: string }> = {
+    en: {
+        title: 'News | VELNOX — Engineering Solutions & Updates',
+        description: 'Latest news, engineering solutions and product updates from VELNOX — bearing units, hub assemblies and custom OEM solutions.',
+    },
+    uk: {
+        title: 'Новини | VELNOX — Інженерні рішення та оновлення',
+        description: 'Останні новини, інженерні рішення та оновлення продукції VELNOX — підшипникові вузли, ступичні вузли та кастомні OEM-рішення.',
+    },
+    pl: {
+        title: 'Aktualności | VELNOX — Rozwiązania inżynieryjne i aktualizacje',
+        description: 'Najnowsze wiadomości, rozwiązania inżynieryjne i aktualizacje produktów VELNOX — węzły łożyskowe, węzły piast i niestandardowe rozwiązania OEM.',
+    },
+};
 
-    return (
-        <main>
-            <h1>News</h1>
-            <div>
-                {articles.map((article) => (
-                    <article key={article.slug}>
-                        <span>{article.category}</span>
-                        <Link href={`/${locale}/news/${article.slug}`}>
-                            <h2>{article.title}</h2>
-                        </Link>
-                        <p>{article.excerpt}</p>
-                        <time>{article.published_at}</time>
-                    </article>
-                ))}
-            </div>
-        </main>
-    );
+export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+    const m = meta[locale] ?? meta.en;
+    return { title: m.title, description: m.description };
+}
+
+export default function NewsPage({ params: { locale } }: Props) {
+    setRequestLocale(locale);
+    return <NewsListPage locale={locale} />;
 }

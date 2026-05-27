@@ -437,7 +437,7 @@
 
 .tablesHeaderWrap.isSticky .stickyContainer {
     position: fixed;
-    top: 100px;
+    top: 88px;
     left: 0;
     right: 0;
     z-index: 90;
@@ -1445,7 +1445,7 @@
     }
 
     .tablesHeaderWrap.isSticky .stickyContainer {
-        top: 72px;
+        top: 74px;
         padding: 10px 20px;
     }
 
@@ -1558,7 +1558,7 @@
     }
     /* Sticky header — mobile */
     .tablesHeaderWrap.isSticky .stickyContainer {
-        top: 58px;
+        top: 66px;
         padding: 8px 16px;
     }
     .tablesHeaderWrap.isSticky .tablesHeader {

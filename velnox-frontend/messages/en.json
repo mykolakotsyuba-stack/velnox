@@ -266,6 +266,17 @@
       "success_title": "Application received!",
       "success_body": "Our engineer will contact you within 24 hours to clarify the details.",
       "close": "Close"
+    },
+    "order": {
+      "tag": "ORDER FROM DISTRIBUTOR",
+      "desc": "Fill out the form to send a purchase request for this product.",
+      "name_ph": "Your name or company",
+      "phone_ph": "Phone",
+      "message_ph": "Additional message or quantity",
+      "submit": "Send Request",
+      "sent_title": "Request sent!",
+      "sent_desc": "Your request has been successfully sent to distributor {name}. They will contact you shortly.",
+      "close": "Close"
     }
   },
   "about": {
@@ -473,7 +484,37 @@
     "pdf_catalog_title": "PRODUCT CATALOG",
     "pdf_drawing_title": "Technical Drawing",
     "drawings": "Drawings",
-    "pdf_copyright": "All rights reserved."
+    "pdf_copyright": "All rights reserved.",
+    "cta": {
+      "request_tag": "REQUEST TO ENGINEER",
+      "article_prefix": "Article:",
+      "modal_desc": "Select the request type and enter your contact details — we'll get back to you.",
+      "type_analogue": "Selection by Sample",
+      "type_resource": "Resource Calculation",
+      "type_batch": "Batch Order",
+      "type_custom": "Custom Solution",
+      "placeholder": "Your name, phone, email or any message",
+      "sending": "Sending...",
+      "submit": "Send Request",
+      "error_send": "Error sending. Please try again.",
+      "error_connection": "Connection error. Check your connection and try again.",
+      "sent_title": "Request sent!",
+      "sent_desc": "Our engineer will review your request and contact you shortly.",
+      "close": "Close"
+    },
+    "pdf": {
+      "save": "Save PDF",
+      "save_file": "Save file",
+      "open_tab": "Open PDF in new tab",
+      "generate": "Generate PDF"
+    },
+    "blueprint_specs": "Specifications",
+    "sort_filter": "Sort / Filter",
+    "gallery_photo": "Photos",
+    "visual_init": "Initializing…",
+    "visual_loading": "Loading (~{size} MB)…",
+    "visual_hint": "Drag · Scroll to zoom",
+    "application_area": "Application Area"
   },
   "news": {
     "categories": {
@@ -481,8 +522,24 @@
       "quality_control": "Quality Control",
       "oem_solutions": "OEM Solutions"
     },
+    "page_title": "News & Publications",
+    "page_subtitle": "Engineering solutions, developments and updates from the VELNOX team",
     "read_more": "Read more",
-    "back_to_news": "Back to News"
+    "back_to_list": "All news",
+    "back_to_news": "Back to News",
+    "not_found": "Article not found",
+    "articles": {
+      "velnox-seals-seeder-coulters": {
+        "title": "VELNOX developed a wide range of seals for seeder coulter bearings",
+        "excerpt": "VELNOX presents a wide range of seals for bearings used in seeder coulters — standard, wide contact area, and double-lip labyrinth type.",
+        "body": "<p>VELNOX continues to develop specialized solutions for agricultural machinery and presents a wide range of seals for bearings used in seeder coulters.</p><p>During operation, coulters are constantly in contact with soil, dust, moisture, and aggressive environments. Many designs use standard radial ball bearings that require maximum protection against contamination and grease leakage. That is why VELNOX engineers have developed several types of seals for different operating conditions.</p><h2>VELNOX offers three main seal types</h2><ul><li><strong>Standard contact seal</strong> — a classic solution for basic operating conditions that provides effective dust protection and grease retention.</li><li><strong>Wide contact area seal</strong> — a reinforced solution for harsh field conditions with increased contamination levels. The large contact area significantly improves protection against dust and moisture ingress.</li><li><strong>Double-lip labyrinth seal</strong> — a specialized seal for the most demanding operating conditions. The labyrinth design significantly impedes contaminant penetration into the bearing and ensures stable unit operation even with intense soil contact.</li></ul><h2>All VELNOX seal types provide</h2><ul><li>effective bearing protection against dust, dirt, and moisture;</li><li>reduced risk of grease leakage;</li><li>extended bearing unit service life;</li><li>stable operation at various rotation speeds;</li><li>reduced equipment downtime during the season.</li></ul><p>The right seal choice means more than just bearing longevity. It ensures stable coulter operation, uniform seeding depth, and precise seed placement in the soil. As a result, the farmer achieves more uniform germination, reduces seed material losses, and improves field equipment efficiency.</p><blockquote>Contact VELNOX distributors and specialists — we will help you select the optimal solution for your specific operating conditions.</blockquote>"
+      },
+      "velnox-bearing-solution-rotary-harrows": {
+        "title": "VELNOX developed a new reinforced bearing solution for rotary harrows",
+        "excerpt": "VELNOX announces the development of a new generation of agricultural bearings, specifically designed for rotary harrows and other tillage equipment operating in extreme field conditions.",
+        "body": "<p>VELNOX announces the development of a new generation of agricultural bearings, specifically designed for rotary harrows and other tillage equipment operating in extreme field conditions.</p><p>The new bearing solution was developed based on real operating conditions of modern agricultural machinery: constant vibration, impact loads, high levels of dust, moisture, and intensive seasonal operation.</p><p>According to VELNOX engineers, the main goal during development was not to create another standard catalog bearing, but to significantly increase the service life of the unit and reduce equipment downtime during the critical period of field work.</p><h2>Key technical advantages of the new VELNOX solution</h2><p>The new bearing features a special anti-corrosion protective coating that significantly improves resistance to moisture, fertilizers, and aggressive operating environments.</p><p>The bearing's internal space is filled with high-quality grease up to 80% of free volume, allowing stable lubrication even during prolonged operation in dusty conditions and at high temperatures.</p><p>The design features a reinforced five-lip contact seal on both sides, providing maximum protection against dust, dirt, moisture, and plant residue ingress.</p><p>Engineers paid special attention to bearing performance under high radial and axial loads typical of rotary harrows and other heavy tillage equipment.</p><p>Based on internal testing and operating condition analysis, the new VELNOX solution enables:</p><ul><li>extended bearing unit service life;</li><li>reduced emergency equipment stops;</li><li>lower service and bearing replacement costs;</li><li>more hectares processed per bearing unit;</li><li>significantly reduced total equipment operating costs.</li></ul><blockquote>VELNOX emphasizes that the company's philosophy remains unchanged: creating real engineering solutions for agricultural machinery instead of standard universal products.</blockquote>"
+      }
+    }
   },
   "common": {
     "loading": "Loading...",
@@ -566,14 +623,30 @@
       "text": "Download exact CAD models of units in the required format or contact our engineers to select a custom sealing system for your operating environment.",
       "btn_pdf": "Download PDF Catalog",
       "btn_cad": "3D / CAD Library",
-      "btn_contact": "Contact Engineer"
+      "btn_contact": "Contact Engineer",
+      "modal_contact": "General Engineering Support",
+      "modal_cad": "CAD Catalogue Request"
     },
     "packer_roller": {
       "title": "Packer Roller Bearings",
       "tag": "APPLICATIONS",
       "watermark": "Applications",
       "sealing_title": "Combined Sealing System",
-      "content": "Packer roller bearings operate in constant contact with soil, moisture, and abrasive particles, which creates high radial loads and intensive contamination conditions. Bearing units for such applications must ensure stable operation at low rotational speeds, high static loads, and shock impacts.\n\nVELNOX solutions for packer rollers are developed taking into account real operating conditions: reinforced housings, effective sealing systems, and optimized internal clearances ensure reliable operation of the units in difficult field conditions. The design is focused on reducing the impact of contamination and increasing service life with minimal maintenance.\n\nVELNOX bearing units are used in packer rollers of agricultural machinery, ensuring stable operation of the equipment and reducing downtime throughout the entire season."
+      "content": "Packer roller bearings operate in constant contact with soil, moisture, and abrasive particles, which creates high radial loads and intensive contamination conditions. Bearing units for such applications must ensure stable operation at low rotational speeds, high static loads, and shock impacts.\n\nVELNOX solutions for packer rollers are developed taking into account real operating conditions: reinforced housings, effective sealing systems, and optimized internal clearances ensure reliable operation of the units in difficult field conditions. The design is focused on reducing the impact of contamination and increasing service life with minimal maintenance.\n\nVELNOX bearing units are used in packer rollers of agricultural machinery, ensuring stable operation of the equipment and reducing downtime throughout the entire season.",
+      "keywords": [
+        "radial loads",
+        "heavy contamination",
+        "low rotational speeds",
+        "reinforced housings",
+        "sealing systems",
+        "optimized internal clearances",
+        "contamination protection",
+        "extended service life",
+        "minimal maintenance requirements",
+        "stable operation and reduced downtime",
+        "impact loads",
+        "strength margin"
+      ]
     },
     "cols": {
       "part_number": "Part Number",
@@ -649,26 +722,37 @@
       "title": "Hubs for Disc Harrows and Heavy Cultivators",
       "desc": "Unit designed for operation in extreme dust and moisture conditions. Used in soil preparation aggregates where each disc requires independent rotation under load.",
       "applications": "Deep looseners, heavy disc harrows, combined aggregates",
-      "oem_focus": "Full compatibility with HORSCH equipment (Joker, Focus, Terrano series)"
+      "oem_focus": "Full compatibility with HORSCH equipment (Joker, Focus, Terrano series)",
+      "tag": "DISK HARROWS",
+      "field_label": "Application area",
+      "oem_label": "OEM compatibility"
     },
     "app2": {
       "title": "Hubs for Cutting Nodes with Independent Suspension",
       "desc": "Maintenance-free bearing units providing precise blade angle of attack. Design includes built-in cassette sealing eliminating lubrication needs throughout service life.",
       "applications": "Compact disc harrows, pre-seeding cultivators",
-      "oem_focus": "Replacement hubs for Bednar, Köckerling, Gaspardo, Kuhn, Lemken"
+      "oem_focus": "Replacement hubs for Bednar, Köckerling, Gaspardo, Kuhn, Lemken",
+      "tag": "CUTTING NODES",
+      "field_label": "Application area",
+      "oem_label": "OEM compatibility"
     },
     "app3": {
       "title": "Hubs for High-Speed Seeders and Press Wheels",
       "desc": "High-precision rotation units. Minimal play ensures stable seeding depth even at high operating speeds.",
       "applications": "Seeding complexes, grain and vegetable seeder sections",
-      "oem_focus": "Optimized for Vaderstad (Rapid series), Agrisem equipment"
+      "oem_focus": "Optimized for Vaderstad (Rapid series), Agrisem equipment",
+      "tag": "HIGH-SPEED SEEDERS",
+      "field_label": "Application area",
+      "oem_label": "OEM compatibility"
     },
     "block3": {
       "title": "Ready for Integration",
       "text": "VELNOX hubs are a complete OEM solution requiring no changes to design documentation. All parameters are calculated and tested for real field conditions.",
       "btn_pdf": "Download PDF",
       "btn_cad": "CAD Models",
-      "btn_contact": "Talk to Engineer"
+      "btn_contact": "Talk to Engineer",
+      "modal_contact": "General Engineering Support",
+      "modal_cad": "CAD Catalogue Request"
     }
   },
   "agroPage": {
@@ -706,7 +790,8 @@
       "table4": {
         "title": "Table 4: Dimensional specifications of AA30941 hub unit for John Deere machinery",
         "desc": ""
-      }
+      },
+      "btn_request": "Request"
     },
     "special": {
       "tagline": "SPECIAL AGRO BEARINGS",
@@ -731,7 +816,8 @@
         "Resistant to manure, soil, and gross contamination",
         "Stable operation under radial and axial loads"
       ],
-      "btn_select": "Select by Dimensions"
+      "btn_select": "Select by Dimensions",
+      "btn_modal_designation": "VELNOX Special Agro Bearings"
     },
     "app1": {
       "title": "Standard agro bearings series 1726",
@@ -753,7 +839,9 @@
       "text": "Free engineering consultation. Technical specs, 3D models, and cross-reference selection for your machine.",
       "btn_contact": "Talk to an engineer",
       "btn_pdf": "Download PDF catalogue",
-      "btn_cad": "CAD Models"
+      "btn_cad": "CAD Models",
+      "modal_contact": "Agro Bearings — Engineering Support",
+      "modal_cad": "Agro CAD Catalogue Request"
     }
   },
   "kitPage": {
@@ -845,7 +933,9 @@
       "text": "Need an engineering consultation? We provide technical drawings, CAD models, and cross-reference selection for your machinery.",
       "btn_contact": "Talk to an engineer",
       "btn_pdf": "Download PDF",
-      "btn_cad": "CAD Models"
+      "btn_cad": "CAD Models",
+      "modal_contact": "Kit Bearings — Engineering Support",
+      "modal_cad": "Kit CAD Catalogue Request"
     }
   },
   "oemPage": {
@@ -921,5 +1011,11 @@
     "show_details": "Show details",
     "show_all": "Show all",
     "request_for": "Request for: "
+  },
+  "table": {
+    "sort_filter": "Sort / Filter",
+    "sort_asc": "Ascending",
+    "sort_desc": "Descending",
+    "empty": "Nothing found"
   }
 }

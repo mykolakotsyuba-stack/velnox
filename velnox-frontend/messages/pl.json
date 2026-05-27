@@ -266,6 +266,17 @@
       "success_title": "Wniosek otrzymany!",
       "success_body": "Nasz inżynier skontaktuje się z Tobą w ciągu 24 godzin w celu wyjaśnienia szczegółów.",
       "close": "Zamknij"
+    },
+    "order": {
+      "tag": "ZAMÓW U DYSTRYBUTORA",
+      "desc": "Wypełnij formularz, aby wysłać zapytanie o zakup tego produktu.",
+      "name_ph": "Twoje imię lub firma",
+      "phone_ph": "Telefon",
+      "message_ph": "Dodatkowa wiadomość lub ilość",
+      "submit": "Wyślij zapytanie",
+      "sent_title": "Zapytanie wysłane!",
+      "sent_desc": "Twoje zapytanie zostało wysłane do dystrybutora {name}. Skontaktują się z Tobą wkrótce.",
+      "close": "Zamknij"
     }
   },
   "about": {
@@ -416,7 +427,37 @@
     "pdf_catalog_title": "KATALOG PRODUKTÓW",
     "pdf_drawing_title": "Rysunek techniczny",
     "drawings": "Rysunki",
-    "pdf_copyright": "Wszelkie prawa zastrzeżone."
+    "pdf_copyright": "Wszelkie prawa zastrzeżone.",
+    "cta": {
+      "request_tag": "ZAPYTANIE DO INŻYNIERA",
+      "article_prefix": "Nr artykułu:",
+      "modal_desc": "Wybierz typ zapytania i podaj dane kontaktowe — skontaktujemy się z Tobą.",
+      "type_analogue": "Dobór według próbki",
+      "type_resource": "Obliczenie zasobu",
+      "type_batch": "Zamówienie partii",
+      "type_custom": "Rozwiązanie niestandardowe",
+      "placeholder": "Imię, telefon, email lub wiadomość",
+      "sending": "Wysyłamy...",
+      "submit": "Wyślij zapytanie",
+      "error_send": "Błąd wysyłania. Spróbuj ponownie.",
+      "error_connection": "Błąd połączenia. Sprawdź połączenie i spróbuj ponownie.",
+      "sent_title": "Zapytanie wysłane!",
+      "sent_desc": "Nasz inżynier rozpatrzy Twoje zapytanie i skontaktuje się wkrótce.",
+      "close": "Zamknij"
+    },
+    "pdf": {
+      "save": "Zapisz PDF",
+      "save_file": "Zapisz plik",
+      "open_tab": "Otwórz PDF w nowej karcie",
+      "generate": "Generuj PDF"
+    },
+    "blueprint_specs": "Specyfikacje",
+    "sort_filter": "Sortuj / Filtruj",
+    "gallery_photo": "Zdjęcia",
+    "visual_init": "Inicjalizacja…",
+    "visual_loading": "Ładowanie (~{size} MB)…",
+    "visual_hint": "Przeciągnij · Przewiń by powiększyć",
+    "application_area": "Obszar zastosowania"
   },
   "news": {
     "categories": {
@@ -424,8 +465,24 @@
       "quality_control": "Kontrola jakości",
       "oem_solutions": "Rozwiązania OEM"
     },
+    "page_title": "Aktualności i publikacje",
+    "page_subtitle": "Rozwiązania inżynieryjne, nowości i aktualizacje od zespołu VELNOX",
     "read_more": "Czytaj więcej",
-    "back_to_news": "Powrót do aktualności"
+    "back_to_list": "Wszystkie aktualności",
+    "back_to_news": "Powrót do aktualności",
+    "not_found": "Nie znaleziono artykułu",
+    "articles": {
+      "velnox-seals-seeder-coulters": {
+        "title": "VELNOX opracował szeroką gamę uszczelek do łożysk redlic siewników",
+        "excerpt": "VELNOX prezentuje szeroką gamę uszczelek do łożysk stosowanych w redlicach siewników — standardowe, z szeroką powierzchnią kontaktu oraz dwuwargowe typu labiryntowego.",
+        "body": "<p>Firma VELNOX kontynuuje rozwój specjalistycznych rozwiązań dla maszyn rolniczych i prezentuje szeroką gamę uszczelek do łożysk stosowanych w redlicach siewników.</p><p>Podczas pracy redlice stale kontaktują się z glebą, pyłem, wilgocią i agresywnym środowiskiem. W wielu konstrukcjach stosowane są standardowe kulkowe łożyska promieniowe, które wymagają maksymalnie skutecznej ochrony przed zanieczyszczeniami i wyciekiem smaru. Dlatego inżynierowie VELNOX opracowali kilka typów uszczelek do różnych warunków eksploatacji.</p><h2>VELNOX oferuje trzy główne typy uszczelek</h2><ul><li><strong>Standardowa uszczelka kontaktowa</strong> — klasyczne rozwiązanie do podstawowych warunków pracy, zapewniające skuteczną ochronę przed pyłem i utrzymanie smaru.</li><li><strong>Uszczelka z szeroką powierzchnią kontaktu</strong> — wzmocnione rozwiązanie do ciężkich warunków polowych z podwyższonym poziomem zanieczyszczeń. Duża powierzchnia kontaktu znacząco poprawia ochronę przed wnikaniem pyłu i wilgoci.</li><li><strong>Dwuwargowa uszczelka labiryntowa</strong> — specjalistyczna uszczelka do najbardziej wymagających warunków eksploatacji. Konstrukcja labiryntowa skutecznie utrudnia przenikanie zanieczyszczeń do wnętrza łożyska i zapewnia stabilną pracę węzła nawet przy intensywnym kontakcie z glebą.</li></ul><h2>Wszystkie typy uszczelek VELNOX umożliwiają</h2><ul><li>skuteczną ochronę łożyska przed pyłem, brudem i wilgocią;</li><li>zmniejszenie ryzyka wycieku smaru;</li><li>wydłużenie żywotności węzła łożyskowego;</li><li>stabilną pracę przy różnych prędkościach obrotowych;</li><li>zmniejszenie przestojów maszyn w sezonie.</li></ul><p>Właściwie dobrana uszczelka to nie tylko trwałość łożyska. To stabilna praca redlicy, równomierna głębokość siewu i precyzyjne umieszczanie nasion w glebie. W rezultacie rolnik uzyskuje bardziej równomierne wschody, zmniejsza straty materiału siewnego i poprawia efektywność pracy maszyn w polu.</p><blockquote>Skontaktuj się z dystrybutorami i specjalistami VELNOX — pomożemy dobrać optymalne rozwiązanie do Twoich warunków eksploatacji.</blockquote>"
+      },
+      "velnox-bearing-solution-rotary-harrows": {
+        "title": "VELNOX opracował nowe wzmocnione rozwiązanie łożyskowe do bron rotacyjnych",
+        "excerpt": "VELNOX informuje o opracowaniu nowej generacji łożysk rolniczych, specjalnie zaprojektowanych do bron rotacyjnych i innych maszyn uprawowych pracujących w ekstremalnych warunkach polowych.",
+        "body": "<p>VELNOX informuje o opracowaniu nowej generacji łożysk rolniczych, specjalnie zaprojektowanych do bron rotacyjnych i innych maszyn uprawowych pracujących w ekstremalnych warunkach polowych.</p><p>Nowe rozwiązanie łożyskowe zostało opracowane na podstawie rzeczywistych warunków eksploatacji nowoczesnych maszyn rolniczych: ciągłych wibracji, obciążeń udarowych, dużej ilości pyłu, wilgoci i intensywnej pracy sezonowej.</p><p>Według inżynierów VELNOX głównym celem podczas opracowywania nie było stworzenie kolejnego standardowego łożyska katalogowego, lecz znaczne zwiększenie żywotności węzła i zmniejszenie przestojów maszyn w najważniejszym okresie prac polowych.</p><h2>Główne zalety techniczne nowego rozwiązania VELNOX</h2><p>Nowe łożysko posiada specjalną powłokę antykorozyjną, która znacząco zwiększa odporność na wilgoć, nawozy i agresywne środowisko eksploatacji.</p><p>Wnętrze łożyska jest wypełnione wysokiej jakości smarem do 80% wolnej objętości, co pozwala na utrzymanie stabilnego smarowania nawet podczas długotrwałej pracy w zapylonych warunkach i wysokich temperaturach.</p><p>Konstrukcja wyposażona jest we wzmocnioną pięciowargową uszczelkę kontaktową z obu stron, zapewniającą maksymalną ochronę przed wnikaniem pyłu, brudu, wilgoci i resztek roślinnych.</p><p>Inżynierowie poświęcili szczególną uwagę pracy łożyska pod wysokimi obciążeniami promieniowymi i osiowymi, typowymi dla bron rotacyjnych i innych ciężkich maszyn uprawowych.</p><p>Na podstawie testów wewnętrznych i analizy warunków eksploatacji nowe rozwiązanie VELNOX umożliwia:</p><ul><li>wydłużenie żywotności węzła łożyskowego;</li><li>zmniejszenie awaryjnych zatrzymań maszyn;</li><li>obniżenie kosztów serwisu i wymiany łożysk;</li><li>obrobienie większej liczby hektarów na jednym węźle łożyskowym;</li><li>znaczne obniżenie całkowitych kosztów eksploatacji maszyn.</li></ul><blockquote>VELNOX podkreśla, że filozofia firmy pozostaje niezmienna: tworzenie prawdziwych rozwiązań inżynieryjnych dla maszyn rolniczych zamiast standardowych uniwersalnych produktów.</blockquote>"
+      }
+    }
   },
   "common": {
     "loading": "Ładowanie...",
@@ -509,14 +566,30 @@
       "text": "Pobierz dokładne modele CAD w wymaganym formacie lub skontaktuj się z naszymi inżynierami, aby dobrać niestandardowy system uszczelnień do Twojego środowiska pracy.",
       "btn_pdf": "Pobierz katalog PDF",
       "btn_cad": "Biblioteka modeli 3D / CAD",
-      "btn_contact": "Skontaktuj się z inżynierem"
+      "btn_contact": "Skontaktuj się z inżynierem",
+      "modal_contact": "Ogólne wsparcie inżynieryjne",
+      "modal_cad": "Zapytanie o katalog CAD"
     },
     "packer_roller": {
       "title": "Łożyska do walców doprawiających",
       "tag": "ZASTOSOWANIA",
       "watermark": "Zastosowania",
       "sealing_title": "Połączony system uszczelnień",
-      "content": "Łożyska do walców doprawiających pracują w stałym kontakcie z glebą, wilgocią i cząstkami ściernymi, co generuje wysokie obciążenia promieniowe i warunki intensywnego zanieczyszczenia. Zespoły łożyskowe do takich zastosowań muszą zapewniać stabilną pracę przy niskich prędkościach obrotowych, wysokich obciążeniach statycznych i uderzeniach.\n\nRozwiązania VELNOX dla walców doprawiających zostały opracowane z uwzględnieniem rzeczywistych warunków eksploatacji: wzmocnione obudowy, skuteczne systemy uszczelnień i zoptymalizowane luzy wewnętrzne zapewniają niezawodną pracę jednostek w trudnych warunkach polowych. Konstrukcja jest zorientowana na zmniejszenie wpływu zanieczyszczeń i wydłużenie żywotności przy minimalnej konserwacji.\n\nZespoły łożyskowe VELNOX są stosowane w walcach doprawiających maszyn rolniczych, zapewniając stabilną pracę agregatów i redukcję przestojów w całym sezonie."
+      "content": "Łożyska do walców doprawiających pracują w stałym kontakcie z glebą, wilgocią i cząstkami ściernymi, co generuje wysokie obciążenia promieniowe i warunki intensywnego zanieczyszczenia. Zespoły łożyskowe do takich zastosowań muszą zapewniać stabilną pracę przy niskich prędkościach obrotowych, wysokich obciążeniach statycznych i uderzeniach.\n\nRozwiązania VELNOX dla walców doprawiających zostały opracowane z uwzględnieniem rzeczywistych warunków eksploatacji: wzmocnione obudowy, skuteczne systemy uszczelnień i zoptymalizowane luzy wewnętrzne zapewniają niezawodną pracę jednostek w trudnych warunkach polowych. Konstrukcja jest zorientowana na zmniejszenie wpływu zanieczyszczeń i wydłużenie żywotności przy minimalnej konserwacji.\n\nZespoły łożyskowe VELNOX są stosowane w walcach doprawiających maszyn rolniczych, zapewniając stabilną pracę agregatów i redukcję przestojów w całym sezonie.",
+      "keywords": [
+        "obciążeń promieniowych",
+        "silnego zanieczyszczenia",
+        "niskich prędkości obrotowych",
+        "wzmocnionych obudów",
+        "systemów uszczelnienia",
+        "zoptymalizowanych luzów wewnętrznych",
+        "ochrony przed zanieczyszczeniami",
+        "długiej żywotności",
+        "minimalnymi wymaganiami serwisowymi",
+        "stabilną pracę i ograniczenie przestojów",
+        "obciążeń udarowych",
+        "zapas wytrzymałości"
+      ]
     },
     "cols": {
       "part_number": "Oznaczenie Velnox",
@@ -592,26 +665,37 @@
       "title": "Piasty do bron tarczowych i ciężkich kultywatorów",
       "desc": "Jednostka zaprojektowana do pracy w warunkach ekstremalnego zapylenia i wilgoci. Stosowana w agregatach do przygotowania gleby, gdzie każdy tarcz wymaga niezależnego obrotu pod obciążeniem.",
       "applications": "Rozluźniacze głębokie, ciężkie brony tarczowe, agregaty kombinowane",
-      "oem_focus": "Pełna kompatybilność z maszynami HORSCH (serie Joker, Focus, Terrano)"
+      "oem_focus": "Pełna kompatybilność z maszynami HORSCH (serie Joker, Focus, Terrano)",
+      "tag": "BRONY TALERZOWE",
+      "field_label": "Obszar zastosowania",
+      "oem_label": "Kompatybilność OEM"
     },
     "app2": {
       "title": "Piasty węzłów tnących z niezależnym zawieszeniem",
       "desc": "Bezobsługowe jednostki łożyskowe zapewniające dokładny kąt ataku tarczy. Konstrukcja obejmuje wbudowane uszczelnienie kasetowe eliminujące potrzebę smarowania przez cały okres użytkowania.",
       "applications": "Kompaktowe brony tarczowe, kultywatory przedsiewne",
-      "oem_focus": "Piasty zamienny dla Bednar, Köckerling, Gaspardo, Kuhn, Lemken"
+      "oem_focus": "Piasty zamienny dla Bednar, Köckerling, Gaspardo, Kuhn, Lemken",
+      "tag": "WĘZŁY TNĄCE",
+      "field_label": "Obszar zastosowania",
+      "oem_label": "Kompatybilność OEM"
     },
     "app3": {
       "title": "Piasty do szybkoobrotowych siewników i kół dociskowych",
       "desc": "Jednostki wysokiej precyzji obrotu. Minimalny luz zapewnia stabilną głębokość siewu nawet przy wysokich prędkościach pracy.",
       "applications": "Kompleksy siewne, sekcje siewników zbożowych i warzywnych",
-      "oem_focus": "Zoptymalizowano dla maszyn Vaderstad (seria Rapid), Agrisem"
+      "oem_focus": "Zoptymalizowano dla maszyn Vaderstad (seria Rapid), Agrisem",
+      "tag": "SIEWNIKI SZYBKOBIEŻNE",
+      "field_label": "Obszar zastosowania",
+      "oem_label": "Kompatybilność OEM"
     },
     "block3": {
       "title": "Gotowe do integracji",
       "text": "Piasty VELNOX to kompletne rozwiązanie OEM nie wymagające zmian w dokumentacji konstrukcyjnej. Wszystkie parametry zostały obliczone i przetestowane pod warunkami rzeczywistych pól.",
       "btn_pdf": "Pobierz PDF",
       "btn_cad": "Modele CAD",
-      "btn_contact": "Porozmawiaj z inżynierem"
+      "btn_contact": "Porozmawiaj z inżynierem",
+      "modal_contact": "Ogólne wsparcie inżynieryjne",
+      "modal_cad": "Zapytanie o katalog CAD"
     }
   },
   "agroPage": {
@@ -666,7 +750,8 @@
         "Odporne на gnojowicę, glebę i silne zanieczyszczenia",
         "Stabilna praca przy obciążeniach promieniowych i osiowych"
       ],
-      "btn_select": "Dobierz według Wymiarów"
+      "btn_select": "Dobierz według Wymiarów",
+      "btn_modal_designation": "Specjalne łożyska rolnicze VELNOX"
     },
     "app1": {
       "title": "Standardowe łożyska agro serii 1726",
@@ -688,7 +773,18 @@
       "text": "Bezpłatna konsultacja techniczna. Specyfikacje, modele 3D i dobór zamienników do Twojej maszyny.",
       "btn_contact": "Skontaktuj się z inżynierem",
       "btn_pdf": "Pobierz katalog PDF",
-      "btn_cad": "Modele CAD"
+      "btn_cad": "Modele CAD",
+      "modal_contact": "Łożyska rolnicze — wsparcie inżynieryjne",
+      "modal_cad": "Agro — zapytanie o katalog CAD"
+    },
+    "block1": {
+      "title": "Dlaczego producenci OEM wybierają łożyska rolnicze VELNOX?",
+      "card1_title": "Uszczelnienia rolnicze 2RS1",
+      "card1_desc": "Podwójne uszczelnienia kontaktowe z obu stron. Ochrona przed kurzem, brudem i wilgocią w warunkach polowych.",
+      "card2_title": "OEM Cross-Reference",
+      "card2_desc": "Bezpośredni zamiennik łożysk CLAAS, JD, KUHN, Capello, Gaspardo, MF, NH bez zmian konstrukcyjnych maszyn.",
+      "card3_title": "Rozszerzony otwór wewnętrzny d1",
+      "card3_desc": "Specjalna wersja z rozszerzonym otworem pierścienia wewnętrznego — cecha serii 1726 dla zastosowań rolniczych."
     }
   },
   "kitPage": {
@@ -780,7 +876,9 @@
       "text": "Potrzebujesz konsultacji inżynieryjnej? Zapewniamy rysunki techniczne, modele CAD oraz dobór zamienników dla Twoich maszyn.",
       "btn_contact": "Skontaktuj się z inżynierem",
       "btn_pdf": "Pobierz PDF",
-      "btn_cad": "Modele CAD"
+      "btn_cad": "Modele CAD",
+      "modal_contact": "Zestawy łożysk — wsparcie inżynieryjne",
+      "modal_cad": "Zestawy — zapytanie o katalog CAD"
     }
   },
   "oemPage": {
@@ -904,5 +1002,11 @@
     "show_details": "Pokaż szczegóły",
     "show_all": "Pokaż wszystkie",
     "request_for": "Zapytanie o: "
+  },
+  "table": {
+    "sort_filter": "Sortowanie / Filtr",
+    "sort_asc": "Rosnąco",
+    "sort_desc": "Malejąco",
+    "empty": "Nic nie znaleziono"
   }
 }

@@ -8,18 +8,15 @@ interface CtaBlockProps {
     article: string;
 }
 
-const REQUEST_TYPES = [
-    { value: 'analogue', label: 'Підбір за зразком' },
-    { value: 'resource', label: 'Прорахунок ресурсу' },
-    { value: 'batch',    label: 'Замовлення партії' },
-    { value: 'custom',   label: 'Кастомне рішення' },
-] as const;
+type RequestType = 'analogue' | 'resource' | 'batch' | 'custom';
+const REQUEST_TYPE_VALUES: RequestType[] = ['analogue', 'resource', 'batch', 'custom'];
 
 function ContactModal({ article, onClose }: { article: string; onClose: () => void }) {
+    const t = useTranslations('product');
     const [sent, setSent] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [type, setType] = useState<'analogue' | 'resource' | 'batch' | 'custom'>('batch');
+    const [type, setType] = useState<RequestType>('batch');
     const [contact, setContact] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -27,7 +24,7 @@ function ContactModal({ article, onClose }: { article: string; onClose: () => vo
         setLoading(true);
         setError('');
 
-        const contactValue = `${contact} / Артикул: ${article}`;
+        const contactValue = `${contact} / ${t('cta.article_prefix')} ${article}`;
 
         try {
             const res = await fetch(
@@ -42,10 +39,10 @@ function ContactModal({ article, onClose }: { article: string; onClose: () => vo
             if (data.success) {
                 setSent(true);
             } else {
-                setError('Помилка при відправці. Спробуйте ще раз.');
+                setError(t('cta.error_send'));
             }
         } catch {
-            setError('Помилка з\'єднання. Перевірте підключення та спробуйте знову.');
+            setError(t('cta.error_connection'));
         } finally {
             setLoading(false);
         }
@@ -68,26 +65,26 @@ function ContactModal({ article, onClose }: { article: string; onClose: () => vo
                                 <path d="M8 12l3 3 5-5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </div>
-                        <h3>Запит надіслано!</h3>
-                        <p>Наш інженер розгляне ваш запит і зв'яжеться з вами найближчим часом.</p>
-                        <button className={styles.btnClose} onClick={onClose}>Закрити</button>
+                        <h3>{t('cta.sent_title')}</h3>
+                        <p>{t('cta.sent_desc')}</p>
+                        <button className={styles.btnClose} onClick={onClose}>{t('cta.close')}</button>
                     </div>
                 ) : (
                     <>
-                        <span className={styles.modalTag}>ЗАПИТ ДО ІНЖЕНЕРА</span>
-                        <h2 className={styles.modalTitle}>Артикул: <strong>{article}</strong></h2>
-                        <p className={styles.modalDesc}>Оберіть тип запиту та вкажіть контактні дані — ми зв'яжемося з вами.</p>
+                        <span className={styles.modalTag}>{t('cta.request_tag')}</span>
+                        <h2 className={styles.modalTitle}>{t('cta.article_prefix')} <strong>{article}</strong></h2>
+                        <p className={styles.modalDesc}>{t('cta.modal_desc')}</p>
 
                         <form onSubmit={handleSubmit} className={styles.leadForm}>
                             <div className={styles.typeGrid}>
-                                {REQUEST_TYPES.map(rt => (
+                                {REQUEST_TYPE_VALUES.map(val => (
                                     <button
-                                        key={rt.value}
+                                        key={val}
                                         type="button"
-                                        className={`${styles.typeBtn} ${type === rt.value ? styles.typeBtnActive : ''}`}
-                                        onClick={() => setType(rt.value)}
+                                        className={`${styles.typeBtn} ${type === val ? styles.typeBtnActive : ''}`}
+                                        onClick={() => setType(val)}
                                     >
-                                        {rt.label}
+                                        {t(`cta.type_${val}` as any)}
                                     </button>
                                 ))}
                             </div>
@@ -96,7 +93,7 @@ function ContactModal({ article, onClose }: { article: string; onClose: () => vo
                                 className={styles.contactArea}
                                 required
                                 rows={3}
-                                placeholder="Ваше ім'я, телефон, email або будь-яке повідомлення"
+                                placeholder={t('cta.placeholder')}
                                 value={contact}
                                 onChange={e => setContact(e.target.value)}
                             />
@@ -104,7 +101,7 @@ function ContactModal({ article, onClose }: { article: string; onClose: () => vo
                             {error && <p className={styles.formError}>{error}</p>}
 
                             <button type="submit" className={styles.formSubmit} disabled={loading}>
-                                {loading ? 'Відправляємо...' : 'Надіслати запит'}
+                                {loading ? t('cta.sending') : t('cta.submit')}
                                 {!loading && (
                                     <svg viewBox="0 0 16 16" fill="none" width="14">
                                         <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

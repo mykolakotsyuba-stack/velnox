@@ -1,29 +1,12 @@
-import { apiFetch } from '@/shared/lib/api';
-import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
+import { NewsArticlePage } from '@/features/news/NewsArticlePage';
 import type { Locale } from '@/entities/product/model/types';
 
-interface NewsArticlePageProps {
+interface Props {
     params: { locale: Locale; slug: string };
 }
 
-export default async function NewsArticlePage({ params: { locale, slug } }: NewsArticlePageProps) {
-    try {
-        const article = await apiFetch<{
-            title: string;
-            category: string;
-            body: string;
-            published_at: string;
-        }>(`/news/${slug}`, { params: { locale } });
-
-        return (
-            <article>
-                <span>{article.category}</span>
-                <h1>{article.title}</h1>
-                <time>{article.published_at}</time>
-                <div dangerouslySetInnerHTML={{ __html: article.body }} />
-            </article>
-        );
-    } catch {
-        notFound();
-    }
+export default function NewsArticleRoute({ params: { locale, slug } }: Props) {
+    setRequestLocale(locale);
+    return <NewsArticlePage locale={locale} slug={slug} />;
 }

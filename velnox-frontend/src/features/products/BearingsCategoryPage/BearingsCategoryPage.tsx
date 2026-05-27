@@ -45,10 +45,11 @@ function renderTightCell(val: string | null | undefined) {
 /* ─── Lead Modal ─── */
 function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; defaultDesignation?: string }) {
     const t = useTranslations('distributors');
+    const tc = useTranslations('crosses');
     const [sent, setSent] = useState(false);
     const [form, setForm] = useState({
         company: '', name: '', phone: '', email: '', country: '',
-        message: defaultDesignation ? `Запит на: ${defaultDesignation}` : ''
+        message: defaultDesignation ? `${tc('request_for')}${defaultDesignation}` : ''
     });
     const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSent(true); };
     return (
@@ -102,21 +103,15 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
 }
 
 /* ─── Applications: keyword highlight helper ─── */
-const APP_KEYWORDS = [
-    'радіальних навантажень', 'сильного забруднення', 'низьких швидкостей обертання',
-    'підсилених корпусів', 'систем ущільнення', 'оптимізованих внутрішніх зазорів',
-    'захисту від забруднень', 'тривалого ресурсу', 'мінімальними вимогами до обслуговування',
-    'стабільну роботу та зменшення простоїв', 'ударних впливів', 'запас міцності',
-];
-
-function HighlightedText({ text }: { text: string }) {
-    const escaped = APP_KEYWORDS.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+function HighlightedText({ text, keywords }: { text: string; keywords: string[] }) {
+    if (!keywords.length) return <>{text}</>;
+    const escaped = keywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
     const pattern = new RegExp(`(${escaped.join('|')})`, 'gi');
     const parts = text.split(pattern);
     return (
         <>
             {parts.map((part, i) =>
-                APP_KEYWORDS.some(k => k.toLowerCase() === part.toLowerCase())
+                keywords.some(k => k.toLowerCase() === part.toLowerCase())
                     ? <strong key={i} className={styles.appKeyword}>{part}</strong>
                     : part
             )}
@@ -129,6 +124,7 @@ function PackerRollerIntro() {
     const t = useTranslations('bearingsPage.packer_roller');
     const { ref, inView } = useInView(0.05);
     const paragraphs = t('content').split('\n\n');
+    const keywords = t.raw('keywords') as string[];
     return (
         <section
             className={`${styles.applicationsSection} ${inView ? styles.appSectionVisible : ''}`}
@@ -147,7 +143,7 @@ function PackerRollerIntro() {
                             className={`${styles.appPara} ${i === 0 ? styles.appParaLead : ''} ${inView ? styles.appParaVisible : ''}`}
                             style={{ transitionDelay: `${0.25 + i * 0.15}s` }}
                         >
-                            <HighlightedText text={para} />
+                            <HighlightedText text={para} keywords={keywords} />
                         </p>
                     ))}
                 </div>
@@ -160,12 +156,12 @@ function PackerRollerIntro() {
 type SlMap = Record<string, string>;
 const CROSS_REF_KEYS = new Set(['bearing_part', 'bearing_brand', 'oem']);
 
-function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: string): ColDef[] {
+function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: string, bearingDesignationLabel: string, brandLabel: string, crossAnaloguesLabel: string): ColDef[] {
     const base: ColDef[] = [
-        { key: 'part_number',   label: partLabel,                width: '130px' },
-        { key: 'bearing_part',  label: 'Позначення підшипника',  hasFilter: false },
-        { key: 'bearing_brand', label: 'Бренд',                  hasFilter: false },
-        { key: 'oem',           label: 'Перехресні аналоги',     hasFilter: false },
+        { key: 'part_number',   label: partLabel,                  width: '130px' },
+        { key: 'bearing_part',  label: bearingDesignationLabel,    hasFilter: false },
+        { key: 'bearing_brand', label: brandLabel,                 hasFilter: false },
+        { key: 'oem',           label: crossAnaloguesLabel,        hasFilter: false },
     ];
     const specKeys = specColumns?.length ? specColumns : Object.keys(sl);
     const specCols: ColDef[] = specKeys.map(key => ({
@@ -208,6 +204,8 @@ function CrossRefPanel({
         return () => document.removeEventListener('mousedown', close);
     }, [open]);
 
+    const tc = useTranslations('crosses');
+
     if (!rows.length) return null;
     const idx = Math.min(selectedIdx, rows.length - 1);
     const selectedRow = rows[idx];
@@ -216,15 +214,15 @@ function CrossRefPanel({
         return (
             <div className={styles.crossesPanel}>
                 <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(false)}>
-                    ← Обрати один
+                    ← {tc('select_one')}
                 </button>
                 <table className={styles.crossTable}>
                     <thead>
                         <tr>
-                            <th>Velnox</th>
-                            <th>Підшипник</th>
-                            <th>Бренд</th>
-                            <th>Аналоги</th>
+                            <th>{tc('velnox')}</th>
+                            <th>{tc('bearing')}</th>
+                            <th>{tc('brand')}</th>
+                            <th>{tc('analogues')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -269,7 +267,7 @@ function CrossRefPanel({
         <div className={styles.crossesPanel}>
             <div className={styles.crossNav}>
                 <button type="button" className={styles.crossNavBtn}
-                    onClick={() => onSelect(idx > 0 ? idx - 1 : rows.length - 1)} title="Попередній">
+                    onClick={() => onSelect(idx > 0 ? idx - 1 : rows.length - 1)} title={tc('prev')}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14">
                         <polyline points="15 18 9 12 15 6" />
                     </svg>
@@ -289,7 +287,7 @@ function CrossRefPanel({
                     </button>
                     {open && (
                         <div className={styles.crossDropdown}>
-                            <input type="text" className={styles.crossDropdownSearch} placeholder="Пошук..."
+                            <input type="text" className={styles.crossDropdownSearch} placeholder={tc('search')}
                                 value={query} onChange={e => setQuery(e.target.value)} autoFocus />
                             <div className={styles.crossDropdownList}>
                                 {matchingRows.map(row => {
@@ -304,7 +302,7 @@ function CrossRefPanel({
                                     );
                                 })}
                                 {matchingRows.length === 0 && (
-                                    <div className={styles.crossDropdownEmpty}>Не знайдено</div>
+                                    <div className={styles.crossDropdownEmpty}>{tc('not_found')}</div>
                                 )}
                             </div>
                         </div>
@@ -312,7 +310,7 @@ function CrossRefPanel({
                 </div>
 
                 <button type="button" className={styles.crossNavBtn}
-                    onClick={() => onSelect(idx < rows.length - 1 ? idx + 1 : 0)} title="Наступний">
+                    onClick={() => onSelect(idx < rows.length - 1 ? idx + 1 : 0)} title={tc('next')}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14">
                         <polyline points="9 18 15 12 9 6" />
                     </svg>
@@ -322,9 +320,9 @@ function CrossRefPanel({
             <table className={styles.crossTable}>
                 <thead>
                     <tr>
-                        <th>Позначення підшипника</th>
-                        <th>Бренд</th>
-                        <th>Перехресні аналоги</th>
+                        <th>{tc('bearing_designation')}</th>
+                        <th>{tc('brand')}</th>
+                        <th>{tc('cross_analogues')}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -342,16 +340,16 @@ function CrossRefPanel({
                 <label className={styles.crossFilterCheck}>
                     <input type="checkbox" checked={filterSpecs}
                         onChange={e => onFilterChange(e.target.checked)} />
-                    Показати тільки обраний
+                    {tc('show_only_selected')}
                 </label>
                 <Link
                     href={`/${locale}/products/${categorySlug}/${articleToSlug(selectedRow.part_number)}`}
                     className={styles.crossDetailBtn}
                 >
-                    Показати детальніше
+                    {tc('show_details')}
                 </Link>
                 <button type="button" className={styles.crossShowAllBtn} onClick={() => setShowAll(true)}>
-                    Показати всі
+                    {tc('show_all')}
                 </button>
             </div>
         </div>
@@ -465,19 +463,22 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
         );
     }, [searchQuery]);
 
-    const partLabel = t('bearingsPage.cols.part_number');
+    const partLabel             = t('bearingsPage.cols.part_number');
+    const bearingDesignationLabel = t('crosses.bearing_designation');
+    const brandLabel            = t('crosses.brand');
+    const crossAnaloguesLabel   = t('crosses.cross_analogues');
 
     const tableConfigs = useMemo(() => {
         return TABLE_IDS.map(id => {
             const tbl = tables[id];
             const searched = search(tbl.data);
-            const cols = buildCols(tbl.specLabels, tbl.specColumns, partLabel);
+            const cols = buildCols(tbl.specLabels, tbl.specColumns, partLabel, bearingDesignationLabel, brandLabel, crossAnaloguesLabel);
             const specCols = cols.filter(c => !CROSS_REF_KEYS.has(c.key));
             const clampIdx = Math.min(tbl.selectedIdx, Math.max(0, searched.length - 1));
             const specsRows = tbl.syncFilter && searched.length ? [searched[clampIdx]] : searched;
             return { id, tbl, searched, cols, specCols, specsRows };
         });
-    }, [tables, search, partLabel]);
+    }, [tables, search, partLabel, bearingDesignationLabel, brandLabel, crossAnaloguesLabel]);
 
     const setSelection = useCallback((id: number, idx: number) => {
         setTables(prev => ({ ...prev, [id]: { ...prev[id], selectedIdx: idx } }));
@@ -597,7 +598,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                                         />
                                         <div className={styles.schemaPanel}>
                                             {tbl.schema && (
-                                                <ProductSchema src={tbl.schema} alt={`Bearings table ${id} — технічна схема`} />
+                                                <ProductSchema src={tbl.schema} alt={`Bearings table ${id} — technical drawing`} />
                                             )}
                                         </div>
                                     </div>
@@ -608,7 +609,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
 
                                 <div className={styles.mobileCombined}>
                                     {tbl.schema && (
-                                        <ProductSchema src={tbl.schema} alt={`Bearings table ${id} — технічна схема`} />
+                                        <ProductSchema src={tbl.schema} alt={`Bearings table ${id} — technical drawing`} />
                                     )}
                                     <ProductTable columns={cols} rows={searched} renderCell={renderCell} actionCell={reqBtn} />
                                 </div>
@@ -624,19 +625,19 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
                     <h2 className={styles.ctaTitle}>{t('bearingsPage.block3.title')}</h2>
                     <p className={styles.ctaText}>{t('bearingsPage.block3.text')}</p>
                     <div className={styles.ctaButtons}>
-                        <button className={styles.btnPrimary} onClick={() => setModalProduct('General Engineering Support')}>
+                        <button className={styles.btnPrimary} onClick={() => setModalProduct(t('bearingsPage.block3.modal_contact'))}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                             </svg>
                             {t('bearingsPage.block3.btn_contact')}
                         </button>
-                        <button className={styles.btnSecondary}>
+                        <a href="/velnox/presentation.pdf" download className={styles.btnSecondary}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
                             </svg>
                             {t('bearingsPage.block3.btn_pdf')}
-                        </button>
-                        <button className={styles.btnSecondary}>
+                        </a>
+                        <button className={styles.btnSecondary} onClick={() => setModalProduct(t('bearingsPage.block3.modal_cad'))}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                                 <polyline points="3.27 6.96 12 12.01 20.73 6.96" />

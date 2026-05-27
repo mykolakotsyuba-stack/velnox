@@ -50,10 +50,11 @@ function renderTightCell(val: string | null | undefined) {
 /* ─── Lead Modal ─── */
 function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; defaultDesignation?: string }) {
     const t = useTranslations('distributors');
+    const tc = useTranslations('crosses');
     const [sent, setSent] = useState(false);
     const [form, setForm] = useState({
         company: '', name: '', phone: '', email: '', country: '',
-        message: defaultDesignation ? `${t('crosses.request_for')}${defaultDesignation}` : ''
+        message: defaultDesignation ? `${tc('request_for')}${defaultDesignation}` : ''
     });
     const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSent(true); };
     return (
@@ -119,15 +120,15 @@ function buildT1Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
         { key: 'bearing_part',  label: t('crosses.bearing_designation'),                     hasFilter: false },
         { key: 'bearing_brand', label: t('crosses.brand'),                                     hasFilter: false },
         { key: 'oem',           label: t('crosses.cross_analogues'),                        hasFilter: false },
-        { key: 'd_mm',          label: sl['d_mm']    || 'Діаметр отвору d (мм)',    hasFilter: true },
-        { key: 'D_mm',          label: sl['D_mm']    || 'Зовнішній діаметр D (мм)', hasFilter: true },
-        { key: 'B_mm',          label: sl['B_mm']    || 'Ширина B (мм)',            hasFilter: true },
-        { key: 'd1_mm',         label: sl['d1_mm']   || 'd1 (мм)',                  hasFilter: true },
-        { key: 'r_12_mm',       label: sl['r_12_mm'] || 'r 1,2 (мм)',              hasFilter: true },
-        { key: 'cdyn_kn',       label: sl['cdyn_kn'] || 'Cdyn (кН)',               hasFilter: true },
-        { key: 'co_kn',         label: sl['co_kn']   || 'Co (кН)',                 hasFilter: true },
-        { key: 'pu_kn',         label: sl['pu_kn']   || 'Pu (кН)',                 hasFilter: true },
-        { key: 'mass_kg',       label: sl['mass_kg'] || 'Маса (кг)',               hasFilter: true },
+        { key: 'd_mm',          label: sl['d_mm']    || 'd (mm)',          hasFilter: true },
+        { key: 'D_mm',          label: sl['D_mm']    || 'D (mm)',          hasFilter: true },
+        { key: 'B_mm',          label: sl['B_mm']    || 'B (mm)',          hasFilter: true },
+        { key: 'd1_mm',         label: sl['d1_mm']   || 'd1 (mm)',         hasFilter: true },
+        { key: 'r_12_mm',       label: sl['r_12_mm'] || 'r 1,2 (mm)',     hasFilter: true },
+        { key: 'cdyn_kn',       label: sl['cdyn_kn'] || 'Cdyn (kN)',      hasFilter: true },
+        { key: 'co_kn',         label: sl['co_kn']   || 'Co (kN)',        hasFilter: true },
+        { key: 'pu_kn',         label: sl['pu_kn']   || 'Pu (kN)',        hasFilter: true },
+        { key: 'mass_kg',       label: sl['mass_kg'] || 'Mass (kg)',      hasFilter: true },
     ];
 }
 
@@ -137,21 +138,21 @@ function buildT2Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
         { key: 'bearing_part',  label: t('crosses.bearing_designation'),                                     hasFilter: false },
         { key: 'bearing_brand', label: t('crosses.brand'),                                                     hasFilter: false },
         { key: 'oem',           label: t('crosses.cross_analogues'),                                        hasFilter: false },
-        { key: 'd_inch',        label: sl['d_inch']   || 'Діаметр отвору d (дюйм)',                 hasFilter: true },
-        { key: 'd_mm',          label: sl['d_mm']     || 'Діаметр отвору d (мм)',                   hasFilter: true },
-        { key: 'B_mm',          label: sl['B_mm']     || 'B (мм)',                                  hasFilter: true },
-        { key: 'C_mm',          label: sl['C_mm']     || 'C (мм)',                                  hasFilter: true },
-        { key: 'Da_mm',         label: sl['Da_mm']    || 'Da (мм)',                                 hasFilter: true },
-        { key: 'L_mm',          label: sl['L_mm']     || 'L (мм)',                                  hasFilter: true },
-        { key: 'A_fl_mm',       label: sl['A_fl_mm']  || 'A (мм)',                                  hasFilter: true },
-        { key: 'A1_mm',         label: sl['A1_mm']    || 'A1 (мм)',                                 hasFilter: true },
-        { key: 'J_mm',          label: sl['J_mm']     || 'J (мм)',                                  hasFilter: true },
-        { key: 'N_mm',          label: sl['N_mm']     || 'N (мм)',                                  hasFilter: true },
-        { key: 'Fr_kn',         label: sl['Fr_kn']    || 'Fr (кН)',                                 hasFilter: true },
-        { key: 'Fa_kn',         label: sl['Fa_kn']    || 'Fa (кН)',                                 hasFilter: true },
-        { key: 'mass_kg',       label: sl['mass_kg']  || 'Маса (кг)',                               hasFilter: true },
-        { key: 'cdyn_kn',       label: sl['cdyn_kn']  || 'Cdyn (кН)',                               hasFilter: true },
-        { key: 'co_kn',         label: sl['co_kn']    || 'Co (кН)',                                 hasFilter: true },
+        { key: 'd_inch',        label: sl['d_inch']   || 'd (inch)',       hasFilter: true },
+        { key: 'd_mm',          label: sl['d_mm']     || 'd (mm)',         hasFilter: true },
+        { key: 'B_mm',          label: sl['B_mm']     || 'B (mm)',         hasFilter: true },
+        { key: 'C_mm',          label: sl['C_mm']     || 'C (mm)',         hasFilter: true },
+        { key: 'Da_mm',         label: sl['Da_mm']    || 'Da (mm)',        hasFilter: true },
+        { key: 'L_mm',          label: sl['L_mm']     || 'L (mm)',         hasFilter: true },
+        { key: 'A_fl_mm',       label: sl['A_fl_mm']  || 'A (mm)',         hasFilter: true },
+        { key: 'A1_mm',         label: sl['A1_mm']    || 'A1 (mm)',        hasFilter: true },
+        { key: 'J_mm',          label: sl['J_mm']     || 'J (mm)',         hasFilter: true },
+        { key: 'N_mm',          label: sl['N_mm']     || 'N (mm)',         hasFilter: true },
+        { key: 'Fr_kn',         label: sl['Fr_kn']    || 'Fr (kN)',        hasFilter: true },
+        { key: 'Fa_kn',         label: sl['Fa_kn']    || 'Fa (kN)',        hasFilter: true },
+        { key: 'mass_kg',       label: sl['mass_kg']  || 'Mass (kg)',      hasFilter: true },
+        { key: 'cdyn_kn',       label: sl['cdyn_kn']  || 'Cdyn (kN)',      hasFilter: true },
+        { key: 'co_kn',         label: sl['co_kn']    || 'Co (kN)',        hasFilter: true },
     ];
 }
 
@@ -161,24 +162,24 @@ function buildT3Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
         { key: 'bearing_part',  label: t('crosses.bearing_designation'),  hasFilter: false },
         { key: 'bearing_brand', label: t('crosses.brand'),                  hasFilter: false },
         { key: 'oem',           label: t('crosses.cross_analogues'),     hasFilter: false },
-        { key: 'd_inch',        label: sl['d_inch']   || 'Діаметр отвору d (дюйм)', hasFilter: true },
-        { key: 'd_mm',          label: sl['d_mm']     || 'Діаметр отвору d (мм)',   hasFilter: true },
-        { key: 'B_mm',          label: sl['B_mm']     || 'B (мм)',                  hasFilter: true },
-        { key: 'C_mm',          label: sl['C_mm']     || 'C (мм)',                  hasFilter: true },
-        { key: 'a_mm',          label: sl['a_mm']     || 'a (мм)',                  hasFilter: true },
-        { key: 'Da_mm',         label: sl['Da_mm']    || 'Da (мм)',                 hasFilter: true },
-        { key: 'L_mm',          label: sl['L_mm']     || 'L (мм)',                  hasFilter: true },
-        { key: 'A_fl_mm',       label: sl['A_fl_mm']  || 'A (мм)',                  hasFilter: true },
-        { key: 'A1_mm',         label: sl['A1_mm']    || 'A1 (мм)',                 hasFilter: true },
-        { key: 'J_mm',          label: sl['J_mm']     || 'J (мм)',                  hasFilter: true },
-        { key: 'N_mm',          label: sl['N_mm']     || 'N (мм)',                  hasFilter: true },
-        { key: 'M_mm',          label: sl['M_mm']     || 'M (мм)',                  hasFilter: true },
-        { key: 'Fr_kn',         label: sl['Fr_kn']    || 'Fr (кН)',                 hasFilter: true },
-        { key: 'Fa_kn',         label: sl['Fa_kn']    || 'Fa (кН)',                 hasFilter: true },
-        { key: 'cdyn_kn',       label: sl['cdyn_kn']  || 'Cdyn (кН)',               hasFilter: true },
-        { key: 'co_kn',         label: sl['co_kn']    || 'Co (кН)',                 hasFilter: true },
-        { key: 'mass_kg',       label: sl['mass_kg']  || 'Маса (кг)',               hasFilter: true },
-        { key: 'pu_kn',         label: sl['pu_kn']    || 'Pu (кН)',                 hasFilter: true },
+        { key: 'd_inch',        label: sl['d_inch']   || 'd (inch)',       hasFilter: true },
+        { key: 'd_mm',          label: sl['d_mm']     || 'd (mm)',         hasFilter: true },
+        { key: 'B_mm',          label: sl['B_mm']     || 'B (mm)',         hasFilter: true },
+        { key: 'C_mm',          label: sl['C_mm']     || 'C (mm)',         hasFilter: true },
+        { key: 'a_mm',          label: sl['a_mm']     || 'a (mm)',         hasFilter: true },
+        { key: 'Da_mm',         label: sl['Da_mm']    || 'Da (mm)',        hasFilter: true },
+        { key: 'L_mm',          label: sl['L_mm']     || 'L (mm)',         hasFilter: true },
+        { key: 'A_fl_mm',       label: sl['A_fl_mm']  || 'A (mm)',         hasFilter: true },
+        { key: 'A1_mm',         label: sl['A1_mm']    || 'A1 (mm)',        hasFilter: true },
+        { key: 'J_mm',          label: sl['J_mm']     || 'J (mm)',         hasFilter: true },
+        { key: 'N_mm',          label: sl['N_mm']     || 'N (mm)',         hasFilter: true },
+        { key: 'M_mm',          label: sl['M_mm']     || 'M (mm)',         hasFilter: true },
+        { key: 'Fr_kn',         label: sl['Fr_kn']    || 'Fr (kN)',        hasFilter: true },
+        { key: 'Fa_kn',         label: sl['Fa_kn']    || 'Fa (kN)',        hasFilter: true },
+        { key: 'cdyn_kn',       label: sl['cdyn_kn']  || 'Cdyn (kN)',      hasFilter: true },
+        { key: 'co_kn',         label: sl['co_kn']    || 'Co (kN)',        hasFilter: true },
+        { key: 'mass_kg',       label: sl['mass_kg']  || 'Mass (kg)',      hasFilter: true },
+        { key: 'pu_kn',         label: sl['pu_kn']    || 'Pu (kN)',        hasFilter: true },
     ];
 }
 
@@ -188,20 +189,20 @@ function buildT4Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
         { key: 'bearing_part',  label: t('crosses.bearing_designation'),  hasFilter: false },
         { key: 'bearing_brand', label: t('crosses.brand'),                  hasFilter: false },
         { key: 'oem',           label: t('crosses.cross_analogues'),     hasFilter: false },
-        { key: 'd_inch',        label: sl['d_inch']  || 'Діаметр отвору d (дюйм)', hasFilter: true },
-        { key: 'd_mm',          label: sl['d_mm']    || 'Діаметр отвору d (мм)',   hasFilter: true },
-        { key: 'B_mm',          label: sl['B_mm']    || 'B (мм)',                  hasFilter: true },
-        { key: 'L_mm',          label: sl['L_mm']    || 'L (мм)',                  hasFilter: true },
-        { key: 'A1_mm',         label: sl['A1_mm']   || 'A1 (мм)',                 hasFilter: true },
-        { key: 'C_mm',          label: sl['C_mm']    || 'C (мм)',                  hasFilter: true },
-        { key: 'Da_mm',         label: sl['Da_mm']   || 'Da (мм)',                 hasFilter: true },
-        { key: 'D_mm',          label: sl['D_mm']    || 'D (мм)',                  hasFilter: true },
-        { key: 'J_mm',          label: sl['J_mm']    || 'J (мм)',                  hasFilter: true },
-        { key: 'N_mm',          label: sl['N_mm']    || 'N (мм)',                  hasFilter: true },
-        { key: 'cdyn_kn',       label: sl['cdyn_kn'] || 'Cdyn (кН)',               hasFilter: true },
-        { key: 'co_kn',         label: sl['co_kn']   || 'Co (кН)',                 hasFilter: true },
-        { key: 'mass_kg',       label: sl['mass_kg'] || 'Маса (кг)',               hasFilter: true },
-        { key: 'pu_kn',         label: sl['pu_kn']   || 'Pu (кН)',                 hasFilter: true },
+        { key: 'd_inch',        label: sl['d_inch']  || 'd (inch)',       hasFilter: true },
+        { key: 'd_mm',          label: sl['d_mm']    || 'd (mm)',         hasFilter: true },
+        { key: 'B_mm',          label: sl['B_mm']    || 'B (mm)',         hasFilter: true },
+        { key: 'L_mm',          label: sl['L_mm']    || 'L (mm)',         hasFilter: true },
+        { key: 'A1_mm',         label: sl['A1_mm']   || 'A1 (mm)',        hasFilter: true },
+        { key: 'C_mm',          label: sl['C_mm']    || 'C (mm)',         hasFilter: true },
+        { key: 'Da_mm',         label: sl['Da_mm']   || 'Da (mm)',        hasFilter: true },
+        { key: 'D_mm',          label: sl['D_mm']    || 'D (mm)',         hasFilter: true },
+        { key: 'J_mm',          label: sl['J_mm']    || 'J (mm)',         hasFilter: true },
+        { key: 'N_mm',          label: sl['N_mm']    || 'N (mm)',         hasFilter: true },
+        { key: 'cdyn_kn',       label: sl['cdyn_kn'] || 'Cdyn (kN)',      hasFilter: true },
+        { key: 'co_kn',         label: sl['co_kn']   || 'Co (kN)',        hasFilter: true },
+        { key: 'mass_kg',       label: sl['mass_kg'] || 'Mass (kg)',      hasFilter: true },
+        { key: 'pu_kn',         label: sl['pu_kn']   || 'Pu (kN)',        hasFilter: true },
     ];
 }
 
@@ -298,7 +299,7 @@ function CrossRefPanel({
         <div className={styles.crossesPanel}>
             <div className={styles.crossNav}>
                 <button type="button" className={styles.crossNavBtn}
-                    onClick={() => onSelect(idx > 0 ? idx - 1 : rows.length - 1)} title="Попередній">
+                    onClick={() => onSelect(idx > 0 ? idx - 1 : rows.length - 1)} title={t('crosses.prev')}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14">
                         <polyline points="15 18 9 12 15 6" />
                     </svg>
@@ -341,7 +342,7 @@ function CrossRefPanel({
                 </div>
 
                 <button type="button" className={styles.crossNavBtn}
-                    onClick={() => onSelect(idx < rows.length - 1 ? idx + 1 : 0)} title="Наступний">
+                    onClick={() => onSelect(idx < rows.length - 1 ? idx + 1 : 0)} title={t('crosses.next')}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14">
                         <polyline points="9 18 15 12 9 6" />
                     </svg>
@@ -637,7 +638,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                             <div className={styles.tableSplitLayout}>
                                 <CrossRefPanel rows={searchedT1} selectedIdx={selT1} onSelect={setSelT1} filterSpecs={syncT1} onFilterChange={setSyncT1} locale={locale} />
                                 <div className={styles.schemaPanel}>
-                                    {schema1 && <ProductSchema src={schema1} alt="Agro table 1 — технічна схема" />}
+                                    {schema1 && <ProductSchema src={schema1} alt="Agro table 1 — technical drawing" />}
                                 </div>
                             </div>
                             <div className={styles.specsPanel}>
@@ -646,7 +647,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         </div>
 
                         <div className={styles.mobileCombined}>
-                            {schema1 && <ProductSchema src={schema1} alt="Agro table 1 — технічна схема" />}
+                            {schema1 && <ProductSchema src={schema1} alt="Agro table 1 — technical drawing" />}
                             <ProductTable columns={colsT1} rows={searchedT1} renderCell={renderCell} actionCell={reqBtn} />
                         </div>
                     </div>
@@ -726,7 +727,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                     </div>
                 </div>
                 <div className={styles.specialCta}>
-                    <button className={styles.specialCtaBtn} onClick={() => setModalProduct('Спеціальні агропідшипники VELNOX')}>
+                    <button className={styles.specialCtaBtn} onClick={() => setModalProduct(t('agroPage.special.btn_modal_designation'))}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.13 12 19.79 19.79 0 0 1 1.06 3.38 2 2 0 0 1 3.04 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
                         </svg>
@@ -748,7 +749,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                             <div className={styles.tableSplitLayout}>
                                 <CrossRefPanel rows={searchedT2} selectedIdx={selT2} onSelect={setSelT2} filterSpecs={syncT2} onFilterChange={setSyncT2} locale={locale} />
                                 <div className={styles.schemaPanel}>
-                                    {schema2 && <ProductSchema src={schema2} alt="Agro table 2 — технічна схема" />}
+                                    {schema2 && <ProductSchema src={schema2} alt="Agro table 2 — technical drawing" />}
                                 </div>
                             </div>
                             <div className={styles.specsPanel}>
@@ -757,7 +758,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         </div>
 
                         <div className={styles.mobileCombined}>
-                            {schema2 && <ProductSchema src={schema2} alt="Agro table 2 — технічна схема" />}
+                            {schema2 && <ProductSchema src={schema2} alt="Agro table 2 — technical drawing" />}
                             <ProductTable columns={colsT2} rows={searchedT2} renderCell={renderCell} actionCell={reqBtn} />
                         </div>
                     </div>
@@ -777,7 +778,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                             <div className={styles.tableSplitLayout}>
                                 <CrossRefPanel rows={searchedT3} selectedIdx={selT3} onSelect={setSelT3} filterSpecs={syncT3} onFilterChange={setSyncT3} locale={locale} />
                                 <div className={styles.schemaPanel}>
-                                    {schema3 && <ProductSchema src={schema3} alt="Agro table 3 — технічна схема" />}
+                                    {schema3 && <ProductSchema src={schema3} alt="Agro table 3 — technical drawing" />}
                                 </div>
                             </div>
                             <div className={styles.specsPanel}>
@@ -786,7 +787,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         </div>
 
                         <div className={styles.mobileCombined}>
-                            {schema3 && <ProductSchema src={schema3} alt="Agro table 3 — технічна схема" />}
+                            {schema3 && <ProductSchema src={schema3} alt="Agro table 3 — technical drawing" />}
                             <ProductTable columns={colsT3} rows={searchedT3} renderCell={renderCell} actionCell={reqBtn} />
                         </div>
                     </div>
@@ -806,7 +807,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                             <div className={styles.tableSplitLayout}>
                                 <CrossRefPanel rows={searchedT4} selectedIdx={selT4} onSelect={setSelT4} filterSpecs={syncT4} onFilterChange={setSyncT4} locale={locale} />
                                 <div className={styles.schemaPanel}>
-                                    {schema4 && <ProductSchema src={schema4} alt="Agro table 4 — технічна схема" />}
+                                    {schema4 && <ProductSchema src={schema4} alt="Agro table 4 — technical drawing" />}
                                 </div>
                             </div>
                             <div className={styles.specsPanel}>
@@ -815,7 +816,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                         </div>
 
                         <div className={styles.mobileCombined}>
-                            {schema4 && <ProductSchema src={schema4} alt="Agro table 4 — технічна схема" />}
+                            {schema4 && <ProductSchema src={schema4} alt="Agro table 4 — technical drawing" />}
                             <ProductTable columns={colsT4} rows={searchedT4} renderCell={renderCell} actionCell={reqBtn} />
                         </div>
                     </div>
@@ -828,17 +829,25 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                     <h2 className={styles.ctaTitle}>{t('agroPage.block3.title')}</h2>
                     <p className={styles.ctaText}>{t('agroPage.block3.text')}</p>
                     <div className={styles.ctaButtons}>
-                        <button className={styles.btnPrimary} onClick={() => setModalProduct('Agro Bearings — Engineering Support')}>
+                        <button className={styles.btnPrimary} onClick={() => setModalProduct(t('agroPage.block3.modal_contact'))}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                             </svg>
                             {t('agroPage.block3.btn_contact')}
                         </button>
-                        <button className={styles.btnSecondary}>
+                        <a href="/velnox/presentation.pdf" download className={styles.btnSecondary}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
                             </svg>
                             {t('agroPage.block3.btn_pdf')}
+                        </a>
+                        <button className={styles.btnSecondary} onClick={() => setModalProduct(t('agroPage.block3.modal_cad'))}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                                <line x1="12" y1="22.08" x2="12" y2="12" />
+                            </svg>
+                            {t('agroPage.block3.btn_cad')}
                         </button>
                     </div>
                 </div>

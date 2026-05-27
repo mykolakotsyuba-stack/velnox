@@ -394,6 +394,10 @@
    DESKTOP — Table view (≥ 1025px)
 ──────────────────────────────────────────────────────── */
 @media (min-width: 1025px) {
+    .tableScroll {
+        overflow-x: hidden;
+    }
+
     .techTable {
         table-layout: fixed;
         width: 100%;
