@@ -63,11 +63,13 @@ export function ModelBlock3D({ src, label, sizeMb, hero = false }: ModelBlock3DP
 
     useEffect(() => {
         const el = ref.current;
-        if (!el || !activated) return;
+        if (!el || !activated || !scriptReady) return;
         const onLoad = () => setLoaded(true);
         el.addEventListener('load', onLoad);
+        // model-viewer may already be loaded by the time the listener attaches
+        if ((el as unknown as { loaded?: boolean }).loaded) setLoaded(true);
         return () => el.removeEventListener('load', onLoad);
-    }, [activated]);
+    }, [activated, scriptReady]);
 
     return (
         <section className={`${styles.section} ${hero ? styles.heroSection : ''}`}>

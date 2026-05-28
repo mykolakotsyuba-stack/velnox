@@ -52,11 +52,13 @@ export function PhotoGallery({ images, altText, model3dSrc, hero = false }: Phot
 
     useEffect(() => {
         const el = modelRef.current;
-        if (!el || !model3dActivated) return;
+        if (!el || !model3dActivated || !scriptReady) return;
         const onLoad = () => setModel3dLoaded(true);
         el.addEventListener('load', onLoad);
+        // model-viewer may already be loaded by the time the listener attaches
+        if ((el as unknown as { loaded?: boolean }).loaded) setModel3dLoaded(true);
         return () => el.removeEventListener('load', onLoad);
-    }, [model3dActivated]);
+    }, [model3dActivated, scriptReady]);
 
     if (!images || images.length === 0) {
         return (
