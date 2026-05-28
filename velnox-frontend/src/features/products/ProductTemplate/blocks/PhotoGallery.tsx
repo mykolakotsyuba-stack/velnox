@@ -4,9 +4,10 @@ import styles from './PhotoGallery.module.css';
 
 const MODEL_VIEWER_CDN = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js';
 
-function useModelViewerScript(): boolean {
+function useModelViewerScript(enabled: boolean): boolean {
     const [ready, setReady] = useState(false);
     useEffect(() => {
+        if (!enabled) return;
         if (typeof window === 'undefined') return;
         if (customElements.get('model-viewer')) { setReady(true); return; }
         if (document.querySelector(`script[src*="model-viewer"]`)) {
@@ -24,7 +25,7 @@ function useModelViewerScript(): boolean {
             }, 80);
         };
         document.head.appendChild(s);
-    }, []);
+    }, [enabled]);
     return ready;
 }
 
@@ -44,7 +45,7 @@ export function PhotoGallery({ images, altText, model3dSrc, hero = false }: Phot
     const [model3dActivated, setModel3dActivated] = useState(false);
     const [model3dLoaded, setModel3dLoaded] = useState(false);
     const modelRef = useRef<HTMLElement>(null);
-    const scriptReady = useModelViewerScript();
+    const scriptReady = useModelViewerScript(model3dActivated);
 
     const minSwipeDistance = 50;
     const has3D = !!model3dSrc;

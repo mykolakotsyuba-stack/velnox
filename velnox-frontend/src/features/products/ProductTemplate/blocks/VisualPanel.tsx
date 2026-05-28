@@ -23,9 +23,10 @@ declare global {
 
 const MODEL_VIEWER_CDN = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js';
 
-function useModelViewerScript(): boolean {
+function useModelViewerScript(enabled: boolean): boolean {
     const [ready, setReady] = useState(false);
     useEffect(() => {
+        if (!enabled) return;
         if (typeof window === 'undefined') return;
         if (customElements.get('model-viewer')) { setReady(true); return; }
         if (document.querySelector(`script[src*="model-viewer"]`)) {
@@ -43,7 +44,7 @@ function useModelViewerScript(): boolean {
             }, 80);
         };
         document.head.appendChild(s);
-    }, []);
+    }, [enabled]);
     return ready;
 }
 
@@ -58,7 +59,7 @@ export function ModelBlock3D({ src, label, sizeMb, hero = false }: ModelBlock3DP
     const [activated, setActivated] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const ref = useRef<HTMLElement>(null);
-    const scriptReady = useModelViewerScript();
+    const scriptReady = useModelViewerScript(activated);
 
     useEffect(() => {
         const el = ref.current;
