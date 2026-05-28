@@ -151,6 +151,7 @@ export function PhotoGallery({ images, altText, model3dSrc, hero = false }: Phot
                     src={images[activeIndex]}
                     alt={`${altText} - View ${activeIndex + 1}`}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className={styles.mainImage}
                     priority={activeIndex === 0}
                     draggable={false}
@@ -228,6 +229,7 @@ export function PhotoGallery({ images, altText, model3dSrc, hero = false }: Phot
                                 src={img}
                                 alt={`${altText} thumbnail ${idx + 1}`}
                                 fill
+                                sizes="80px"
                                 className={styles.thumbnailImage}
                             />
                         </button>

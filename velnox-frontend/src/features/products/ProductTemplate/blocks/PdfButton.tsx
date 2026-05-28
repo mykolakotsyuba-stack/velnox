@@ -1,12 +1,10 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import type { ProductDTO, Locale } from '@/entities/product/model/types';
 import { PdfLayout } from './PdfLayout';
 import styles from './PdfButton.module.css';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
 
 interface PdfButtonProps {
     product: ProductDTO;
@@ -16,11 +14,11 @@ interface PdfButtonProps {
 export function PdfButton({ product, locale }: PdfButtonProps) {
     const t = useTranslations('product');
     const [isGenerating, setIsGenerating] = useState(false);
+    const [showLayout, setShowLayout] = useState(false);
     const [pdfUrl, setPdfUrl] = useState<string | null>(null);
     const [pageUrl, setPageUrl] = useState('');
     const hiddenPdfRef = useRef<HTMLDivElement>(null);
 
-    // Must be set in useEffect to avoid server/client HTML mismatch (hydration error #418)
     useEffect(() => {
         setPageUrl(window.location.href);
     }, []);
@@ -28,7 +26,6 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
     const safeArticle = product.article.replace(/[^a-zA-Z0-9-_]/g, '_');
     const filename = `VELNOX_Catalog_${safeArticle}.pdf`;
 
-    // Cleanup object URL on unmount or when generating a new one
     useEffect(() => {
         return () => {
             if (pdfUrl) {
@@ -37,27 +34,32 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
         };
     }, [pdfUrl]);
 
-    const handleGenerate = async () => {
-        if (!hiddenPdfRef.current || isGenerating) return;
+    const handleGenerate = useCallback(async () => {
+        if (isGenerating) return;
 
         try {
             setIsGenerating(true);
+            setShowLayout(true);
 
-            // Wait slightly to ensure fonts and images in the hidden container are loaded
-            await new Promise(resolve => setTimeout(resolve, 300));
+            // Wait for PdfLayout to mount and images to load
+            await new Promise(resolve => setTimeout(resolve, 600));
 
-            // Capture the strictly styled A4 container
+            if (!hiddenPdfRef.current) return;
+
+            const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+                import('html2canvas'),
+                import('jspdf'),
+            ]);
+
             const canvas = await html2canvas(hiddenPdfRef.current, {
-                scale: 1.5, // 1.5 is enough for A4, keeps file size reasonable
+                scale: 1.5,
                 useCORS: true,
                 logging: false,
                 backgroundColor: '#ffffff',
             });
 
-            // Use JPEG instead of PNG to drastically reduce file size
             const imgData = canvas.toDataURL('image/jpeg', 0.85);
 
-            // Format A4 (210mm x 297mm)
             const pdf = new jsPDF({
                 orientation: 'portrait',
                 unit: 'mm',
@@ -71,25 +73,20 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
             let heightLeft = pdfHeight;
             let position = 0;
 
-            // First page
             pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight, undefined, 'FAST');
             heightLeft -= pageHeight;
 
-            // Subsequent pages
             while (heightLeft >= 0) {
-                position -= pageHeight; // Shift image UP by exactly one page height
+                position -= pageHeight;
                 pdf.addPage();
                 pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight, undefined, 'FAST');
                 heightLeft -= pageHeight;
             }
 
-            // Explicit MIME type ensures Chrome adds .pdf extension on save
             const pdfArrayBuffer = pdf.output('arraybuffer');
             const blob = new Blob([pdfArrayBuffer], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
 
-            // Instead of auto-clicking (which triggers Safari's filename bug), 
-            // we shift to a state where the user clicks a native download link.
             setPdfUrl(url);
 
         } catch (error) {
@@ -97,8 +94,9 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
             alert("Помилка при генерації PDF. Будь ласка, спробуйте ще раз.");
         } finally {
             setIsGenerating(false);
+            setShowLayout(false);
         }
-    };
+    }, [isGenerating, product, locale, pageUrl]);
 
     return (
         <>
@@ -170,23 +168,24 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
                 </button>
             )}
 
-            {/* The hidden A4 layout that will be captured by html2canvas */}
-            <div
-                style={{
-                    position: 'absolute',
-                    top: '-9999px',
-                    left: 0,
-                    zIndex: -9999,
-                    pointerEvents: 'none'
-                }}
-            >
-                <PdfLayout
-                    ref={hiddenPdfRef}
-                    product={product}
-                    locale={locale}
-                    pageUrl={pageUrl}
-                />
-            </div>
+            {showLayout && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '-9999px',
+                        left: 0,
+                        zIndex: -9999,
+                        pointerEvents: 'none'
+                    }}
+                >
+                    <PdfLayout
+                        ref={hiddenPdfRef}
+                        product={product}
+                        locale={locale}
+                        pageUrl={pageUrl}
+                    />
+                </div>
+            )}
         </>
     );
 }

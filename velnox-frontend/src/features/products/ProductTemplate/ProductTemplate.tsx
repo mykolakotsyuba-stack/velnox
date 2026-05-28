@@ -3,16 +3,25 @@
 import { useState, useRef, useEffect } from 'react';
 import type { ProductDTO, Locale } from '@/entities/product/model/types';
 import { Breadcrumbs } from './blocks/Breadcrumbs';
-import { BlueprintViewer } from './blocks/BlueprintViewer';
-import { BuqBlueprintViewer } from './blocks/BuqBlueprintViewer';
 import { SpecsTable } from './blocks/SpecsTable';
 import { CrossReferences } from './blocks/CrossReferences';
 import { Installations } from './blocks/Installations';
 import { CtaBlock } from '@/widgets/CtaBlock';
 import { PhotoGallery } from './blocks/PhotoGallery';
-import { DistributorsBlock } from '@/widgets/DistributorsBlock';
+import dynamic from 'next/dynamic';
 import { ProductHeader } from './blocks/ProductHeader';
 import styles from './ProductTemplate.module.css';
+
+const BlueprintViewer = dynamic(
+    () => import('./blocks/BlueprintViewer').then(m => m.BlueprintViewer)
+);
+const BuqBlueprintViewer = dynamic(
+    () => import('./blocks/BuqBlueprintViewer').then(m => m.BuqBlueprintViewer)
+);
+const DistributorsBlock = dynamic(
+    () => import('@/widgets/DistributorsBlock').then(m => m.DistributorsBlock),
+    { ssr: false }
+);
 
 interface ProductTemplateProps {
     product: ProductDTO;

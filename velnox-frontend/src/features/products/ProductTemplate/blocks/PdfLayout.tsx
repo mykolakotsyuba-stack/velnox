@@ -173,6 +173,7 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                                             alt={`${t('drawings')} ${i + 1}`}
                                             className={styles.drawingThumb}
                                             crossOrigin="anonymous"
+                                            loading="lazy"
                                         />
                                     ))}
                                 </div>

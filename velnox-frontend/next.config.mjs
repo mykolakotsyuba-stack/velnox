@@ -6,6 +6,9 @@ const withNextIntl = createNextIntlPlugin('./src/shared/lib/i18n.ts');
 const nextConfig = {
     basePath: "/velnox",
     assetPrefix: "/velnox",
+    experimental: {
+        optimizePackageImports: ['lucide-react'],
+    },
     images: {
         unoptimized: true,
         remotePatterns: [
