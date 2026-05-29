@@ -180,7 +180,7 @@ export function HomePage({ locale }: { locale: string }) {
                 </svg>
             ),
             key: 'harrow',
-            bg: '/velnox/images/industry-harrow.png',
+            bg: '/velnox/images/industry-harrow.webp',
         },
         {
             icon: (
@@ -192,7 +192,7 @@ export function HomePage({ locale }: { locale: string }) {
                 </svg>
             ),
             key: 'cultivator',
-            bg: '/velnox/images/industry-cultivator.png',
+            bg: '/velnox/images/industry-cultivator.webp',
         },
         {
             icon: (
@@ -203,7 +203,7 @@ export function HomePage({ locale }: { locale: string }) {
                 </svg>
             ),
             key: 'seeder',
-            bg: '/velnox/images/industry-seeder.png',
+            bg: '/velnox/images/industry-seeder.webp',
         },
     ];
 
@@ -427,7 +427,7 @@ export function HomePage({ locale }: { locale: string }) {
                     {/* Background Photo */}
                     <div className={styles.ctaPhotoBg}>
                         <Image 
-                            src="/velnox/images/cta-bg.png" 
+                            src="/velnox/images/cta-bg.webp" 
                             alt="Engineering background" 
                             fill 
                             style={{ objectFit: 'cover' }} 

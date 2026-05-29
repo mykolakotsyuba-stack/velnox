@@ -29,7 +29,7 @@ export function ProductSlider({ locale }: { locale: string }) {
 
     const SLIDES: Slide[] = [
         {
-            bgImg: '/velnox/images/bg_seeder_highspeed.png',
+            bgImg: '/velnox/images/bg_seeder_highspeed.webp',
             tag: t('slide1.tag'),
             title: t('slide1.title'),
             body: t('slide1.body'),
@@ -40,7 +40,7 @@ export function ProductSlider({ locale }: { locale: string }) {
             link2: `/${locale}/contacts`,
         },
         {
-            bgImg: '/velnox/images/bg_agro.png',
+            bgImg: '/velnox/images/bg_agro.webp',
             bgPos: 'right center',
             tag: t('slide2.tag'),
             title: t('slide2.title'),
@@ -52,7 +52,7 @@ export function ProductSlider({ locale }: { locale: string }) {
             link2: `/${locale}/contacts`,
         },
         {
-            bgImg: '/velnox/images/bg_bearing_207.png',
+            bgImg: '/velnox/images/bg_bearing_207.webp',
             tag: t('slide3.tag'),
             title: t('slide3.title'),
             body: t('slide3.body'),

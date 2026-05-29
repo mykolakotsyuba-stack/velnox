@@ -616,7 +616,7 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background-image: url('/velnox/images/oem-optimization-bg.png');
+    background-image: url('/velnox/images/oem-optimization-bg.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Parallax effect */
