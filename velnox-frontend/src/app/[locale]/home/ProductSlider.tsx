@@ -24,6 +24,9 @@ export function ProductSlider({ locale }: { locale: string }) {
     const [animDir, setAnimDir] = useState<'left' | 'right'>('right');
     const [isAnimating, setIsAnimating] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+    // Skip entrance animations on the very first paint so the LCP element
+    // (hero title + background) renders instantly at its final state.
+    const [firstPaint, setFirstPaint] = useState(true);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const SLIDES: Slide[] = [
@@ -65,6 +68,7 @@ export function ProductSlider({ locale }: { locale: string }) {
 
     const goTo = useCallback((idx: number, dir: 'left' | 'right' = 'right') => {
         if (isAnimating) return;
+        setFirstPaint(false);
         setIsAnimating(true);
         setAnimDir(dir);
         setTimeout(() => {
@@ -109,7 +113,7 @@ export function ProductSlider({ locale }: { locale: string }) {
             {/* Background image (blurred, full bleed) */}
             <div className={styles.sliderBg}>
                 {SLIDES.map((s, i) => (
-                    <div key={i} className={`${styles.bgLayer} ${i === active ? styles.bgLayerActive : ''}`}>
+                    <div key={i} className={`${styles.bgLayer} ${i === active ? styles.bgLayerActive : ''} ${firstPaint && i === active ? styles.bgLayerInstant : ''}`}>
                         <picture>
                             <source media="(max-width: 820px)" srcSet={s.bgImg.replace(/\.webp$/, '-m.webp')} />
                             <img
@@ -130,7 +134,7 @@ export function ProductSlider({ locale }: { locale: string }) {
             {/* Slide rail */}
             <div className={styles.sliderInner}>
                 {/* Left: content */}
-                <div className={`${styles.slideContent} ${isAnimating ? (animDir === 'right' ? styles.exitLeft : styles.exitRight) : styles.slideIn}`}>
+                <div className={`${styles.slideContent} ${isAnimating ? (animDir === 'right' ? styles.exitLeft : styles.exitRight) : (firstPaint ? '' : styles.slideIn)}`}>
                     <span className={styles.slideTag}>
                         <span className={styles.tagPulse} />
                         {slide.tag}

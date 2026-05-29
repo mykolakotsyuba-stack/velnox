@@ -31,6 +31,13 @@
     animation: kenBurnsBg 20s linear forwards;
 }
 
+/* First paint: show the active background instantly (no 1.2s fade) so it
+   doesn't delay LCP. Ken Burns transform animation still runs. */
+.bgLayerInstant {
+    opacity: 1;
+    transition: none;
+}
+
 @keyframes kenBurnsBg {
     0% {
         transform: scale(1.08) translate(0, 0);
