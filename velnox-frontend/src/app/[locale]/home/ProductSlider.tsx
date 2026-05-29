@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import styles from './ProductSlider.module.css';
@@ -111,7 +110,17 @@ export function ProductSlider({ locale }: { locale: string }) {
             <div className={styles.sliderBg}>
                 {SLIDES.map((s, i) => (
                     <div key={i} className={`${styles.bgLayer} ${i === active ? styles.bgLayerActive : ''}`}>
-                        <Image src={s.bgImg} alt="" fill style={{ objectFit: 'cover', objectPosition: s.bgPos || 'center' }} quality={60} priority={i === 0} />
+                        <picture>
+                            <source media="(max-width: 820px)" srcSet={s.bgImg.replace(/\.webp$/, '-m.webp')} />
+                            <img
+                                src={s.bgImg}
+                                alt=""
+                                fetchPriority={i === 0 ? 'high' : undefined}
+                                loading={i === 0 ? 'eager' : 'lazy'}
+                                decoding="async"
+                                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: s.bgPos || 'center' }}
+                            />
+                        </picture>
                     </div>
                 ))}
                 <div className={styles.bgOverlay} />
