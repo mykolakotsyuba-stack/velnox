@@ -528,7 +528,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
             {/* HERO */}
             <section className={styles.hero} ref={heroRef.ref as React.Ref<HTMLElement>}>
                 <div className={styles.heroBgWrapper}>
-                    <Image src="/velnox/images/products/hubs/hero_bg.jpg" alt="VELNOX Bearing Hubs" fill
+                    <Image src="/velnox/images/products/hubs/hero_bg.webp" alt="VELNOX Bearing Hubs" fill
                         className={styles.heroBgImg} quality={90} priority />
                     <div className={styles.heroBgOverlay} />
                 </div>
@@ -629,7 +629,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
             {/* APP BLOCK 2 — CUTTING NODES */}
             <section ref={app2Ref.ref} className={`${styles.blueprintBlock} ${app2Ref.inView ? styles.blueprintVisible : ''}`}>
-                <Image src="/velnox/images/hubs/bednar-field.png" alt="" fill priority={false} style={{ objectFit: 'cover', objectPosition: '30% 50%' }} />
+                <Image src="/velnox/images/hubs/bednar-field.webp" alt="" fill priority={false} style={{ objectFit: 'cover', objectPosition: '30% 50%' }} />
                 <div className={styles.blueprintDarkOverlayRight} />
                 <div className={`${styles.blueprintLayout} ${styles.blueprintLayoutRight}`}>
                     <div className={styles.blueprintSpacer} />

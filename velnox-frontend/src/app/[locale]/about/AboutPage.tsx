@@ -110,7 +110,7 @@ export function AboutPage({ locale }: { locale: string }) {
             <section className={styles.hero}>
                 {/* Full bleed background image */}
                 <div className={styles.heroBgWrapper}>
-                    <Image src="/velnox/images/about/hero_bearing_final.png" alt="VELNOX Engineering" fill
+                    <Image src="/velnox/images/about/hero_bearing_final.webp" alt="VELNOX Engineering" fill
                         className={styles.heroBgImg} quality={80} priority />
                     <div className={styles.heroBgOverlay} />
                 </div>
@@ -239,7 +239,7 @@ export function AboutPage({ locale }: { locale: string }) {
                             style={{ transitionDelay: '0.1s' }}
                         >
                             <div className={styles.phiCardBg}>
-                                <Image src="/velnox/images/about/phi_left.png" alt="Blueprint" fill
+                                <Image src="/velnox/images/about/phi_left.webp" alt="Blueprint" fill
                                     sizes="(max-width: 1024px) 100vw, 50vw"
                                     className={styles.phiCardImg} loading="lazy" />
                                 <div className={styles.phiCardOverlay} />
@@ -266,7 +266,7 @@ export function AboutPage({ locale }: { locale: string }) {
                             style={{ transitionDelay: '0.25s' }}
                         >
                             <div className={styles.phiCardBg}>
-                                <Image src="/velnox/images/about/industry-agro.jpg" alt="Action" fill
+                                <Image src="/velnox/images/about/industry-agro.webp" alt="Action" fill
                                     sizes="(max-width: 1024px) 100vw, 50vw"
                                     className={styles.phiCardImg} loading="lazy" />
                                 <div className={styles.phiCardOverlay} />
@@ -315,7 +315,7 @@ export function AboutPage({ locale }: { locale: string }) {
                         {/* Right: Technical Schema */}
                         <div className={`${styles.customVisual} ${customSection.inView ? styles.customVisualVisible : ''}`}>
                             <div className={styles.schemaContainer}>
-                                <Image src="/velnox/images/about/custom_seal_final.png" alt="Engineering Schema" fill
+                                <Image src="/velnox/images/about/custom_seal_final.webp" alt="Engineering Schema" fill
                                     sizes="(max-width: 1024px) 100vw, 50vw"
                                     className={styles.schemaImg} loading="lazy" />
                             </div>
@@ -396,7 +396,7 @@ export function AboutPage({ locale }: { locale: string }) {
                         <AudienceSector
                             active={audienceSection.inView}
                             index={0}
-                            bgImg="/velnox/images/about/aud_oem.png"
+                            bgImg="/velnox/images/about/aud_oem.webp"
                             title={t('audience.s1_title')}
                             desc={t('audience.s1_desc')}
                             icon={
@@ -412,7 +412,7 @@ export function AboutPage({ locale }: { locale: string }) {
                         <AudienceSector
                             active={audienceSection.inView}
                             index={1}
-                            bgImg="/velnox/images/about/aud_eng.png"
+                            bgImg="/velnox/images/about/aud_eng.webp"
                             title={t('audience.s2_title')}
                             desc={t('audience.s2_desc')}
                             icon={
@@ -428,7 +428,7 @@ export function AboutPage({ locale }: { locale: string }) {
                         <AudienceSector
                             active={audienceSection.inView}
                             index={2}
-                            bgImg="/velnox/images/about/aud_dist.png"
+                            bgImg="/velnox/images/about/aud_dist.webp"
                             title={t('audience.s3_title')}
                             desc={t('audience.s3_desc')}
                             icon={
@@ -444,7 +444,7 @@ export function AboutPage({ locale }: { locale: string }) {
                         <AudienceSector
                             active={audienceSection.inView}
                             index={3}
-                            bgImg="/velnox/images/about/aud_agro.png"
+                            bgImg="/velnox/images/about/aud_agro.webp"
                             title={t('audience.s4_title')}
                             desc={t('audience.s4_desc')}
                             icon={

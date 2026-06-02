@@ -1,0 +1,37 @@
+services:
+  velnox-api:
+    build:
+      context: ./api
+    image: velnox-api:latest
+    container_name: velnox-api
+    restart: unless-stopped
+    volumes:
+      # Persist the SQLite database and Laravel storage on the host (backup-friendly)
+      - ./data/database.sqlite:/var/www/database/database.sqlite
+      - ./data/storage:/var/www/storage
+    ports:
+      - "127.0.0.1:8506:80"
+    networks:
+      - velnox
+
+  velnox-frontend:
+    build:
+      context: ./frontend
+    image: velnox-frontend:latest
+    container_name: velnox-frontend
+    restart: unless-stopped
+    depends_on:
+      - velnox-api
+    environment:
+      # Server-side (SSR) data fetching reaches the API over the compose network.
+      # api.ts reads INTERNAL_API_URL (includes /api/v1); sitemap.ts reads API_INTERNAL_URL.
+      - INTERNAL_API_URL=http://velnox-api/api/v1
+      - API_INTERNAL_URL=http://velnox-api
+    ports:
+      - "127.0.0.1:8505:3000"
+    networks:
+      - velnox
+
+networks:
+  velnox:
+    driver: bridge

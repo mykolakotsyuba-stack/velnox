@@ -6,3 +6,6 @@ vendor/
 *.tar.gz
 pdf-gen-temp/
 .DS_Store
+
+# Prod DB/storage backups (never commit data)
+backups-prod/

@@ -1,5 +1,55 @@
 # 🚀 Server Deployment Guide — Irbis Projects
 
+---
+
+## 🌍 PROD — velnox.eu (з 2026-06-02)
+
+Окремий бойовий сервер. **Дев лишається тестовим майданчиком** — спочатку правимо
+й тестуємо на деві, лише потім переносимо на прод.
+
+| Параметр | Значення |
+|----------|----------|
+| Домен | `https://velnox.eu` (SSL home.pl, дійсний до 2026-11-19) |
+| IP | `31.70.77.158` · Ubuntu 24.04 |
+| SSH | `ssh admin-site@velnox.eu` |
+| Ізоляція | Уся VELNOX у **Docker** (`/home/admin-site/velnox/`), щоб не конфліктувати з іншими проєктами на хості |
+| Контейнери | `velnox-frontend` → `127.0.0.1:8505`, `velnox-api` → `127.0.0.1:8506` (лише локально) |
+| Reverse proxy | **Системний nginx** хоста проксує `velnox.eu` → контейнери (спільний з іншими проєктами; конфіг `/etc/nginx/sites-available/velnox.eu`) |
+| БД | SQLite, bind-mount `data/database.sqlite` (бекап-френдлі) |
+| Дані/медіа | bind-mount `data/storage`, медіа у `frontend/public` |
+
+**Ключові відмінності прода від дева** (їх обробляє код/конфіг автоматично):
+- Дев віддає сайт під підшляхом `/velnox/`; прод — у корені домену.
+  `next.config.mjs` перемикається через `DEPLOY_TARGET=prod` (білд-env у Dockerfile).
+- API: дев `/velnox-api/api`, прод `/api` (host nginx `location /api/`).
+- Хардкоднутий у коді/БД префікс `/velnox/` на проді знімається nginx-rewrite
+  `location ^~ /velnox/` (стрипить і переобробляє) — код/БД не правимо.
+
+### Робочий цикл «дев → прод»
+
+```bash
+# 1) правиш код, деплоїш і ТЕСТУЄШ на деві (наявні скрипти, не змінювались):
+./deploy_frontend_auto.exp      # або clean_deploy_frontend.exp
+./deploy_api_auto.exp
+
+# 2) коли все ок на деві — переносиш на прод (НОВІ скрипти):
+export PROD_SSH_PASS='...'       # пароль прода, НЕ хардкодимо в git
+./deploy_prod.sh                 # бекап → rsync коду → docker build → up → smoke-test
+```
+
+- `deploy_prod.sh` спочатку викликає `backup_prod.sh`, потім rsync-ить код
+  (`.env`, SQLite та `data/` НЕ чіпає — прод-дані зберігаються), перебудовує
+  образи й перезапускає стек.
+- `backup_prod.sh` робить знімок БД+storage у `backups/` на проді і тягне копію
+  в локальний `backups-prod/` (gitignored).
+- Артефакти прода в репо: `deploy/docker-compose.yml`, `deploy/velnox.eu.nginx.conf`,
+  `velnox-frontend/Dockerfile`, `velnox-api/Dockerfile`, `velnox-api/docker/start.sh`.
+
+> SEO: `/robots.txt` і `/sitemap.xml` генеруються Next-роутами
+> (`src/app/robots.ts`, `src/app/sitemap.ts`); canonical/hreflang/OG — у `[locale]/layout.tsx`.
+
+---
+
 ## 🖥️ Сервер
 
 | Параметр | Значення |

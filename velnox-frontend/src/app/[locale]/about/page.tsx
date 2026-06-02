@@ -30,7 +30,7 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
         openGraph: {
             title: m.title,
             description: m.description,
-            images: [{ url: '/velnox/images/about/hero_bearing_final.png', width: 1200, height: 630 }],
+            images: [{ url: '/velnox/images/about/hero_bearing_final.webp', width: 1200, height: 630 }],
             type: 'website',
         },
         twitter: {

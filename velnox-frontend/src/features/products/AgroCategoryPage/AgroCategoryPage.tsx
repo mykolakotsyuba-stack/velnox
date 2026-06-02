@@ -573,7 +573,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
             {/* ── HERO ── */}
             <section className={styles.hero} ref={heroRef.ref as React.Ref<HTMLElement>}>
                 <div className={styles.heroBgWrapper}>
-                    <Image src="/velnox/images/products/agro/hero_bg.jpg" alt="VELNOX Agro Bearings" fill
+                    <Image src="/velnox/images/products/agro/hero_bg.webp" alt="VELNOX Agro Bearings" fill
                         className={styles.heroBgImg} quality={90} priority />
                     <div className={styles.heroBgOverlay} />
                 </div>
@@ -668,7 +668,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 >
                     <div className={styles.specialParallaxOverlay} />
                     <Image
-                        src="/velnox/images/agro/agro-parallax-bg.png"
+                        src="/velnox/images/agro/agro-parallax-bg.webp"
                         alt="Agro field background"
                         fill
                         className={styles.specialParallaxImg}

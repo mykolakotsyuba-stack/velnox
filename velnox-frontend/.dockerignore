@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+*.pdf
+*.xlsx
+*.csv
+docs
+.claude
+test-dom.mjs
+parse_excel.js
+update_i18n.*
+tsconfig.tsbuildinfo

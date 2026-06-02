@@ -144,7 +144,7 @@ export function BlueprintViewer({
                     </button>
 
                     <Image
-                        src={schemaSrc ?? '/velnox/images/blueprint-base.png'}
+                        src={schemaSrc ?? '/velnox/images/blueprint-base.webp'}
                         alt={`Blueprint ${article}`}
                         fill
                         className={styles.blueprintImage}
@@ -169,7 +169,7 @@ export function BlueprintViewer({
                     <div className={styles.modalDrawing}>
                         <div style={{ position: 'relative', width: '100%', height: '100%', maxWidth: '800px', maxHeight: '800px', aspectRatio: '1/1' }}>
                             <Image
-                                src={schemaSrc ?? '/velnox/images/blueprint-base.png'}
+                                src={schemaSrc ?? '/velnox/images/blueprint-base.webp'}
                                 alt={`Blueprint ${article} Fullscreen`}
                                 fill
                                 className={styles.blueprintImage}

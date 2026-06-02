@@ -696,7 +696,7 @@
     grid-template-columns: 1fr;
     gap: 40px;
     position: relative;
-    background: url('/velnox/images/about/quality_lab.png') no-repeat center center;
+    background: url('/velnox/images/about/quality_lab.webp') no-repeat center center;
     background-size: cover;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 32px;

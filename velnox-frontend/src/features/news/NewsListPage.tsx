@@ -9,12 +9,12 @@ const NEWS_SLUGS = [
     {
         slug: 'velnox-seals-seeder-coulters',
         date: '2026-05-27',
-        coverImage: '/velnox/images/articles/velnox-seals-seeder-coulters.png',
+        coverImage: '/velnox/images/articles/velnox-seals-seeder-coulters.webp',
     },
     {
         slug: 'velnox-bearing-solution-rotary-harrows',
         date: '2026-05-27',
-        coverImage: '/velnox/images/articles/velnox-bearing-rotary-harrows.png',
+        coverImage: '/velnox/images/articles/velnox-bearing-rotary-harrows.webp',
     },
 ];
 

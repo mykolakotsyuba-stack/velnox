@@ -2,10 +2,16 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin('./src/shared/lib/i18n.ts');
 
+// On the shared dev server VELNOX is served under the /velnox sub-path.
+// On the dedicated prod server (velnox.eu) it is served at the domain root.
+// Toggle via DEPLOY_TARGET=prod at build time. Default keeps dev behaviour.
+const isProd = process.env.DEPLOY_TARGET === 'prod';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: "/velnox",
-    assetPrefix: "/velnox",
+    output: 'standalone',
+    basePath: isProd ? '' : '/velnox',
+    assetPrefix: isProd ? undefined : '/velnox',
     experimental: {
         optimizePackageImports: ['lucide-react'],
     },
@@ -20,6 +26,10 @@ const nextConfig = {
             {
                 protocol: 'http',
                 hostname: 'mx.irbis.ua',
+            },
+            {
+                protocol: 'https',
+                hostname: 'velnox.eu',
             },
         ],
     },

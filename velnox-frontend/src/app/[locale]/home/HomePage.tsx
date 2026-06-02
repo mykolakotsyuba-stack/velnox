@@ -471,11 +471,12 @@ export function HomePage({ locale }: { locale: string }) {
                             <form className={styles.formGrid} onSubmit={handleCtaSubmit}>
                                 {/* Contact Field */}
                                 <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
-                                    <input 
-                                        type="text" 
-                                        className={styles.fieldInput} 
-                                        placeholder=" " 
-                                        required 
+                                    <input
+                                        type="text"
+                                        className={styles.fieldInput}
+                                        placeholder=" "
+                                        required
+                                        aria-label={t('cta.form.contact')}
                                         value={contact}
                                         onChange={e => setContact(e.target.value)}
                                     />
@@ -484,9 +485,10 @@ export function HomePage({ locale }: { locale: string }) {
                                 
                                 {/* Request Type */}
                                 <div className={`${styles.fieldGroup} ${styles.fullWidth}`}>
-                                    <select 
-                                        className={styles.fieldSelect} 
+                                    <select
+                                        className={styles.fieldSelect}
                                         required
+                                        aria-label={t('cta.form.type')}
                                         value={reqType}
                                         onChange={e => setReqType(e.target.value)}
                                     >
@@ -501,10 +503,11 @@ export function HomePage({ locale }: { locale: string }) {
 
                                 {/* AI Drop Zone */}
                                 <div className={`${styles.fieldGroup} ${styles.fullWidth} ${styles.dropZone}`}>
-                                    <input 
-                                        type="file" 
+                                    <input
+                                        type="file"
                                         accept=".jpg,.jpeg,.png,.heic,.webp"
                                         className={styles.fileInput}
+                                        aria-label={t('cta.form.upload')}
                                         ref={fileInputRef}
                                         onChange={handleFileChange}
                                     />

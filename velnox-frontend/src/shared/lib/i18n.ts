@@ -15,6 +15,15 @@ export default getRequestConfig(async ({ requestLocale }) => {
     return {
         locale,
         messages: (await import(`../../../messages/${locale}.json`)).default,
+        // In production next-intl throws on a missing key, which would 500 the
+        // whole page. Degrade gracefully: log non-missing errors, show the key.
+        onError(error) {
+            if (error.code === 'MISSING_MESSAGE') return;
+            console.error(error);
+        },
+        getMessageFallback({ key }) {
+            return key;
+        },
     };
 });
 

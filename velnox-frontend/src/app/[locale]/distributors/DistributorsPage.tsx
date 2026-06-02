@@ -147,7 +147,7 @@ export function DistributorsPage() {
                 {/* Europe map background */}
                 <div className={styles.heroMapWrap} aria-hidden>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/velnox/images/about/geo_map.png" alt="" className={styles.heroMapImg} />
+                    <img src="/velnox/images/about/geo_map.webp" alt="" className={styles.heroMapImg} />
                 </div>
 
                 <div className={styles.heroInner}>

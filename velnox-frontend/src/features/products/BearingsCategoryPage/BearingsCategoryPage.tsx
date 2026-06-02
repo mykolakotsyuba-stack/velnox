@@ -518,7 +518,7 @@ export function BearingsCategoryPage({ locale, products = [] }: { locale: Locale
             {/* HERO */}
             <section className={styles.hero} ref={heroRef.ref as React.Ref<HTMLElement>}>
                 <div className={styles.heroBgWrapper}>
-                    <Image src="/velnox/images/bearings/hero_bg.png" alt="VELNOX Bearings" fill
+                    <Image src="/velnox/images/bearings/hero_bg.webp" alt="VELNOX Bearings" fill
                         className={styles.heroBgImg} quality={90} priority />
                     <div className={styles.heroBgOverlay} />
                 </div>

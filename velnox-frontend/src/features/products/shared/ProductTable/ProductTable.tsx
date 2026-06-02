@@ -59,7 +59,7 @@ function ColMenu({
             <button
                 className={`${styles.colMenuBtn}${isActive ? ' ' + styles.colMenuBtnActive : ''}`}
                 onClick={e => { e.stopPropagation(); setOpen(v => !v); }}
-                title={t('table.sort_filter')}
+                title={t('sort_filter')}
             >
                 <svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor">
                     <circle cx="4" cy="5" r="1.5" />

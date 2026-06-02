@@ -9,7 +9,7 @@ export function CustomHero() {
     return (
         <section className={styles.hero}>
             <Image
-                src="/velnox/images/custom/hero_bg.png"
+                src="/velnox/images/custom/hero_bg.webp"
                 alt="VELNOX Custom Solutions"
                 fill
                 priority

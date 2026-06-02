@@ -8,11 +8,11 @@ import styles from './news.module.css';
 const ARTICLE_META: Record<string, { date: string; coverImage: string }> = {
     'velnox-seals-seeder-coulters': {
         date: '2026-05-27',
-        coverImage: '/velnox/images/articles/velnox-seals-seeder-coulters.png',
+        coverImage: '/velnox/images/articles/velnox-seals-seeder-coulters.webp',
     },
     'velnox-bearing-solution-rotary-harrows': {
         date: '2026-05-27',
-        coverImage: '/velnox/images/articles/velnox-bearing-rotary-harrows.png',
+        coverImage: '/velnox/images/articles/velnox-bearing-rotary-harrows.webp',
     },
 };
 

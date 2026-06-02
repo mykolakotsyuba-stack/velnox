@@ -11,7 +11,7 @@ export function CustomBanner() {
             <div className={styles.bottomBannerContent}>
                 <div className={styles.bottomBannerImage}>
                     <Image
-                        src="/velnox/images/custom/banner_bg.png"
+                        src="/velnox/images/custom/banner_bg.webp"
                         alt="VELNOX Engineering"
                         fill
                         style={{ objectFit: 'cover' }}

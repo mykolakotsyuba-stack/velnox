@@ -1,12 +1,18 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci
+# lockfile on the shared dev box lags behind package.json (e.g. gsap added
+# without committing the lock), so use install rather than ci for a reliable build
+RUN npm install --no-audit --no-fund
 
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# Prod build: root domain (no /velnox basePath) and API at /api
+ENV DEPLOY_TARGET=prod
+ENV NEXT_PUBLIC_API_URL=/api
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 FROM node:20-alpine AS runner
@@ -14,6 +20,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 ENV PORT 3000
+ENV HOSTNAME 0.0.0.0
 
 # Copy necessary files
 COPY --from=builder /app/public ./public
