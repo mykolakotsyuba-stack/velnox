@@ -7,6 +7,7 @@ import styles from './ProductSlider.module.css';
 
 interface Slide {
     bgImg: string;
+    bgAlt?: string;
     bgPos?: string;
     tag: string;
     title: string;
@@ -32,6 +33,7 @@ export function ProductSlider({ locale }: { locale: string }) {
     const SLIDES: Slide[] = [
         {
             bgImg: '/velnox/images/bg_seeder_highspeed.webp',
+            bgAlt: 'High-speed seeder in field — VELNOX agro bearings',
             tag: t('slide1.tag'),
             title: t('slide1.title'),
             body: t('slide1.body'),
@@ -43,6 +45,7 @@ export function ProductSlider({ locale }: { locale: string }) {
         },
         {
             bgImg: '/velnox/images/bg_agro.webp',
+            bgAlt: 'Agricultural machinery with VELNOX bearing units',
             bgPos: 'right center',
             tag: t('slide2.tag'),
             title: t('slide2.title'),
@@ -55,6 +58,7 @@ export function ProductSlider({ locale }: { locale: string }) {
         },
         {
             bgImg: '/velnox/images/bg_bearing_207.webp',
+            bgAlt: 'VELNOX BUQ-207 bearing unit close-up',
             tag: t('slide3.tag'),
             title: t('slide3.title'),
             body: t('slide3.body'),
@@ -118,7 +122,7 @@ export function ProductSlider({ locale }: { locale: string }) {
                             <source media="(max-width: 820px)" srcSet={s.bgImg.replace(/\.webp$/, '-m.webp')} />
                             <img
                                 src={s.bgImg}
-                                alt=""
+                                alt={s.bgAlt || ''}
                                 fetchPriority={i === 0 ? 'high' : undefined}
                                 loading={i === 0 ? 'eager' : 'lazy'}
                                 decoding="async"

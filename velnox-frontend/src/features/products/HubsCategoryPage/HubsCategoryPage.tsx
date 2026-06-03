@@ -577,7 +577,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
             {/* APP BLOCK 1 — DISK HARROWS */}
             <section ref={app1Ref.ref} className={`${styles.blueprintBlock} ${app1Ref.inView ? styles.blueprintVisible : ''}`}>
-                <Image src="/velnox/images/hubs/horsch-field.png" alt="" fill priority style={{ objectFit: 'cover', objectPosition: '45% 62%' }} />
+                <Image src="/velnox/images/hubs/horsch-field.png" alt="HORSCH disc harrow working in field — VELNOX hub assemblies" fill priority style={{ objectFit: 'cover', objectPosition: '45% 62%' }} />
                 <div className={styles.blueprintDarkOverlay} />
                 <div className={styles.blueprintLayout}>
                     <div className={styles.blueprintText}>
@@ -629,7 +629,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
             {/* APP BLOCK 2 — CUTTING NODES */}
             <section ref={app2Ref.ref} className={`${styles.blueprintBlock} ${app2Ref.inView ? styles.blueprintVisible : ''}`}>
-                <Image src="/velnox/images/hubs/bednar-field.webp" alt="" fill priority={false} style={{ objectFit: 'cover', objectPosition: '30% 50%' }} />
+                <Image src="/velnox/images/hubs/bednar-field.webp" alt="Bednar cutting node in field — VELNOX hub assemblies" fill priority={false} style={{ objectFit: 'cover', objectPosition: '30% 50%' }} />
                 <div className={styles.blueprintDarkOverlayRight} />
                 <div className={`${styles.blueprintLayout} ${styles.blueprintLayoutRight}`}>
                     <div className={styles.blueprintSpacer} />
@@ -659,7 +659,7 @@ export function HubsCategoryPage({ locale, products }: HubsCategoryPageProps) {
 
             {/* APP BLOCK 3 — SEEDERS */}
             <section ref={app3Ref.ref} className={`${styles.blueprintBlock} ${app3Ref.inView ? styles.blueprintVisible : ''}`}>
-                <Image src="/velnox/images/hubs/seeder-field.png" alt="" fill priority={false} style={{ objectFit: 'cover', objectPosition: 'center 60%' }} />
+                <Image src="/velnox/images/hubs/seeder-field.png" alt="Seeder in field — VELNOX hub assemblies for planting equipment" fill priority={false} style={{ objectFit: 'cover', objectPosition: 'center 60%' }} />
                 <div className={styles.blueprintDarkOverlay} />
                 <div className={styles.blueprintLayout}>
                     <div className={styles.blueprintText}>
