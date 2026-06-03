@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { NewsListPage } from '@/features/news/NewsListPage';
 import type { Locale } from '@/entities/product/model/types';
+import { seoMeta } from '@/shared/lib/seo';
 
 interface Props {
     params: { locale: Locale };
@@ -24,7 +25,7 @@ const meta: Record<string, { title: string; description: string }> = {
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
     const m = meta[locale] ?? meta.en;
-    return { title: m.title, description: m.description };
+    return { title: m.title, description: m.description, ...seoMeta(locale, '/news') };
 }
 
 export default function NewsPage({ params: { locale } }: Props) {

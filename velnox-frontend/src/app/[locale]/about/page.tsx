@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { AboutPage } from './AboutPage';
 import type { Locale } from '@/entities/product/model/types';
+import { seoMeta } from '@/shared/lib/seo';
 
 interface Props {
     params: { locale: Locale };
@@ -27,11 +28,13 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
     return {
         title: m.title,
         description: m.description,
+        ...seoMeta(locale, '/about'),
         openGraph: {
             title: m.title,
             description: m.description,
             images: [{ url: '/velnox/images/about/hero_bearing_final.webp', width: 1200, height: 630 }],
             type: 'website',
+            ...seoMeta(locale, '/about').openGraph,
         },
         twitter: {
             card: 'summary_large_image',

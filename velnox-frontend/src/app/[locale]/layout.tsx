@@ -8,6 +8,7 @@ import type { Locale } from '@/entities/product/model/types';
 import '../globals.css';
 
 const OG_LOCALE: Record<string, string> = { en: 'en_US', uk: 'uk_UA', pl: 'pl_PL' };
+const isProd = process.env.DEPLOY_TARGET === 'prod';
 
 interface LocaleLayoutProps {
     children: React.ReactNode;
@@ -17,19 +18,11 @@ interface LocaleLayoutProps {
 export async function generateMetadata({ params: { locale } }: { params: { locale: Locale } }): Promise<Metadata> {
     return {
         metadataBase: new URL('https://velnox.eu'),
-        robots: { index: true, follow: true },
+        robots: isProd ? { index: true, follow: true } : { index: false, follow: false },
         openGraph: {
             siteName: 'VELNOX',
             type: 'website',
             locale: OG_LOCALE[locale] ?? 'en_US',
-            url: `https://velnox.eu/${locale}`,
-        },
-        alternates: {
-            languages: {
-                en: 'https://velnox.eu/en',
-                uk: 'https://velnox.eu/uk',
-                pl: 'https://velnox.eu/pl',
-            },
         },
     };
 }

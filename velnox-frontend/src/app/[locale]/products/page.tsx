@@ -1,9 +1,15 @@
+import type { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import type { Locale } from '@/entities/product/model/types';
+import { seoMeta } from '@/shared/lib/seo';
 
 interface ProductsPageProps {
     params: { locale: Locale };
+}
+
+export function generateMetadata({ params: { locale } }: ProductsPageProps): Metadata {
+    return seoMeta(locale, '/products');
 }
 
 const CATEGORIES = ['bearings', 'hubs', 'agro', 'kit', 'custom'] as const;

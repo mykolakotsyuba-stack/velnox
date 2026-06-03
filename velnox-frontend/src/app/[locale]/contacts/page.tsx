@@ -1,7 +1,18 @@
+import type { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import { ContactForm } from '@/features/contacts/ContactForm/ContactForm';
 import { Phone, Mail } from 'lucide-react';
+import { seoMeta } from '@/shared/lib/seo';
+import type { Locale } from '@/entities/product/model/types';
 import styles from './Contacts.module.css';
+
+interface Props {
+    params: { locale: Locale };
+}
+
+export function generateMetadata({ params: { locale } }: Props): Metadata {
+    return seoMeta(locale, '/contacts');
+}
 
 export default function ContactsPage() {
     const t = useTranslations('contacts');

@@ -1,11 +1,58 @@
 ---
 description: How to deploy and work with the Velnox project
 ---
+
+## ⚠️ TWO SERVERS — DEV and PROD (since 2026-06-02)
+
+There are now **two** servers. Read this before any deploy.
+
+| | DEV (test) | PROD (live) |
+|---|---|---|
+| Host | `ssh user@mail.irbis.ua` (`12345678`) | `ssh admin-site@velnox.eu` (`velnox-admin`) |
+| URL | `http://mx.irbis.ua/velnox/` (sub-path) | `https://velnox.eu` (domain root) |
+| Run mode | native systemd (`/srv/projects/velnox`) | **Docker** (`/home/admin-site/velnox`), isolated from other projects |
+| DB | SQLite (live, seeded) | SQLite (copy of dev), bind-mount `data/database.sqlite` |
+| Proxy | shared nginx, sub-path | host nginx → containers `127.0.0.1:8505/8506`, TLS |
+
+**Golden rule: edit → deploy & TEST on DEV → only then ship to PROD.** Never deploy
+untested code straight to prod. DEV is never reconfigured for prod.
+
+**Deploy commands:**
+```bash
+# DEV (existing expect scripts — unchanged):
+expect deploy_frontend_auto.exp      # or clean_deploy_frontend.exp
+expect deploy_api_auto.exp
+# PROD (after dev is verified):
+export PROD_SSH_PASS='velnox-admin'
+./deploy_prod.sh      # backup -> rsync code -> docker compose BUILD -> up -> smoke test
+./backup_prod.sh      # DB + storage snapshot anytime
+```
+
+**PROD-specific gotchas (full details: Claude memory `prod-velnox-eu.md`):**
+- `next.config.mjs` switches via build-env `DEPLOY_TARGET=prod`: prod = root domain,
+  dev = `/velnox` sub-path. The frontend Dockerfile sets it. Default = dev.
+- Keep using the `/velnox/` prefix on ALL asset paths (rule #9). On prod, host nginx
+  `location ^~ /velnox/` strips it and re-routes — code/DB stay identical to dev.
+- SSR data fetch reads env **`INTERNAL_API_URL=http://velnox-api/api/v1`** (set in
+  `deploy/docker-compose.yml`). Missing it → 500 on category/product pages.
+- `public/` is **baked into the Docker image** (`COPY public`). New/changed images
+  need `docker compose build` (which `deploy_prod.sh` does) — a bare `restart` won't
+  pick them up.
+- Media cache = `max-age` WITHOUT `immutable` (a bad response can't stick for a year);
+  `_next/static` stays immutable (content-hashed).
+- The bind-mounted `data/database.sqlite` is chowned to www-data by the api container
+  → edit it on the host with `sudo`. Always `./backup_prod.sh` before DB edits.
+- Prod artifacts in repo: `deploy/docker-compose.yml`, `deploy/velnox.eu.nginx.conf`,
+  `velnox-{frontend,api}/Dockerfile`, `velnox-api/docker/start.sh`, `deploy_prod.sh`,
+  `backup_prod.sh`. See `DEPLOYMENT_GUIDE.md` → "PROD — velnox.eu".
+
+---
+
 # Always follow these rules for Velnox:
 1. **Never run or install** Node.js, PHP, or Composer locally. 
 2. The local machine is ONLY for code editing and syncing.
 3. Always refer to `/Users/localmac/Desktop/Велнокс/DEPLOYMENT_GUIDE.md` for architecture and deployment info.
-4. Testing is done by deploying the code to the external server (`mx.irbis.ua`).
+4. Testing is done by deploying to **DEV** (`mx.irbis.ua`) first; promote to **PROD** (`velnox.eu`) only after dev verification (see the two-servers table above).
 5. **DATABASE BACKUP**: BEFORE every commit, you MUST create a backup of the SQLite database.
    - Command: `cp velnox-api/database/database.sqlite velnox-api/database/backups/$(date +%Y%m%d_%H%M%S)_database.sqlite`
 6. **DUAL COMMIT & PUSH**: Every change MUST be committed locally AND pushed to GitHub (`origin main`).
@@ -26,3 +73,4 @@ description: How to deploy and work with the Velnox project
 18. **⛔ DEPLOY DOES NOT RUN `npm install`** (added 2026-05-29): `deploy_frontend_auto.exp` only runs `npm run build` on the server — no install/ci. Adding a package to package.json is NOT enough; the server won't have it and the build fails with "Cannot find module". To add a dependency: add to package.json AND install it on the server separately (or temporarily add `npm install` to the deploy script). Build only happens on the server (no local node), so such errors only surface after deploy.
 19. **RENDER-BLOCKING CSS = MOBILE LCP CEILING** (added 2026-05-29): Lighthouse mobile flags render-blocking CSS (~310ms) as the main remaining LCP lever — the filmstrip is blank until CSS loads. Image preload + smaller images squeeze the rest but CSS is the ceiling. The only in-framework fix is `experimental.optimizeCss: true` (inlines critical CSS), but it requires the `critters` package which isn't installed (see #18 → build fails). Do it deliberately: critters in package.json → install on server → enable flag → verify build. Expected: ~-300ms mobile LCP/FCP.
 20. **METADATA/`<title>` ON EVERY ROUTE, LOCALIZED** (added 2026-05-29): Root layout (`src/app/[locale]/layout.tsx`) sets no title → pages without their own metadata trigger Lighthouse "no `<title>`" (hurts SEO/a11y). Project pattern (about/news/products): `const meta: Record<locale,{title,description}>` + `export async function generateMetadata` selecting by locale. Every new page must add localized title/description (uk/en/pl) + OG. Home fixed 2026-05-29 → SEO 82→100.
+21. **SEO: CANONICAL + ALTERNATES + ROBOTS** (added 2026-06-03): Every page MUST use `seoMeta(locale, pathname)` from `src/shared/lib/seo.ts` in its `generateMetadata`. This utility generates: `<link rel="canonical">` → `https://velnox.eu/{locale}{path}`, hreflang alternates for en/uk/pl, `og:url`, and `robots: noindex` when `DEPLOY_TARGET !== 'prod'`. Canonical always points to `velnox.eu` (prod domain) regardless of where the page is served. The Dockerfile runner stage MUST have `ENV DEPLOY_TARGET=prod` — without it, dynamic (ƒ) pages get `noindex` at runtime even though SSG pages built correctly. Dev is closed from indexing by design.

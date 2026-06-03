@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@/entities/product/model/types';
+import { seoMeta } from '@/shared/lib/seo';
 import { HomePage } from './home/HomePage';
 
 const locales: Locale[] = ['en', 'pl', 'uk'];
@@ -29,7 +30,8 @@ export async function generateMetadata({ params: { locale } }: { params: { local
     return {
         title: m.title,
         description: m.description,
-        openGraph: { title: m.title, description: m.description, type: 'website' },
+        ...seoMeta(locale, ''),
+        openGraph: { title: m.title, description: m.description, type: 'website', ...seoMeta(locale, '').openGraph },
         twitter: { card: 'summary_large_image', title: m.title, description: m.description },
     };
 }

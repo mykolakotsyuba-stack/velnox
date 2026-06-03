@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { fetchProducts } from '@/entities/product/api/productApi';
 import Link from 'next/link';
 import { BearingsCategoryPage } from '@/features/products/BearingsCategoryPage/BearingsCategoryPage';
@@ -5,9 +6,14 @@ import { HubsCategoryPage } from '@/features/products/HubsCategoryPage/HubsCateg
 import { AgroCategoryPage } from '@/features/products/AgroCategoryPage/AgroCategoryPage';
 import { KitCategoryPage } from '@/features/products/KitCategoryPage/KitCategoryPage';
 import type { Locale } from '@/entities/product/model/types';
+import { seoMeta } from '@/shared/lib/seo';
 
 interface CategoryPageProps {
     params: { locale: Locale; category: string };
+}
+
+export function generateMetadata({ params: { locale, category } }: CategoryPageProps): Metadata {
+    return seoMeta(locale, `/products/${category}`);
 }
 
 export function generateStaticParams() {

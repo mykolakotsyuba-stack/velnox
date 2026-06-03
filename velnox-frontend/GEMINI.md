@@ -1,16 +1,21 @@
 # Velnox Frontend — Rules for AI Assistants
 
-## Deploy
+## Deploy — TWO servers (test on DEV, then PROD)
 
-**ALWAYS use the expect script. NEVER run npm/node manually.**
+**NEVER run npm/node/docker locally.** Edit → deploy & test on **DEV** → only then **PROD**.
 
 ```bash
 cd /Users/localmac/Desktop/Велнокс
-expect deploy_frontend_auto.exp
+# DEV (test) — http://mx.irbis.ua/velnox/  (sub-path, native)
+expect deploy_frontend_auto.exp        # or clean_deploy_frontend.exp
+# PROD (live) — https://velnox.eu       (root domain, Docker) — after DEV is verified
+export PROD_SSH_PASS='velnox-admin' && ./deploy_prod.sh
 ```
 
-Do not run `npm run build`, `npm run start`, or any npm commands directly.  
-Do not cd outside of `/Users/localmac/Desktop/Велнокс/` when deploying.
+- `prod` = domain root via build-env `DEPLOY_TARGET=prod` (frontend Dockerfile); `dev` = `/velnox` sub-path. Keep the `/velnox/` prefix on assets — prod nginx strips it.
+- `public/`/images are **baked into the Docker image** → `deploy_prod.sh` rebuilds (a bare `restart` won't pick up new images).
+- Do not run `npm run build/start` or `docker` locally; do not cd outside `/Users/localmac/Desktop/Велнокс/`.
+- Full rules: `../.agents/workflows/00_server_rules.md` and `../DEPLOYMENT_GUIDE.md` (→ "PROD — velnox.eu").
 
 ---
 

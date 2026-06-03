@@ -3,6 +3,7 @@ import { ProductTemplate } from '@/features/products/ProductTemplate/ProductTemp
 import { notFound } from 'next/navigation';
 import type { Locale } from '@/entities/product/model/types';
 import type { Metadata } from 'next';
+import { seoMeta } from '@/shared/lib/seo';
 
 interface ProductPageProps {
     params: { locale: Locale; category: string; slug: string };
@@ -17,16 +18,16 @@ export async function generateMetadata({ params: { locale, category, slug } }: P
 
         const firstImage = product.images.find(i => i.type === 'gallery')?.path;
 
+        const seo = seoMeta(locale, `/products/${category}/${slug}`);
         return {
             title,
             description,
-            alternates: {
-                canonical: `/products/${category}/${slug}`,
-            },
+            ...seo,
             openGraph: {
                 title,
                 description,
                 type: 'website',
+                ...seo.openGraph,
                 ...(firstImage && { images: [{ url: firstImage, width: 800, height: 800, alt: product.article }] }),
             },
             twitter: {
