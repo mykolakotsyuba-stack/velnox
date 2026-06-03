@@ -357,6 +357,7 @@
     "contacts": "Contacts"
   },
   "categories": {
+    "heading": "Products",
     "bearings": "Bearing Units",
     "hubs": "Agricultural Hub Units",
     "agro": "Special Agro Bearings",

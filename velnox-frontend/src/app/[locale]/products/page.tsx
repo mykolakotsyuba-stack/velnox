@@ -35,7 +35,7 @@ export default function ProductsPage({ params: { locale } }: ProductsPageProps) 
 
     return (
         <main>
-            <h1>Products</h1>
+            <h1>{t('heading')}</h1>
             <div>
                 {CATEGORIES.map((slug) => (
                     <Link key={slug} href={`/${locale}/products/${slug}`}>
