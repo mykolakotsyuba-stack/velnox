@@ -142,8 +142,8 @@ export function CtaBlock({ product, locale, onModalOpen, onModalClose }: CtaBloc
                             {t('btn_contact')}
                         </button>
                         <a
-                            href="/velnox/files/velnox-presentation.pdf"
-                            download="VELNOX_Presentation.pdf"
+                            href={`/velnox/files/velnox-catalog-${locale}.pdf`}
+                            download="VELNOX_Catalog.pdf"
                             className={styles.btnOutline}
                         >
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">

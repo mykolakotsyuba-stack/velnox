@@ -274,7 +274,7 @@ export function HomePage({ locale }: { locale: string }) {
                     </div>
 
                     <div className={`${styles.qualityCta} ${qualityRef.inView ? styles.fadeUp : ''}`} style={{ transitionDelay: '0.5s' }}>
-                        <a href={`/${locale}/presentation.pdf`} className={styles.pdfBtn}>
+                        <a href={`/velnox/files/velnox-catalog-${locale}.pdf`} download className={styles.pdfBtn}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" width="18">
                                 <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
                                 <path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3" strokeLinecap="round" strokeLinejoin="round" />

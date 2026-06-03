@@ -835,7 +835,7 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                             </svg>
                             {t('agroPage.block3.btn_contact')}
                         </button>
-                        <a href="/velnox/presentation.pdf" download className={styles.btnSecondary}>
+                        <a href={`/velnox/files/velnox-catalog-${locale}.pdf`} download className={styles.btnSecondary}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
                             </svg>
