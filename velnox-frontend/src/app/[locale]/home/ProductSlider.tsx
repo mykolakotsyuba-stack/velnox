@@ -140,7 +140,7 @@ export function ProductSlider({ locale }: { locale: string }) {
                         {slide.tag}
                     </span>
 
-                    <h2 className={styles.slideTitle}>{slide.title}</h2>
+                    <h1 className={styles.slideTitle}>{slide.title}</h1>
                     <p className={styles.slideBody}>{slide.body}</p>
 
                     {slide.spec && (
