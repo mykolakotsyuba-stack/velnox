@@ -12,8 +12,32 @@ interface CategoryPageProps {
     params: { locale: Locale; category: string };
 }
 
+const categoryMeta: Record<string, Record<string, { title: string; description: string }>> = {
+    bearings: {
+        en: { title: 'Bearing Units | VELNOX — BUQ, BUCR, BUP Series', description: 'VELNOX bearing units: BUQ, BUCR, BUP series for agricultural machinery, OEM equipment and industrial applications. Full specs and cross-references.' },
+        uk: { title: 'Підшипникові вузли | VELNOX — Серії BUQ, BUCR, BUP', description: 'Підшипникові вузли VELNOX: серії BUQ, BUCR, BUP для сільськогосподарської техніки, OEM-обладнання та промислових застосувань.' },
+        pl: { title: 'Węzły łożyskowe | VELNOX — Serie BUQ, BUCR, BUP', description: 'Węzły łożyskowe VELNOX: serie BUQ, BUCR, BUP do maszyn rolniczych, urządzeń OEM i zastosowań przemysłowych.' },
+    },
+    hubs: {
+        en: { title: 'Hub Assemblies | VELNOX — Disc Harrows, Seeders, Cutting Nodes', description: 'VELNOX hub assemblies for disc harrows, seeders and cutting nodes. Compatible with HORSCH, Bednar, Köckerling, Väderstad.' },
+        uk: { title: 'Ступичні вузли | VELNOX — Дискові борони, сівалки, ріжучі вузли', description: 'Ступичні вузли VELNOX для дискових борін, сівалок та ріжучих вузлів. Сумісні з HORSCH, Bednar, Köckerling, Väderstad.' },
+        pl: { title: 'Węzły piast | VELNOX — Brony talerzowe, siewniki, węzły tnące', description: 'Węzły piast VELNOX do bron talerzowych, siewników i węzłów tnących. Kompatybilne z HORSCH, Bednar, Köckerling, Väderstad.' },
+    },
+    agro: {
+        en: { title: 'Agricultural Bearings | VELNOX — Seeder & Harrow Bearings', description: 'VELNOX agricultural bearings for seeders, harrows and farming equipment. Deep groove, disc hub units, and specialty bearings.' },
+        uk: { title: 'Агропідшипники | VELNOX — Підшипники для сівалок і борін', description: 'Агропідшипники VELNOX для сівалок, борін та сільськогосподарської техніки. Кулькові, ступичні вузли, спеціалізовані підшипники.' },
+        pl: { title: 'Łożyska rolnicze | VELNOX — Łożyska do siewników i bron', description: 'Łożyska rolnicze VELNOX do siewników, bron i sprzętu rolniczego. Kulkowe, węzły piast, łożyska specjalistyczne.' },
+    },
+    kit: {
+        en: { title: 'Seeder Kit Bearings | VELNOX — Precision Bearings for Seeders', description: 'VELNOX seeder kit bearings: precision bearings for planter units, coulter assemblies, and seeding equipment.' },
+        uk: { title: 'Підшипники для посівних комплексів | VELNOX', description: 'Підшипники VELNOX для посівних комплексів: точні підшипники для висівних апаратів, сошникових вузлів та посівної техніки.' },
+        pl: { title: 'Łożyska do siewników | VELNOX — Precyzyjne łożyska', description: 'Łożyska VELNOX do siewników: precyzyjne łożyska do zespołów siewnych, redlic i sprzętu siewnego.' },
+    },
+};
+
 export function generateMetadata({ params: { locale, category } }: CategoryPageProps): Metadata {
-    return seoMeta(locale, `/products/${category}`);
+    const m = categoryMeta[category]?.[locale] ?? categoryMeta[category]?.en ?? { title: `${category} | VELNOX`, description: '' };
+    return { title: m.title, description: m.description, ...seoMeta(locale, `/products/${category}`) };
 }
 
 export function generateStaticParams() {

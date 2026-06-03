@@ -8,8 +8,24 @@ interface ProductsPageProps {
     params: { locale: Locale };
 }
 
+const meta: Record<string, { title: string; description: string }> = {
+    en: {
+        title: 'Products | VELNOX — Bearings, Hubs, Agro & Kit',
+        description: 'VELNOX product catalog: bearing units, hub assemblies, agricultural bearings, seeder kit bearings, and custom OEM solutions.',
+    },
+    uk: {
+        title: 'Продукція | VELNOX — Підшипники, ступиці, агро та кіт',
+        description: 'Каталог продукції VELNOX: підшипникові вузли, ступичні вузли, агропідшипники, підшипники для посівних комплексів та кастомні OEM-рішення.',
+    },
+    pl: {
+        title: 'Produkty | VELNOX — Łożyska, piasty, agro i kit',
+        description: 'Katalog produktów VELNOX: węzły łożyskowe, węzły piast, łożyska rolnicze, łożyska do siewników i niestandardowe rozwiązania OEM.',
+    },
+};
+
 export function generateMetadata({ params: { locale } }: ProductsPageProps): Metadata {
-    return seoMeta(locale, '/products');
+    const m = meta[locale] ?? meta.en;
+    return { title: m.title, description: m.description, ...seoMeta(locale, '/products') };
 }
 
 const CATEGORIES = ['bearings', 'hubs', 'agro', 'kit', 'custom'] as const;

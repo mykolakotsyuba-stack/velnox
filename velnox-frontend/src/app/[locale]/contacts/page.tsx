@@ -10,8 +10,24 @@ interface Props {
     params: { locale: Locale };
 }
 
+const meta: Record<string, { title: string; description: string }> = {
+    en: {
+        title: 'Contacts | VELNOX — Engineering Bearings & OEM Assemblies',
+        description: 'Contact VELNOX engineering team for bearings, hub assemblies, and custom OEM solutions. Phone, email, and inquiry form.',
+    },
+    uk: {
+        title: 'Контакти | VELNOX — Інженерні підшипники та OEM-вузли',
+        description: 'Зв\'яжіться з інженерною командою VELNOX: підшипники, ступичні вузли, кастомні OEM-рішення. Телефон, email, форма запиту.',
+    },
+    pl: {
+        title: 'Kontakt | VELNOX — Łożyska inżynierskie i węzły OEM',
+        description: 'Skontaktuj się z zespołem inżynierów VELNOX: łożyska, węzły piast, niestandardowe rozwiązania OEM. Telefon, email, formularz.',
+    },
+};
+
 export function generateMetadata({ params: { locale } }: Props): Metadata {
-    return seoMeta(locale, '/contacts');
+    const m = meta[locale] ?? meta.en;
+    return { title: m.title, description: m.description, ...seoMeta(locale, '/contacts') };
 }
 
 export default function ContactsPage() {
