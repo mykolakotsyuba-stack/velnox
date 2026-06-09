@@ -919,12 +919,10 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        // gallery тепер на рівні product (entity_type='product') — вставляється нижче, в циклі $t4Products
         foreach ([
-            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2.webp',          'sort_order' => 1],
-            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-drawing-1.webp', 'sort_order' => 2],
-            ['type' => 'gallery',    'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-drawing-2.webp', 'sort_order' => 3],
-            ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-schema.webp',   'sort_order' => 0],
-            ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t4/schema.svg',                           'sort_order' => 0],
+            ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-schema.webp', 'sort_order' => 0],
+            ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t4/schema.svg',                         'sort_order' => 0],
         ] as $asset) {
             DB::table('product_assets')->updateOrInsert(
                 ['entity_type' => 'product_table', 'entity_id' => $t4, 'type' => $asset['type'], 'path' => $asset['path']],
@@ -1037,6 +1035,26 @@ class DatabaseSeeder extends Seeder
                     ['entity_type' => 'product', 'entity_id' => $productId, 'type' => 'model_3d'],
                     ['path' => '/velnox/models/BUCR-SG-309-S2.glb', 'sort_order' => 0]
                 );
+                // gallery (entity_type='product'): нові фото спочатку, потім старе фото + креслення
+                foreach ([
+                    ['path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-photo-1.webp',  'sort_order' => 0],
+                    ['path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-photo-2.webp',  'sort_order' => 1],
+                    ['path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-photo-3.webp',  'sort_order' => 2],
+                    ['path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-photo-4.webp',  'sort_order' => 3],
+                    ['path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2.webp',           'sort_order' => 4],
+                    ['path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-drawing-1.webp', 'sort_order' => 5],
+                    ['path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-drawing-2.webp', 'sort_order' => 6],
+                ] as $img) {
+                    $exists = DB::table('product_assets')
+                        ->where('entity_type', 'product')->where('entity_id', $productId)
+                        ->where('type', 'gallery')->where('path', $img['path'])->exists();
+                    if (!$exists) {
+                        DB::table('product_assets')->insert([
+                            'entity_type' => 'product', 'entity_id' => $productId,
+                            'type' => 'gallery', 'path' => $img['path'], 'sort_order' => $img['sort_order'],
+                        ]);
+                    }
+                }
             }
         }
 
@@ -1435,33 +1453,17 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        // product_assets for hubs-t2 (schema_png, schema_svg, gallery)
+        // product_assets for hubs-t2 (schema_png, schema_svg тільки — gallery тепер на рівні product)
         $ht2AssetBase    = '/velnox/images/products/hubs-t2';
         $ht2ArticleSlug  = 'baa-0004-vx';
         foreach ([
             ['type' => 'schema_png', 'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}-schema.webp", 'sort_order' => 0],
             ['type' => 'schema_svg', 'path' => "{$ht2AssetBase}/schema.svg",                            'sort_order' => 0],
-            ['type' => 'gallery',    'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}.webp",          'sort_order' => 1],
-            ['type' => 'gallery',    'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}-drawing-1.webp",'sort_order' => 2],
-            ['type' => 'gallery',    'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}-drawing-2.webp",'sort_order' => 3],
-            ['type' => 'gallery',    'path' => "{$ht2AssetBase}/velnox-{$ht2ArticleSlug}-drawing-3.webp",'sort_order' => 4],
         ] as $asset) {
-            if ($asset['type'] === 'gallery') {
-                $exists = DB::table('product_assets')
-                    ->where('entity_type', 'product_table')->where('entity_id', $ht2)
-                    ->where('type', 'gallery')->where('path', $asset['path'])->exists();
-                if (!$exists) {
-                    DB::table('product_assets')->insert([
-                        'entity_type' => 'product_table', 'entity_id' => $ht2,
-                        'type' => $asset['type'], 'path' => $asset['path'], 'sort_order' => $asset['sort_order'],
-                    ]);
-                }
-            } else {
-                DB::table('product_assets')->updateOrInsert(
-                    ['entity_type' => 'product_table', 'entity_id' => $ht2, 'type' => $asset['type']],
-                    ['path' => $asset['path'], 'sort_order' => $asset['sort_order']]
-                );
-            }
+            DB::table('product_assets')->updateOrInsert(
+                ['entity_type' => 'product_table', 'entity_id' => $ht2, 'type' => $asset['type']],
+                ['path' => $asset['path'], 'sort_order' => $asset['sort_order']]
+            );
         }
 
         // =========================================================
@@ -1646,6 +1648,31 @@ class DatabaseSeeder extends Seeder
                 ['entity_type' => 'product', 'entity_id' => $productId, 'type' => 'model_3d'],
                 ['path' => '/velnox/models/baa-0004-vx.glb', 'sort_order' => 0]
             );
+
+            // gallery (entity_type='product'): нові фото спочатку, потім старе фото + креслення
+            foreach ([
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-photo-1.webp',  'sort_order' => 0],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-photo-2.webp',  'sort_order' => 1],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-photo-3.webp',  'sort_order' => 2],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-photo-4.webp',  'sort_order' => 3],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-photo-5.webp',  'sort_order' => 4],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-photo-6.webp',  'sort_order' => 5],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-photo-7.webp',  'sort_order' => 6],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx.webp',           'sort_order' => 7],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-drawing-1.webp', 'sort_order' => 8],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-drawing-2.webp', 'sort_order' => 9],
+                ['path' => '/velnox/images/products/hubs-t2/velnox-baa-0004-vx-drawing-3.webp', 'sort_order' => 10],
+            ] as $img) {
+                $exists = DB::table('product_assets')
+                    ->where('entity_type', 'product')->where('entity_id', $productId)
+                    ->where('type', 'gallery')->where('path', $img['path'])->exists();
+                if (!$exists) {
+                    DB::table('product_assets')->insert([
+                        'entity_type' => 'product', 'entity_id' => $productId,
+                        'type' => 'gallery', 'path' => $img['path'], 'sort_order' => $img['sort_order'],
+                    ]);
+                }
+            }
 
             foreach (['uk', 'en', 'pl'] as $locale) {
                 DB::table('translations')->updateOrInsert(
@@ -2440,13 +2467,18 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // gallery
+        // gallery (entity_type='product'): нові фото 0-4, старе фото + креслення 5-9
         foreach ([
-            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx.webp',          'sort_order' => 0],
-            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-1.webp', 'sort_order' => 1],
-            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-2.webp', 'sort_order' => 2],
-            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-3.webp', 'sort_order' => 3],
-            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-4.webp', 'sort_order' => 4],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-photo-1.webp',  'sort_order' => 0],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-photo-2.webp',  'sort_order' => 1],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-photo-3.webp',  'sort_order' => 2],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-photo-4.webp',  'sort_order' => 3],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-photo-5.webp',  'sort_order' => 4],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx.webp',           'sort_order' => 5],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-1.webp', 'sort_order' => 6],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-2.webp', 'sort_order' => 7],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-3.webp', 'sort_order' => 8],
+            ['path' => '/velnox/images/products/agro-t4/velnox-aa30941-vx-drawing-4.webp', 'sort_order' => 9],
         ] as $asset) {
             $exists = DB::table('product_assets')
                 ->where('entity_type', 'product')->where('entity_id', $pt4)
@@ -3251,14 +3283,20 @@ class DatabaseSeeder extends Seeder
             DB::table('product_cross_refs')->insert(['product_id' => $pk7, 'value' => $ref['value'], 'brand' => $ref['brand'], 'type' => $ref['type']]);
         }
 
+        // gallery (entity_type='product'): нові фото 0-4, старе фото + креслення 5-8
         foreach ([
-            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx.webp',           'sort_order' => 0],
-            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-drawing-1.webp', 'sort_order' => 1],
-            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-drawing-2.webp', 'sort_order' => 2],
-            ['type' => 'gallery', 'path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-drawing-3.webp', 'sort_order' => 3],
+            ['path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-photo-1.webp',  'sort_order' => 0],
+            ['path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-photo-2.webp',  'sort_order' => 1],
+            ['path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-photo-3.webp',  'sort_order' => 2],
+            ['path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-photo-4.webp',  'sort_order' => 3],
+            ['path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-photo-5.webp',  'sort_order' => 4],
+            ['path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx.webp',           'sort_order' => 5],
+            ['path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-drawing-1.webp', 'sort_order' => 6],
+            ['path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-drawing-2.webp', 'sort_order' => 7],
+            ['path' => '/velnox/images/products/kit-t7/velnox-aa59196-vx-drawing-3.webp', 'sort_order' => 8],
         ] as $asset) {
             DB::table('product_assets')->updateOrInsert(
-                ['entity_type' => 'product', 'entity_id' => $pk7, 'type' => $asset['type'], 'path' => $asset['path']],
+                ['entity_type' => 'product', 'entity_id' => $pk7, 'type' => 'gallery', 'path' => $asset['path']],
                 ['sort_order' => $asset['sort_order']]
             );
         }
