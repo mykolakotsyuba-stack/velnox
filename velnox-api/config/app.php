@@ -15,6 +15,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    // Shared password for the closed leads admin table (/admin). Set in .env.
+    'leads_admin_password' => env('LEADS_ADMIN_PASSWORD', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
