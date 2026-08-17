@@ -184,6 +184,25 @@
     font-weight: 600;
 }
 
+.contactInput {
+    width: 100%;
+    padding: 13px 16px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    color: #111;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.contactInput:focus {
+    border-color: var(--color-accent, #00953E);
+    background: color-mix(in srgb, var(--color-accent, #00953E) 3%, white);
+}
+
 .contactArea {
     width: 100%;
     padding: 14px 16px;

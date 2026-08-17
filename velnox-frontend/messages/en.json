@@ -277,6 +277,19 @@
       "sent_title": "Request sent!",
       "sent_desc": "Your request has been successfully sent to distributor {name}. They will contact you shortly.",
       "close": "Close"
+    },
+    "partners": {
+      "tag": "Partner Network",
+      "title": "Authorized Distributors",
+      "order_btn": "Order here",
+      "d1_name": "TECH SOLUTIONS Sp. z o.o.",
+      "d1_country": "Poland",
+      "d2_name": "LLC «TTK»",
+      "d2_country": "Ukraine",
+      "d3_name": "LLC «Promkomponent»",
+      "d3_country": "Ukraine",
+      "d4_name": "LLC «TD IRBIS»",
+      "d4_country": "Ukraine"
     }
   },
   "about": {
@@ -374,17 +387,17 @@
         "title": "Engineering Department & OEM Projects",
         "desc": "Unit calculation, working with specifications and drawings.",
         "phone": "+48426403050",
-        "email": "engineering@velnox.com"
+        "email": "engineering@velnox.eu"
       },
       "block2": {
         "title": "Distribution & Wholesale Sales",
         "desc": "Partnership conditions, price lists, availability.",
         "phone": "+48426403050",
-        "email": "sales@velnox.com"
+        "email": "sales@velnox.eu"
       },
       "block3": {
         "title": "General Inquiries",
-        "email": "info@velnox.com"
+        "email": "info@velnox.eu"
       }
     },
     "form": {
@@ -403,7 +416,8 @@
       "file_label": "ATTACH FILE",
       "file_desc": "Download drawing, specification or photo (PDF, Excel, JPG, DWG)",
       "submit": "SEND FOR CALCULATION",
-      "success": "Request sent successfully. We will contact you shortly."
+      "success": "Request sent successfully. We will contact you shortly.",
+      "error": "Sending failed. Please try again."
     },
     "socials": {
       "instagram": "",
@@ -495,6 +509,10 @@
       "type_batch": "Batch Order",
       "type_custom": "Custom Solution",
       "placeholder": "Your name, phone, email or any message",
+      "ph_name": "Your name *",
+      "ph_phone": "Phone *",
+      "ph_email": "Email (optional)",
+      "ph_message": "Message (optional)",
       "sending": "Sending...",
       "submit": "Send Request",
       "error_send": "Error sending. Please try again.",
@@ -507,7 +525,10 @@
       "save": "Save PDF",
       "save_file": "Save file",
       "open_tab": "Open PDF in new tab",
-      "generate": "Generate PDF"
+      "generate": "Generate PDF",
+      "generating": "Generating...",
+      "prepare": "Prepare PDF",
+      "error": "Error generating PDF. Please try again."
     },
     "blueprint_specs": "Specifications",
     "sort_filter": "Sort / Filter",

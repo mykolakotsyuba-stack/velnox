@@ -162,10 +162,52 @@ export function CustomForm({ locale }: { locale: string }) {
         setFiles(prev => prev.filter((_, i) => i !== index));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setStatus('submitting');
-        setTimeout(() => setStatus('success'), 1200);
+        setError('');
+
+        const fd = new FormData(e.currentTarget);
+        const contact = [
+            fd.get('name'), fd.get('email'), fd.get('phone'),
+            fd.get('company') ? `Компанія: ${fd.get('company')}` : '',
+        ].filter(Boolean).join(' / ');
+
+        const products = selectedProducts.map(p => p.article).join(', ');
+        const specs = ['d', 'D', 'BC', 'J', 'GHT', 'L', 'c_dyn', 'co', 'rpm']
+            .map(k => { const v = fd.get(k); return v ? `${k}: ${v}` : ''; })
+            .filter(Boolean).join('; ');
+
+        const extra = [
+            fd.get('environment') ? `Середовище: ${fd.get('environment')}` : '',
+            fd.get('resource') ? `Ресурс: ${fd.get('resource')}` : '',
+            fd.get('additional_info') ? `Додатково: ${fd.get('additional_info')}` : '',
+        ].filter(Boolean).join('\n');
+
+        const fullContact = [
+            contact,
+            products ? `Базові продукти: ${products}` : '',
+            specs ? `Параметри: ${specs}` : '',
+            extra,
+        ].filter(Boolean).join('\n');
+
+        // multipart so the attached drawings/files are actually sent (JSON drops them)
+        const payload = new FormData();
+        payload.append('contact', fullContact);
+        payload.append('type', 'oem');
+        files.forEach((f) => payload.append('files[]', f));
+
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/v1/leads/engineer`,
+                { method: 'POST', headers: { Accept: 'application/json' }, body: payload }
+            );
+            const data = await res.json();
+            if (data.success) { setStatus('success'); }
+            else { setError('Помилка відправки'); setStatus('idle'); }
+        } catch { setError('Помилка з\'єднання'); setStatus('idle'); }
     };
 
     const findMatchedOem = (product: Product, query: string): string | null => {
@@ -229,21 +271,21 @@ export function CustomForm({ locale }: { locale: string }) {
                             <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('company')} *</span>
-                                    <input required type="text" className={styles.input} />
+                                    <input required type="text" name="company" className={styles.input} />
                                 </div>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('name')} *</span>
-                                    <input required type="text" className={styles.input} />
+                                    <input required type="text" name="name" className={styles.input} />
                                 </div>
                             </div>
                             <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('email')} *</span>
-                                    <input required type="email" className={styles.input} />
+                                    <input required type="email" name="email" className={styles.input} />
                                 </div>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('phone')}</span>
-                                    <input type="tel" className={styles.input} />
+                                    <input type="tel" name="phone" className={styles.input} />
                                 </div>
                             </div>
                         </div>
@@ -380,47 +422,47 @@ export function CustomForm({ locale }: { locale: string }) {
                             <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('d')}</span>
-                                    <input type="text" className={styles.input} />
+                                    <input type="text" name="d" className={styles.input} />
                                 </div>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('D')}</span>
-                                    <input type="text" className={styles.input} />
+                                    <input type="text" name="D" className={styles.input} />
                                 </div>
                             </div>
                             <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('BC')}</span>
-                                    <input type="text" className={styles.input} />
+                                    <input type="text" name="BC" className={styles.input} />
                                 </div>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('J')}</span>
-                                    <input type="text" className={styles.input} />
+                                    <input type="text" name="J" className={styles.input} />
                                 </div>
                             </div>
                             <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('GHT')}</span>
-                                    <input type="text" className={styles.input} />
+                                    <input type="text" name="GHT" className={styles.input} />
                                 </div>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('L')}</span>
-                                    <input type="text" className={styles.input} />
+                                    <input type="text" name="L" className={styles.input} />
                                 </div>
                             </div>
                             <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('c_dyn')}</span>
-                                    <input type="text" className={styles.input} />
+                                    <input type="text" name="c_dyn" className={styles.input} />
                                 </div>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('co')}</span>
-                                    <input type="text" className={styles.input} />
+                                    <input type="text" name="co" className={styles.input} />
                                 </div>
                             </div>
                             <div className={styles.inputRow}>
                                 <div className={styles.inputField}>
                                     <span className={styles.label}>{t('rpm')}</span>
-                                    <input type="text" className={styles.input} />
+                                    <input type="text" name="rpm" className={styles.input} />
                                 </div>
                             </div>
                         </div>
@@ -468,18 +510,19 @@ export function CustomForm({ locale }: { locale: string }) {
 
                             <div className={styles.inputField} style={{ marginBottom: '24px' }}>
                                 <span className={styles.label}>{t('environment')}</span>
-                                <input type="text" className={styles.input} />
+                                <input type="text" name="environment" className={styles.input} />
                             </div>
                             <div className={styles.inputField} style={{ marginBottom: '24px' }}>
                                 <span className={styles.label}>{t('resource')}</span>
-                                <input type="text" className={styles.input} />
+                                <input type="text" name="resource" className={styles.input} />
                             </div>
                             <div className={styles.inputField}>
                                 <span className={styles.label}>{t('additional_info')}</span>
-                                <textarea className={`${styles.input} ${styles.textarea}`}></textarea>
+                                <textarea name="additional_info" className={`${styles.input} ${styles.textarea}`}></textarea>
                             </div>
                         </div>
 
+                        {error && <p style={{ color: '#ef4444', fontSize: '0.85rem', margin: '0 0 12px' }}>{error}</p>}
                         <button type="submit" className={styles.submitBtn} disabled={status === 'submitting'}>
                             {status === 'submitting' ? '...' : t('submit')}
                         </button>

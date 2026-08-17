@@ -277,6 +277,19 @@
       "sent_title": "Zapytanie wysłane!",
       "sent_desc": "Twoje zapytanie zostało wysłane do dystrybutora {name}. Skontaktują się z Tobą wkrótce.",
       "close": "Zamknij"
+    },
+    "partners": {
+      "tag": "Sieć partnerów",
+      "title": "Autoryzowani dystrybutorzy",
+      "order_btn": "Zamów tutaj",
+      "d1_name": "TECH SOLUTIONS Sp. z o.o.",
+      "d1_country": "Polska",
+      "d2_name": "LLC «TTK»",
+      "d2_country": "Ukraina",
+      "d3_name": "LLC «Promkomponent»",
+      "d3_country": "Ukraina",
+      "d4_name": "LLC «TD IRBIS»",
+      "d4_country": "Ukraina"
     }
   },
   "about": {
@@ -438,6 +451,10 @@
       "type_batch": "Zamówienie partii",
       "type_custom": "Rozwiązanie niestandardowe",
       "placeholder": "Imię, telefon, email lub wiadomość",
+      "ph_name": "Imię i nazwisko *",
+      "ph_phone": "Telefon *",
+      "ph_email": "Email (opcjonalnie)",
+      "ph_message": "Wiadomość (opcjonalnie)",
       "sending": "Wysyłamy...",
       "submit": "Wyślij zapytanie",
       "error_send": "Błąd wysyłania. Spróbuj ponownie.",
@@ -450,7 +467,10 @@
       "save": "Zapisz PDF",
       "save_file": "Zapisz plik",
       "open_tab": "Otwórz PDF w nowej karcie",
-      "generate": "Generuj PDF"
+      "generate": "Generuj PDF",
+      "generating": "Generowanie...",
+      "prepare": "Przygotuj PDF",
+      "error": "Błąd generowania PDF. Spróbuj ponownie."
     },
     "blueprint_specs": "Specyfikacje",
     "sort_filter": "Sortuj / Filtruj",
@@ -949,17 +969,17 @@
         "title": "Dział techniczny i projekty OEM",
         "desc": "Obliczenia węzłów, praca ze specyfikacjami i rysunkami.",
         "phone": "+48426403050",
-        "email": "engineering@velnox.com"
+        "email": "engineering@velnox.eu"
       },
       "block2": {
         "title": "Dystrybucja i sprzedaż hurtowa",
         "desc": "Warunki współpracy, cenniki, dostępność.",
         "phone": "+48426403050",
-        "email": "sales@velnox.com"
+        "email": "sales@velnox.eu"
       },
       "block3": {
         "title": "Zapytania ogólne",
-        "email": "info@velnox.com"
+        "email": "info@velnox.eu"
       }
     },
     "socials": {
@@ -984,7 +1004,8 @@
       "file_label": "ZAŁĄCZ PLIK",
       "file_desc": "Pobierz rysunek, specyfikację lub zdjęcie (PDF, Excel, JPG, DWG)",
       "submit": "WYŚLIJ DO OBLICZEŃ",
-      "success": "Zapytanie wysłane. Skontaktujemy się wkrótce."
+      "success": "Zapytanie wysłane. Skontaktujemy się wkrótce.",
+      "error": "Błąd wysyłania. Spróbuj ponownie."
     }
   },
   "crosses": {

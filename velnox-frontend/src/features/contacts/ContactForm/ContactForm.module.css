@@ -166,6 +166,66 @@
     color: var(--color-text-secondary);
 }
 
+.selectedFiles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.selectedFile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid rgba(0, 149, 62, 0.4);
+    background: rgba(0, 149, 62, 0.06);
+    border-radius: 10px;
+    animation: fadeIn 0.25s ease-out;
+}
+
+.selectedFileIcon {
+    color: #00953E;
+    flex-shrink: 0;
+}
+
+.selectedFileName {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+
+.selectedFileSize {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.removeFile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.removeFile:hover {
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
