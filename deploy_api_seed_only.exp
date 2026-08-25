@@ -1,0 +1,37 @@
+#!/usr/bin/expect -f
+# DEV: rsync API + re-run the seeder WITHOUT migrate:fresh.
+# Use this when only seeder data changed (assets, translations, specs).
+# deploy_api_migrate_seed.exp wipes the DB (migrate:fresh) — that also destroys
+# the `leads` table with real form submissions. This script does not.
+set timeout -1
+set password "12345678"
+
+# 1. Rsync the API files (never touch the server's SQLite DB — RULE 7)
+spawn rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --exclude vendor --exclude .env --exclude .git --exclude "database/*.sqlite" --exclude "storage/*.sqlite" velnox-api/ user@mail.irbis.ua:/srv/projects/velnox/api/
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
+
+# 2. SSH and seed + restart
+spawn ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null user@mail.irbis.ua
+expect {
+    "password:" {
+        send "$password\r"
+    }
+}
+
+expect "$ "
+send "cd /srv/projects/velnox/api\r"
+expect "$ "
+send "php artisan db:seed --class=DatabaseSeeder --force\r"
+expect "$ "
+send "echo \"12345678\" | sudo -S systemctl restart velnox-api\r"
+expect "$ "
+send "systemctl status velnox-api --no-pager\r"
+expect "$ "
+send "exit\r"
+expect eof
