@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     nginx \
+    msmtp \
+    msmtp-mta \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions (SQLite-based stack)
@@ -30,6 +32,12 @@ COPY . /var/www
 
 # Copy Nginx config
 COPY docker/nginx.conf /etc/nginx/sites-available/default
+
+# Configure msmtp as sendmail replacement (relay to host Postfix via Docker gateway)
+RUN printf 'defaults\ntls off\nlogfile /var/log/msmtp.log\n\naccount default\nhost 172.18.0.1\nport 25\nfrom info@velnox.eu\nauto_from off\n' > /etc/msmtprc \
+    && chmod 644 /etc/msmtprc \
+    && touch /var/log/msmtp.log && chmod 666 /var/log/msmtp.log \
+    && echo 'sendmail_path = "/usr/bin/msmtp -t"' > /usr/local/etc/php/conf.d/sendmail.ini
 
 # Provide permissions
 RUN chown -R www-data:www-data /var/www \

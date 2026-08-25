@@ -7,6 +7,16 @@ if [ ! -f /var/www/database/database.sqlite ]; then
 fi
 chown -R www-data:www-data /var/www/database /var/www/storage 2>/dev/null || true
 
+# Ensure mail config exists (sendmail via msmtp → host Postfix)
+if ! grep -q '^MAIL_MAILER=' /var/www/.env 2>/dev/null; then
+    cat >> /var/www/.env <<'MAILEOF'
+
+MAIL_MAILER=sendmail
+MAIL_FROM_ADDRESS=info@velnox.eu
+MAIL_FROM_NAME="VELNOX Engineering"
+MAILEOF
+fi
+
 # Clear any stale caches, then rebuild for prod
 php artisan config:clear || true
 php artisan config:cache
