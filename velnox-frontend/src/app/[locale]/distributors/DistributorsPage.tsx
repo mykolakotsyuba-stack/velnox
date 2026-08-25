@@ -43,11 +43,30 @@ function useCountUp(target: number, duration = 1800, active = false) {
 function LeadModal({ onClose }: { onClose: () => void }) {
     const t = useTranslations('distributors');
     const [sent, setSent] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [form, setForm] = useState({ company: '', name: '', phone: '', email: '', country: '', message: '' });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setSent(true);
+        setLoading(true);
+        setError('');
+        const contact = [
+            form.name, form.phone, form.email,
+            form.company ? `Компанія: ${form.company}` : '',
+            form.country ? `Країна: ${form.country}` : '',
+            form.message ? `Повідомлення: ${form.message}` : '',
+        ].filter(Boolean).join(' / ');
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/v1/leads/engineer`,
+                { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                  body: JSON.stringify({ contact, type: 'distributor' }) }
+            );
+            const data = await res.json();
+            if (data.success) { setSent(true); } else { setError('Помилка відправки'); }
+        } catch { setError('Помилка з\'єднання'); }
+        finally { setLoading(false); }
     };
 
     return (
@@ -94,11 +113,14 @@ function LeadModal({ onClose }: { onClose: () => void }) {
                                 value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
                             <textarea className={styles.formField4} rows={4} placeholder={t('form.message_ph')}
                                 value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
-                            <button type="submit" className={styles.formSubmit}>
-                                {t('form.submit')}
-                                <svg viewBox="0 0 16 16" fill="none" width="14">
-                                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
+                            {error && <p style={{ color: '#ef4444', fontSize: '0.85rem', margin: '0 0 8px' }}>{error}</p>}
+                            <button type="submit" className={styles.formSubmit} disabled={loading}>
+                                {loading ? '...' : t('form.submit')}
+                                {!loading && (
+                                    <svg viewBox="0 0 16 16" fill="none" width="14">
+                                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                )}
                             </button>
                         </form>
                     </>
@@ -126,10 +148,10 @@ export function DistributorsPage() {
     }, [showModal]);
 
     const DISTRIBUTORS = [
-        { name: 'TECH SOLUTIONS Sp. z o.o.', country: 'Польща', logo: 'https://nte-bearings.com/wp-content/uploads/2025/02/techsolutions-europe-logo-1462363501.png', flag: '🇵🇱', isAuthorized: true },
-        { name: 'ТОВ «ТТК»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/ttk-logo-smaller.png', flag: '🇺🇦', isAuthorized: false },
-        { name: 'ТОВ «Промкомпонент»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/04/promcomponent-logo-small.png', flag: '🇺🇦', isAuthorized: false },
-        { name: 'ТОВ «ТД ІРБІС»', country: 'Україна', logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/logo-irbis-new-3.png', flag: '🇺🇦', isAuthorized: false },
+        { nameKey: 'd1_name' as const, countryKey: 'd1_country' as const, logo: 'https://nte-bearings.com/wp-content/uploads/2025/02/techsolutions-europe-logo-1462363501.png', flag: '🇵🇱', isAuthorized: true },
+        { nameKey: 'd2_name' as const, countryKey: 'd2_country' as const, logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/ttk-logo-smaller.png', flag: '🇺🇦', isAuthorized: false },
+        { nameKey: 'd3_name' as const, countryKey: 'd3_country' as const, logo: 'https://nte-bearings.com/wp-content/uploads/2025/04/promcomponent-logo-small.png', flag: '🇺🇦', isAuthorized: false },
+        { nameKey: 'd4_name' as const, countryKey: 'd4_country' as const, logo: 'https://nte-bearings.com/wp-content/uploads/2025/11/logo-irbis-new-3.png', flag: '🇺🇦', isAuthorized: false },
     ];
 
     return (
@@ -199,7 +221,7 @@ export function DistributorsPage() {
                     <div className={styles.distributorGrid}>
                         {DISTRIBUTORS.map((d, i) => (
                             <div
-                                key={d.name}
+                                key={d.nameKey}
                                 className={`${styles.distCard} ${gridRef.inView ? styles.distCardIn : ''} ${d.isAuthorized ? styles.distCardAuth : ''}`}
                                 style={{ transitionDelay: `${i * 0.12}s` }}
                             >
@@ -208,12 +230,12 @@ export function DistributorsPage() {
 
                                 <div className={styles.cardLogoWrap}>
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img src={d.logo} alt={d.name} className={styles.cardLogo} />
+                                    <img src={d.logo} alt={t(`partners.${d.nameKey}`)} className={styles.cardLogo} />
                                 </div>
                                 <div className={styles.cardMeta}>
                                     <span className={styles.cardFlag}>{d.flag}</span>
-                                    <span className={styles.cardName}>{d.name}</span>
-                                    <span className={styles.cardCountry}>{d.country}</span>
+                                    <span className={styles.cardName}>{t(`partners.${d.nameKey}`)}</span>
+                                    <span className={styles.cardCountry}>{t(`partners.${d.countryKey}`)}</span>
                                 </div>
                                 <div className={styles.cardBadge}>
                                     <svg viewBox="0 0 16 16" width="12" fill="none" stroke="currentColor" strokeWidth="1.5">

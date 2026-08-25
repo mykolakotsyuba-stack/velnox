@@ -98,7 +98,7 @@ export const PdfLayout = forwardRef<HTMLDivElement, PdfLayoutProps>(({ product, 
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
                                 src={schemaSrc}
-                                alt={`Технічне креслення ${product.article}`}
+                                alt={`${t('pdf_drawing_title')} ${product.article}`}
                                 className={styles.drawing}
                                 crossOrigin="anonymous"
                             />

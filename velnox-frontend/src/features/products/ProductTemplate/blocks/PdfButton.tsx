@@ -91,7 +91,7 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
 
         } catch (error) {
             console.error("Error generating PDF:", error);
-            alert("Помилка при генерації PDF. Будь ласка, спробуйте ще раз.");
+            alert(t('pdf.error'));
         } finally {
             setIsGenerating(false);
             setShowLayout(false);
@@ -107,7 +107,7 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
                         href={pdfUrl}
                         download={filename}
                         className={`${styles.pdfButton} ${styles.ready}`}
-                        title="Зберегти файл"
+                        title={t('pdf.save_file')}
                         onClick={() => {
                             setTimeout(() => setPdfUrl(null), 3000);
                         }}
@@ -117,14 +117,14 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
                             <polyline points="7 10 12 15 17 10" />
                             <line x1="12" y1="15" x2="12" y2="3" />
                         </svg>
-                        <span className={styles.buttonText}>Зберегти PDF</span>
+                        <span className={styles.buttonText}>{t('pdf.save')}</span>
                     </a>
                     <a
                         href={pdfUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`${styles.pdfButton} ${styles.ready}`}
-                        title="Відкрити PDF у новій вкладці"
+                        title={t('pdf.open_tab')}
                         style={{ padding: '9px 14px' }}
                     >
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -139,8 +139,8 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
                     className={`${styles.pdfButton} ${isGenerating ? styles.loading : ''}`}
                     onClick={handleGenerate}
                     disabled={isGenerating}
-                    aria-label="Згенерувати PDF"
-                    title="Згенерувати PDF"
+                    aria-label={t('pdf.generate')}
+                    title={t('pdf.generate')}
                 >
                     {isGenerating ? (
                         <div className={styles.spinner}></div>
@@ -163,7 +163,7 @@ export function PdfButton({ product, locale }: PdfButtonProps) {
                         </svg>
                     )}
                     <span className={styles.buttonText}>
-                        {isGenerating ? 'Генерація...' : 'Підготовка PDF'}
+                        {isGenerating ? t('pdf.generating') : t('pdf.prepare')}
                     </span>
                 </button>
             )}

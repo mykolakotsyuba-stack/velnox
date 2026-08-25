@@ -52,11 +52,33 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
     const t = useTranslations('distributors');
     const tc = useTranslations('crosses');
     const [sent, setSent] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [form, setForm] = useState({
         company: '', name: '', phone: '', email: '', country: '',
         message: defaultDesignation ? `${tc('request_for')}${defaultDesignation}` : ''
     });
-    const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSent(true); };
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        const contact = [
+            form.name, form.phone, form.email,
+            form.company ? `Компанія: ${form.company}` : '',
+            form.country ? `Країна: ${form.country}` : '',
+            form.message ? `Повідомлення: ${form.message}` : '',
+        ].filter(Boolean).join(' / ');
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/v1/leads/engineer`,
+                { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                  body: JSON.stringify({ contact, type: 'batch' }) }
+            );
+            const data = await res.json();
+            if (data.success) { setSent(true); } else { setError('Помилка відправки'); }
+        } catch { setError('Помилка з\'єднання'); }
+        finally { setLoading(false); }
+    };
     return (
         <div className={styles.modalBackdrop} onClick={onClose}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
@@ -96,8 +118,11 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
                                 value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
                             <textarea className={styles.formField4} rows={4} placeholder={t('form.message_ph')}
                                 value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
+                            {error && <p style={{ color: '#ef4444', fontSize: '0.85rem', margin: '0 0 8px' }}>{error}</p>}
                             <div className={styles.modalBottom}>
-                                <button type="submit" className={styles.formSubmit}>{t('form.submit')}</button>
+                                <button type="submit" className={styles.formSubmit} disabled={loading}>
+                                    {loading ? '...' : t('form.submit')}
+                                </button>
                             </div>
                         </form>
                     </>
