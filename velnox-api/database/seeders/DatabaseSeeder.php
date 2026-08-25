@@ -919,7 +919,12 @@ class DatabaseSeeder extends Seeder
             );
         }
 
-        // gallery тепер на рівні product (entity_type='product') — вставляється нижче, в циклі $t4Products
+        // gallery тепер на рівні product (entity_type='product') — вставляється нижче, в циклі $t4Products.
+        // Старі рядки рівня product_table треба прибрати, інакше головне фото і креслення
+        // дублюються в галереї (лишились у БД після b30529c).
+        DB::table('product_assets')
+            ->where('entity_type', 'product_table')->where('entity_id', $t4)
+            ->where('type', 'gallery')->delete();
         foreach ([
             ['type' => 'schema_png', 'path' => '/velnox/images/products/bearings-t4/velnox-bucr-sg-309-s2-schema.webp', 'sort_order' => 0],
             ['type' => 'schema_svg', 'path' => '/velnox/images/products/bearings-t4/schema.svg',                         'sort_order' => 0],
@@ -1461,6 +1466,11 @@ class DatabaseSeeder extends Seeder
         ];
 
         // product_assets for hubs-t2 (schema_png, schema_svg тільки — gallery тепер на рівні product)
+        // Прибрати старі gallery-рядки рівня product_table — інакше головне фото і креслення
+        // дублюються в галереї (лишились у БД після b30529c).
+        DB::table('product_assets')
+            ->where('entity_type', 'product_table')->where('entity_id', $ht2)
+            ->where('type', 'gallery')->delete();
         $ht2AssetBase    = '/velnox/images/products/hubs-t2';
         $ht2ArticleSlug  = 'baa-0004-vx';
         foreach ([
