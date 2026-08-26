@@ -148,10 +148,10 @@ class DatabaseSeeder extends Seeder
 
         // Hub spec translations
         $hubSpecTrans = [
-            'hub_J_mm'        => ['uk' => 'Діаметр ділильного кола J (мм)',     'en' => 'Pitch circle diameter J (mm)',  'pl' => 'Średnica koła podziałowego J (mm)'],
+            'hub_J_mm'        => ['uk' => 'Відстань між отворами J (мм)',       'en' => 'Bolt hole spacing J (mm)',      'pl' => 'Rozstaw otworów J (mm)'],
             'hub_D_mm'        => ['uk' => 'Зовнішній діаметр D (мм)',           'en' => 'Outside diameter D (mm)',       'pl' => 'Średnica zewnętrzna D (mm)'],
             'hub_D1_mm'       => ['uk' => 'Зовнішній діаметр D1 (мм)',          'en' => 'Outside diameter D1 (mm)',      'pl' => 'Średnica zewnętrzna D1 (mm)'],
-            'hub_d_mm'        => ['uk' => 'Діаметр отвору d (мм)',              'en' => 'Bore diameter d (mm)',          'pl' => 'Średnica otworu d (mm)'],
+            'hub_d_mm'        => ['uk' => 'Діаметр вала d (мм)',                'en' => 'Shaft diameter d (mm)',         'pl' => 'Średnica wału d (mm)'],
             'hub_C_mm'        => ['uk' => 'Відстань C (мм)',                    'en' => 'Distance C (mm)',               'pl' => 'Odległość C (mm)'],
             'hub_hole_thread' => ['uk' => 'Отвір / Різьба H/T',                 'en' => 'Hole / Thread H/T',             'pl' => 'Otwór / Gwint H/T'],
             'hub_G'           => ['uk' => 'Різьба G',                          'en' => 'Thread G',                      'pl' => 'Gwint G'],

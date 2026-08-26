@@ -49,13 +49,13 @@
 }
 
 /* ─── Header cells ─── */
+/* без uppercase: у підписах є символи розмірів — d і D, L і L1 — великі літери їх зрівнюють */
 .techTable th {
     background: color-mix(in srgb, var(--color-text) 5%, var(--color-bg));
     padding: 12px 8px;
     font-size: 11px;
     font-weight: 700;
     color: var(--color-text-muted);
-    text-transform: uppercase;
     letter-spacing: 0.02em;
     border-bottom: 2px solid var(--color-border);
     white-space: normal;
@@ -367,10 +367,10 @@
         background: color-mix(in srgb, var(--color-accent) 5%, transparent);
     }
 
+    /* без uppercase: у підписах є символи розмірів — d і D, L і L1 — великі літери їх зрівнюють */
     .techTable td::before {
         content: attr(data-label);
         font-weight: 700;
-        text-transform: uppercase;
         font-size: 11px;
         color: var(--color-text-muted);
         text-align: left;

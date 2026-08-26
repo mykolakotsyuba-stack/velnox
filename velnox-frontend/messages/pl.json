@@ -426,7 +426,7 @@
     "hole_diameter_h_mm": "H (mm) — Średnica otworu",
     "outside_diameter_d_mm": "D (mm) — Średnica zewnętrzna",
     "pitch_circle_diameter_j_mm": "J (mm) — Średnica podziałowa otworów",
-    "j_mm": "Średnica podziałowa J (mm)",
+    "j_mm": "Rozstaw otworów J (mm)",
     "D_mm": "Średnica zewnętrzna D (mm)",
     "D1_mm": "Zewnętrzna średnica wału D1 (mm)",
     "C_mm": "Odległość między otworami C (mm)",

@@ -481,7 +481,7 @@
     "hole_diameter_h_mm": "H (mm) — Hole diameter",
     "outside_diameter_d_mm": "D (mm) — Outside diameter",
     "pitch_circle_diameter_j_mm": "J (mm) — Pitch circle diameter",
-    "j_mm": "Pitch Circle Diameter J (mm)",
+    "j_mm": "Bolt hole spacing J (mm)",
     "D_mm": "Outside Diameter D (mm)",
     "D1_mm": "Shaft Outside Diameter D1 (mm)",
     "C_mm": "Distance Between Holes C (mm)",

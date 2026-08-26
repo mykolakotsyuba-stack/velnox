@@ -64,14 +64,18 @@ function DimensionOverlay({ specs, hoveredSpec, dimLabels, viewBox }: {
                 const val = specs[dim.key];
                 const pt = dim.point;
                 const strVal = val != null ? String(val) : '';
-                const boxW = Math.max(620, strVal.length * 150 + 260);
+                // ширину рахуємо від FS (він масштабований) — фіксовані user-units робили
+                // плашку в рази ширшою за текст на таблицях з малим viewBox
+                const padX = Math.round(FS * 0.75);
+                const textW = Math.round(strVal.length * FS * 0.62);
+                const boxW = Math.max(Math.round(BOX_H * 1.5), textW + padX * 2);
 
                 return (
                     <g key={`${dim.key}-${i}`} style={{ pointerEvents: 'none' }}>
                         <circle cx={pt.x} cy={pt.y} r={R} fill="rgba(0,149,62,0.18)" stroke="#00953E" strokeWidth={SW} />
                         {val != null && (
                             <g transform={`translate(${pt.x},${pt.y + BOX_OFFSET})`}>
-                                <rect x={-boxW / 2} y={-BOX_H / 2} width={boxW} height={BOX_H} rx={60} fill="#00953E" strokeWidth={0} />
+                                <rect x={-boxW / 2} y={-BOX_H / 2} width={boxW} height={BOX_H} rx={BOX_H / 2} fill="#00953E" strokeWidth={0} />
                                 <text x={0} y={0} fontSize={FS} fill="#ffffff" fontWeight="700" textAnchor="middle" dominantBaseline="middle" letterSpacing="2">
                                     {strVal}
                                 </text>
