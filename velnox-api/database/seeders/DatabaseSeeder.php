@@ -71,6 +71,18 @@ class DatabaseSeeder extends Seeder
             // agro-t3 (DHU S-series)
             ['key' => 'a_mm',            'svg_label' => null,   'sort_order' => 40],
             ['key' => 'M_mm',            'svg_label' => 'M',    'sort_order' => 41],
+            // kit — не були зареєстровані, через це API віддавав сиру назву ключа
+            ['key' => 'alpha_deg',       'svg_label' => 'α',    'sort_order' => 42],
+            ['key' => 'E_mm',            'svg_label' => 'E',    'sort_order' => 43],
+            // раніше реєструвались окремим блоком нижче по файлу — зведено сюди
+            ['key' => 'J1_mm',           'svg_label' => 'J1',   'sort_order' => 44],
+            ['key' => 'J2_mm',           'svg_label' => 'J2',   'sort_order' => 45],
+            ['key' => 'A3_mm',           'svg_label' => 'A3',   'sort_order' => 46],
+            ['key' => 'T_size',          'svg_label' => null,   'sort_order' => 47],
+            ['key' => 'H_mm',            'svg_label' => 'H',    'sort_order' => 48],
+            // розділені ключі: та сама буква, інший зміст у конкретних таблицях
+            ['key' => 'flange_A1_mm',    'svg_label' => 'A1',   'sort_order' => 49],
+            ['key' => 'shaft_d_mm',      'svg_label' => 'd',    'sort_order' => 50],
         ];
 
         foreach ($specs as $spec) {
@@ -104,34 +116,60 @@ class DatabaseSeeder extends Seeder
         // 4. TRANSLATIONS — spec_definitions (label + unit)
         // =========================================================
         $specTranslations = [
-            'd_mm'    => ['uk' => ['label' => 'Діаметр отвору d (мм)',                            'unit' => 'мм'],  'en' => ['label' => 'Bore diameter d (mm)',                          'unit' => 'mm'],  'pl' => ['label' => 'Średnica otworu d (mm)',                        'unit' => 'mm']],
-            'd_inch'  => ['uk' => ['label' => 'Діаметр отвору d (дюйм)',                          'unit' => 'дюйм'],'en' => ['label' => 'Bore diameter d (inch)',                        'unit' => 'in'],  'pl' => ['label' => 'Średnica otworu d (cal)',                       'unit' => 'cal']],
-            'A1_mm'   => ['uk' => ['label' => 'Загальна ширина корпусу A1 (мм)',                   'unit' => 'мм'],  'en' => ['label' => 'Overall housing width A1 (mm)',                 'unit' => 'mm'],  'pl' => ['label' => 'Całkowita szerokość obudowy A1 (mm)',           'unit' => 'mm']],
-            'A2_mm'   => ['uk' => ['label' => 'Товщина фланця корпусу A2 (мм)',                   'unit' => 'мм'],  'en' => ['label' => 'Housing flange thickness A2 (mm)',               'unit' => 'mm'],  'pl' => ['label' => 'Grubość kołnierza obudowy A2 (mm)',             'unit' => 'mm']],
-            'J_mm'    => ['uk' => ['label' => 'Відстань між отворами J (мм)',                     'unit' => 'мм'],  'en' => ['label' => 'Bolt hole spacing J (mm)',                       'unit' => 'mm'],  'pl' => ['label' => 'Rozstaw otworów J (mm)',                        'unit' => 'mm']],
-            'L_mm'    => ['uk' => ['label' => 'Загальна довжина L (мм)',                          'unit' => 'мм'],  'en' => ['label' => 'Overall length L (mm)',                          'unit' => 'mm'],  'pl' => ['label' => 'Długość całkowita L (mm)',                      'unit' => 'mm']],
-            'N_mm'    => ['uk' => ['label' => 'Діаметр отвору N (мм)',                            'unit' => 'мм'],  'en' => ['label' => 'Bolt hole diameter N (mm)',                      'unit' => 'mm'],  'pl' => ['label' => 'Średnica otworu N (mm)',                        'unit' => 'mm']],
-            'A_mm'    => ['uk' => ['label' => 'Загальна ширина A (мм)',                           'unit' => 'мм'],  'en' => ['label' => 'Overall width A (mm)',                           'unit' => 'mm'],  'pl' => ['label' => 'Szerokość całkowita A (mm)',                    'unit' => 'mm']],
-            'mass_kg' => ['uk' => ['label' => 'Маса',                                             'unit' => 'кг'],  'en' => ['label' => 'Mass',                                          'unit' => 'kg'],  'pl' => ['label' => 'Masa',                                         'unit' => 'kg']],
-            'cdyn_kn' => ['uk' => ['label' => 'Динамічна вантажо-підйомність Cdyn (кН)',          'unit' => 'кН'],  'en' => ['label' => 'Dynamic load rating Cdyn (kN)',                 'unit' => 'kN'],  'pl' => ['label' => 'Nośność dynamiczna Cdyn (kN)',                  'unit' => 'kN']],
-            'co_kn'   => ['uk' => ['label' => 'Статична вантажо-підйомність Co (кН)',             'unit' => 'кН'],  'en' => ['label' => 'Static load rating Co (kN)',                    'unit' => 'kN'],  'pl' => ['label' => 'Nośność statyczna Co (kN)',                     'unit' => 'kN']],
-            'pu_kn'   => ['uk' => ['label' => 'Гранична навантаженість втомної міцності Pu (кН)', 'unit' => 'кН'],  'en' => ['label' => 'Fatigue load limit Pu (kN)',                    'unit' => 'kN'],  'pl' => ['label' => 'Graniczne obciążenie zmęczeniowe Pu (kN)',      'unit' => 'kN']],
-            'B_mm'    => ['uk' => ['label' => 'Ширина внутрішнього кільця B (мм)',                'unit' => 'мм'],  'en' => ['label' => 'Inner ring width B (mm)',                        'unit' => 'mm'],  'pl' => ['label' => 'Szerokość pierścienia wewnętrznego B (mm)',     'unit' => 'mm']],
-            'D_mm'    => ['uk' => ['label' => 'D (мм) — зовн. діаметр корпусу',                  'unit' => 'мм'],  'en' => ['label' => 'D (mm) — housing outside diameter',             'unit' => 'mm'],  'pl' => ['label' => 'D (mm) — zewn. śr. obudowy',                   'unit' => 'mm']],
-            'H_T'     => ['uk' => ['label' => 'Отвір / Різьба H/T',                              'unit' => ''],    'en' => ['label' => 'Hole / Thread H/T',                             'unit' => ''],    'pl' => ['label' => 'Otwór / Gwint H/T',                            'unit' => '']],
-            'L1_mm'   => ['uk' => ['label' => 'L1 (мм) — довжина секції 1',      'unit' => 'мм'],  'en' => ['label' => 'L1 (mm) — section 1 length',        'unit' => 'mm'],  'pl' => ['label' => 'L1 (mm) — długość sekcji 1',       'unit' => 'mm']],
-            'L2_mm'   => ['uk' => ['label' => 'L2 (мм) — довжина секції 2',      'unit' => 'мм'],  'en' => ['label' => 'L2 (mm) — section 2 length',        'unit' => 'mm'],  'pl' => ['label' => 'L2 (mm) — długość sekcji 2',       'unit' => 'mm']],
-            'd1_mm'   => ['uk' => ['label' => 'Зовнішній діаметр внутрішнього кільця d1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Inner ring outside diameter d1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Zewnętrzna śr. pierścienia wewnętrznego d1 (mm)', 'unit' => 'mm']],
-            'r_12_mm' => ['uk' => ['label' => 'Розмір фаски r 1,2 (мм)',                       'unit' => 'мм'], 'en' => ['label' => 'Chamfer dimension r 1,2 (mm)',         'unit' => 'mm'], 'pl' => ['label' => 'Wymiar fazowania r 1,2 (mm)',                     'unit' => 'mm']],
-            // agro-t2 (DHU series)
-            'C_mm'    => ['uk' => ['label' => 'Ширина зовнішнього кільця C (мм)',                                       'unit' => 'мм'], 'en' => ['label' => 'Outer ring width C (mm)',                                         'unit' => 'mm'], 'pl' => ['label' => 'Szerokość pierścienia zewnętrznego C (mm)',                   'unit' => 'mm']],
-            'Da_mm'   => ['uk' => ['label' => 'Діаметр центрування Da (мм)',                                            'unit' => 'мм'], 'en' => ['label' => 'Centering diameter Da (mm)',                                      'unit' => 'mm'], 'pl' => ['label' => 'Średnica centrowania Da (mm)',                                'unit' => 'mm']],
-            'Fr_kn'   => ['uk' => ['label' => 'Радіальне навантаження Fr (кН)',                                         'unit' => 'кН'], 'en' => ['label' => 'Radial load Fr (kN)',                                             'unit' => 'kN'], 'pl' => ['label' => 'Obciążenie promieniowe Fr (kN)',                              'unit' => 'kN']],
-            'Fa_kn'   => ['uk' => ['label' => 'Осьове навантаження Fa (кН)',                                            'unit' => 'кН'], 'en' => ['label' => 'Axial load Fa (kN)',                                              'unit' => 'kN'], 'pl' => ['label' => 'Obciążenie osiowe Fa (kN)',                                   'unit' => 'kN']],
-            'A_fl_mm' => ['uk' => ['label' => 'Відстань від фланця корпусу до торця внутрішнього кільця A (мм)',        'unit' => 'мм'], 'en' => ['label' => 'Flange face to inner ring end face distance A (mm)',             'unit' => 'mm'], 'pl' => ['label' => 'Odległość od kołnierza obudowy do czoła pierścienia wewn. A (mm)', 'unit' => 'mm']],
-            // agro-t3 (DHU S-series)
-            'a_mm'    => ['uk' => ['label' => 'Розмір вала а (мм)',                   'unit' => 'мм'], 'en' => ['label' => 'Shaft dimension a (mm)',              'unit' => 'mm'], 'pl' => ['label' => 'Wymiar wału a (mm)',                   'unit' => 'mm']],
-            'M_mm'    => ['uk' => ['label' => 'Розмір прямокутного отвору M (мм)',    'unit' => 'мм'], 'en' => ['label' => 'Rectangular hole size M (mm)',        'unit' => 'mm'], 'pl' => ['label' => 'Wymiar prostokątnego otworu M (mm)',   'unit' => 'mm']],
+            // ЄДИНЕ джерело підписів характеристик. Не заводити другий словник нижче по файлу —
+            // раніше їх було три, і пізніший тихо перекривав ранній.
+            // en/pl — робоча версія, фінальні переклади окремим завданням.
+            // --- Базові — підшипники, агро, KIT ---
+            'd_mm'      => ['uk' => ['label' => 'Діаметр отвору d (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Bore diameter d (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica otworu d (mm)', 'unit' => 'mm']],
+            'shaft_d_mm' => ['uk' => ['label' => 'Діаметр вала d (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Shaft diameter d (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica wału d (mm)', 'unit' => 'mm']],
+            'd_inch'    => ['uk' => ['label' => 'Діаметр отвору d (дюйм)', 'unit' => 'дюйм'], 'en' => ['label' => 'Bore diameter d (inch)', 'unit' => 'in'], 'pl' => ['label' => 'Średnica otworu d (cal)', 'unit' => 'cal']],
+            'D_mm'      => ['uk' => ['label' => 'Зовнішній діаметр D (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Outside diameter D (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica zewnętrzna D (mm)', 'unit' => 'mm']],
+            'd1_mm'     => ['uk' => ['label' => 'Діаметр центрування d1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Centering diameter d1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica centrowania d1 (mm)', 'unit' => 'mm']],
+            'B_mm'      => ['uk' => ['label' => 'Ширина внутрішнього кільця B (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Inner ring width B (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Szerokość pierścienia wewnętrznego B (mm)', 'unit' => 'mm']],
+            'C_mm'      => ['uk' => ['label' => 'Ширина зовнішнього кільця C (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Outer ring width C (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Szerokość pierścienia zewnętrznego C (mm)', 'unit' => 'mm']],
+            'A_mm'      => ['uk' => ['label' => 'Загальна ширина A (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Overall width A (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Szerokość całkowita A (mm)', 'unit' => 'mm']],
+            'A1_mm'     => ['uk' => ['label' => 'Загальна ширина корпусу A1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Overall housing width A1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Całkowita szerokość obudowy A1 (mm)', 'unit' => 'mm']],
+            'flange_A1_mm' => ['uk' => ['label' => 'Товщина фланця A1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Flange thickness A1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Grubość kołnierza A1 (mm)', 'unit' => 'mm']],
+            'A2_mm'     => ['uk' => ['label' => 'Товщина фланця корпусу A2 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Housing flange thickness A2 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Grubość kołnierza obudowy A2 (mm)', 'unit' => 'mm']],
+            'A3_mm'     => ['uk' => ['label' => 'Висота діаметру центрування A3 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Centering diameter height A3 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Wysokość średnicy centrowania A3 (mm)', 'unit' => 'mm']],
+            'A_fl_mm'   => ['uk' => ['label' => 'Відстань від фланця корпусу до торця внутрішнього кільця A (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Flange face to inner ring end face distance A (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Odległość od kołnierza obudowy do czoła pierścienia wewn. A (mm)', 'unit' => 'mm']],
+            'J_mm'      => ['uk' => ['label' => 'Відстань між отворами J (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Bolt hole spacing J (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Rozstaw otworów J (mm)', 'unit' => 'mm']],
+            'J1_mm'     => ['uk' => ['label' => 'Відстань між отворами J1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Distance between holes J1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Rozstaw otworów J1 (mm)', 'unit' => 'mm']],
+            'J2_mm'     => ['uk' => ['label' => 'Відстань між отворами J2 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Distance between holes J2 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Rozstaw otworów J2 (mm)', 'unit' => 'mm']],
+            'L_mm'      => ['uk' => ['label' => 'Загальна довжина L (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Overall length L (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Długość całkowita L (mm)', 'unit' => 'mm']],
+            'L1_mm'     => ['uk' => ['label' => 'Загальна ширина корпусу L1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Housing overall width L1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Całkowita szerokość obudowy L1 (mm)', 'unit' => 'mm']],
+            'L2_mm'     => ['uk' => ['label' => 'Загальна ширина корпусу L2 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Housing overall width L2 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Całkowita szerokość obudowy L2 (mm)', 'unit' => 'mm']],
+            'N_mm'      => ['uk' => ['label' => 'Діаметр отвору N (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Bolt hole diameter N (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica otworu N (mm)', 'unit' => 'mm']],
+            'M_mm'      => ['uk' => ['label' => 'Розмір прямокутного отвору M (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Rectangular hole size M (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Wymiar prostokątnego otworu M (mm)', 'unit' => 'mm']],
+            'H_mm'      => ['uk' => ['label' => 'Отвір H (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Hole diameter H (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica otworu H (mm)', 'unit' => 'mm']],
+            'H_T'       => ['uk' => ['label' => 'Отвір / Різьба H/T', 'unit' => ''], 'en' => ['label' => 'Hole / Thread H/T', 'unit' => ''], 'pl' => ['label' => 'Otwór / Gwint H/T', 'unit' => '']],
+            'T_size'    => ['uk' => ['label' => 'Розмір різьби T', 'unit' => ''], 'en' => ['label' => 'Threaded hole size T', 'unit' => ''], 'pl' => ['label' => 'Rozmiar gwintu T', 'unit' => '']],
+            'Da_mm'     => ['uk' => ['label' => 'Діаметр центрування Da (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Centering diameter Da (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica centrowania Da (mm)', 'unit' => 'mm']],
+            'a_mm'      => ['uk' => ['label' => 'Розмір вала a (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Shaft dimension a (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Wymiar wału a (mm)', 'unit' => 'mm']],
+            'r_12_mm'   => ['uk' => ['label' => 'Розмір фаски r 1,2 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Chamfer dimension r 1,2 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Wymiar fazowania r 1,2 (mm)', 'unit' => 'mm']],
+            'alpha_deg' => ['uk' => ['label' => 'Кут контакту α (°)', 'unit' => '°'], 'en' => ['label' => 'Contact angle α (°)', 'unit' => '°'], 'pl' => ['label' => 'Kąt styku α (°)', 'unit' => '°']],
+            'E_mm'      => ['uk' => ['label' => 'Відстань від торця до канавки E (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Distance from face to groove E (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Odległość od czoła do rowka E (mm)', 'unit' => 'mm']],
+            'Fr_kn'     => ['uk' => ['label' => 'Радіальне навантаження Fr (кН)', 'unit' => 'кН'], 'en' => ['label' => 'Radial load Fr (kN)', 'unit' => 'kN'], 'pl' => ['label' => 'Obciążenie promieniowe Fr (kN)', 'unit' => 'kN']],
+            'Fa_kn'     => ['uk' => ['label' => 'Осьове навантаження Fa (кН)', 'unit' => 'кН'], 'en' => ['label' => 'Axial load Fa (kN)', 'unit' => 'kN'], 'pl' => ['label' => 'Obciążenie osiowe Fa (kN)', 'unit' => 'kN']],
+            'cdyn_kn'   => ['uk' => ['label' => 'Динамічна вантажопідйомність Cdyn (кН)', 'unit' => 'кН'], 'en' => ['label' => 'Dynamic load rating Cdyn (kN)', 'unit' => 'kN'], 'pl' => ['label' => 'Nośność dynamiczna Cdyn (kN)', 'unit' => 'kN']],
+            'co_kn'     => ['uk' => ['label' => 'Статична вантажопідйомність Co (кН)', 'unit' => 'кН'], 'en' => ['label' => 'Static load rating Co (kN)', 'unit' => 'kN'], 'pl' => ['label' => 'Nośność statyczna Co (kN)', 'unit' => 'kN']],
+            'pu_kn'     => ['uk' => ['label' => 'Границя витривалості Pu (кН)', 'unit' => 'кН'], 'en' => ['label' => 'Fatigue load limit Pu (kN)', 'unit' => 'kN'], 'pl' => ['label' => 'Graniczne obciążenie zmęczeniowe Pu (kN)', 'unit' => 'kN']],
+            'mass_kg'   => ['uk' => ['label' => 'Маса (кг)', 'unit' => 'кг'], 'en' => ['label' => 'Mass (kg)', 'unit' => 'kg'], 'pl' => ['label' => 'Masa (kg)', 'unit' => 'kg']],
+
+            // --- Ступичні вузли — власні ключі за правилом №8 (однакова буква, інший зміст) ---
+            'hub_d_mm'        => ['uk' => ['label' => 'Діаметр отвору d (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Bore diameter d (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica otworu d (mm)', 'unit' => 'mm']],
+            'hub_D_mm'        => ['uk' => ['label' => 'Зовнішній діаметр D (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Outside diameter D (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica zewnętrzna D (mm)', 'unit' => 'mm']],
+            'hub_D1_mm'       => ['uk' => ['label' => 'Зовнішній діаметр D1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Outside diameter D1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Średnica zewnętrzna D1 (mm)', 'unit' => 'mm']],
+            'hub_B_mm'        => ['uk' => ['label' => 'Ширина внутрішнього кільця B (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Inner ring width B (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Szerokość pierścienia wewnętrznego B (mm)', 'unit' => 'mm']],
+            'hub_C_mm'        => ['uk' => ['label' => 'Відстань C (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Distance C (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Odległość C (mm)', 'unit' => 'mm']],
+            'hub_E_mm'        => ['uk' => ['label' => 'Відстань E (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Distance E (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Odległość E (mm)', 'unit' => 'mm']],
+            'hub_F_mm'        => ['uk' => ['label' => 'Довжина різьбової частини F (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Thread length F (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Długość gwintowa F (mm)', 'unit' => 'mm']],
+            'hub_J_mm'        => ['uk' => ['label' => 'Відстань між отворами J (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Bolt hole spacing J (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Rozstaw otworów J (mm)', 'unit' => 'mm']],
+            'hub_L_mm'        => ['uk' => ['label' => 'Загальна довжина L (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Total length L (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Długość całkowita L (mm)', 'unit' => 'mm']],
+            'hub_L1_mm'       => ['uk' => ['label' => 'Глибина розточки L1 (мм)', 'unit' => 'мм'], 'en' => ['label' => 'Bore depth L1 (mm)', 'unit' => 'mm'], 'pl' => ['label' => 'Głębokość wytoczenia L1 (mm)', 'unit' => 'mm']],
+            'hub_G'           => ['uk' => ['label' => 'Внутрішня різьба G', 'unit' => ''], 'en' => ['label' => 'Internal thread G', 'unit' => ''], 'pl' => ['label' => 'Gwint wewnętrzny G', 'unit' => '']],
+            'hub_M_thread'    => ['uk' => ['label' => 'Різьба M', 'unit' => ''], 'en' => ['label' => 'Thread M', 'unit' => ''], 'pl' => ['label' => 'Gwint M', 'unit' => '']],
+            'hub_hole_thread' => ['uk' => ['label' => 'Отвір / Різьба H/T', 'unit' => ''], 'en' => ['label' => 'Hole / Thread H/T', 'unit' => ''], 'pl' => ['label' => 'Otwór / Gwint H/T', 'unit' => '']],
         ];
 
         foreach ($specTranslations as $key => $locales) {
@@ -147,31 +185,6 @@ class DatabaseSeeder extends Seeder
         }
 
         // Hub spec translations
-        $hubSpecTrans = [
-            'hub_J_mm'        => ['uk' => 'Відстань між отворами J (мм)',       'en' => 'Bolt hole spacing J (mm)',      'pl' => 'Rozstaw otworów J (mm)'],
-            'hub_D_mm'        => ['uk' => 'Зовнішній діаметр D (мм)',           'en' => 'Outside diameter D (mm)',       'pl' => 'Średnica zewnętrzna D (mm)'],
-            'hub_D1_mm'       => ['uk' => 'Зовнішній діаметр D1 (мм)',          'en' => 'Outside diameter D1 (mm)',      'pl' => 'Średnica zewnętrzna D1 (mm)'],
-            'hub_d_mm'        => ['uk' => 'Діаметр вала d (мм)',                'en' => 'Shaft diameter d (mm)',         'pl' => 'Średnica wału d (mm)'],
-            'hub_C_mm'        => ['uk' => 'Відстань C (мм)',                    'en' => 'Distance C (mm)',               'pl' => 'Odległość C (mm)'],
-            'hub_hole_thread' => ['uk' => 'Отвір / Різьба H/T',                 'en' => 'Hole / Thread H/T',             'pl' => 'Otwór / Gwint H/T'],
-            'hub_G'           => ['uk' => 'Різьба G',                          'en' => 'Thread G',                      'pl' => 'Gwint G'],
-            'hub_L_mm'        => ['uk' => 'Загальна довжина L (мм)',            'en' => 'Total length L (mm)',           'pl' => 'Długość całkowita L (mm)'],
-            'hub_L1_mm'       => ['uk' => 'Глибина розточки L1 (мм)',          'en' => 'Bore depth L1 (mm)',            'pl' => 'Głębokość wytoczenia L1 (mm)'],
-            'hub_F_mm'        => ['uk' => 'Довжина різьбової частини F (мм)',   'en' => 'Thread length F (mm)',          'pl' => 'Długość gwintowa F (mm)'],
-            'hub_M_thread'    => ['uk' => 'Різьба M',                          'en' => 'Thread M',                      'pl' => 'Gwint M'],
-            'hub_E_mm'        => ['uk' => 'Відстань E (мм)',                    'en' => 'Distance E (mm)',               'pl' => 'Odległość E (mm)'],
-            'hub_B_mm'        => ['uk' => 'Ширина B (мм)',                      'en' => 'Width B (mm)',                  'pl' => 'Szerokość B (mm)'],
-        ];
-        foreach ($hubSpecTrans as $key => $labels) {
-            $sid = $specId($key);
-            if (!$sid) continue;
-            foreach (['uk', 'en', 'pl'] as $locale) {
-                DB::table('translations')->updateOrInsert(
-                    ['entity_type' => 'spec_definitions', 'entity_id' => $sid, 'locale' => $locale, 'field' => 'label'],
-                    ['value' => $labels[$locale]]
-                );
-            }
-        }
 
         // =========================================================
         // 5. PRODUCT TABLE: bearings-t1
@@ -809,81 +822,6 @@ class DatabaseSeeder extends Seeder
         }
 
         // =========================================================
-        // 10. SPEC DEFINITIONS — new for bearings-t4
-        // =========================================================
-        $newSpecs = [
-            ['key' => 'd1_mm',  'svg_label' => 'd1', 'sort_order' => 33],
-            ['key' => 'J1_mm',  'svg_label' => 'J1', 'sort_order' => 34],
-            ['key' => 'J2_mm',  'svg_label' => 'J2', 'sort_order' => 35],
-            ['key' => 'A3_mm',  'svg_label' => 'A3', 'sort_order' => 36],
-            ['key' => 'T_size', 'svg_label' => null,  'sort_order' => 37],
-            ['key' => 'H_mm',   'svg_label' => 'H',  'sort_order' => 38],
-        ];
-        foreach ($newSpecs as $spec) {
-            DB::table('spec_definitions')->updateOrInsert(['key' => $spec['key']], $spec);
-        }
-
-        // =========================================================
-        // 11. SPEC TRANSLATIONS — new + update L1_mm / L2_mm
-        // =========================================================
-        $t4SpecTranslations = [
-            'd1_mm' => [
-                'uk' => ['label' => 'Діаметр центрування d1 (мм)',           'unit' => 'мм'],
-                'en' => ['label' => 'Centering diameter d1 (mm)',             'unit' => 'mm'],
-                'pl' => ['label' => 'Średnica centrowania d1 (mm)',           'unit' => 'mm'],
-            ],
-            'J1_mm' => [
-                'uk' => ['label' => 'Відстань між отворами J1 (мм)',          'unit' => 'мм'],
-                'en' => ['label' => 'Distance between holes J1 (mm)',         'unit' => 'mm'],
-                'pl' => ['label' => 'Rozstaw otworów J1 (mm)',                'unit' => 'mm'],
-            ],
-            'J2_mm' => [
-                'uk' => ['label' => 'Відстань між отворами J2 (мм)',          'unit' => 'мм'],
-                'en' => ['label' => 'Distance between holes J2 (mm)',         'unit' => 'mm'],
-                'pl' => ['label' => 'Rozstaw otworów J2 (mm)',                'unit' => 'mm'],
-            ],
-            'A3_mm' => [
-                'uk' => ['label' => 'Висота діаметру центрування A3 (мм)',    'unit' => 'мм'],
-                'en' => ['label' => 'Centering diameter height A3 (mm)',      'unit' => 'mm'],
-                'pl' => ['label' => 'Wysokość średnicy centrowania A3 (mm)',  'unit' => 'mm'],
-            ],
-            'T_size' => [
-                'uk' => ['label' => 'Розмір різьби T',                        'unit' => ''],
-                'en' => ['label' => 'Threaded hole size T',                   'unit' => ''],
-                'pl' => ['label' => 'Rozmiar gwintu T',                       'unit' => ''],
-            ],
-            'H_mm' => [
-                'uk' => ['label' => 'Отвір H (мм)',                           'unit' => 'мм'],
-                'en' => ['label' => 'Hole diameter H (mm)',                   'unit' => 'mm'],
-                'pl' => ['label' => 'Średnica otworu H (mm)',                 'unit' => 'mm'],
-            ],
-            // Update existing L1_mm / L2_mm to correct labels for T4
-            'L1_mm' => [
-                'uk' => ['label' => 'Загальна ширина корпусу L1 (мм)',        'unit' => 'мм'],
-                'en' => ['label' => 'Housing overall width L1 (mm)',          'unit' => 'mm'],
-                'pl' => ['label' => 'Całkowita szerokość obudowy L1 (mm)',    'unit' => 'mm'],
-            ],
-            'L2_mm' => [
-                'uk' => ['label' => 'Загальна ширина корпусу L2 (мм)',        'unit' => 'мм'],
-                'en' => ['label' => 'Housing overall width L2 (mm)',          'unit' => 'mm'],
-                'pl' => ['label' => 'Całkowita szerokość obudowy L2 (mm)',    'unit' => 'mm'],
-            ],
-        ];
-
-        foreach ($t4SpecTranslations as $key => $locales) {
-            $sid = $specId($key);
-            if (!$sid) continue;
-            foreach ($locales as $locale => $fields) {
-                foreach ($fields as $field => $value) {
-                    DB::table('translations')->updateOrInsert(
-                        ['entity_type' => 'spec_definitions', 'entity_id' => $sid, 'locale' => $locale, 'field' => $field],
-                        ['value' => $value]
-                    );
-                }
-            }
-        }
-
-        // =========================================================
         // 12. PRODUCT TABLE: bearings-t4 (BUCR-SG-309-S2)
         // =========================================================
         DB::table('product_tables')->updateOrInsert(
@@ -891,7 +829,7 @@ class DatabaseSeeder extends Seeder
             [
                 'slug'             => 'bearings-t4',
                 'category_id'      => $bearingsCatId,
-                'spec_columns'     => json_encode(['d_mm','d1_mm','L1_mm','J1_mm','L2_mm','J2_mm','A_mm','A1_mm','A2_mm','A3_mm','T_size','H_mm','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'spec_columns'     => json_encode(['d_mm','d1_mm','L1_mm','J1_mm','L2_mm','J2_mm','A_mm','flange_A1_mm','A2_mm','A3_mm','T_size','H_mm','mass_kg','cdyn_kn','co_kn','pu_kn']),
                 'highlight_config' => json_encode([
                     'd_mm'   => [['label'=>'d',  'x'=>1168,'y'=>1004]],
                     'd1_mm'  => [['label'=>'d1', 'x'=>1513,'y'=>1003]],
@@ -900,7 +838,7 @@ class DatabaseSeeder extends Seeder
                     'L2_mm'  => [['label'=>'L2', 'x'=>986, 'y'=>676]],
                     'J2_mm'  => [['label'=>'J2', 'x'=>939, 'y'=>723]],
                     'A_mm'   => [['label'=>'A',  'x'=>1350,'y'=>1465]],
-                    'A1_mm'  => [['label'=>'A1', 'x'=>1438,'y'=>1419]],
+                    'flange_A1_mm'  => [['label'=>'A1', 'x'=>1438,'y'=>1419]],
                     'A2_mm'  => [['label'=>'A2', 'x'=>1261,'y'=>1389]],
                     'A3_mm'  => [['label'=>'A3', 'x'=>1261,'y'=>1323]],
                     'T_size' => [['label'=>'T',  'x'=>243, 'y'=>774]],
@@ -950,10 +888,10 @@ class DatabaseSeeder extends Seeder
                     'L2_mm'   => '150',
                     'J2_mm'   => '120',
                     'A_mm'    => '66.9',
-                    'A1_mm'   => '18',
+                    'flange_A1_mm'   => '18',
                     'A2_mm'   => '12',
                     'A3_mm'   => '7',
-                    'T_size'  => '4хM12x1.25',
+                    'T_size'  => '4xM12x1.25',
                     'H_mm'    => '4x12.3',
                     'mass_kg' => '5.6',
                     'cdyn_kn' => '52.7',
@@ -2067,13 +2005,13 @@ class DatabaseSeeder extends Seeder
             [
                 'slug'             => 'agro-t2',
                 'category_id'      => $catId('agro'),
-                'spec_columns'     => json_encode(['d_inch','d_mm','B_mm','C_mm','Da_mm','L_mm','A_fl_mm','A1_mm','J_mm','N_mm','Fr_kn','Fa_kn','cdyn_kn','co_kn','mass_kg']),
+                'spec_columns'     => json_encode(['d_inch','d_mm','B_mm','C_mm','Da_mm','L_mm','A_fl_mm','flange_A1_mm','J_mm','N_mm','Fr_kn','Fa_kn','cdyn_kn','co_kn','mass_kg']),
                 'highlight_config' => json_encode([
                     'd_mm'    => [['label' => 'd',  'x' => 1151, 'y' => 721]],
                     'd_inch'  => [['label' => 'd',  'x' => 1151, 'y' => 721]],
                     'Da_mm'   => [['label' => 'Da', 'x' => 889,  'y' => 720]],
                     'B_mm'    => [['label' => 'B',  'x' => 1015, 'y' => 764]],
-                    'A1_mm'   => [['label' => 'A1', 'x' => 922,  'y' => 419]],
+                    'flange_A1_mm'   => [['label' => 'A1', 'x' => 922,  'y' => 419]],
                     'L_mm'    => [['label' => 'L',  'x' => 533,  'y' => 1011]],
                     'C_mm'    => [['label' => 'C',  'x' => 1039, 'y' => 1051]],
                     'A_fl_mm' => [['label' => 'A',  'x' => 1019, 'y' => 392]],
@@ -2110,7 +2048,7 @@ class DatabaseSeeder extends Seeder
                 'specs'    => [
                     'd_mm'    => '38.11',
                     'd_inch'  => '1.5004',
-                    'A1_mm'   => '3.5',
+                    'flange_A1_mm'   => '3.5',
                     'J_mm'    => '127',
                     'L_mm'    => '127',
                     'N_mm'    => '13.5',
@@ -2226,7 +2164,7 @@ class DatabaseSeeder extends Seeder
             [
                 'slug'         => 'agro-t3',
                 'category_id'  => $catId('agro'),
-                'spec_columns' => json_encode(['d_inch','d_mm','B_mm','C_mm','a_mm','Da_mm','L_mm','A_fl_mm','A1_mm','J_mm','N_mm','M_mm','Fr_kn','Fa_kn','cdyn_kn','co_kn','mass_kg','pu_kn']),
+                'spec_columns' => json_encode(['d_inch','d_mm','B_mm','C_mm','a_mm','Da_mm','L_mm','A_fl_mm','flange_A1_mm','J_mm','N_mm','M_mm','Fr_kn','Fa_kn','cdyn_kn','co_kn','mass_kg','pu_kn']),
                 'sort_order'   => 3,
             ]
         );
@@ -2265,7 +2203,7 @@ class DatabaseSeeder extends Seeder
                 'Da_mm'   => [['label' => 'Da', 'x' => 838,  'y' => 2149]],
                 'L_mm'    => [['label' => 'L',  'x' => 475,  'y' => 2513]],
                 'A_fl_mm' => [['label' => 'A',  'x' => 996,  'y' => 1804]],
-                'A1_mm'   => [['label' => 'A1', 'x' => 880,  'y' => 1829]],
+                'flange_A1_mm'   => [['label' => 'A1', 'x' => 880,  'y' => 1829]],
                 'J_mm'    => [['label' => 'J',  'x' => 495,  'y' => 2123]],
                 'N_mm'    => [['label' => 'N',  'x' => 752,  'y' => 1886]],
                 'M_mm'    => [['label' => 'M',  'x' => 600,  'y' => 1924]],
@@ -2284,7 +2222,7 @@ class DatabaseSeeder extends Seeder
         foreach ([
             'd_inch'  => '1.3976', 'd_mm'    => '35.5',  'B_mm'    => '42.85', 'C_mm'    => '22',
             'a_mm'    => '32.8',   'Da_mm'   => '97',    'L_mm'    => '127',   'A_fl_mm' => '39',
-            'A1_mm'   => '3.5',    'J_mm'    => '127',   'N_mm'    => '13.5',  'M_mm'    => '17.5',
+            'flange_A1_mm'   => '3.5',    'J_mm'    => '127',   'N_mm'    => '13.5',  'M_mm'    => '17.5',
             'Fr_kn'   => '7.7',    'Fa_kn'   => '3.8',   'cdyn_kn' => '32.5',  'co_kn'   => '20.4',
             'mass_kg' => '1.63',   'pu_kn'   => '0.857',
         ] as $key => $val) {
@@ -2376,7 +2314,7 @@ class DatabaseSeeder extends Seeder
             [
                 'slug'         => 'agro-t4',
                 'category_id'  => $catId('agro'),
-                'spec_columns' => json_encode(['d_inch','d_mm','B_mm','L_mm','A1_mm','C_mm','Da_mm','D_mm','J_mm','N_mm','cdyn_kn','co_kn','mass_kg','pu_kn']),
+                'spec_columns' => json_encode(['d_inch','d_mm','B_mm','L_mm','flange_A1_mm','C_mm','Da_mm','D_mm','J_mm','N_mm','cdyn_kn','co_kn','mass_kg','pu_kn']),
                 'sort_order'   => 4,
             ]
         );
@@ -2409,7 +2347,7 @@ class DatabaseSeeder extends Seeder
             'highlight_config' => json_encode([
                 'd_mm'   => [['label' => 'd',  'x' => 1259, 'y' => 940]],
                 'd_inch' => [['label' => 'd',  'x' => 1259, 'y' => 940]],
-                'A1_mm'  => [['label' => 'A1', 'x' => 1413, 'y' => 572]],
+                'flange_A1_mm'  => [['label' => 'A1', 'x' => 1413, 'y' => 572]],
                 'Da_mm'  => [['label' => 'Da', 'x' => 1529, 'y' => 944]],
                 'D_mm'   => [['label' => 'D',  'x' => 1662, 'y' => 944]],
                 'J_mm'   => [['label' => 'J',  'x' => 371,  'y' => 880]],
@@ -2428,7 +2366,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ([
             'd_inch'  => '1.781', 'd_mm'    => '45.24', 'B_mm'    => '36.53', 'L_mm'    => '48.5',
-            'A1_mm'   => '3.5',   'C_mm'    => '30.1',  'Da_mm'   => '93',    'D_mm'    => '150',
+            'flange_A1_mm'   => '3.5',   'C_mm'    => '30.1',  'Da_mm'   => '93',    'D_mm'    => '150',
             'J_mm'    => '120.5', 'N_mm'    => '13.5',  'cdyn_kn' => '32.5',  'co_kn'   => '20.4',
             'mass_kg' => '1.836', 'pu_kn'   => '0.857',
         ] as $key => $val) {
@@ -3114,9 +3052,9 @@ class DatabaseSeeder extends Seeder
             [
                 'slug'             => 'kit-t6',
                 'category_id'      => $catId('kit'),
-                'spec_columns'     => json_encode(['d_mm','d1_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'spec_columns'     => json_encode(['shaft_d_mm','d1_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
                 'highlight_config' => json_encode([
-                    'd_mm'      => [['label' => 'd', 'x' => 251, 'y' => 2248]],
+                    'shaft_d_mm'      => [['label' => 'd', 'x' => 251, 'y' => 2248]],
                     'd1_mm'     => [['label' => 'd1', 'x' => 1076, 'y' => 2245]],
                     'D_mm'      => [['label' => 'D', 'x' => 208, 'y' => 2250]],
                     'B_mm'      => [['label' => 'B', 'x' => 966, 'y' => 2516]],
@@ -3154,7 +3092,7 @@ class DatabaseSeeder extends Seeder
         $pk6 = DB::table('products')->where('slug', 'aa205dd-vx')->value('id');
 
         foreach ([
-            'd_mm'      => '16',
+            'shaft_d_mm'      => '16',
             'd1_mm'     => '33.74',
             'D_mm'      => '53.086',
             'B_mm'      => '19.4',
@@ -3233,9 +3171,9 @@ class DatabaseSeeder extends Seeder
             [
                 'slug'             => 'kit-t7',
                 'category_id'      => $catId('kit'),
-                'spec_columns'     => json_encode(['d_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
+                'spec_columns'     => json_encode(['shaft_d_mm','D_mm','B_mm','C_mm','alpha_deg','mass_kg','cdyn_kn','co_kn','pu_kn']),
                 'highlight_config' => json_encode([
-                    'd_mm'      => [['label' => 'd', 'x' => 224, 'y' => 708]],
+                    'shaft_d_mm'      => [['label' => 'd', 'x' => 224, 'y' => 708]],
                     'D_mm'      => [['label' => 'D', 'x' => 176, 'y' => 707]],
                     'B_mm'      => [['label' => 'B', 'x' => 883, 'y' => 942]],
                     'C_mm'      => [['label' => 'C', 'x' => 873, 'y' => 442]],
@@ -3272,7 +3210,7 @@ class DatabaseSeeder extends Seeder
         $pk7 = DB::table('products')->where('slug', 'aa59196-vx')->value('id');
 
         foreach ([
-            'd_mm'      => '16.027',
+            'shaft_d_mm'      => '16.027',
             'D_mm'      => '45.225',
             'B_mm'      => '26',
             'C_mm'      => '22.82',
