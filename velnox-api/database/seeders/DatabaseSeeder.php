@@ -3387,5 +3387,24 @@ class DatabaseSeeder extends Seeder
             );
         }
 
+        // =========================================================
+        // ПРИБИРАННЯ: значення характеристик, яких уже немає в spec_columns
+        // =========================================================
+        // Перейменування ключа (напр. d_mm -> shaft_d_mm) створює новий рядок у
+        // product_specs, а старий лишається — і картка показує дві колонки з тим
+        // самим числом. Контролер віддає всі product_specs, не звіряючись зі
+        // spec_columns, тож прибирати треба тут.
+        foreach (DB::table('product_tables')->get(['id', 'spec_columns']) as $pt) {
+            $cols = json_decode($pt->spec_columns ?? '[]', true);
+            if (!is_array($cols) || !$cols) continue;   // порожні spec_columns — не чіпаємо
+            $allowed    = DB::table('spec_definitions')->whereIn('key', $cols)->pluck('id');
+            $productIds = DB::table('products')->where('product_table_id', $pt->id)->pluck('id');
+            if ($productIds->isEmpty()) continue;
+            DB::table('product_specs')
+                ->whereIn('product_id', $productIds)
+                ->whereNotIn('spec_id', $allowed)
+                ->delete();
+        }
+
     }
 }
