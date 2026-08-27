@@ -40,3 +40,24 @@ All static files use basePath `/velnox`:
 - Product images: `/velnox/images/products/`
 
 Never use relative paths or paths without the `/velnox` prefix.
+## Підписи характеристик — єдине джерело (2026-08-27)
+
+Підписи колонок беруться **тільки з БД** (`translations` для `spec_definitions`, uk/en/pl):
+картка — через `spec.label` у `SpecsTable.tsx`, категорійні таблиці — через `spec_labels`
+з `/api/v1/product-tables/{slug}` у `buildCols` (`label: sl[key] || key`).
+
+⚠️ У `velnox-frontend/messages/{uk,en,pl}.json` лежить **мертвий** словник підписів
+(`product.d_mm`, `product.cdyn_kn`, `bearingsPage.cols.*` …) — 0 використань у коді,
+але він застарілий. Правити треба сідер, не месиджі.
+
+**Правило ключа (власник):** ключ = назва + буква + одиниця, а не буква. Однакова буква
+з різним змістом у різних таблицях → окремі ключі: `hub_d_mm`/`hub_bore_d_mm`,
+`hub_C_mm`/`hub_dshape_C_mm`, `N_mm`/`mount_N_mm`, `d1_mm`/`needle_d1_mm`/`agro_d1_mm`,
+`A1_mm`/`flange_A1_mm`, `d_mm`/`shaft_d_mm`.
+
+**Прод, коли змінився лише сидер — без rebuild:** rsync `DatabaseSeeder.php` у
+`~/velnox/api/database/seeders/`, потім `docker compose cp` того ж файла в контейнер
+`velnox-api:/var/www/database/seeders/` і `docker compose exec -T velnox-api
+php artisan db:seed --class=DatabaseSeeder --force`. Код у прод-образі запечений —
+без `cp` контейнер бачить старий файл. Сторінки після цього ще ~хвилину віддають
+старий ISR-кеш: питати кожну двічі.
