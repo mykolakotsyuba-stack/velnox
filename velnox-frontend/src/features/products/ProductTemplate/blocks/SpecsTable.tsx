@@ -15,6 +15,8 @@ interface SpecsTableProps {
 const DIMENSIONAL_KEYS = new Set([
     'd_inch', 'd_mm', 'D_mm', 'B_mm', 'L_mm', 'J_mm',
     'A_mm', 'A1_mm', 'A2_mm', 'C_mm', 'Da_mm', 'N_mm', 'M_mm',
+    // розділені ключі — той самий замір, окремий ключ на таблицю
+    'shaft_d_mm', 'flange_A1_mm', 'mount_N_mm',
 ]);
 
 /** Group 3: навантаження / маса — завжди останніми */
