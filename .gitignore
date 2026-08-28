@@ -9,3 +9,8 @@ pdf-gen-temp/
 
 # Prod DB/storage backups (never commit data)
 backups-prod/
+
+# Робочі копії Claude Code — це тимчасові worktree, не частина проекту.
+# Раніше одна з них потрапила в індекс як сабмодуль (без .gitmodules) і git
+# вічно показував "modified content".
+.claude/worktrees/
