@@ -139,96 +139,25 @@ function LeadModal({ onClose, defaultDesignation = '' }: { onClose: () => void; 
 ──────────────────────────────────────────────────────────────────── */
 type SlMap = Record<string, string>;
 
-function buildT1Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
-    return [
-        { key: 'part_number',   label: partLabel,                                   width: '130px' },
-        { key: 'bearing_part',  label: t('crosses.bearing_designation'),                     hasFilter: false },
-        { key: 'bearing_brand', label: t('crosses.brand'),                                     hasFilter: false },
-        { key: 'oem',           label: t('crosses.cross_analogues'),                        hasFilter: false },
-        { key: 'd_mm',          label: sl['d_mm']    || 'd (mm)',          hasFilter: true },
-        { key: 'D_mm',          label: sl['D_mm']    || 'D (mm)',          hasFilter: true },
-        { key: 'B_mm',          label: sl['B_mm']    || 'B (mm)',          hasFilter: true },
-        { key: 'agro_d1_mm',    label: sl['agro_d1_mm'] || 'd1 (mm)',      hasFilter: true },
-        { key: 'r_12_mm',       label: sl['r_12_mm'] || 'r 1,2 (mm)',     hasFilter: true },
-        { key: 'cdyn_kn',       label: sl['cdyn_kn'] || 'Cdyn (kN)',      hasFilter: true },
-        { key: 'co_kn',         label: sl['co_kn']   || 'Co (kN)',        hasFilter: true },
-        { key: 'pu_kn',         label: sl['pu_kn']   || 'Pu (kN)',        hasFilter: true },
-        { key: 'mass_kg',       label: sl['mass_kg'] || 'Mass (kg)',      hasFilter: true },
-    ];
-}
-
-function buildT2Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
-    return [
-        { key: 'part_number',   label: partLabel,                                                   width: '130px' },
-        { key: 'bearing_part',  label: t('crosses.bearing_designation'),                                     hasFilter: false },
-        { key: 'bearing_brand', label: t('crosses.brand'),                                                     hasFilter: false },
-        { key: 'oem',           label: t('crosses.cross_analogues'),                                        hasFilter: false },
-        { key: 'd_inch',        label: sl['d_inch']   || 'd (inch)',       hasFilter: true },
-        { key: 'd_mm',          label: sl['d_mm']     || 'd (mm)',         hasFilter: true },
-        { key: 'B_mm',          label: sl['B_mm']     || 'B (mm)',         hasFilter: true },
-        { key: 'C_mm',          label: sl['C_mm']     || 'C (mm)',         hasFilter: true },
-        { key: 'Da_mm',         label: sl['Da_mm']    || 'Da (mm)',        hasFilter: true },
-        { key: 'L_mm',          label: sl['L_mm']     || 'L (mm)',         hasFilter: true },
-        { key: 'A_fl_mm',       label: sl['A_fl_mm']  || 'A (mm)',         hasFilter: true },
-        { key: 'flange_A1_mm',  label: sl['flange_A1_mm'] || 'A1 (mm)',    hasFilter: true },
-        { key: 'J_mm',          label: sl['J_mm']     || 'J (mm)',         hasFilter: true },
-        { key: 'mount_N_mm',    label: sl['mount_N_mm'] || 'N (mm)',       hasFilter: true },
-        { key: 'Fr_kn',         label: sl['Fr_kn']    || 'Fr (kN)',        hasFilter: true },
-        { key: 'Fa_kn',         label: sl['Fa_kn']    || 'Fa (kN)',        hasFilter: true },
-        { key: 'mass_kg',       label: sl['mass_kg']  || 'Mass (kg)',      hasFilter: true },
-        { key: 'cdyn_kn',       label: sl['cdyn_kn']  || 'Cdyn (kN)',      hasFilter: true },
-        { key: 'co_kn',         label: sl['co_kn']    || 'Co (kN)',        hasFilter: true },
-    ];
-}
-
-function buildT3Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
-    return [
-        { key: 'part_number',   label: partLabel,                                    width: '130px' },
-        { key: 'bearing_part',  label: t('crosses.bearing_designation'),  hasFilter: false },
-        { key: 'bearing_brand', label: t('crosses.brand'),                  hasFilter: false },
+/**
+ * Склад і порядок колонок задає `spec_columns` таблиці в БД, підписи — `spec_labels`.
+ * Ключі тут НЕ перелічуються: перейменування ключа в сидері підхоплюється саме собою.
+ * Та сама схема, що в Bearings/Hubs/Kit.
+ */
+function buildCols(sl: SlMap, specColumns: string[] | undefined, partLabel: string, t: any, partWidth = '130px'): ColDef[] {
+    const base: ColDef[] = [
+        { key: 'part_number',   label: partLabel,                        width: partWidth },
+        { key: 'bearing_part',  label: t('crosses.bearing_designation'), hasFilter: false },
+        { key: 'bearing_brand', label: t('crosses.brand'),               hasFilter: false },
         { key: 'oem',           label: t('crosses.cross_analogues'),     hasFilter: false },
-        { key: 'd_inch',        label: sl['d_inch']   || 'd (inch)',       hasFilter: true },
-        { key: 'd_mm',          label: sl['d_mm']     || 'd (mm)',         hasFilter: true },
-        { key: 'B_mm',          label: sl['B_mm']     || 'B (mm)',         hasFilter: true },
-        { key: 'C_mm',          label: sl['C_mm']     || 'C (mm)',         hasFilter: true },
-        { key: 'a_mm',          label: sl['a_mm']     || 'a (mm)',         hasFilter: true },
-        { key: 'Da_mm',         label: sl['Da_mm']    || 'Da (mm)',        hasFilter: true },
-        { key: 'L_mm',          label: sl['L_mm']     || 'L (mm)',         hasFilter: true },
-        { key: 'A_fl_mm',       label: sl['A_fl_mm']  || 'A (mm)',         hasFilter: true },
-        { key: 'flange_A1_mm',  label: sl['flange_A1_mm'] || 'A1 (mm)',    hasFilter: true },
-        { key: 'J_mm',          label: sl['J_mm']     || 'J (mm)',         hasFilter: true },
-        { key: 'mount_N_mm',    label: sl['mount_N_mm'] || 'N (mm)',       hasFilter: true },
-        { key: 'M_mm',          label: sl['M_mm']     || 'M (mm)',         hasFilter: true },
-        { key: 'Fr_kn',         label: sl['Fr_kn']    || 'Fr (kN)',        hasFilter: true },
-        { key: 'Fa_kn',         label: sl['Fa_kn']    || 'Fa (kN)',        hasFilter: true },
-        { key: 'cdyn_kn',       label: sl['cdyn_kn']  || 'Cdyn (kN)',      hasFilter: true },
-        { key: 'co_kn',         label: sl['co_kn']    || 'Co (kN)',        hasFilter: true },
-        { key: 'mass_kg',       label: sl['mass_kg']  || 'Mass (kg)',      hasFilter: true },
-        { key: 'pu_kn',         label: sl['pu_kn']    || 'Pu (kN)',        hasFilter: true },
     ];
-}
-
-function buildT4Cols(sl: SlMap, partLabel: string, t: any): ColDef[] {
-    return [
-        { key: 'part_number',   label: partLabel,                                    width: '120px' },
-        { key: 'bearing_part',  label: t('crosses.bearing_designation'),  hasFilter: false },
-        { key: 'bearing_brand', label: t('crosses.brand'),                  hasFilter: false },
-        { key: 'oem',           label: t('crosses.cross_analogues'),     hasFilter: false },
-        { key: 'd_inch',        label: sl['d_inch']  || 'd (inch)',       hasFilter: true },
-        { key: 'd_mm',          label: sl['d_mm']    || 'd (mm)',         hasFilter: true },
-        { key: 'B_mm',          label: sl['B_mm']    || 'B (mm)',         hasFilter: true },
-        { key: 'L_mm',          label: sl['L_mm']    || 'L (mm)',         hasFilter: true },
-        { key: 'flange_A1_mm',  label: sl['flange_A1_mm'] || 'A1 (mm)',   hasFilter: true },
-        { key: 'C_mm',          label: sl['C_mm']    || 'C (mm)',         hasFilter: true },
-        { key: 'Da_mm',         label: sl['Da_mm']   || 'Da (mm)',        hasFilter: true },
-        { key: 'D_mm',          label: sl['D_mm']    || 'D (mm)',         hasFilter: true },
-        { key: 'J_mm',          label: sl['J_mm']    || 'J (mm)',         hasFilter: true },
-        { key: 'mount_N_mm',    label: sl['mount_N_mm'] || 'N (mm)',      hasFilter: true },
-        { key: 'cdyn_kn',       label: sl['cdyn_kn'] || 'Cdyn (kN)',      hasFilter: true },
-        { key: 'co_kn',         label: sl['co_kn']   || 'Co (kN)',        hasFilter: true },
-        { key: 'mass_kg',       label: sl['mass_kg'] || 'Mass (kg)',      hasFilter: true },
-        { key: 'pu_kn',         label: sl['pu_kn']   || 'Pu (kN)',        hasFilter: true },
-    ];
+    const specKeys = specColumns?.length ? specColumns : Object.keys(sl);
+    const specCols: ColDef[] = specKeys.map(key => ({
+        key,
+        label: sl[key] || key,
+        hasFilter: true,
+    }));
+    return [...base, ...specCols];
 }
 
 const CROSS_REF_KEYS = new Set(['bearing_part', 'bearing_brand', 'oem']);
@@ -436,6 +365,11 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     const [sl3, setSl3] = useState<SlMap>({});
     const [sl4, setSl4] = useState<SlMap>({});
 
+    const [sc1, setSc1] = useState<string[] | undefined>(undefined);
+    const [sc2, setSc2] = useState<string[] | undefined>(undefined);
+    const [sc3, setSc3] = useState<string[] | undefined>(undefined);
+    const [sc4, setSc4] = useState<string[] | undefined>(undefined);
+
     const [schema1, setSchema1] = useState<string | null>(null);
     const [schema2, setSchema2] = useState<string | null>(null);
     const [schema3, setSchema3] = useState<string | null>(null);
@@ -495,6 +429,11 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
                 if (data3.table?.spec_labels) setSl3(data3.table.spec_labels);
                 if (data4.table?.spec_labels) setSl4(data4.table.spec_labels);
 
+                setSc1(data1.table?.spec_columns);
+                setSc2(data2.table?.spec_columns);
+                setSc3(data3.table?.spec_columns);
+                setSc4(data4.table?.spec_columns);
+
                 if (data1.table?.schema_src) setSchema1(data1.table.schema_src);
                 if (data2.table?.schema_src) setSchema2(data2.table.schema_src);
                 if (data3.table?.schema_src) setSchema3(data3.table.schema_src);
@@ -543,10 +482,10 @@ export function AgroCategoryPage({ locale, products }: AgroCategoryPageProps) {
     const searchedT4 = useMemo(() => search(table4Data), [table4Data, searchQuery]);
 
     const partLabel = t('agroPage.cols.part_number');
-    const colsT1 = useMemo(() => buildT1Cols(sl1, partLabel, t), [sl1, partLabel, t]);
-    const colsT2 = useMemo(() => buildT2Cols(sl2, partLabel, t), [sl2, partLabel, t]);
-    const colsT3 = useMemo(() => buildT3Cols(sl3, partLabel, t), [sl3, partLabel, t]);
-    const colsT4 = useMemo(() => buildT4Cols(sl4, partLabel, t), [sl4, partLabel, t]);
+    const colsT1 = useMemo(() => buildCols(sl1, sc1, partLabel, t),          [sl1, sc1, partLabel, t]);
+    const colsT2 = useMemo(() => buildCols(sl2, sc2, partLabel, t),          [sl2, sc2, partLabel, t]);
+    const colsT3 = useMemo(() => buildCols(sl3, sc3, partLabel, t),          [sl3, sc3, partLabel, t]);
+    const colsT4 = useMemo(() => buildCols(sl4, sc4, partLabel, t, '120px'), [sl4, sc4, partLabel, t]);
 
     const specColsT1  = useMemo(() => colsT1.filter(c => !CROSS_REF_KEYS.has(c.key)), [colsT1]);
     const specColsT2  = useMemo(() => colsT2.filter(c => !CROSS_REF_KEYS.has(c.key)), [colsT2]);
