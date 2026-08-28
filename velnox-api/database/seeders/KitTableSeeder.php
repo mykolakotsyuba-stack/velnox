@@ -48,7 +48,7 @@ class KitTableSeeder extends Seeder
         ];
 
         foreach ($files as $num => $filename) {
-            $path = base_path('../' . $filename); // Files are in the root directory relative to velnox-api
+            $path = base_path('../materials/' . $filename); // Вихідні CSV лежать у materials/ у корені репозиторію
             if (!file_exists($path)) {
                 $this->command->warn("File not found: $path");
                 continue;

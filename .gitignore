@@ -14,3 +14,11 @@ backups-prod/
 # Раніше одна з них потрапила в індекс як сабмодуль (без .gitmodules) і git
 # вічно показував "modified content".
 .claude/worktrees/
+
+# Сирі матеріали від дизайнера/фотографа, які ще не розібрані.
+# materials/ під git — це джерела, з яких зібрані таблиці й зображення сайту.
+# materials/inbox/ — приймальня: усе, що щойно закинули, git не чіпає.
+materials/inbox/
+
+# Локальний конфіг превʼю-сервера Claude Code
+.claude/launch.json
